@@ -1,0 +1,212 @@
+<!--
+Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+   <head>
+      <style>
+         .formfield * {
+         vertical-align: top;
+         }
+      </style>
+   </head>
+   <body ng-controller="sites">
+      <div id="akrainocontent" style="padding-left:20px;padding-right:20px">
+         <div>
+            <h1>Akraino Sites
+            </h1>
+         </div>
+         <label>Select Regions:
+         </label><br>
+            <div class="selectStyle">
+            <select class ="exampleTable" style="width:200px;height:40px;" ng-model="selectedRegion"   ng-change="selectedRegionChange()" ng-options="region.regionName for region in regions">
+               <option value="">All Sites
+               </option>
+            </select>
+            </div>
+        
+         <div id="sitesTable" ng-show="showSitesTable" style="padding-bottom:1px; padding-top:30px">
+            <form>
+               <div class="form-group">
+                  <div class="input-group">
+                     <div class="input-group-addon">
+                        <i class="fa fa-search">
+                        </i>
+                     </div>
+                     
+                     <input type="text" style="width:300px" class="form-control" placeholder="Search Edge Sites" ng-model="q">
+                     <div style="float:right">
+                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="selectedRegionChange()"> Refresh 
+                        </a>
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="sites[hostIndex].blueprintType != 'Unicycle'" ng-click="buildEdgeSite(hostIndex)" >Build 
+                        </button>
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled="((sites[hostIndex].buildStatus == 'build complete' || sites[hostIndex].blueprintType == 'Rover') && sites[hostIndex].blueprintType != '')? false : true" ng-click="deployEdgeSite(hostIndex)">Deploy
+                        </button> 
+                        <button class="refreshbutton" style="margin-left:5px;"  ng-disabled="sites[hostIndex].deployStatus != 'Completed'" ng-click="vnfOnboard(hostIndex)">VNF Onboard
+                        </button> 
+                     </div>
+                  </div>
+               </div>
+         </div>
+         
+         </form>
+         
+         <table cellspacing="0" cellpadding="10" class="siteStatusTable">
+            <tbody>
+               <tr>
+                  <th>
+                  </th>
+                  <th>{{regionHeader}}&nbsp;
+                  </th>
+                  <th>{{SiteHeader}}&nbsp;
+                  </th>
+                  <th>Blueprint&nbsp;
+                  </th>
+                  <th>{{buildStatusHeader}}&nbsp;
+                  </th>
+                  <th>{{deployStatusHeader}}&nbsp;
+                  </th>
+               </tr>
+               <tr class="border_bottom" ng-repeat="site in pagedItems[currentPage] | orderBy:sortingOrder:reverse | filter:q">
+                  <td style="text-align: center;width:8%;">
+                     <form>
+                     <input   type="radio"
+                        ng-model="$parent.selection"
+                        name="subscriptionRadio"
+                        value="{{site.edgeSiteName}}" ng-click="update($index)"/>
+                     <form>
+                  </td>
+                  <td  style="padding-left:10px;font-size: 15px;width:18.4%;">{{ site.regionName }}
+                  </td>
+                  <td style="width:18.4%;">
+                     <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model ="selectedSites" ng-click ="loadSitePopup($index)">{{ site.edgeSiteName }}
+                     </a>
+                  </td>
+                   <td style="width:18.4%;padding-left:10px;">
+                   <select style="width:150px;" ng-model="site.blueprintType"  ng-init="site.blueprintType=''" class="exampleTable" ng-change ="callblueprint(hostIndex)" required>
+            			<option value="">Select Blueprint</option>
+            			<option value="Rover">Rover</option>
+            			<option value="Unicycle">Unicycle</option>
+            			<option value="Tricycle">Tricycle</option>
+            			<option value="Cruiser">Cruiser</option>
+          		  </select> 
+                    
+                  </td>
+                  <td style="width:18.4%;">     
+                     <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.buildStatus ? site.buildStatus : 'Not started'}}
+                     </label>
+                     <a href="#" ng-click="viewYamlBuildFile($index)">
+                     <i>{{site.viewBuildFile}}
+                     </i>
+                     </a>
+                  </td>
+                  <td style="width:18.4%;">
+                  <!---
+                     <div ng-if ="site.edgeSiteDeployCreateTarStatus==null || site.edgeSiteDeployGenesisNodeStatus==null || site.edgeSiteDeployToolStatus ==null">
+                        <label style="font-size: 15px;font-style: italic;padding-left:10px;" > Not started
+                        </label>
+                        </br>
+                     </div>
+                     <div ng-if ="site.edgeSiteDeployCreateTarStatus=='build complete' && site.edgeSiteDeployGenesisNodeStatus=='build complete' && site.edgeSiteDeployToolStatus =='build complete'">
+                        <label style="font-size: 15px;font-style: italic;padding-left:10px;" > build complete
+                        </label>
+                        </br>
+                     </div>
+                     <div ng-if ="site.edgeSiteDeployCreateTarStatus=='in progress' || site.edgeSiteDeployGenesisNodeStatus=='in progress' || site.edgeSiteDeployToolStatus =='in progress'">
+                        <label style="font-size: 15px;font-style: italic;padding-left:10px;">in progress
+                        </label>
+                        </br>
+                     </div>
+                     -->
+                      <label style="font-size: 15px;font-style: italic;padding-left:10px;" >{{site.deployStatus ? site.deployStatus : 'Not started'}}
+                        </label>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      </div>
+      <div class="pagination">
+         <ul>
+            <li ng-class="{disabled: currentPage == 0}">
+               <a href ng-click="prevPage()">« Prev
+               </a>
+            </li>
+            <li ng-repeat="n in range(pagedItems.length)"
+               ng-class="{active: n == currentPage}"
+               ng-click="setPage()">
+               <a href ng-bind="n + 1">1
+               </a>
+            </li>
+            <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+               <a href ng-click="nextPage()">Next »
+               </a>
+            </li>
+         </ul>
+      </div>
+      </div>
+      </div>
+   </body>
+   <script type="text/ng-template" id="sitetemplateForm">
+      <form class="siteForm">
+            <h1>Site Details:</h1><br>
+          <label style="width:30%;">Region: </label>
+      <input type="text" placeholder ="{{popupregionName}}" disabled/>
+       <br>
+          <label style="width:30%;">Site: </label> 
+      <input type="text" placeholder ="{{popupsiteName}}" disabled/><br>
+          <label style="width:30%;">Build Status: </label> 
+      <input type="text" placeholder ="{{popUpedgeSiteBuildStatus ? popUpedgeSiteBuildStatus : 'Not started'}}" disabled/><br>
+          <label style="width:30%;">Last Bulid Date: </label>
+      <input type="text" placeholder ="{{popUpbuildDate}}" disabled/><br>
+      <label style="width:30%;">VNF Status: </label>
+      <input type="text" placeholder ="{{popUpVnf}}" disabled/><br>
+          <label> Deploy Status</label>
+          <ul><li ><label style="width:26%;">Document created Status: </label>
+      <input type="text" style="width:42%" placeholder ="{{popUpedgeSiteDeployCreateTarStatus ? popUpedgeSiteDeployCreateTarStatus : 'Not started'}}" disabled/></li>
+            <li><label style="width:26%;">GenesisNode Status: </label>
+      <input type="text" style="width:42%" placeholder ="{{popUpedgeSiteDeployGenesisNodeStatus ? popUpedgeSiteDeployGenesisNodeStatus : 'Not started'}}" disabled/> </li>
+            <li><label style="width:26%;">Tool Status: </label>
+      <input type="text" style="width:42%;" placeholder ="{{popUpedgeSiteDeployToolStatus ? popUpedgeSiteDeployToolStatus : 'Not started'}}" disabled/></li>
+        </ul>
+            <label style="width:30%;"> Last Deploy Date: </label>
+      <input type="text" placeholder ="{{popUpdeployDate}}" disabled/> <br>
+            <p class="formfield">
+            <label style="width:30%;" for="textarea">Yaml File: </label>
+        <textarea style="width:500px;" id="textarea" rows="5" disabled>{{Data}}</textarea></p>
+            <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
+      </form>
+   </script>
+   <script type="text/ng-template" id="vnftemplateForm">
+      <form class="vnfForm">
+            <h1>VNF Details:</h1><br>
+          <label style="width:30%;">Region: </label> <label>{{popupregionName}}</label><br>
+          <label style="width:30%;">Site: </label> <label>{{popupsiteName}}</label><br>
+          <label style="width:30%;">VNF: </label> <select ng-model="vnfType" class="example"  ng-change ="callreadVnf()" required>
+            <option value="vCDN">cVDN</option>
+          </select> 
+                   <br><br>
+            <p class="formfield">
+            <label style="width:30%;" for="textarea">Heat Template File: </label>
+        <textarea style="width:500px;" id="textarea" rows="5" disabled>{{heattemplateoutput}}</textarea></p>
+            <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
+       <button  class="akrbutton" ng-click="onBoard()">Onboard</button>
+      </form>
+   </script>
+</html>
+

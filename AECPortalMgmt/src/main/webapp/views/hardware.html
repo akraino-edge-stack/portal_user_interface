@@ -1,0 +1,121 @@
+<!--
+Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+   <head>
+   </head>
+   <body ng-controller="AECHardwareController">
+      <div id="akrainohardwarecontent" style="padding-left:20px;padding-right:20px">
+         <div>
+            <h1>Akraino Hardware
+            </h1>
+         </div>
+         <label>Select POD:
+         </label>
+         <div class="select-style">
+            <select class ="example"  ng-model="selectedBlueprint"  ng-init="selectedBlueprint=blueprints[0]" ng-change="selectedBluePrintChange()" ng-options="blueprint.name for blueprint in blueprints">
+            </select>
+           
+         </div>
+         
+         
+          <label>{{checkBlueprint}}</label>
+         <br>
+         <form ng-show="displayForm" class="hardwareForm">
+            <div class="form-group">
+               <div class="input-group">
+                  <label>Blueprint name:
+                  <input type="text"  style="width:300px;height:40px;" placeholder="Enter Blueprint Name" ng-model="siteBuildName" required/><label ng-show ="showerrorMessage" style="color:red">{{errorMessage}}</label>
+                  <br>
+                  <h3>Global Configuration </h3>
+                  <label>Step {{stepNumber}} out of {{maxStep}} :</label>
+                  <button class="refreshbutton" style="margin-left:20px;" ng-disabled ="addNodesButton" ng-click="addNodes(hostIndex)" >{{ hardwareButton}}
+                  </button>
+                   <button class="refreshbutton" style="margin-left:5px;"  ng-click="cancelAll()" >Cancel
+                  </button>
+               </div>
+            </div>
+         </form>
+         <div id="hardwareTable" ng-show ="showHardwareTable" style="padding-bottom:1px; padding-top:30px">
+            <table cellspacing="0" cellpadding="0" class="shardwareTable">
+            <tbody>
+               <tr>
+                  <th>Node(host)</th>
+                  <th>Node Type&nbsp;</th>
+                  
+                  <th>H/W Model&nbsp;</th>
+                  
+               </tr>
+               <tr class="border_bottom" ng-repeat ="hardware in hardwareDetails  ">
+                  <td style="padding-left:10px;font-size: 15px;">{{ hardware.nodeName}}</td>
+                  <td style="padding-left:10px;font-size: 15px;">{{ hardware.nodeType}}</td>
+                 
+                  <td style="padding-left:10px;font-size: 15px;">{{hardware.hwModel}}</td>
+                  
+               </tr>
+            </tbody>
+            <table>
+         </div>
+         <br>
+         <button class="refreshbutton" style="float:right"   
+            ng-show ="showSaveButton" ng-click="saveNodes();" >Save
+         </button>
+      </div>
+   </body>
+   <script type="text/ng-template" id="hardwaretemplateForm">
+      <form class="hardwareForm">
+      <h2>Add {{nodeType}} Node</h2>
+                   <h2>{{siteBuildHardwareHeader}}</h2>
+                   <label style="width:30%;"> Blueprint Name :</label>
+                  <label>{{blueprintSiteBuildName}}</label>
+                   <br>
+                   <label style="width:30%;"> Node name(host) :</label>
+                   <input type="text" placeholder="" ng-model="data.nodeName" required/>
+                   <br>
+                   <label style="width:30%;">h/w type:</label>
+                   <select class="exampleTable" ng-model="data.hwModel" required>
+            <option value="HP">HP</option>
+            
+            <option value="DELL">DELL</option>
+          </select> 
+                   
+                   
+                   <br>
+                   <label style="width:30%;">Node Type:</label>
+                   <input type="text" placeholder="{{nodeType}}" ng-model="nodeType" ng-readonly="readControlType" />
+                   <br>
+                  
+                   
+                   
+                   <br>
+                   <button style="margin-left:40%" class="akrbutton" ng-click="cancel()">Close</button>
+                   <button class="akrbutton" ng-click="submitSiteBuildDetails()" ng-disabled="disable">Save</button>
+        </form>
+   
+  </script>   
+      <script type="text/ng-template" id="savetemplateForm">
+      <form class="softwareForm">
+      <h3>Blueprint has been saved,successfully.</h3>
+       <button style="margin-left:40%" class="akrbutton" ng-click="cancel()">Close</button>
+          </form>
+   </script>
+   
+</html>
+
+
+

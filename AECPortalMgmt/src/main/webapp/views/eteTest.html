@@ -1,0 +1,110 @@
+<!--
+Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+   <head>
+      <style type="text/css">
+         a.focus:link,
+         a.focus:visited {
+         color: blue;
+         }
+      </style>
+   </head>
+   <body ng-controller="AECeteTestController">
+      <div id="akrainoeteTestcontent" style="padding-left:20px;padding-right:20px">
+         <div>
+            <h1>Run Tests</h1>
+         </div>
+         <label>Select Regions</label><br>
+        <div class="selectStyle">
+            <select class ="exampleTable" style="width:200px;height:40px;" ng-model="selectedtempestRegion"   ng-change="selectedtempestRegionChange()" ng-options="region.regionName for region in tempestregions">
+               <option value="">All Sites
+               </option>
+            </select>
+            </div>
+         <div id="sitestempestTable" ng-show="showtempestSitesTable" style="padding-bottom:1px; padding-top:20px">
+            <label>Deployed Sites</label>
+            <form>
+               <div class="form-group">
+                  <div class="input-group">
+                     <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                     <input type="text" style="width:300px" class="form-control" placeholder="Search Edge Sites" ng-model="searchtempestSites">
+                     <div style="float:right">
+                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="selectedtempestRegionChange()"> Refresh 
+                        </a>
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="tempestSelectButton" ng-click="runTempest(siteIndex)">Run Tempest</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+            <table cellspacing="0" cellpadding="0" style="height:80%;" class="sitetempestsTable">
+               <tr>
+                  <th></th>
+                  <th>Region&nbsp;</th>
+                  <th>Sites&nbsp;</th>
+                  <th>Blueprint&nbsp;</th>
+                  <th>Status&nbsp;</th>
+               </tr>
+               <tbody>
+                  <tr class="border_bottom" ng-repeat="site in pagedItems[currentPage] | orderBy:sortType:sortReverse | filter:searchtempestSites">
+                     <td style="text-align: center;width:8%;">
+                        <form>
+                        <input type="radio" ng-model="$parent.tempestselection" name="selectionRadio" value="{{site.edgeSiteName}}" ng-click="tempestUpdate($index)" />
+                        <form>
+                     </td>
+                     <td style="padding-left:10px;width:23%">{{site.regionName}}</td>
+                     <td  style="width:23%"> <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedtempestSites" ng-click="opentempestDialog($index)">{{ site.edgeSiteName }}</a></td>
+                     <td style="padding-left:10px;width:23%"></td>
+                     <td style="padding-left:10px;width:23%">{{site.tempestStatus ? site.tempestStatus : 'Not started'}}</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="pagination">
+         <ul>
+            <li ng-class="{disabled: currentPage == 0}"> <a href ng-click="prevPage()">« Prev</a> </li>
+            <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()"> <a href ng-bind="n + 1">1</a> </li>
+            <li ng-class="{disabled: currentPage == pagedItems.length - 1}"> <a href ng-click="nextPage()">Next »</a> </li>
+         </ul>
+      </div>
+      </div>
+      </div>
+   </body>
+   <script type="text/ng-template" id="tempestForm">
+      <form class="tempestclassForm">
+      	<h2>Tempest Details for {{siteName}}</h2>
+      	<label style="width:30%;"> OS Username :</label>
+      	<input type="text" placeholder ="{{phosUsername}}" ng-model="osUsername" required/>
+      	<br>
+      	<label style="width:30%;"> OS Password :</label>
+      	<input type="text" placeholder="{{phosPassword}}" ng-model="osPassword" required/>
+      	<br>
+      	<label style="width:30%;">OS Region Name :</label>
+      	<input type="text" placeholder="{{phosregionName}}" ng-model="osregionName" required/>
+      	<br>
+      	<label style="width:30%;">Namespace :</label>
+      	<input type="text" placeholder="{{phnameSpace}}" ng-model="nameSpace" required/>
+      	<br>
+      	<br>
+      	<button style="margin-left:40%" class="akrbutton" ng-click="cancel()">Close</button>
+      	<button class="akrbutton" ng-click="submit()" ng-disabled="disable">Save</button>
+      </form>
+   </script>
+</html>
+

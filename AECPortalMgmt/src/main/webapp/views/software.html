@@ -1,0 +1,92 @@
+<!--
+Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+   <head>
+   </head>
+   <body ng-controller="AECSoftwareController">
+      <div id="akrainosoftwarecontent" style="padding-left:20px;padding-right:20px">
+         <div>
+            <h1>Akraino Software
+            </h1>
+         </div>
+         <label>Site Name:
+         </label>
+         <div class="select-style">
+            <select class ="example"  ng-model="selectSoftwareBlueprint"  ng-init="selectSoftwareBlueprint=softwareSiteName[0]" ng-change="showBlueprintTable()()" ng-options="site for site in softwareSiteName">
+            </select>
+           
+         </div>
+         <h3>Global Configuration </h3>
+         <div id="softwareTable" ng-show ="showsoftwareTable" style="padding-bottom:1px; padding-top:30px">
+            <table cellspacing="0" cellpadding="0" class="softwareTable">
+            <tbody>
+               <tr>
+                  <th>Node(host)</th>
+                  <th>Node Type&nbsp;</th>
+                  
+                  <th>H/W Model&nbsp;</th>
+                  
+               </tr>
+               <tr class="border_bottom" ng-repeat ="software in softwareDetails  ">
+                  <td style="padding-left:10px;font-size: 15px;cursor: pointer;"><a ng-click="showSoftwarePopup($index)">{{ software.nodeName}}</a></td>
+                  <td style="padding-left:10px;font-size: 15px;">{{ software.nodeType}}</td>
+                  
+                  <td style="padding-left:10px;font-size: 15px;">{{software.hwModel}}</td>
+                  
+               </tr>
+            </tbody>
+            <table>
+         </div>
+      </div>
+   </body>
+   <script type="text/ng-template" id="softwaretemplateForm">
+      <form class="softwareForm">
+      <h2>Node: {{displaySiteName}} - Add Software</h2>
+       <label style="width:30%;"> Site Build Name : {{displaysoftwareSiteName}}</label>
+                   <br>
+      </form>
+      <table class ="popUpTable">
+      <tr>
+      <th style="width:8%"></th>
+      <th style="width:23%">Name</th>
+      <th style="width:23%">Version</th>
+      <th style="width:23%">Install Date</th>
+      <th style="width:23%">Operational Status</th>
+      </tr>
+      <tr>
+      <td style="text-align: center;" ><input value="Openstack" type="radio" name=""></td>
+      <td style="padding-left:10px;font-size: 15px;">Openstack</td>
+      <td style="padding-left:10px;font-size: 15px;">Newton</td>
+      <td style="padding-left:10px;font-size: 15px;">6/6/2018</td>
+      <td style="padding-left:10px;font-size: 15px;">Active</td>
+      </tr>
+      <tr>
+      <td  style="text-align: center;"><input value="Kubernetes" type="radio" name=""></td>
+      <td style="padding-left:10px;font-size: 15px;">Kubernetes</td>
+      <td style="padding-left:10px;font-size: 15px;">V1.10</td>
+      <td style="padding-left:10px;font-size: 15px;">6/6/2018</td>
+      <td style="padding-left:10px;font-size: 15px;">Active</td>
+      </tr>
+      </table>
+      <button style="margin-left:40%" class="akrbutton" ng-click="cancel()">Close</button>
+                   <button class="akrbutton" >Add</button>
+   </script>
+</html>
+
