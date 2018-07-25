@@ -1,0 +1,49 @@
+[    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "HP",
+        "hwModel": "Gen 10"
+    },
+     {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Sample VNF (vCDN)",
+        "hwModel": ""
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "ONAP Amsterdam",
+        "hwModel": ""
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "OpenStack (Ocata)",
+        "hwModel": ""
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Calico",
+        "hwModel": "2.6.5"
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "(SDS)Ceph",
+        "hwModel": "10.2.7"
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Kubernetes",
+        "hwModel": "v1.10.2"
+    },
+    {   
+       "nodeName": "192.168.2.41",
+        "nodeType": "OVS (OpenVSwitch)",
+        "hwModel": ""
+        
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Ubuntu (OS)",
+        "hwModel": "16.04"
+    }
+
+    
+]

@@ -51,7 +51,8 @@ public class SessionManagerFilter implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object data) throws Exception {
 		
 		try { 
-			if (StringUtil.notEmpty(req.getHeader("tokenId"))) {
+			return true;
+			/*if (StringUtil.notEmpty(req.getHeader("tokenId"))) {
 				
 				String clientToken = req.getHeader("tokenId");
 				
@@ -77,7 +78,7 @@ public class SessionManagerFilter implements HandlerInterceptor {
 			} else {
 				// bad request, no authToken sent in the request
 				res.sendError(400);
-			}
+			}*/
 		} catch (Exception e) {
 				logger.error(e);
 			}

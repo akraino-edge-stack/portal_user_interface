@@ -1,0 +1,46 @@
+[
+   {
+      "name":"Rover",
+      "pod":{
+         "name":"RoverPod",
+         "racks":[
+            {
+               "name":"SingleNode",
+               "type":"Control,Compute,Storage,Network",
+               "nodes":[
+                  {
+                     "name":"SingleNodeServer",
+                     "type":"Control,Compute,Storage,Network",
+                     "softwares":[
+                        {
+                           "name":"Container",
+                           "type":"Kubernetes",
+                           "version":"v1.10.2"
+                        },
+                        {
+                           "name":"Network",
+                           "type":"OVS",
+                           "version":"OpenVSwitch"
+                        },
+                        {
+                           "name":"OS",
+                           "type":"Ubuntu",
+                           "version":"16.04"
+                        }
+                        
+                     ],
+                     "hardwares":[
+                        {
+                           "name":"Dell",
+                           "type":"Dell 45"
+                        }
+                     ],
+                     "$$hashKey":"object:12"
+                  }
+               ]
+            }
+         ]
+      },
+      "$$hashKey":"object:10"
+   }
+]

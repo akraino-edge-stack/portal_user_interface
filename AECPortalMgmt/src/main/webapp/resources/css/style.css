@@ -309,8 +309,8 @@ sidebar-nav > .sidebar-brand {
 }
  table {
      border-collapse: collapse;
-     width: 100%;
-}
+     width: 100%;}
+
  .siteStatusTable th {
      padding: 10px;
      text-align: left;
@@ -346,12 +346,22 @@ sidebar-nav > .sidebar-brand {
 
 
 .shardwareTable th {
-     padding: 10px;
+     padding: 5px;
      text-align: left;
      background-color: #cccccc;
      border: 1px solid #ddd;
 }
  .shardwareTable td {
+     padding-top: 3px;
+     padding-bottom:3px;
+}
+.rackTable th {
+     padding: 10px;
+     text-align: left;
+     background-color: #cccccc;
+     border: 1px solid #ddd;
+}
+ .rackTable td {
      padding-top: 5px;
      padding-bottom:5px;
 }
@@ -387,7 +397,7 @@ sidebar-nav > .sidebar-brand {
      padding-top: 5px;
      padding-bottom:5px;
 }
- .pagination {
+/*.pagination {
      display: inline-block;
      float:right;
 }
@@ -404,7 +414,7 @@ sidebar-nav > .sidebar-brand {
      background-color: #DCDCDC;
      color: white;
      border: 1px solid #ddd;
-}
+}*/
  button:disabled {
      background: #dddddd;
 }
@@ -513,6 +523,26 @@ sidebar-nav > .sidebar-brand {
      margin-bottom: 3px;
      resize: vertical;
 }
+.podForm input[type=text], select, textarea {
+     width: 40%;
+     padding: 3px;
+     border: 0.5px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     margin-top: 3px;
+     margin-bottom: 3px;
+     resize: vertical;
+}
+.uploadForm input[type=text], select, textarea {
+     width: 40%;
+     padding: 3px;
+     border: 0.5px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     margin-top: 3px;
+     margin-bottom: 3px;
+     resize: vertical;
+}
 .vnfForm input[type=text], select, textarea {
      width: 40%;
      padding: 3px;
@@ -555,4 +585,11 @@ sidebar-nav > .sidebar-brand {
 	display:inline-block;
 	bottom:0;
 	 width: 250px;
+}
+.borderFrame{
+	margin-top:2px;
+	border:2px solid #cdcdcd;
+	/*border-radius: 0.1px;
+	/*-moz-border-radius: 0.1px;
+	-webkit-border-radius:0.1px;*/
 }

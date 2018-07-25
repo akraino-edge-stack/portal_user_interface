@@ -23,6 +23,24 @@ limitations under the License.
          a.focus:visited {
          color: blue;
          }
+         .pagination {
+     display: inline-block;
+     float:right;
+}
+ .pagination li {
+     list-style-type:none;
+     color: white;
+     float: left;
+     padding: 8px 16px;
+     text-decoration: none;
+     transition: background-color .3s;
+     border: 1px solid #ddd;
+}
+ .pagination li.active {
+     background-color: #DCDCDC;
+     color: white;
+     border: 1px solid #ddd;
+}
       </style>
    </head>
    <body ng-controller="AECaddOnsController">

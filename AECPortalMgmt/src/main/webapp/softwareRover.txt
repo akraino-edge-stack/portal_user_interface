@@ -1,0 +1,19 @@
+[ 
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Kubernetes",
+        "hwModel": "v1.10.2"
+    },
+    {   
+       "nodeName": "192.168.2.41",
+        "nodeType": "OVS (OpenVSwitch)",
+        "hwModel": ""
+        
+    },
+    {
+        "nodeName": "192.168.2.41",
+        "nodeType": "Ubuntu (OS)",
+        "hwModel": "16.04"
+    }
+    
+]

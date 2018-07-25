@@ -23,6 +23,27 @@ limitations under the License.
          .formfield * {
          vertical-align: top;
          }
+         .pagination {
+     display: inline-block;
+     float:right;
+}
+ .pagination li {
+     list-style-type:none;
+     color: white;
+     float: left;
+     padding: 8px 16px;
+     text-decoration: none;
+     transition: background-color .3s;
+     border: 1px solid #ddd;
+}
+ .pagination li.active {
+     background-color: #DCDCDC;
+     color: white;
+     border: 1px solid #ddd;
+}
+input[type="file"] {
+display:inline-block;
+}
       </style>
    </head>
    <body ng-controller="sites">
@@ -55,7 +76,7 @@ limitations under the License.
                         </a>
                         <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="sites[hostIndex].blueprintType != 'Unicycle'" ng-click="buildEdgeSite(hostIndex)" >Build 
                         </button>
-                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled="((sites[hostIndex].buildStatus == 'build complete' || sites[hostIndex].blueprintType == 'Rover') && sites[hostIndex].blueprintType != '')? false : true" ng-click="deployEdgeSite(hostIndex)">Deploy
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!(sites[hostIndex].fileUploadStatus == 'Completed')" ng-click="deployEdgeSite(hostIndex)">Deploy
                         </button> 
                         <button class="refreshbutton" style="margin-left:5px;"  ng-disabled="sites[hostIndex].deployStatus != 'Completed'" ng-click="vnfOnboard(hostIndex)">VNF Onboard
                         </button> 
@@ -83,7 +104,7 @@ limitations under the License.
                   </th>
                </tr>
                <tr class="border_bottom" ng-repeat="site in pagedItems[currentPage] | orderBy:sortingOrder:reverse | filter:q">
-                  <td style="text-align: center;width:8%;">
+                  <td style="text-align: center;width:5%;">
                      <form>
                      <input   type="radio"
                         ng-model="$parent.selection"
@@ -93,21 +114,23 @@ limitations under the License.
                   </td>
                   <td  style="padding-left:10px;font-size: 15px;width:18.4%;">{{ site.regionName }}
                   </td>
-                  <td style="width:18.4%;">
+                  <td style="width:19%;">
                      <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model ="selectedSites" ng-click ="loadSitePopup($index)">{{ site.edgeSiteName }}
                      </a>
+                      
+                      <label>{{site.fileUploadMessage}}</label>
                   </td>
-                   <td style="width:18.4%;padding-left:10px;">
-                   <select style="width:150px;" ng-model="site.blueprintType"  ng-init="site.blueprintType=''" class="exampleTable" ng-change ="callblueprint(hostIndex)" required>
+                   <td style="width:19%;padding-left:10px;">
+                   <select style="width:130px;" ng-model="site.blueprintType"  ng-init="site.blueprintType=''" class="exampleTable" ng-change ="callblueprint(hostIndex)" required>
             			<option value="">Select Blueprint</option>
             			<option value="Rover">Rover</option>
-            			<option value="Unicycle">Unicycle</option>
+            			<!-- - <option value="Unicycle">Unicycle</option>
             			<option value="Tricycle">Tricycle</option>
-            			<option value="Cruiser">Cruiser</option>
+            			<option value="Cruiser">Cruiser</option>--->
           		  </select> 
-                    
+                   <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && (site.blueprintType == 'Rover'))" ng-click ="uploadFile(hostIndex)">Upload</button>
                   </td>
-                  <td style="width:18.4%;">     
+                  <td style="width:19%;">     
                      <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.buildStatus ? site.buildStatus : 'Not started'}}
                      </label>
                      <a href="#" ng-click="viewYamlBuildFile($index)">
@@ -115,7 +138,7 @@ limitations under the License.
                      </i>
                      </a>
                   </td>
-                  <td style="width:18.4%;">
+                  <td style="width:19%;">
                   <!---
                      <div ng-if ="site.edgeSiteDeployCreateTarStatus==null || site.edgeSiteDeployGenesisNodeStatus==null || site.edgeSiteDeployToolStatus ==null">
                         <label style="font-size: 15px;font-style: italic;padding-left:10px;" > Not started
@@ -205,8 +228,26 @@ limitations under the License.
             <label style="width:30%;" for="textarea">Heat Template File: </label>
         <textarea style="width:500px;" id="textarea" rows="5" disabled>{{heattemplateoutput}}</textarea></p>
             <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
-       <button  class="akrbutton" ng-click="onBoard()">Onboard</button>
+       <button  class="akrbutton" ng-click="onBoard($parent.hostIndex)">Onboard</button>
       </form>
+   </script>
+   <script type="text/ng-template" id="siteUploadForm">
+   <form class="uploadForm">
+      <h1>Input Details:</h1><br>
+     <label style="width:30%;"> Site Ipaddress: </label>
+      <input type="text" placeholder ="" ng-model="siteIPaddress"/> <br>
+      <label style="width:30%;"> Site Username: </label>
+      <input type="text" placeholder ="" ng-model="siteUsername"/> <br>
+      <label style="width:30%;"> Site Password: </label>
+
+      <input type="text" placeholder ="" ng-model="sitePassword"/> <br>
+ <label style="width:30%;">Input File: </label>
+   <input type="file" name="Input File" accept="**" ngf-select ng-model="file"/> 
+ <br>
+
+        <button style="margin-left:45%" class="refreshbutton" ng-click="cancel()">Close</button>
+       <button  class="refreshbutton" ng-click="upload($parent.hostIndex,file)">Submit</button>
+   </form>
    </script>
 </html>
 

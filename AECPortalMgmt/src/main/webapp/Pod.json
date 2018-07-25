@@ -1,0 +1,9 @@
+[{"name":"pod1",
+	"racks":[{"name":"rack1",
+	"type":"compute"}]
+  },
+  {"name":"pod2",
+	"racks":[{"name":"rack2",
+	"type":"compute"}]
+  }
+]

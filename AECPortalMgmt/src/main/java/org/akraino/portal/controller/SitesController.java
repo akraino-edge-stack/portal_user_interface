@@ -34,11 +34,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/edgeSites")
@@ -111,6 +114,43 @@ public class SitesController {
 	    return new ResponseEntity<WFEBuildSiteReponse>(response, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file, @ModelAttribute("siteName") String siteName,
+			@ModelAttribute("blueprint") String blueprint, @ModelAttribute("edgeSiteIP") String edgeSiteIP, 
+			@ModelAttribute("edgeSiteUser") String edgeSiteUser, @ModelAttribute("edgeSitePwd") String edgeSitePwd) {
+		AkrainoSiteService akrainoSiteService = new AkrainoSiteService(); 
+		SiteStatusResponse response = new SiteStatusResponse();
+		
+		SiteStatusRequest siteRequest = new SiteStatusRequest();
+		
+		siteRequest.setSiteName(siteName);
+		siteRequest.setBlueprint(blueprint);
+		siteRequest.setEdgeSiteIP(edgeSiteIP);
+		siteRequest.setEdgeSiteUser(edgeSiteUser);
+		siteRequest.setEdgeSitePwd(edgeSitePwd);
+		
+		 try {
+		    	boolean copyStatus = akrainoSiteService.saveAndCopyInput(file.getBytes(), siteRequest);
+		    	if(copyStatus) {
+		    		response.setStatusCode("200");
+		    		response.setMessage("Input file copied successfully");
+		    	} else {
+		    		response.setStatusCode("406");
+		    		response.setMessage("Input file copy failed");
+		    	}
+		    	
+		    	
+			} catch (Exception e) {
+				response.setStatusCode("406");
+				response.setMessage(e.getMessage());
+			}
+		   
+		    
+		    return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+		
+	}
+	
 	@RequestMapping(value = "/status", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> updateSiteStatus(@RequestBody SiteStatusRequest statusRequest) {
@@ -132,8 +172,6 @@ public class SitesController {
 		} catch (ClassNotFoundException | SQLException e) {
 			response.setStatusCode("406");
 			response.setMessage(e.getMessage());
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	   
 	    
