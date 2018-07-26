@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cbecfd7_e74160e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "what blueprint?  Need to reference it somewhere",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4543e52e_1242f038",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/SessionManagerFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "Remove ALL spaces and tabs at end of lines.  LF is picky about this.",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90948c1f_4e25827d",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/PodController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "remove spaces at end of lines",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f9d312a_7226b0ab",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/dao/GetEdgeSitesDAO.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "remove spaces",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecf9e722_fe84e2ee",
+        "filename": "AECPortalMgmt/src/main/webapp/Pod.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "Add copyright message",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "264556d5_a846a618",
+        "filename": "AECPortalMgmt/src/main/webapp/blueprint.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19c9875_f2e0fa80",
+        "filename": "AECPortalMgmt/src/main/webapp/blueprintRover.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63cfe992_940649d1",
+        "filename": "AECPortalMgmt/src/main/webapp/blueprintUnicycle.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55910429_2c05d25a",
+        "filename": "AECPortalMgmt/src/main/webapp/softwareRover.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123d4398_cb8aa4a7",
+        "filename": "AECPortalMgmt/src/main/webapp/softwareUnicycle.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbbde1d7_93872742",
+        "filename": "AECPortalMgmt/src/main/webapp/views/siteBuilds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-26T14:37:13Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "4db926bfc5a325520f29994a327f610baa4bdbe5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
