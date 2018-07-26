@@ -17,7 +17,7 @@ limitations under the License.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.aecportal</groupId>
+  <groupId>com.akraino</groupId>
   <artifactId>AECPortalMgmt</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
@@ -28,9 +28,9 @@ limitations under the License.
 		<org.springframework-version>4.3.0.RELEASE</org.springframework-version>
 		<org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
 		<jackson.library>2.7.5</jackson.library>
-	</properties>
+  </properties>
 
-<repositories>
+  <repositories>
     <repository>
         <id>central</id>
         <name>Central Repository</name>
@@ -40,7 +40,7 @@ limitations under the License.
             <enabled>false</enabled>
         </snapshots>
     </repository>
-</repositories>
+  </repositories>
   <pluginRepositories>
     <pluginRepository>
       <id>central</id>
@@ -54,10 +54,10 @@ limitations under the License.
         <updatePolicy>never</updatePolicy>
       </releases>
     </pluginRepository>
-  </pluginRepositories> 
+  </pluginRepositories>
 
   <dependencies>
-    <dependency>
+		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -68,7 +68,7 @@ limitations under the License.
 		  <artifactId>commons-codec</artifactId>
 		  <version>1.11</version>
 		</dependency>
-    <dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
@@ -130,7 +130,6 @@ limitations under the License.
 		    <artifactId>postgresql</artifactId>
 		    <version>42.2.2</version>
 		</dependency>
-        
   </dependencies>
   <build>
     <finalName>AECPortalMgmt</finalName>
@@ -157,7 +156,5 @@ limitations under the License.
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		
-		
   </build>
 </project>
