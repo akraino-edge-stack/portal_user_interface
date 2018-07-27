@@ -25,6 +25,10 @@ public class EdgeSite {
 	String inputFile;
 	String regionName;
 	
+	String edgeSiteIP;
+	String edgeSiteUser;
+	String edgeSitePwd;
+	
 	Date buildDate;
 	
 	Date deployDate;
@@ -33,6 +37,7 @@ public class EdgeSite {
 	String onapStatus;
 	String tempestStatus;
 	String vCDNStatus;
+	String blueprint;
 	
 	String outputYaml1;
 	String outputYaml2;
@@ -56,6 +61,12 @@ public class EdgeSite {
 	String outputYaml20;
 	String outputYaml21;
 	
+	public String getBlueprint() {
+		return blueprint;
+	}
+	public void setBlueprint(String blueprint) {
+		this.blueprint = blueprint;
+	}
 	public Date getBuildDate() {
 		return buildDate;
 	}
@@ -273,6 +284,25 @@ public class EdgeSite {
 	}
 	public void setvCDNStatus(String vCDNStatus) {
 		this.vCDNStatus = vCDNStatus;
+	}
+
+	public String getEdgeSiteIP() {
+		return edgeSiteIP;
+	}
+	public void setEdgeSiteIP(String edgeSiteIP) {
+		this.edgeSiteIP = edgeSiteIP;
+	}
+	public String getEdgeSiteUser() {
+		return edgeSiteUser;
+	}
+	public void setEdgeSiteUser(String edgeSiteUser) {
+		this.edgeSiteUser = edgeSiteUser;
+	}
+	public String getEdgeSitePwd() {
+		return edgeSitePwd;
+	}
+	public void setEdgeSitePwd(String edgeSitePwd) {
+		this.edgeSitePwd = edgeSitePwd;
 	}
 
 

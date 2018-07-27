@@ -119,28 +119,40 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         }
     }
     $scope.tempestUpdate = function(index) {
-        $scope.siteIndex = index;
+    	if($scope.itemsPerPage > 6){
+    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+    	        console.log($scope.rowIndex);
+    	        $scope.siteIndex  = $scope.rowIndex;
+    	    	}
+    	    	else{
+    	    		$scope.siteIndex = index;
+    	    	}
+    	//$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+       // $scope.siteIndex = index;
         $scope.tempestSelectButton = false;
+        console.log($scope.siteIndex);
     }
     $scope.runTempest = function(siteIndex) {
+    	console.log(siteIndex);
     	$scope.tempestSites[siteIndex].tempestStatus = 'In Progress...';
         $http({
      method: 'POST',
      url: 'http://'+camundaUrl+'/tempest/',
      data: {
-        "remoteserver": "192.168.2.45",
-        "username":"root", 
-        "password":"akraino,d" , 
+    	 "sitename": $scope.tempestSites[siteIndex].edgeSiteName,
+        "remoteserver": $scope.tempestSites[siteIndex].edgeSiteIP,
+        "username":$scope.tempestSites[siteIndex].edgeSiteUser,
+        "password":$scope.tempestSites[siteIndex].edgeSitePwd,
         "portnumber": 22 ,
-        "srcdir": "/opt/tempest", 
-        "destdir": "/opt/tempest/test_automation/openstack_tempest", 
+        "srcdir": "/opt/akraino/test_automation", 
+        "destdir": "/opt/openstack_tempest", 
         "filename":"test_run.sh", 
         "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_PASSWORD=password", 
         "deploymentverifier":"test_status.sh",
-        "verifierparams":"TIMEOUT=1600", 
+        "verifierparams":"TIMEOUT=900", 
         "noofiterations":0,
         "waittime":15,
-        "filetrasferscript":"/opt/tempest/mv.sh"
+        "filetrasferscript":"/opt/akraino/test_automation/mv.sh"
      },
      headers: {
          'Content-Type': "application/json",
@@ -159,6 +171,14 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     });
 }
     $scope.opentempestDialog = function(index) {
+    	if($scope.itemsPerPage > 6){
+    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+    	        console.log($scope.rowIndex);
+    	        index  = $scope.rowIndex;
+    	    	}
+    	    	else{
+    	    		index = index;
+    	    	}
         $scope.siteName = $scope.tempestSites[index].edgeSiteName;
         $scope.osUsername = "admin";
         $scope.osPassword = "password";

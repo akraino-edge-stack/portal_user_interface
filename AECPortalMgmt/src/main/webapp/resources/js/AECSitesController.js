@@ -30,16 +30,37 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     $scope.currentPage = 0;
     $scope.selectionButton = true;
     $scope.size = 10;
+    $scope.fileUploadStatus ="";
     $scope.tokenId = localStorage.getItem("tokenId");
     $controller('commonController', { $scope: $scope }); 
     $scope.update = function(hostIndex) {
-        //console.log(hostIndex)
+    	if($scope.itemsPerPage > 6){
+    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+hostIndex+1;
+        console.log($scope.rowIndex);
+        $scope.hostIndex = $scope.rowIndex;
+    	}
+    	else{
         $scope.hostIndex = hostIndex;
+    	}
         $scope.selectionButton = false;
+        $scope.sites[$scope.hostIndex].selection = true;
+        console.log($scope.sites[$scope.hostIndex].selection);
         
     }
     $scope.callblueprint=function(index){
+    	$scope.sites[index].blueprintType = 'Rover';
     	//console.log($scope.sites[index].blueprintType);
+    }
+    $scope.uploadFile = function(index){
+    	ngDialog.open({
+            scope: $scope,
+            template: 'siteUploadForm',
+            closeByDocument: false,
+            controller: 'PopUpUploadController',
+            appendClassName: 'ngdialog-custom',
+            width: '800px'
+        });
+    	
     }
     $scope.loadSitePopup = function(index) {
         $scope.selectedSites = $scope.sites[index].edgeSiteName;
@@ -125,7 +146,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     $scope.setPage = function() {
         $scope.currentPage = this.n;
     }
-    allSitesDisplay = function() {
+    var allSitesDisplay = function() {
         $http({
             method: 'GET',
             url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
@@ -197,40 +218,69 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         	
         });
     }
+    $scope.airshipDeploy = function(index){
+    	$http({
+	            method: 'POST',
+	            url: 'http://'+camundaUrl+'/airship/',
+	            data: {
+	            	 "sitename": $scope.sites[index].edgeSiteName,
+	            	 "filepath":"/opt/akraino/redfish/install_server_os.sh ", 
+	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/"+ $scope.sites[index].edgeSiteName + " --no-confirm", 
+	            	 "winscpdir": "/opt", 
+	            	 "winscpfilepath": "nare.sh", 
+	            	 "remotserver":$scope.sites[index].edgeSiteIP,
+	            	 "port": 22,
+	            	 "username": $scope.sites[index].edgeSiteUser,
+	            	 "password":$scope.sites[index].edgeSitePwd,
+	            	 "destdir":"/opt ",
+	            	 "remotefilename": "akraino_airship_deploy.sh"
+	            	},
+	            headers: {
+	                'Content-Type': "application/json",
+	                'Accept': "application/json",
+	            }
+	        }).then(function(response) {
+	            if (response.data.status == '200') {
+	                $scope.sites[index].deployStatus = 'Completed';
+	            } else {
+	                $scope.sites[index].deployStatus = response.data.message;
+	            }
+	        }, function(error) {
+	        	$scope.sites[index].deployStatus = 'Deploy error';
+	        });
+    }
     $scope.deployEdgeSite = function(index) {
     	console.log($scope.sites[index].blueprintType);
     	if($scope.sites[index].blueprintType == 'Rover'){
     		
     		 $scope.sites[index].deployStatus = 'In Progress...';
-    		 $http({
+    		 $scope.airshipDeploy(index);
+    		 /*$http({
     	            method: 'POST',
-    	            url: 'http://'+camundaUrl+'/airship/',
+    	            url: 'http://'+hostUrl+'/AECPortalMgmt/copyinput',
     	            data: {
-    	            	"filepath":"/opt/akraino/redfish/install_server_os.sh ", 
-    	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/node41rc --no-confirm", 
-    	            	 "winscpdir": "/opt", 
-    	            	 "winscpfilepath": "nare.sh", 
-    	            	 "remotserver":"192.168.2.41",
-    	            	 "port": 22,
-    	            	 "username": "root",
-    	            	 "password":"akraino,d" ,
-    	            	 "destdir":"/opt ",
-    	            	 "remotefilename": "akraino_airship_deploy.sh"
-    	            	},
+    	                "siteName":$scope.sites[index].edgeSiteName,
+    	                "blueprint":$scope.sites[index].blueprint
+    	                
+    	            },
     	            headers: {
     	                'Content-Type': "application/json",
     	                'Accept': "application/json",
+    	                'tokenId' : $scope.tokenId
     	            }
     	        }).then(function(response) {
-    	            if (response.data.status == '200') {
-    	                $scope.sites[index].deployStatus = 'Completed';
-    	            } else {
-    	                $scope.sites[index].deployStatus = response.data.message;
-    	            }
+    	        	if (response.data.status == '200') {
+    	        		
+    	        		
+    	            } 
+    	        	else{
+    	        		$scope.sites[index].deployStatus = 'Deploy error';	
+    	        	}
     	        }, function(error) {
-    	        	$scope.sites[index].deployStatus = 'Deploy error';
-    	        });
-    	
+    	        	$scope.errorHandle(error);
+    	        });*/
+    		 
+ 	
     	}
     	else{
         $scope.sites[index].deployStatus = 'In Progress...';
@@ -357,18 +407,19 @@ angular.module('PortalManagement').controller('PopUpSiteController', function($s
         $scope.closeThisDialog();
     };
 });
-angular.module('PortalManagement').controller('PopUpvnfController', function($scope,$http, ngDialog,$localStorage) {
+angular.module('PortalManagement').controller('PopUpvnfController', function($scope,$http, ngDialog,$localStorage,camundaUrl) {
 	$scope.callreadVnf = function(){
 	$scope.$parent.readHeatTemplate($scope.vnfType);
 	}
-	$scope.onBoard = function(){
+	$scope.onBoard = function(index){
         $http({
      method: 'POST',
      url: 'http://'+camundaUrl+'/apache/',
      data: {
-         "remoteserver": "192.168.2.45",
-         "username": "root",
-         "password": "akraino,d",
+    	 "sitename": $scope.sites[index].edgeSiteName,
+         "remoteserver": $scope.sites[index].edgeSiteIP,
+         "username": $scope.sites[index].edgeSiteUser,
+         "password": $scope.sites[index].edgeSitePwd,
          "portnumber": 22,
          "srcdir": "/tmp/tempest",
          "destdir": "/tmp/ats-demo-back",
@@ -388,8 +439,43 @@ angular.module('PortalManagement').controller('PopUpvnfController', function($sc
 	            } 
 	        }, function(error) { 
 	        });
+        $scope.closeThisDialog('cancel');
 	}
 	$scope.cancel = function() {
         $scope.closeThisDialog();
     };
+});
+angular.module('PortalManagement').controller('PopUpUploadController', function($scope,$http, ngDialog,$localStorage,hostUrl,Upload) {
+	$scope.upload = function(index,file){
+				
+		file.upload = Upload.upload({
+			url:'http://'+hostUrl+'/AECPortalMgmt/edgeSites/upload',
+			method:'POST',
+			file:file,
+			data:{
+				"siteName" :$scope.sites[index].edgeSiteName,
+                "blueprint":$scope.sites[index].blueprintType,
+                "edgeSiteIP": $scope.siteIPaddress,
+               
+                "edgeSiteUser":$scope.siteUsername,
+                "edgeSitePwd":$scope.sitePassword
+            	
+            },
+            headers: {'Content-Type': undefined}
+		}).then(function(response){
+			if(response.data.statusCode == '200'){
+			$scope.sites[index].fileUploadMessage = "File uploaded,successfully.";
+			$scope.sites[index].fileUploadStatus = "Completed";
+			console.log(response.statusCode);
+			}
+		},function(response){
+			console.log(response);
+		});
+		 $scope.closeThisDialog('cancel');
+		 
+	}
+	$scope.cancel = function() {
+        $scope.closeThisDialog();
+    };
+
 });

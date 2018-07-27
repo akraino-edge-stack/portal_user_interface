@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-angular.module('PortalManagement').controller('AECSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller) {
-    $scope.softwareSiteNameDetail = localStorage.getItem("accessSiteName");
+angular.module('PortalManagement').controller('AECSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller,hostUrl) {
+	$scope.NodeName ="Site Ipaddress";
+	$scope.NodeType ="Software Name";
+	$scope.Model ="Version";
+	$scope.softwareSiteNameDetail = localStorage.getItem("accessSiteName");
     if ($scope.softwareSiteNameDetail != null) {
         $scope.softwareSiteReplace = "Rover,Unicycle," + $scope.softwareSiteNameDetail.replace("null,", "");
     } else {
@@ -23,16 +26,48 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
     $scope.softwareSiteName = new Array();
     $scope.softwareSiteName = $scope.softwareSiteReplace.split(",");
     console.log($scope.softwareSiteName);
-
+    
     $controller('commonController', {
         $scope: $scope
     });
     $scope.showBlueprintTable = function() {
         if ($scope.selectSoftwareBlueprint == 'Rover') {
+        	$scope.NodeName ="Site Ipaddress";
+        	$scope.NodeType ="Software Name";
+        	$scope.Model ="Version";
+        	$http({
+                method: 'GET',
+                url: 'http://' + hostUrl + '/AECPortalMgmt/softwareRover.txt',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Accept': "application/json"
+                }
+            }).then(function(response) {
+            	 $scope.softwareDetails  = response.data;
+            	 $scope.showsoftwareTable = true;
+            }, function(error) {});
 
         } else if ($scope.selectSoftwareBlueprint == 'Unicycle') {
+        	$scope.NodeName ="Site Ipaddress";
+        	$scope.NodeType ="Software Name";
+        	$scope.Model ="Version";
+        	$http({
+                method: 'GET',
+                url: 'http://' + hostUrl + '/AECPortalMgmt/softwareUnicycle.txt',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Accept': "application/json"
+                }
+            }).then(function(response) {
+            	$scope.softwareDetails  = response.data;
+           	 $scope.showsoftwareTable = true;
+            }, function(error) {});
+
 
         } else {
+        	$scope.NodeName ="Node(host)";
+        	$scope.NodeType ="Node Type";
+        	$scope.Model ="H/W Model";
             console.log(localStorage.getItem($scope.selectSoftwareBlueprint));
             $scope.softwareDetails = $scope.$eval(localStorage.getItem($scope.selectSoftwareBlueprint));
             $scope.showsoftwareTable = true;
@@ -49,6 +84,20 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
             width: '800px'
         });
     }
+    $http({
+        method: 'GET',
+        url: 'http://' + hostUrl + '/AECPortalMgmt/blueprint.json',
+        headers: {
+            'Content-Type': "application/json",
+            'Accept': "application/json"
+        }
+    }).then(function(response) {
+    	 $scope.softwareDetails  = response.data;
+    	 console.log($scope.softwareDetails );
+    	 $scope.showsoftwareTable = true;
+    }, function(error) {});
+
+    
 });
 angular.module('PortalManagement').controller('PopUpSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller) {
     $scope.displaysoftwareSiteName = $scope.$parent.selectSoftwareBlueprint;

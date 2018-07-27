@@ -22,10 +22,10 @@ limitations under the License.
    <body ng-controller="AECHardwareController">
       <div id="akrainohardwarecontent" style="padding-left:20px;padding-right:20px">
          <div>
-            <h1>Akraino Hardware
+            <h1>Hardware List
             </h1>
          </div>
-         <label>Select POD:
+        <!-- -  <label>Select POD:
          </label>
          <div class="select-style">
             <select class ="example"  ng-model="selectedBlueprint"  ng-init="selectedBlueprint=blueprints[0]" ng-change="selectedBluePrintChange()" ng-options="blueprint.name for blueprint in blueprints">
@@ -50,32 +50,32 @@ limitations under the License.
                   </button>
                </div>
             </div>
-         </form>
-         <div id="hardwareTable" ng-show ="showHardwareTable" style="padding-bottom:1px; padding-top:30px">
-            <table cellspacing="0" cellpadding="0" class="shardwareTable">
+         </form>-->
+         <div id="hardwareTable"  style="padding-bottom:1px; padding-top:30px;width:50%">
+            <table cellspacing="0" cellpadding="0" class="shardwareTable" >
             <tbody>
                <tr>
-                  <th>Node(host)</th>
-                  <th>Node Type&nbsp;</th>
+                 
+                  <th>Hardware Name&nbsp;</th>
                   
-                  <th>H/W Model&nbsp;</th>
+                  <th>Hardware Type&nbsp;</th>
                   
                </tr>
-               <tr class="border_bottom" ng-repeat ="hardware in hardwareDetails  ">
-                  <td style="padding-left:10px;font-size: 15px;">{{ hardware.nodeName}}</td>
-                  <td style="padding-left:10px;font-size: 15px;">{{ hardware.nodeType}}</td>
+               <tr class="border_bottom">
+                
+                  <td style="padding-left:10px;font-size: 15px;width:50%">Dell</td>
                  
-                  <td style="padding-left:10px;font-size: 15px;">{{hardware.hwModel}}</td>
+                  <td style="padding-left:10px;font-size: 15px;width:50%">Dell 45</td>
                   
                </tr>
             </tbody>
             <table>
          </div>
          <br>
-         <button class="refreshbutton" style="float:right"   
+        <!-- -  <button class="refreshbutton" style="float:right"   
             ng-show ="showSaveButton" ng-click="saveNodes();" >Save
          </button>
-      </div>
+      </div>-->
    </body>
    <script type="text/ng-template" id="hardwaretemplateForm">
       <form class="hardwareForm">
