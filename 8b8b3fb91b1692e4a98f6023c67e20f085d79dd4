@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a40cee4_c3cda7f9",
+        "filename": "AECPortalMgmt/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:05:49Z",
+      "side": 1,
+      "message": "this needs to be org.akraino",
+      "revId": "8b8b3fb91b1692e4a98f6023c67e20f085d79dd4",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c386ea4_ae535f52",
+        "filename": "AECPortalMgmt/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:05:49Z",
+      "side": 1,
+      "message": "this needs to be portal_user_interface (the project name)",
+      "revId": "8b8b3fb91b1692e4a98f6023c67e20f085d79dd4",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "619d66c9_1ebec1aa",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:05:49Z",
+      "side": 1,
+      "message": "this needs to be org.akraino (LF reqt)",
+      "revId": "8b8b3fb91b1692e4a98f6023c67e20f085d79dd4",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53223af0_e366fff7",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:05:49Z",
+      "side": 1,
+      "message": "this needs to be portal_user_interface (LF reqt)",
+      "revId": "8b8b3fb91b1692e4a98f6023c67e20f085d79dd4",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
