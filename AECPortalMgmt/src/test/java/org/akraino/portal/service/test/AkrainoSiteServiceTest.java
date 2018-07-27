@@ -31,7 +31,9 @@ import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.data.EdgeSite;
 import org.akraino.portal.data.Onap;
 import org.akraino.portal.data.SiteStatusRequest;
+import org.akraino.portal.entity.Region;
 import org.akraino.portal.service.AkrainoSiteService;
+import org.akraino.portal.service.RegionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,26 +59,10 @@ public class AkrainoSiteServiceTest extends TestCase {
 		
 		try {
 			
-			akrainoService.getUserSession("akraino");
-			/*
-			//akrainoService.getYamlContent("Boston");
-			//akrainoService.getRegions();
-			//List<EdgeSite> sites = akrainoService.getSites(1);
-			//System.out.println("length-" + sites.size());
+			List<EdgeSite> sites = akrainoService.getSites(1);
 			
-			//List<Onap> oanps = akrainoService.getOnapForSite("Boston");
+			System.out.println("no. of sites" + sites.size());
 			
-			//System.out.println("size" + oanps.size());
-			
-			//SiteStatusRequest req = new SiteStatusRequest();
-			
-			//req.setSiteName("Houston");
-			//req.setBuildStatus("hurray");
-			//req.setCreateTarStatus("hurray too");
-			//int res = akrainoService.updateSiteStatus(req);
-			
-			//System.out.println("response-" + res);
-			*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

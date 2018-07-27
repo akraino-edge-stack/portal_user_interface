@@ -52,7 +52,10 @@ public class GetEdgeSitesDAO {
     		+ "edge_site.deploy_status, "
     		+ "edge_site.onap_status, "
     		+ "edge_site.tempest_status, "
-    		+ "edge_site.vcdn_status "
+    		+ "edge_site.vcdn_status, "
+    		+ "edge_site.edge_site_ip, "
+    		+ "edge_site.edge_site_user, "
+    		+ "edge_site.edge_site_pwd "
     				+ "FROM  akraino.edge_site edge_site, akraino.region region where edge_site.region_id = region.region_id \r\n";
     				
    private String getOnapSQL = "SELECT "
@@ -113,14 +116,17 @@ public class GetEdgeSitesDAO {
     
     private String updateUserSQL = "update akraino.usersession set token_id=? , crt_dt=? where login_id=?";
     		
-    private String updateEdgeSiteStatusSQL = "Update akraino.edge_site ";
+    private String updateEdgeSiteStatusSQL = "Update akraino.edge_site set upd_login_id = 'akraino'";
 	
+    private String updateEdgeSiteDetailsSQL = "Update akraino.edge_site set edge_site_ip =?, edge_site_user = ?, edge_site_pwd = ?, "
+    		+ "input_file = ?, edge_site_blueprint = ?"
+    		+ " where edge_site_name = ?";
     
 	public GetEdgeSitesDAO()
 	{
 		
 	}
-    public List <EdgeSite> getEdgeSites(int regionId) throws ClassNotFoundException, SQLException 
+    public List <EdgeSite> getEdgeSites(int regionId, String siteName) throws ClassNotFoundException, SQLException 
     {
     	//DBConnection dbConnection = DBConnection.getInstance();
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -128,16 +134,21 @@ public class GetEdgeSitesDAO {
 		if (regionId != 0) {
 			getEdgeSiteSQL += " AND edge_site.region_id = ?";
 		}
+		if (StringUtil.notEmpty(siteName)) {
+			getEdgeSiteSQL += " AND edge_site.edge_site_name = ?";
+		}
 		
 		PreparedStatement pstmt = connection.prepareStatement(getEdgeSiteSQL);
 		if (regionId != 0) {
 			pstmt.setInt(1, regionId);
 		}
+		if (StringUtil.notEmpty(siteName)) {
+			pstmt.setString(1, siteName);
+		}
 		
         ResultSet rs= pstmt.executeQuery();
         List<EdgeSite> edgeSiteList = new ArrayList<EdgeSite>();
         try {
-        
 	        
 	        while(rs.next())
 	        {
@@ -182,9 +193,20 @@ public class GetEdgeSitesDAO {
 	        	String vcdnStatus = rs.getString(14);
 	        	edgeSite.setvCDNStatus(vcdnStatus);
 	        	
+	        	String siteIp = rs.getString(15);
+	        	edgeSite.setEdgeSiteIP(siteIp);
+	        	
+	        	String siteUser = rs.getString(16);
+	        	edgeSite.setEdgeSiteUser(siteUser);
+	        	
+	        	String sitePwd = rs.getString(17);
+	        	edgeSite.setEdgeSitePwd(sitePwd);
+	        	
 	 	        try {
-					String input_file = new String(b_input_file, "UTF-8");
-					edgeSite.setInputFile(input_file);
+	 	        	if(b_input_file != null) {
+						String input_file = new String(b_input_file, "UTF-8");
+						edgeSite.setInputFile(input_file);
+	 	            }
 					
 				} catch (UnsupportedEncodingException e) {
 
@@ -198,9 +220,7 @@ public class GetEdgeSitesDAO {
         	pstmt.close();
             rs.close();
         }
-
         return edgeSiteList;
-		
     }
     
     public List <Onap> getOnap(String siteName) throws ClassNotFoundException, SQLException { 
@@ -263,7 +283,6 @@ public class GetEdgeSitesDAO {
         	pstmt.close();
         	rs.close();
          }
-
         return onapList;
     }
     
@@ -286,7 +305,6 @@ public class GetEdgeSitesDAO {
 
     	
     	return returnValue;
-    	
     }
     
     public int updateUserSession (String userid, String tokenId) throws ClassNotFoundException, SQLException {
@@ -307,7 +325,6 @@ public class GetEdgeSitesDAO {
     	pstmt.close();
     	
     	return returnValue;
-    	
     }
     
     public UserSession getUserSession(String userId) throws ClassNotFoundException, SQLException {
@@ -333,9 +350,7 @@ public class GetEdgeSitesDAO {
         	pstmt.close();
         	rs.close();
          }
-        
         return user;
-    	
     }
     
     public int deleteUserSession(String userId) throws ClassNotFoundException, SQLException {
@@ -356,10 +371,8 @@ public class GetEdgeSitesDAO {
     	
     		pstmt.close();
     		
-    	}
-	    	
+    	}	
     	return returnValue;
-	    	
     }
     	
     public int updateOnap (Onap onap) throws ClassNotFoundException, SQLException {
@@ -392,11 +405,7 @@ public class GetEdgeSitesDAO {
 		} finally {
 	         	pstmt.close();
 			}
-    	
-    	
-    	
     	return returnValue;
-    	
     }
     
     public int updateEdgeSiteStatus(EdgeSite edgeSite) throws ClassNotFoundException, SQLException {
@@ -417,7 +426,7 @@ public class GetEdgeSitesDAO {
 		int tempestStatusCount = 0;
 		int vcdnStatusCount = 0;
 		if (StringUtil.notEmpty(edgeSite.getEdgeSiteBuildStatus())) {
-			updateEdgeSiteStatusSQL += "set build_status = ? ";
+			updateEdgeSiteStatusSQL += ",build_status = ? ";
 			counter++;
 			buildCount = counter;
 		}
@@ -510,9 +519,34 @@ public class GetEdgeSitesDAO {
 		} finally {
              	pstmt.close();
  		}
-		
 		return returnValue;
+    }
+
+    public void updateEdgeSiteDetails(String fileContent, String ip, String user, String pwd, String blueprint, String siteName) throws ClassNotFoundException, SQLException {
+    	Connection connection = DBConnection.getInstance().getConnection();
 		
+		PreparedStatement pstmt = connection.prepareStatement(updateEdgeSiteDetailsSQL);
+		
+		try {
+			
+			pstmt.setString(1,  ip);
+			pstmt.setString(2,  user);
+			pstmt.setString(3,  pwd);
+			
+			
+			InputStream input_file = new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8));
+			pstmt.setBinaryStream(4, input_file);
+			
+			pstmt.setString(5,  blueprint);
+			
+			pstmt.setString(6,  siteName);
+			
+			pstmt.executeUpdate();
+			connection.commit();
+			
+		} finally {
+			pstmt.close();
+		}
     }
     
 	public void updategeneratedYaml(EdgeSite edgeSite) throws ClassNotFoundException, SQLException {
@@ -586,11 +620,9 @@ public class GetEdgeSitesDAO {
 			
 			pstmt.executeUpdate();
 			connection.commit();
-			
 		} finally {
 			pstmt.close();
 		}
-		
 	}
-	
+
 }

@@ -24,11 +24,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="region")
+@Table(name="akraino.region")
 public class Region {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "region_id")
 	int regionId;
 	
 	@Column(name = "region_name")

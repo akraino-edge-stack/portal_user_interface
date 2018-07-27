@@ -24,7 +24,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AkrainoSiteServiceTest.class
+    PodServiceTest.class,    
+	RegionServiceTest.class,
+    AkrainoSiteServiceTest.class
 })
 public class AkrainoTests {
 
