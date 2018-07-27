@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1398054e_35c85f2b",
+        "filename": "AECPortalMgmt/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:39:31Z",
+      "side": 1,
+      "message": "this needs to be portal_user_interface (the project name)",
+      "revId": "05568b4fa225961b7783cc623dd099bcb4c03373",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c94cbbd7_d6938acd",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-07-27T15:39:31Z",
+      "side": 1,
+      "message": "this needs to be portal_user_interface (the project name)",
+      "revId": "05568b4fa225961b7783cc623dd099bcb4c03373",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
