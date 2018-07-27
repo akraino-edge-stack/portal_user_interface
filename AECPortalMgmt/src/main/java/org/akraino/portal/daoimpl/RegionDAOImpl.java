@@ -18,32 +18,41 @@ package org.akraino.portal.daoimpl;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.entity.Region;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public class RegionDAOImpl implements RegionDAO {
 	
-	 @Autowired
+	@Autowired
 	 private SessionFactory sessionFactory;
+	 
 	 
 	 protected Session getSession(){
 		  return sessionFactory.getCurrentSession();
 	 }
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Region> listAllRegions() {
 		
-		Criteria criteria = getSession().createCriteria(Region.class);
-		  return (List<Region>) criteria.list();
+		CriteriaBuilder builder = getSession().getCriteriaBuilder();
+		CriteriaQuery<Region> criteria = builder.createQuery(Region.class);
+		
+		Root<Region> root = criteria.from(Region.class);
+        criteria.select(root);
+		
+        Query<Region> query = getSession().createQuery(criteria);
+        
+        return query.getResultList();
 	}
 	
 }

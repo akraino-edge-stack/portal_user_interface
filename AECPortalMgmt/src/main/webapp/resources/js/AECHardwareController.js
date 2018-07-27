@@ -30,9 +30,9 @@ angular.module('PortalManagement').controller('AECHardwareController', function(
     $scope.tokenId = localStorage.getItem("tokenId");
     $scope.displayForm = true;
 
-    $controller('commonController', {
+    /*$controller('commonController', {
         $scope: $scope
-    });
+    });*/
     $controller('PopUpHardwareController', {
         $scope: $scope
     });
@@ -192,7 +192,7 @@ angular.module('PortalManagement').controller('PopUpHardwareController', functio
                     $scope.$parent.showSaveButton = true;
 
                 } else {
-                    alert($scope.$parent.hardwareDetails.length);
+                    //alert($scope.$parent.hardwareDetails.length);
                 }
                 $scope.closeThisDialog();
             } else {

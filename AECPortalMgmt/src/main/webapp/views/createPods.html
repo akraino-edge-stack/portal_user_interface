@@ -1,0 +1,261 @@
+<!--
+Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+
+<head>
+<style>
+.borderFrame{
+	margin-top:2px;
+	border:4px solid #cdcdcd;
+	/*border-radius: 0.1px;
+	/*-moz-border-radius: 0.1px;
+	-webkit-border-radius:0.1px;*/
+}
+.pagination > li > a
+{
+    background-color: white;
+    color: #4d4d4d;;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #4d4d4d;;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #4d4d4d;;
+    border: solid 1px #4d4d4d;;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #4d4d4d;;
+    border: solid 1px #4d4d4d;;
+}
+.pagination > .active > a:active
+{
+    background-color: #4d4d4d;;
+    border: solid 1px #4d4d4d;;
+}
+input[type=text], select, textarea {
+     width: 40%;
+     padding: 3px;
+     border: 0.5px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     margin-top: 3px;
+     margin-bottom: 3px;
+     resize: vertical;
+}
+</style>
+</head>
+
+<body ng-controller="AECPodsController">
+    <div id="akrainopodscontent" style="padding-left:20px;padding-right:20px">
+        <div style="width:70%;">
+          <div style="float:left;">
+            <h2>POD List</h2>
+            </div>
+            
+            <div style="float:right;padding-top:25px;">
+            <label ng-show ="showprocessPodMessage">{{processPodMessage}}</label>
+            <button class="refreshbutton"  ng-click="createPOD()">Create POD</button>
+            <button class="refreshbutton"  style="margin-left:5px;" ng-disabled ="editPodButton" ng-click="editPOD()">Edit POD</button>
+            <button class="refreshbutton" style="margin-left:5px;"  ng-disabled ="deletePodButton" ng-click="deletePOD()">Delete POD</button>
+            
+            </div>
+        </div>
+        
+       
+        <div style="width:70%;">
+        <table class="rackTable">
+            <tr>
+            <th>
+            </th>
+                <th>Sl Number
+                </th>
+                <th>
+                    POD Name
+                </th>
+
+            </tr>
+            <tr class="border_bottom" ng-repeat = "pod in podData | filter:paginate">
+                 <td style="text-align: center;width:8%;">
+                     <form>
+                     <input   type="radio"
+                        ng-model="$parent.selection"
+                        name="subscriptionPod"
+                        value="{{pod.name}}" ng-click="update(pod.podname)"/>
+                     <form>
+                  </td>	
+                <td style="padding-left:10px;font-size: 15px;">{{$index +1}}</td>
+
+                <td><a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-click="showPod(pod.podname)">{{pod.podname}}</a>
+                </td>
+
+            </tr>
+
+        </table>
+        <pagination total-items="totalItems" ng-model="currentPage"  
+             max-size="5" boundary-links="true"  
+             items-per-page="numPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+       </pagination>
+        
+         </div><br></br><br>
+        <!--ng-if="showCreatePods"--->
+        <div ng-show="showCreatePods" style="width:70%;">
+        <div class="borderFrame">
+         <div id="createPocontent" style="padding-left:5px;padding-right:5px;padding-bottom:5px;">
+           <div ng-show="showSaveButton" style="float:right" >
+           
+             <button class="refreshbutton" ng-click="saveRacks()">Save POD</button>
+            <button class="refreshbutton"  ng-click="cancelAll()">Cancel</button>
+            
+            
+            </div>
+         
+             <h2 style="margin-top:5px;">{{podHeader}}</h2>
+            
+            
+           
+           
+            
+          <!--  <div>
+            <div>
+                <h2 style="margin-top:5px;">{{podHeader}}</h2>
+                </div>
+                <div  style="float:right;" ng-show="showSaveButton">
+            <button class="refreshbutton" ng-click="saveRacks()">Save POD</button>
+            <button class="refreshbutton"  ng-click="cancelAll()">Cancel</button>
+            </div>
+              </div>--->
+              
+           
+            
+            
+            <form class="podForm">
+                <label style="width:200px">POD name:</label>
+                <input type="text" style="width:300px;height:40px;" placeholder="Enter POD Name" ng-model="podName" ng-readonly="readOnlyPod" required/>
+                </br>
+                <label style="width:200px">Rack name:</label>
+                <input type="text" style="width:300px;height:40px;" placeholder="Enter Rack Name" ng-readonly = "readOnlyRack" ng-model="rackName" />
+                </br>
+                <label style="width:200px">Rack personality:</label>
+                <select style="height:40px;width:300px;" class="exampleTable" ng-model="rackType" />
+                <option value="" slected>Choose personality</option>
+                <option value="control">Control</option>
+
+                <option value="compute">Compute</option>
+                <option value="storage">Storage</option>
+                <option value="network">Network</option>
+                <option value="hybrid">Hybrid</option>
+
+                </select>
+                </br>
+                </br>
+                
+                <button class="refreshbutton" style="margin-left:5px;" ng-click="addRacks()">Add Rack</button>
+                <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="editRackButton" ng-click="editRack()">Edit Rack</button>
+                <button class="refreshbutton" style="margin-left:5px;"  ng-disabled ="deleteRackButton" ng-click="deleteRack()">Delete Rack</button>
+                <label ng-show="showProcessMessage">{{processMessage}}</label>
+                
+            </form>
+            
+            
+            <div ng-show="rackTableShow" style="width:60%;">
+                <h3>Racks</h3>
+                <table class="rackTable">
+                    <tr>
+                    <th>
+                    </th>
+                        <th>Rack Name
+                        </th>
+                        <th>
+                            Rack Personality
+                        </th>
+
+                    </tr>
+                    <tr class="border_bottom" ng-repeat="pod in parcels | filter:rackPaginate ">
+                        <td style="text-align: center;width:8%;">
+                     <form>
+                     <input   type="radio"
+                        ng-model="$parent.rackSelection"
+                        name="subscriptionRack"
+                        value="{{pod.rackname}}" ng-click="rackupdate(pod.rackname)"/>
+                     <form>
+                  </td>
+                        <td style="padding-left:10px;font-size: 15px;">{{ pod.rackname}}</td>
+
+                        <td style="padding-left:10px;font-size: 15px;">{{pod.rackPersonality}}</td>
+
+                    </tr>
+
+                </table>
+                 <pagination total-items="totalRacks" ng-model="currentrackPage"  
+             max-size="5" boundary-links="true"  
+             items-per-page="rackPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+       </pagination>
+       
+            </div><br><br><br>
+            
+            </div>
+            </div>
+        </div>
+        <div ng-if="showPodDetails" style="width:70%;">
+         <div class="borderFrame">
+         <div id="createPocontent" style="padding-left:5px;padding-right:5px;padding-bottom:5px;">
+            <div>
+                <h1>POD Details - {{clickedPodName}}
+            </h1>
+
+            </div>
+            <div>
+                <label>Racks</label>
+                <table class="rackTable" style="width:60%;">
+                    <tr>
+                        <th>Rack Name
+                        </th>
+                        <th>
+                            Rack Personality
+                        </th>
+
+                    </tr>
+                    <tr class="border_bottom" ng-repeat="pod in racksDetail ">
+
+                        <td style="padding-left:10px;font-size: 15px;">{{ pod.rackname}}</td>
+
+                        <td style="padding-left:10px;font-size: 15px;">{{pod.rackPersonality}}</td>
+
+                    </tr>
+
+                </table>
+               
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+
+</html>

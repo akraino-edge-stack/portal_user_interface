@@ -23,6 +23,24 @@ limitations under the License.
          a.focus:visited {
          color: blue;
          }
+         .pagination {
+     display: inline-block;
+     float:right;
+}
+ .pagination li {
+     list-style-type:none;
+     color: white;
+     float: left;
+     padding: 8px 16px;
+     text-decoration: none;
+     transition: background-color .3s;
+     border: 1px solid #ddd;
+}
+ .pagination li.active {
+     background-color: #DCDCDC;
+     color: white;
+     border: 1px solid #ddd;
+}
       </style>
    </head>
    <body ng-controller="AECaddOnsController">
@@ -83,8 +101,9 @@ limitations under the License.
                      <td style="width:23%"> 
                         <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedaddOnSites" ng-click="openDialog($index)">{{ site.edgeSiteName }}
                         </a>
+                         <!-- <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!(site.addOnselection)" ng-click ="">Upload</button>-->
                      </td>
-                     <td style="padding-left:10px;width:23%"></td>
+                     <td style="padding-left:10px;width:23%">{{site.blueprint}}</td>
                      <td style="padding-left:10px;width:23%">{{site.onapStatus ? site.onapStatus : 'Not started'}}
                      </td>
                   </tr>

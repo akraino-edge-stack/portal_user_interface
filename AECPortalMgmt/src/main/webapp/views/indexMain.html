@@ -42,9 +42,13 @@ limitations under the License.
                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>Akraino Blueprint<span class="caret">
                </span></a>
                <ul id="configuracoes" class="collapse">
+               <li>
+                     <a  ng-class ="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
+                     PODs</a>
+                  </li>
                 <li>
                      <a  ng-class ="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
-                     Site Builds</a>
+                     Blueprints</a>
                   </li>
                   <li>
                      <a ng-class ="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>

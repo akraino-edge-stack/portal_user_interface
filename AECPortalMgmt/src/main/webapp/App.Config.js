@@ -15,8 +15,8 @@
  */
 
 var config_module = angular.module('myApp.config', [])
-	.constant('hostUrl','127.0.0.1:8080')
-	.constant('camundaUrl','127.0.0.1:8010')
+	.constant('hostUrl','192.168.2.44:8080')
+	.constant('camundaUrl','192.168.2.44:8073')
 	
 	
 ;
