@@ -82,7 +82,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     $scope.setPage = function() {
         $scope.currentPage = this.n;
     }
-    alladdOnsSitesDisplay = function() {
+    var alladdOnsSitesDisplay = function() {
         $http({
             method: 'GET',
             url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
@@ -123,7 +123,18 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         }
     }
     $scope.addOnUpdate = function(index) {
-        $scope.siteIndex = index;
+    	if($scope.itemsPerPage > 6){
+    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+    	        console.log($scope.rowIndex);
+    	        $scope.siteIndex  = $scope.rowIndex;
+    	    	}
+    	    	else{
+    	    		$scope.siteIndex = index;
+    	    	}
+    	        
+    	//$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+        //$scope.siteIndex =  index;
+    	$scope.addOnsites[$scope.siteIndex].addOnselection = true;
         $scope.addOnselectionButton = false;
     }
     $scope.upDateplaceHolder = function(Data){
@@ -148,9 +159,10 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
             method: 'POST',
             url: 'http://'+camundaUrl+'/onap/',
             data: {
-                "remoteserver": "192.168.2.43",
-                "username": "root",
-                "password": "akraino,d",
+            	 "sitename": $scope.addOnsites[siteIndex].edgeSiteName,
+                "remoteserver": $scope.addOnsites[siteIndex].edgeSiteIP,
+                "username": $scope.addOnsites[siteIndex].edgeSiteUser,
+                "password": $scope.addOnsites[siteIndex].edgeSitePwd,
                 "portnumber": 22,
                 "srcdir": "/opt/onap/",
                 "destdir": "/opt/onap/",
@@ -176,6 +188,14 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         });
     }
     $scope.openDialog = function(index) {
+    	if($scope.itemsPerPage > 6){
+    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+    	        console.log($scope.rowIndex);
+    	        index  = $scope.rowIndex;
+    	    	}
+    	    	else{
+    	    		index = index;
+    	   }
         $scope.siteName = $scope.addOnsites[index].edgeSiteName;
         $scope.readOnapData = "";
         $http({

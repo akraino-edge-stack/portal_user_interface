@@ -30,7 +30,35 @@ public class SiteStatusRequest {
 	private String onapStatus;
 	private String tempestStatus;
 	private String vCDNStatus;
+	private String blueprint;
+	private String edgeSiteIP;
+	private String edgeSiteUser;
+	private String edgeSitePwd;
 	
+	public String getBlueprint() {
+		return blueprint;
+	}
+	public void setBlueprint(String blueprint) {
+		this.blueprint = blueprint;
+	}
+	public String getEdgeSiteIP() {
+		return edgeSiteIP;
+	}
+	public void setEdgeSiteIP(String edgeSiteIP) {
+		this.edgeSiteIP = edgeSiteIP;
+	}
+	public String getEdgeSiteUser() {
+		return edgeSiteUser;
+	}
+	public void setEdgeSiteUser(String edgeSiteUser) {
+		this.edgeSiteUser = edgeSiteUser;
+	}
+	public String getEdgeSitePwd() {
+		return edgeSitePwd;
+	}
+	public void setEdgeSitePwd(String edgeSitePwd) {
+		this.edgeSitePwd = edgeSitePwd;
+	}
 	public String getBuildDate() {
 		return buildDate;
 	}

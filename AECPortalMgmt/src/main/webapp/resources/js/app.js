@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var AECPortalController = angular.module('PortalManagement', ['ngDialog', 'ui.router', 'base64','myApp.config','ngStorage']);
+var AECPortalController = angular.module('PortalManagement', ['ngDialog', 'ui.router', 'base64','myApp.config','ngStorage','ui.bootstrap', 'ngResource','ngFileUpload']);
 AECPortalController.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login')
     $stateProvider
@@ -33,6 +33,16 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
                 "main": {
                     controller: 'AECSitesController',
                     templateUrl: 'views/sites.html'
+                }
+            }
+        })
+        .state('pods', {
+            url: "/pods",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECPodsController',
+                    templateUrl: 'views/createPods.html'
                 }
             }
         })

@@ -23,32 +23,44 @@ limitations under the License.
    <body ng-controller="AECSoftwareController">
       <div id="akrainosoftwarecontent" style="padding-left:20px;padding-right:20px">
          <div>
-            <h1>Akraino Software
+            <h1>Software List
             </h1>
          </div>
-         <label>Site Name:
-         </label>
-         <div class="select-style">
-            <select class ="example"  ng-model="selectSoftwareBlueprint"  ng-init="selectSoftwareBlueprint=softwareSiteName[0]" ng-change="showBlueprintTable()()" ng-options="site for site in softwareSiteName">
-            </select>
-           
-         </div>
-         <h3>Global Configuration </h3>
-         <div id="softwareTable" ng-show ="showsoftwareTable" style="padding-bottom:1px; padding-top:30px">
+        
+         <div id="softwareTable"  style="padding-bottom:1px; padding-top:30px;width:50%">
             <table cellspacing="0" cellpadding="0" class="softwareTable">
             <tbody>
                <tr>
-                  <th>Node(host)</th>
-                  <th>Node Type&nbsp;</th>
-                  
-                  <th>H/W Model&nbsp;</th>
+                
+                  <th>Software Name&nbsp;</th>
+                 
+                  <th>Software Type&nbsp;</th>
+                   <th>Version&nbsp;</th>
                   
                </tr>
-               <tr class="border_bottom" ng-repeat ="software in softwareDetails  ">
-                  <td style="padding-left:10px;font-size: 15px;cursor: pointer;"><a ng-click="showSoftwarePopup($index)">{{ software.nodeName}}</a></td>
-                  <td style="padding-left:10px;font-size: 15px;">{{ software.nodeType}}</td>
+               
+               <tr class="border_bottom">
+                 
+                  <td style="padding-left:10px;font-size: 15px;">Container</td>
                   
-                  <td style="padding-left:10px;font-size: 15px;">{{software.hwModel}}</td>
+                  <td style="padding-left:10px;font-size: 15px;">Kubernetes</td>
+                  <td style="padding-left:10px;font-size: 15px;">v1.10.2</td>
+                  
+               </tr>
+                <tr class="border_bottom">
+                 
+                  <td style="padding-left:10px;font-size: 15px;">Network</td>
+                  
+                  <td style="padding-left:10px;font-size: 15px;">OVS</td>
+                  <td style="padding-left:10px;font-size: 15px;">OpenVSwitch</td>
+                  
+               </tr>
+                <tr class="border_bottom">
+                 
+                  <td style="padding-left:10px;font-size: 15px;">OS</td>
+                  
+                  <td style="padding-left:10px;font-size: 15px;">Ubuntu</td>
+                  <td style="padding-left:10px;font-size: 15px;">16.04</td>
                   
                </tr>
             </tbody>
