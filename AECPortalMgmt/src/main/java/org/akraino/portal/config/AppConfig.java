@@ -16,12 +16,17 @@
 
 package org.akraino.portal.config;
 
+import javax.sql.DataSource;
+
+import org.akraino.portal.common.PropertyUtil;
 import org.akraino.portal.common.SessionManagerFilter;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -70,5 +75,26 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         .excludePathPatterns("/login", "/logout");
 
     }
+	
+	@Bean
+    public CommonsMultipartResolver multipartResolver() {
+
+        CommonsMultipartResolver cmr = new CommonsMultipartResolver();
+        cmr.setMaxUploadSize(1000000 * 2);
+        cmr.setMaxUploadSizePerFile(2000000); //bytes
+        return cmr;
+
+    }
+	
+	@Bean(name = "dataSource")
+	public DataSource getDataSource() {
+	    BasicDataSource dataSource = new BasicDataSource();
+	    dataSource.setDriverClassName("org.postgresql.Driver");
+	    dataSource.setUrl(PropertyUtil.getInstance().getProperty("postgres.db.url"));
+	    dataSource.setUsername(PropertyUtil.getInstance().getProperty("postgres.db.user.name"));
+	    dataSource.setPassword(PropertyUtil.getInstance().getProperty("postgres.db.user.pwd"));
+	 
+	    return dataSource;
+	}
 
 }

@@ -41,28 +41,23 @@ public class RegionController {
 	private static final Logger logger = Logger.getLogger(RegionController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
-	public ResponseEntity<List<org.akraino.portal.data.Region>> getAllRegions() {
+	public ResponseEntity<List<org.akraino.portal.entity.Region>> getAllRegions() {
 		
-		List <org.akraino.portal.data.Region> list = new ArrayList<org.akraino.portal.data.Region> ();
+		//List <org.akraino.portal.data.Region> list = new ArrayList<org.akraino.portal.data.Region> ();
+		List <org.akraino.portal.entity.Region> list = new ArrayList<org.akraino.portal.entity.Region> ();
 		logger.error("test error msg");
 		AkrainoSiteService akraionSiteService = new AkrainoSiteService();
 		
 		try {
-			list = akraionSiteService.getRegions(); //--> working with sql
+			//list = akraionSiteService.getRegions(); //--> working with sql
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			logger.error(e);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			logger.error(e);
+			list = regionService.listAllRegions();
+			
 		} catch (Exception e) {
 			logger.error(e);
-		} finally {
-			logger.error("exception----------------blah");
 		}
 		
-		return new ResponseEntity<List<org.akraino.portal.data.Region>>(list, HttpStatus.OK);
+		return new ResponseEntity<List<org.akraino.portal.entity.Region>>(list, HttpStatus.OK);
 	}
 	
 }
