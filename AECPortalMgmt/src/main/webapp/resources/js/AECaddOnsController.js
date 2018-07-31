@@ -82,6 +82,18 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     $scope.setPage = function() {
         $scope.currentPage = this.n;
     }
+    $scope.uploadOnapfile = function(index){
+    	
+    	ngDialog.open({
+            scope: $scope,
+            template: 'addOnUploadForm',
+            closeByDocument: false,
+            controller: 'addOnUploadController',
+            appendClassName: 'ngdialog-custom',
+            width: '800px'
+        });
+    	
+    }
     var alladdOnsSitesDisplay = function() {
         $http({
             method: 'GET',
@@ -155,6 +167,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     }
     $scope.installOnap = function(siteIndex) {
     	$scope.addOnsites[siteIndex].onapStatus = 'In Progress...';
+    	
         $http({
             method: 'POST',
             url: 'http://'+camundaUrl+'/onap/',
@@ -164,21 +177,41 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
                 "username": $scope.addOnsites[siteIndex].edgeSiteUser,
                 "password": $scope.addOnsites[siteIndex].edgeSitePwd,
                 "portnumber": 22,
-                "srcdir": "/opt/onap/",
-                "destdir": "/opt/onap/",
+                "srcdir": "/opt/akraino/onap/", 
+                "destdir": "/opt",
                 "filename": "INSTALL.sh",
                 "deploymentverifier": "test_status.sh",
                 "noofiterations": 0,
                 "waittime": 15,
-                "filetrasferscript": "/opt/onap/felix.sh"
+                "filetrasferscript": "/opt/akraino/onap/mv.sh", 
+                "filetransferparams": $scope.addOnsites[siteIndex].edgeSiteIP,
             },
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
             }
         }).then(function(response) {
-        	if (response.data.status == '200') {
-            $scope.addOnsites[siteIndex].onapStatus = 'Completed...';
+        	console.log(response.status);
+        	if (response.status == 200) {
+          
+            $http({
+                method: 'POST',
+                url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+                data:{
+                "siteName": $scope.addOnsites[siteIndex].edgeSiteName,
+                "onapStatus":"In Progress" 
+                	
+                },
+                headers: {
+                    'Content-Type': "application/json",
+                    'Accept': "application/json",
+                    'tokenId' : $scope.tokenId
+                }
+            }).then(function(response) {
+            	
+            }, function(error) {
+            	$scope.errorHandle(error);
+            });
         	}
         	else{
         		$scope.addOnsites[siteIndex].onapStatus = response.data.message;
@@ -230,11 +263,12 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         }
     }).then(function(response) {
         $scope.addOnregions = response.data;
+       
     }, function(error) {
     	$scope.errorHandle(error);
     });
 });
-angular.module('PortalManagement').controller('PopUpController', function($scope,$http, ngDialog) {
+angular.module('PortalManagement').controller('PopUpController', function($scope,$http, ngDialog,hostUrl) {
 //scope.siteName = $scope.addOnsites[index].edgeSiteName;
 	//nsole.log("hi" +$scope.siteName);
     $scope.cancel = function() {
@@ -272,4 +306,34 @@ angular.module('PortalManagement').controller('PopUpController', function($scope
             });
         }
     };
+});
+angular.module('PortalManagement').controller('addOnUploadController', function($scope,$http, ngDialog,$localStorage,hostUrl,Upload) {
+	$scope.addOnUpload = function(index,file){
+				
+		file.upload = Upload.upload({
+			url:'http://'+hostUrl+'/AECPortalMgmt/addon/onap/upload',
+			method:'POST',
+			file:file,
+			data:{
+				"siteName" :$scope.addOnsites[index].edgeSiteName
+                
+              
+            },
+            headers: {'Content-Type': undefined}
+		}).then(function(response){
+			if(response.data.statusCode == '200'){
+			$scope.addOnsites[index].fileUploadMessage = "File uploaded,successfully.";
+			$scope.addOnsites[index].fileUploadStatus = "Completed";
+			console.log(response.statusCode);
+			}
+		},function(response){
+			console.log(response);
+		});
+		 $scope.closeThisDialog('cancel');
+		 
+	}
+	$scope.cancel = function() {
+        $scope.closeThisDialog();
+    };
+
 });

@@ -78,7 +78,7 @@ display:inline-block;
                         </button>
                         <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!(sites[hostIndex].fileUploadStatus == 'Completed')" ng-click="deployEdgeSite(hostIndex)">Deploy
                         </button> 
-                        <button class="refreshbutton" style="margin-left:5px;"  ng-disabled="sites[hostIndex].deployStatus != 'Completed'" ng-click="vnfOnboard(hostIndex)">VNF Onboard
+                        <button class="refreshbutton" style="margin-left:5px;"  ng-disabled="!((sites[hostIndex].deployStatus.toLowerCase() == 'success') || (sites[hostIndex].deployStatus.toLowerCase() == 'complete'))" ng-click="vnfOnboard(hostIndex)">VNF Onboard
                         </button> 
                      </div>
                   </div>
@@ -121,14 +121,17 @@ display:inline-block;
                       <label>{{site.fileUploadMessage}}</label>
                   </td>
                    <td style="width:19%;padding-left:10px;">
-                   <select style="width:130px;" ng-model="site.blueprintType"  ng-init="site.blueprintType=''" class="exampleTable" ng-change ="callblueprint(hostIndex)" required>
+                   <!-- -ng-init="site.blueprintType=''" -->
+                   <select style="width:130px;" ng-model="site.blueprintType"    ng-init="site.deployStatus.toLowerCase() == 'complete' ? site.blueprintType = 'Rover' : ''"  class="exampleTable" ng-change ="callblueprint(hostIndex)" required>
             			<option value="">Select Blueprint</option>
             			<option value="Rover">Rover</option>
             			<!-- - <option value="Unicycle">Unicycle</option>
             			<option value="Tricycle">Tricycle</option>
             			<option value="Cruiser">Cruiser</option>--->
           		  </select> 
-                   <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && (site.blueprintType == 'Rover'))" ng-click ="uploadFile(hostIndex)">Upload</button>
+                   <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && (site.blueprintType == 'Rover'))" ng-click ="uploadFile(hostIndex)">Upload</button><br>
+                   <a ng-click ="viewInputfile($index)" ng-if="site.deployStatus.toLowerCase() == 'complete'">View input File</a>
+                   
                   </td>
                   <td style="width:19%;">     
                      <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.buildStatus ? site.buildStatus : 'Not started'}}
@@ -249,5 +252,11 @@ display:inline-block;
        <button  class="refreshbutton" ng-click="upload($parent.hostIndex,file)">Submit</button>
    </form>
    </script>
+   
+    <script type="text/ng-template" id="inputtemplateForm">
+        <h1>Input File:</h1><br>
+<p>{{$parent.inputFileData}}</p>
+<button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
+    </script>          
 </html>
 

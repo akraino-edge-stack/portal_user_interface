@@ -55,7 +55,8 @@ public class GetEdgeSitesDAO {
     		+ "edge_site.vcdn_status, "
     		+ "edge_site.edge_site_ip, "
     		+ "edge_site.edge_site_user, "
-    		+ "edge_site.edge_site_pwd "
+    		+ "edge_site.edge_site_pwd, "
+    		+ "edge_site.edge_site_blueprint "
     				+ "FROM  akraino.edge_site edge_site, akraino.region region where edge_site.region_id = region.region_id \r\n";
     				
    private String getOnapSQL = "SELECT "
@@ -201,6 +202,9 @@ public class GetEdgeSitesDAO {
 	        	
 	        	String sitePwd = rs.getString(17);
 	        	edgeSite.setEdgeSitePwd(sitePwd);
+	        	
+	        	String blueprint = rs.getString(18);
+	        	edgeSite.setBlueprint(blueprint);
 	        	
 	 	        try {
 	 	        	if(b_input_file != null) {

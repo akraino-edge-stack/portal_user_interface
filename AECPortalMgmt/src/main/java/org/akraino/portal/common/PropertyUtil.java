@@ -17,13 +17,17 @@ package org.akraino.portal.common;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
+import org.akraino.portal.config.AppConfig;
 import org.apache.log4j.Logger;
 
 public class PropertyUtil {
 	
 	private static final Logger logger = Logger.getLogger(PropertyUtil.class);
+	
+	private static final String APP_PROPERTIES_FILENAME = "app.properties";
 	
 	private static PropertyUtil propertyUtil;
 	Properties appProps;
@@ -37,12 +41,12 @@ public class PropertyUtil {
 	}
 	
 	private PropertyUtil() {
-		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String appConfigPath = rootPath + "app.properties";
+
+		InputStream input = AppConfig.class.getClassLoader().getResourceAsStream(APP_PROPERTIES_FILENAME);
 		
 		appProps = new Properties();
 		try {
-			appProps.load(new FileInputStream(appConfigPath));
+			appProps.load(input);
 			
 		} catch (IOException e) {
 			logger.error("Error loading app properties file");

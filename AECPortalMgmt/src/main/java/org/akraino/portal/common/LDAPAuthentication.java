@@ -44,7 +44,7 @@ public class LDAPAuthentication {
 		
 		try {
 			
-			String serviceUserDN = "uid=" + user + "," + "ou=users,dc=akraino,dc=com";
+			String serviceUserDN = "uid=" + user + "," + "ou=users,dc=akraino,dc=org";
 			String serviceUserPassword = pwd;
 			
 			Hashtable env = new Hashtable(11);

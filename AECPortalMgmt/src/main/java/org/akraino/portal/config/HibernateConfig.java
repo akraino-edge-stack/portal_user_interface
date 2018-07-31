@@ -69,6 +69,7 @@ public class HibernateConfig {
 				setProperty("hibernate.c3p0.max_size", env.getProperty("hibernate.c3p0.max_size"));
 				setProperty("hibernate.c3p0.max_statements", env.getProperty("hibernate.c3p0.max_statements"));
 				setProperty("hibernate.c3p0.acquire_increment", env.getProperty("hibernate.c3p0.acquire_increment"));
+				setProperty("hibernate.jdbc.use_streams_for_binary", env.getProperty("hibernate.jdbc.use_streams_for_binary"));
 			}
 		};
 	}

@@ -135,7 +135,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     $scope.runTempest = function(siteIndex) {
     	console.log(siteIndex);
     	$scope.tempestSites[siteIndex].tempestStatus = 'In Progress...';
-        $http({
+    	$http({
      method: 'POST',
      url: 'http://'+camundaUrl+'/tempest/',
      data: {
@@ -144,24 +144,43 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         "username":$scope.tempestSites[siteIndex].edgeSiteUser,
         "password":$scope.tempestSites[siteIndex].edgeSitePwd,
         "portnumber": 22 ,
-        "srcdir": "/opt/akraino/test_automation", 
-        "destdir": "/opt/openstack_tempest", 
+        "srcdir": "/opt/akraino/tempest", 
+        "destdir": "/opt", 
         "filename":"test_run.sh", 
-        "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_PASSWORD=password", 
+        "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_PASSWORD=password",  
         "deploymentverifier":"test_status.sh",
         "verifierparams":"TIMEOUT=900", 
         "noofiterations":0,
         "waittime":15,
-        "filetrasferscript":"/opt/akraino/test_automation/mv.sh"
+        "filetrasferscript":"/opt/akraino/tempest/mv.sh", 
+        "filetransferparams": $scope.tempestSites[siteIndex].edgeSiteIP
      },
      headers: {
          'Content-Type': "application/json",
          'Accept': "application/json",
      }
  }).then(function(response) {
- 	if (response.data.status == '200') {
-        $scope.tempestSites[siteIndex].tempestStatus = 'Completed...';
-        //console.log();
+ 	if (response.status == 200) {
+        //$scope.tempestSites[siteIndex].tempestStatus = 'Completed...';
+        $http({
+                     method: 'POST',
+                     url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+                     data:{
+                     "siteName": $scope.tempestSites[siteIndex].edgeSiteName,
+                     "tempestStatus":"In Progress" 
+                     	
+                     },
+                     headers: {
+                         'Content-Type': "application/json",
+                         'Accept': "application/json",
+                         'tokenId' : $scope.tokenId
+                     }
+                 }).then(function(response) {
+                 	
+                 }, function(error) {
+                 	$scope.errorHandle(error);
+                 });
+       
     	}
     	else {
     		$scope.tempestSites[siteIndex].tempestStatus = response.data.message;

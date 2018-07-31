@@ -71,7 +71,7 @@ limitations under the License.
                      <div style="float:right">
                         <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="selectedaddOnRegionChange()"> Refresh 
                         </a>
-                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="addOnselectionButton" ng-click="installOnap(siteIndex)">Install ONAP
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="!(addOnsites[siteIndex].fileUploadStatus == 'Completed')" ng-click="installOnap(siteIndex)">Install ONAP
                         </button>
                      </div>
                   </div>
@@ -101,10 +101,12 @@ limitations under the License.
                      <td style="width:23%"> 
                         <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedaddOnSites" ng-click="openDialog($index)">{{ site.edgeSiteName }}
                         </a>
-                         <!-- <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!(site.addOnselection)" ng-click ="">Upload</button>-->
+                        
+                        <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!(site.addOnselection)" ng-click ="uploadOnapfile(siteIndex)">Upload</button>
+                        <label>{{site.fileUploadMessage}}</label>
                      </td>
                      <td style="padding-left:10px;width:23%">{{site.blueprint}}</td>
-                     <td style="padding-left:10px;width:23%">{{site.onapStatus ? site.onapStatus : 'Not started'}}
+                     <td style="padding-left:10px;width:23%;font-style: italic;">{{site.onapStatus ? site.onapStatus : 'Not started'}}
                      </td>
                   </tr>
                </tbody>
@@ -170,6 +172,18 @@ limitations under the License.
       	<button style="margin-left:40%" class="akrbutton" ng-click="cancel()">Close</button>
       	<button class="akrbutton" ng-click="submit()" ng-disabled="disable">Save</button>
        </form>
+   </script>
+   <script type="text/ng-template" id="addOnUploadForm">
+   <form class="addOnUploadForm">
+      <h1>Input Details:</h1><br>
+    
+ <label style="width:30%;">Input File: </label>
+   <input type="file" name="Input File" accept="**" ngf-select ng-model="file"/> 
+ <br>
+
+        <button style="margin-left:45%" class="refreshbutton" ng-click="cancel()">Close</button>
+       <button  class="refreshbutton" ng-click="addOnUpload($parent.siteIndex,file)">Submit</button>
+   </form>
    </script>
 </html>
 

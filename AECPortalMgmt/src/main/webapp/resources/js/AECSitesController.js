@@ -63,6 +63,14 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     	
     }
     $scope.loadSitePopup = function(index) {
+    	if($scope.itemsPerPage > 6){
+    	  $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+          console.log($scope.rowIndex);
+          index = $scope.rowIndex;
+      	}
+      	else{
+          index = index;
+      	}
         $scope.selectedSites = $scope.sites[index].edgeSiteName;
         $scope.popupregionName = $scope.sites[index].regionName;
         $scope.popupsiteName = $scope.selectedSites;
@@ -219,20 +227,22 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         });
     }
     $scope.airshipDeploy = function(index){
+    	
     	$http({
 	            method: 'POST',
 	            url: 'http://'+camundaUrl+'/airship/',
 	            data: {
 	            	 "sitename": $scope.sites[index].edgeSiteName,
-	            	 "filepath":"/opt/akraino/redfish/install_server_os.sh ", 
-	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/"+ $scope.sites[index].edgeSiteName + " --no-confirm", 
-	            	 "winscpdir": "/opt", 
-	            	 "winscpfilepath": "nare.sh", 
+	            	 "filepath":"/opt/akraino/redfish/install_server_os.sh  ", 
+	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/"+ $scope.sites[index].edgeSiteName + "--no-confirm", 
+	            	 "winscpdir": "/opt/akraino/airshipinabottle_deploy", 
+	            	 "winscpfilepath": "mv.sh", 
+	            	 "winscpfileparams":$scope.sites[index].edgeSiteIP, 
 	            	 "remotserver":$scope.sites[index].edgeSiteIP,
 	            	 "port": 22,
 	            	 "username": $scope.sites[index].edgeSiteUser,
 	            	 "password":$scope.sites[index].edgeSitePwd,
-	            	 "destdir":"/opt ",
+	            	 "destdir":"/opt",
 	            	 "remotefilename": "akraino_airship_deploy.sh"
 	            	},
 	            headers: {
@@ -240,10 +250,28 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 	                'Accept': "application/json",
 	            }
 	        }).then(function(response) {
-	            if (response.data.status == '200') {
-	                $scope.sites[index].deployStatus = 'Completed';
+	            if (response.status == 200) {
+	                
+	            	$http({
+	                    method: 'POST',
+	                    url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+	                    data:{
+	                    "siteName": $scope.sites[index].edgeSiteName,
+	                    "deployStatus":"In Progress" 
+	                    	
+	                    },
+	                    headers: {
+	                        'Content-Type': "application/json",
+	                        'Accept': "application/json",
+	                        'tokenId' : $scope.tokenId
+	                    }
+	                }).then(function(response) {
+	                	
+	                }, function(error) {
+	                	$scope.errorHandle(error);
+	                });
 	            } else {
-	                $scope.sites[index].deployStatus = response.data.message;
+	                //$scope.sites[index].deployStatus = response.data.message;
 	            }
 	        }, function(error) {
 	        	$scope.sites[index].deployStatus = 'Deploy error';
@@ -299,7 +327,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
                 'Accept': "application/json",
             }
         }).then(function(response) {
-            if (response.data.status == '200') {
+            if (response.status == 200) {
                 $scope.sites[index].deployStatus = 'Completed';
             } else {
                 $scope.sites[index].deployStatus = response.data.message;
@@ -337,6 +365,26 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             width: '800px',
             data: $scope.buildyamloutput
         });
+    }
+    $scope.viewInputfile = function(index){
+    	if($scope.itemsPerPage > 6){
+      	  $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+            console.log($scope.rowIndex);
+            index = $scope.rowIndex;
+        	}
+        	else{
+            index = index;
+        	}
+    	$scope.inputFileData = $scope.sites[index].inputFile;
+    	 ngDialog.open({
+             scope: $scope,
+             template: 'inputtemplateForm',
+             closeByDocument: false,
+             controller: 'PopUpinputFileController',
+             appendClassName: 'ngdialog-custom',
+             width: '800px'
+         });
+    	
     }
     $scope.updateEdgeSiteStatus = function(siteName, status ,Date) {
         $scope.siteName = siteName;
@@ -407,12 +455,18 @@ angular.module('PortalManagement').controller('PopUpSiteController', function($s
         $scope.closeThisDialog();
     };
 });
-angular.module('PortalManagement').controller('PopUpvnfController', function($scope,$http, ngDialog,$localStorage,camundaUrl) {
+angular.module('PortalManagement').controller('PopUpinputFileController', function($scope,$http, ngDialog) {
+	$scope.cancel = function() {
+        $scope.closeThisDialog();
+    };
+});
+angular.module('PortalManagement').controller('PopUpvnfController', function($scope,$http, ngDialog,$localStorage,camundaUrl,hostUrl) {
 	$scope.callreadVnf = function(){
 	$scope.$parent.readHeatTemplate($scope.vnfType);
 	}
 	$scope.onBoard = function(index){
-        $http({
+		
+      $http({
      method: 'POST',
      url: 'http://'+camundaUrl+'/apache/',
      data: {
@@ -421,21 +475,41 @@ angular.module('PortalManagement').controller('PopUpvnfController', function($sc
          "username": $scope.sites[index].edgeSiteUser,
          "password": $scope.sites[index].edgeSitePwd,
          "portnumber": 22,
-         "srcdir": "/tmp/tempest",
-         "destdir": "/tmp/ats-demo-back",
+         "srcdir": "/opt/akraino/sample_vnf",
+         "destdir": "/opt",
          "filename": "run_ats-demo.sh",
          "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_USERNAME=admin OS_PASSWORD=password OS_REGION_NAME=RegionOne NETWORK_NAME=public-47",
          "noofiterations": 0,
          "waittime": 15,
-         "filetrasferscript": "/tmp/tempest/mv.sh"
+         "filetrasferscript":"/opt/akraino/sample_vnf/mv.sh",
+         "filetransferparams": $scope.sites[index].edgeSiteIP
      },
      headers: {
          'Content-Type': "application/json",
          'Accept': "application/json",
      }
+		
 	        }).then(function(response) {
-	        	if (response.data.status == '200') {
-	        		$scope.$parent.sites[index].vCDNStatus = 'Completed';
+	        	if (response.status == 200) {
+	        		//$scope.$parent.sites[index].vCDNStatus = 'Completed';
+	        		$http({
+	                    method: 'POST',
+	                    url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+	                    data:{
+	                    "siteName": $scope.sites[index].edgeSiteName,
+	                    "vCDNStatus":"In Progress" 
+	                    	
+	                    },
+	                    headers: {
+	                        'Content-Type': "application/json",
+	                        'Accept': "application/json",
+	                        'tokenId' : $scope.tokenId
+	                    }
+	                }).then(function(response) {
+	                	
+	                }, function(error) {
+	                	$scope.errorHandle(error);
+	                });
 	            } 
 	        }, function(error) { 
 	        });

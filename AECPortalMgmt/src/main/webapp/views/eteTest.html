@@ -87,8 +87,8 @@ limitations under the License.
                      </td>
                      <td style="padding-left:10px;width:23%">{{site.regionName}}</td>
                      <td  style="width:23%"> <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedtempestSites" ng-click="opentempestDialog($index)">{{ site.edgeSiteName }}</a></td>
-                     <td style="padding-left:10px;width:23%"></td>
-                     <td style="padding-left:10px;width:23%">{{site.tempestStatus ? site.tempestStatus : 'Not started'}}</td>
+                     <td style="padding-left:10px;width:23%">{{site.blueprint}}</td>
+                     <td style="padding-left:10px;width:23%;font-style: italic;">{{site.tempestStatus ? site.tempestStatus : 'Not started'}}</td>
                   </tr>
                </tbody>
             </table>

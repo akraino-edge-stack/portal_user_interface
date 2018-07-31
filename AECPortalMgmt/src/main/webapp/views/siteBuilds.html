@@ -46,9 +46,19 @@ limitations under the License.
     background-color: #CCC;
     color: #696969;
 }
-#mainView {
+.mainView {
     border: 1px solid #cdcdcd;
 	clear: both;
+	/*padding-left: 5px;
+padding-right: 5px;
+padding-top: 3px;
+padding-bottom: 3px;*/
+	
+}
+.mainView1 {
+    border: 1px solid #cdcdcd;
+	clear: both;
+	width:84%;
 	/*padding-left: 5px;
 padding-right: 5px;
 padding-top: 3px;
@@ -66,6 +76,12 @@ margin-top:2px;
 .headerbackground{
 background-color: #cdcdcd;
 height:30px
+}
+.selected{
+background-color:#F9F4E5;
+}
+.tableWidth{
+width:84%;
 }
 </style>
 
@@ -95,8 +111,8 @@ height:30px
                         <th>Blueprint name</th>
                         <th>POD name</th>
                     </tr>
-                    <tr class="border_bottom" ng-repeat="blueprint in BlueprintTable">
-                        <td "><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="BlueprintSelected(blueprint.name,blueprint.pod)">{{blueprint.name}}</a></td>
+                    <tr class="border_bottom" ng-repeat="blueprint in BlueprintTable" ng-class="{'selected':$index ==selectedRow}">
+                        <td><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="BlueprintSelected(blueprint.name,blueprint.pod,$index)">{{blueprint.name}}</a></td>
                               <td style="padding-left:10px;font-size: 15px;width:50%;">{{blueprint.pod.name}}</td>
                            </tr>
                         </tbody>
@@ -111,7 +127,7 @@ height:30px
              <button class="refreshbutton"   ng-click="save()" >Save</button>
               <button class="refreshbutton" style="margin-left:5px;"  ng-click="cancel()" >Cancel</button>
             </div>
-            <h3 style="margin-top:5px">{{showBlueprintHeader}}
+            <h3 style="margin-top:10px">{{showBlueprintHeader}}
             </h3>
         </div>
         <div>
@@ -134,8 +150,13 @@ height:30px
          
          <div ng-show="showRackTable" style="width:63%">
                
-              
-               <h4>Racks</h4>
+              <div id="tabs">
+              <ul>
+            <li  class="active" >Racks</li>
+        </ul>
+               
+               <div class="mainView">
+               
                   <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px">
                      <table cellspacing="0" cellpadding="0" class="shardwareTable">
                         <tbody>
@@ -143,23 +164,31 @@ height:30px
                               <th>Rack name</th>
                               <th>Rack Type</th>
                            </tr>
-                           <tr class="border_bottom" ng-repeat="rack in rackList" >
-                              <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="createNodeTable(rack.name,rack.type)">{{rack.name}}</a></td>
+                           <tr class="border_bottom" ng-repeat="rack in rackList"  ng-class="{'selected':$index == selectedRackRow}" >
+                              <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="createNodeTable(rack.name,rack.type,$index)">{{rack.name}}</a></td>
                               <td style="padding-left:10px;font-size: 15px;width:50%;">{{rack.type}}</td>
                            </tr>
                         </tbody>
                      </table>
                   </div>
-              
+                  </div>
+              </div>
             </div>
-         
+         <br>
          <div ng-show="showNode" style="width:75%">
-               <div ng-class="{borderFrame: check != 1}" style="border-radius:1px;margin-bottom:10px;">
-                  
-                  <div ng-class="{headerbackground: check != 1}" >
-                     <h4 style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">{{nodeHeader}}</h4>
+          <div id="tabs">
+              <ul>
+            <li class="active">Nodes</li>
+        </ul>
+               
+               <div ng-class="{mainView:check != 1,mainView1:check == 1}">
+            
+               <!--  <div ng-class="{borderFrame: check != 1}" style="border-radius:1px;margin-bottom:10px;">-->
+                  <!-- -ng-class="{headerbackground: check != 1}" -->
+                  <div>
+                     <h4 ng-class="{headerbackground: check != 1}" ng-show ="showNodeHeader" style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">{{nodeHeader}}</h4>
                    </div> 
-                   <div style="padding-left:5px;padding-right:5px;padding-top:3px;padding-bottom:3px"> 
+                   <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px"> 
                      <form ng-show="showNodeForm" class="podForm">
                         <label style="width:100px">Node name:</label>
                         <input type="text"  style="width:140px;height:30px;" placeholder="Enter Node Name" ng-model="nodeName" required/>
@@ -173,31 +202,32 @@ height:30px
                         </select>
                         <button class="refreshbutton" style="margin-left:5px;height:30px;"  ng-click="addNodes()" >Add Node</button>
                      </form>
-                     <div style="width:84%">
-                     <table ng-show="showNodeTable" class="shardwareTable">
+                     <div ng-class="{tableWidth: check != 1}">
+                     <table ng-show="showNodeTable" class="shardwareTable"  >
                         <tr>
                            <th>Node name</th>
                            <th>Node Type</th>
                         </tr>
-                        <tr class="border_bottom" ng-repeat="node in nodeList" >
-                           <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="addHardwareSoftware(node.name,node.type)">{{node.name}}</a></td>
+                        <tr class="border_bottom" ng-repeat="node in nodeList" ng-class="{'selected':$index == selectedNodeRow}">
+                           <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="addHardwareSoftware(node.name,node.type,$index)">{{node.name}}</a></td>
                            <td style="padding-left:10px;font-size: 15px;width:50%;">{{node.type}}</td>
                         </tr>
                      </table>
                      </div>
-                  </div><br>
+                  </div>
                   
                </div>
+                </div>
                 
             </div> 
-           
+           <br>
             <div id="tabs" ng-show="showSoftwareHardware" style="width:75%;">
         <ul>
             <li ng-repeat="tab in tabs" 
                 ng-class="{active:isActiveTab(tab.url)}" 
                 ng-click="onClickTab(tab)">{{tab.title}}</li>
         </ul>
-        <div id="mainView">
+        <div ng-class="{mainView:check != 1,mainView1:check == 1}">
             <div ng-include="currentTab"></div>
         </div>
     </div>
@@ -224,7 +254,8 @@ height:30px
                         </select>
                        <!-- <button class="refreshbutton" style="margin-left:5px;"  ng-click="addHardware()" >Add Hardware</button>-->
                      </form>
-                     <table  ng-show="showHardwareTable" class="shardwareTable" style="width:84%">
+                     <div ng-class="{tableWidth: check != 1}">
+                     <table  ng-show="showHardwareTable" class="shardwareTable">
                         <tr>
                            <th>Hardware name</th>
                            <th>Hardware Type</th>
@@ -234,6 +265,7 @@ height:30px
                            <td style="padding-left:10px;font-size: 15px;">{{hardware.type}}</td>
                         </tr>
                      </table>
+                      </div>
                   </div>
                   </div>
                
@@ -261,7 +293,8 @@ height:30px
                         <input type="text"  style="width:140px;height:30px;" placeholder="Enter Software Version" ng-model="$parent.softwareVersion" required/>
                         <button class="refreshbutton" style="margin-left:5px;height:30px"  ng-click="addSoftware()" >Add Software</button>
                      </form>
-                     <table ng-show="showSoftwareTable" class="shardwareTable" style="width:84%">
+                     <div ng-class="{tableWidth: check != 1}">
+                     <table ng-show="showSoftwareTable" class="shardwareTable">
                         <tr>
                            <th>Software name</th>
                            <th>Software Type</th>
@@ -273,6 +306,7 @@ height:30px
                            <td style="padding-left:10px;font-size: 15px;">{{software.version}}</td>
                         </tr>
                      </table>
+                   <div>
                   </div>
                </div>
 	</script> 

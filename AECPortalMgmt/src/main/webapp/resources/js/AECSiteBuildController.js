@@ -80,6 +80,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	    $scope.showSoftwareTable = false;
 	    $scope.createPod = false;
 	    $scope.showSoftwareForm = false;
+	    $scope.showNodeHeader = false;
 	    $scope.tabs = [{
             title: 'Hardware',
             url: 'hardware.html'
@@ -106,6 +107,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	        }
 	    }
 	    $scope.createBlueprint = function() {
+	    	$scope.saveBlueprint = false;
 	    	$scope.createPod = true;
 	    	 $scope.showNode = false;
 	 	    $scope.showHardware = false;
@@ -121,6 +123,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	    }
 	    $scope.createNode = function(rackName, rackType) {
 	        $scope.showNode = true;
+	        $scope.showNodeHeader = true;
 	        $scope.showNodeForm = true;
 	        $scope.rackNName = rackName;
 	        $scope.rackNType = rackType;
@@ -131,8 +134,9 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 		        $scope.showNodeForm = false;
 	        }
 	    }
-	    $scope.createNodeTable = function(rackName, rackType) {
-	    	 $scope.nodeHeader = "Nodes";
+	    $scope.createNodeTable = function(rackName, rackType,index) {
+	    	$scope.selectedRackRow = index;
+	    	$scope.showNodeHeader = false;
 	        $scope.showNode = true;
 	        $scope.showNodeForm = true;
 	        $scope.rackNName = rackName;
@@ -212,6 +216,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	    	        return software;
 	    }
 	    $scope.addNodes = function() {
+	    	$scope.selectedNodeRow = null;
 	    	var currentBlueprint = Blueprints.find(function(element){
 	            return element.name === $scope.blueprintName;
 	        });
@@ -260,7 +265,11 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	    		 }
 	    	}
 	    }
-	    $scope.addHardwareSoftware = function(NodeName,nodeType) {
+	    $scope.cancel = function(){
+	    	$scope.createPod = false;
+	    }
+	    $scope.addHardwareSoftware = function(NodeName,nodeType,index) {
+	    	
 	        $scope.showHardware = true;
 	        $scope.showSoftware = true;
 	        $scope.showSoftwareHardware = true;
@@ -270,14 +279,16 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	        $scope.showHardwareForm = true;
 	        $scope.showHardwareTable = false;
 	        $scope.headerdSoftware = true;
-	        $scope.headerdHardware = true;
+	        $scope.headerHardware = true;
+	        $scope.selectedNodeRow = index;
 	        if($scope.check ==1){
+	        	$scope.selectedNodeRow = index;
 	        	$scope.showSoftwareForm = false;
 	        	$scope.showSoftwareTable = true;
 	        	$scope.showHardwareTable = true;
 	        	$scope.showHardwareForm = false;
 	        	 $scope.headerdSoftware = false;
-	 	        $scope.headerdHardware = false;
+	 	        $scope.headerHardware = false;
 	        var currentBlueprint = $scope.BlueprintTable.find(function(element) {
                 return element.name === $scope.blueprintName;
             });
@@ -434,8 +445,10 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	        console.log(currentBlueprint);
 	    }
 	    }
-	    $scope.BlueprintSelected = function(blueprintName,pod)
+	    $scope.BlueprintSelected = function(blueprintName,pod,index)
 	    {
+	    	$scope.saveBlueprint = false;
+	    	$scope.selectedRow = index;
 	    	$scope.showBlueprintHeader = "Blueprint Details";
 	    	$scope.showNode = false;
 	        $scope.showNodeForm = false;
