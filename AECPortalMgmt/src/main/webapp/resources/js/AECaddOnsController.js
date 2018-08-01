@@ -180,7 +180,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
                 "srcdir": "/opt/akraino/onap/", 
                 "destdir": "/opt",
                 "filename": "INSTALL.sh",
-                "deploymentverifier": "test_status.sh",
+                "deploymentverifier": "onap_test_status.sh",
                 "noofiterations": 0,
                 "waittime": 15,
                 "filetrasferscript": "/opt/akraino/onap/mv.sh", 
