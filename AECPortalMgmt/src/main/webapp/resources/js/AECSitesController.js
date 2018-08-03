@@ -173,6 +173,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     }
     allSitesDisplay();
     $scope.refreshRegionChange = function() {
+    	$scope.selection = false;
         allSitesDisplay();
     }
     $scope.selectedRegionChange = function() {
@@ -478,7 +479,7 @@ angular.module('PortalManagement').controller('PopUpvnfController', function($sc
          "srcdir": "/opt/akraino/sample_vnf",
          "destdir": "/opt",
          "filename": "run_ats-demo.sh",
-         "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_USERNAME=admin OS_PASSWORD=password OS_REGION_NAME=RegionOne NETWORK_NAME=public-47",
+         "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_USERNAME=admin OS_PASSWORD=password OS_REGION_NAME=RegionOne NETWORK_NAME=public",
          "noofiterations": 0,
          "waittime": 15,
          "filetrasferscript":"/opt/akraino/sample_vnf/mv.sh",
