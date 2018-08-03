@@ -111,6 +111,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     }
     alladdOnsSitesDisplay();
     $scope.refreshRegionChange = function() {
+    	$scope.addOnselection = false;
         alladdOnsSitesDisplay();
     }
     $scope.selectedaddOnRegionChange = function() {
@@ -325,6 +326,9 @@ angular.module('PortalManagement').controller('addOnUploadController', function(
 			$scope.addOnsites[index].fileUploadMessage = "File uploaded,successfully.";
 			$scope.addOnsites[index].fileUploadStatus = "Completed";
 			console.log(response.statusCode);
+			}
+			else{
+				$scope.addOnsites[index].fileUploadMessage = "Error..";	
 			}
 		},function(response){
 			console.log(response);

@@ -44,6 +44,9 @@ limitations under the License.
 input[type="file"] {
 display:inline-block;
 }
+.md-backdrop{
+display:none;
+}
       </style>
    </head>
    <body ng-controller="sites">
@@ -72,7 +75,7 @@ display:inline-block;
                      
                      <input type="text" style="width:300px" class="form-control" placeholder="Search Edge Sites" ng-model="q">
                      <div style="float:right">
-                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="selectedRegionChange()"> Refresh 
+                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="refreshRegionChange()"> Refresh 
                         </a>
                         <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="sites[hostIndex].blueprintType != 'Unicycle'" ng-click="buildEdgeSite(hostIndex)" >Build 
                         </button>
@@ -130,7 +133,7 @@ display:inline-block;
             			<option value="Cruiser">Cruiser</option>--->
           		  </select> 
                    <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && (site.blueprintType == 'Rover'))" ng-click ="uploadFile(hostIndex)">Upload</button><br>
-                   <a ng-click ="viewInputfile($index)" ng-if="site.deployStatus.toLowerCase() == 'complete'">View input File</a>
+                   <a ng-click ="viewInputfile($index)" ng-if="site.deployStatus.toLowerCase() == 'complete' || site.deployStatus.toLowerCase() == 'success'">View input File</a>
                    
                   </td>
                   <td style="width:19%;">     
@@ -223,15 +226,29 @@ display:inline-block;
             <h1>VNF Details:</h1><br>
           <label style="width:30%;">Region: </label> <label>{{popupregionName}}</label><br>
           <label style="width:30%;">Site: </label> <label>{{popupsiteName}}</label><br>
-          <label style="width:30%;">VNF: </label> <select ng-model="vnfType" class="example"  ng-change ="callreadVnf()" required>
-            <option value="vCDN">cVDN</option>
+          <label style="width:30%;">VNF: </label> <select class ="exampleTable" style="height:30px" ng-model="vnfType"   ng-change ="callreadVnf()" required>
+            <option value="vCDN">vCDN</option>
           </select> 
-                   <br><br>
+          <div ng-show="showParameters">
+          <label style ="width:30%;">OS User Domain Name</label>
+          <input type="text" placeholder ="" ng-model="osDomainname"/>
+                   <br>
+           <label style ="width:30%;">OS Project Domain Name</label>
+          <input type="text" placeholder ="" ng-model="osProjectname" /><br>
+          <label style ="width:30%;">OS User Name</label>
+          <input type="text" placeholder ="" ng-model="osUsername" /><br>
+<label style ="width:30%;">OS Password</label>
+          <input type="text" placeholder ="" ng-model="osPassword" /></br>
+<label style ="width:30%;">OS Region Name</label>
+          <input type="text" placeholder ="" ng-model="osRegionname" /><br>
+<label style ="width:30%;">Network Name</label>
+          <input type="text" placeholder ="" ng-model="osNetworkname" />
+</div>
             <p class="formfield">
             <label style="width:30%;" for="textarea">Heat Template File: </label>
         <textarea style="width:500px;" id="textarea" rows="5" disabled>{{heattemplateoutput}}</textarea></p>
-            <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
-       <button  class="akrbutton" ng-click="onBoard($parent.hostIndex)">Onboard</button>
+            <button style="margin-left:45%" class="refreshbutton" ng-click="cancel()">Close</button>
+       <button  class="refreshbutton" ng-click="onBoard($parent.hostIndex)">Onboard</button>
       </form>
    </script>
    <script type="text/ng-template" id="siteUploadForm">
@@ -257,6 +274,8 @@ display:inline-block;
         <h1>Input File:</h1><br>
 <p>{{$parent.inputFileData}}</p>
 <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
-    </script>          
+    </script>   
+    
+    
 </html>
 

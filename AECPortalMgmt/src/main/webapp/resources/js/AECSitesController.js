@@ -31,6 +31,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     $scope.selectionButton = true;
     $scope.size = 10;
     $scope.fileUploadStatus ="";
+    $scope.showParameters = false;
     $scope.tokenId = localStorage.getItem("tokenId");
     $controller('commonController', { $scope: $scope }); 
     $scope.update = function(hostIndex) {
@@ -48,7 +49,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         
     }
     $scope.callblueprint=function(index){
-    	$scope.sites[index].blueprintType = 'Rover';
+    	//$scope.sites[index].blueprintType = 'Rover';
     	//console.log($scope.sites[index].blueprintType);
     }
     $scope.uploadFile = function(index){
@@ -462,12 +463,21 @@ angular.module('PortalManagement').controller('PopUpinputFileController', functi
     };
 });
 angular.module('PortalManagement').controller('PopUpvnfController', function($scope,$http, ngDialog,$localStorage,camundaUrl,hostUrl) {
+	$scope.showParameters = false;
 	$scope.callreadVnf = function(){
 	$scope.$parent.readHeatTemplate($scope.vnfType);
+	$scope.showParameters = true;
 	}
+	$scope.osDomainname ="Default";
+	$scope.osProjectname ="Default";
+	$scope.osUsername = "admin";
+	$scope.osPassword ="password";
+	$scope.osRegionname = "RegionOne";
+	$scope.osNetworkname = "public";
 	$scope.onBoard = function(index){
-		
-      $http({
+		$scope.fileparams = "OS_USER_DOMAIN_NAME="+$scope.osDomainname+" OS_PROJECT_DOMAIN_NAME="+$scope.osProjectname+" OS_USERNAME="+$scope.osUsername+" OS_PASSWORD="+$scope.osPassword+" OS_REGION_NAME="+$scope.osRegionname+" NETWORK_NAME="+$scope.osNetworkname;
+	console.log("fileparams" + $scope.fileparams);
+	$http({	
      method: 'POST',
      url: 'http://'+camundaUrl+'/apache/',
      data: {
@@ -479,7 +489,7 @@ angular.module('PortalManagement').controller('PopUpvnfController', function($sc
          "srcdir": "/opt/akraino/sample_vnf",
          "destdir": "/opt",
          "filename": "run_ats-demo.sh",
-         "fileparams": "OS_USER_DOMAIN_NAME=Default OS_PROJECT_DOMAIN_NAME=Default OS_USERNAME=admin OS_PASSWORD=password OS_REGION_NAME=RegionOne NETWORK_NAME=public",
+         "fileparams": $scope.fileparams,
          "noofiterations": 0,
          "waittime": 15,
          "filetrasferscript":"/opt/akraino/sample_vnf/mv.sh",
@@ -543,6 +553,10 @@ angular.module('PortalManagement').controller('PopUpUploadController', function(
 			$scope.sites[index].fileUploadStatus = "Completed";
 			console.log(response.statusCode);
 			}
+			else{
+				$scope.sites[index].fileUploadMessage = "Error..";	
+			}
+	
 		},function(response){
 			console.log(response);
 		});
