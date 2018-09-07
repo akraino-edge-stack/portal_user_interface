@@ -32,27 +32,26 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RegionDAOImpl implements RegionDAO {
-	
+
 	@Autowired
-	 private SessionFactory sessionFactory;
-	 
-	 
-	 protected Session getSession(){
-		  return sessionFactory.getCurrentSession();
-	 }
+	private SessionFactory sessionFactory;
+
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
 
 	@Override
 	public List<Region> listAllRegions() {
-		
+
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<Region> criteria = builder.createQuery(Region.class);
-		
+
 		Root<Region> root = criteria.from(Region.class);
-        criteria.select(root);
-		
-        Query<Region> query = getSession().createQuery(criteria);
-        
-        return query.getResultList();
+		criteria.select(root);
+
+		Query<Region> query = getSession().createQuery(criteria);
+
+		return query.getResultList();
 	}
-	
+
 }

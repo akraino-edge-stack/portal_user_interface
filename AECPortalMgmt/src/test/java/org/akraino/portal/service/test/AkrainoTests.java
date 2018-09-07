@@ -26,7 +26,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     PodServiceTest.class,    
 	RegionServiceTest.class,
-    AkrainoSiteServiceTest.class
+    EdgeSiteServiceTest.class,
+    AddOnsServiceTest.class
 })
 public class AkrainoTests {
 

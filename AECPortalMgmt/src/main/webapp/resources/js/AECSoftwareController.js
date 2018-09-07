@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-angular.module('PortalManagement').controller('AECSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller,hostUrl) {
+angular.module('PortalManagement').controller('AECSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller,appContext) {
+	 $controller('commonController', { $scope: $scope }); 
 	$scope.NodeName ="Site Ipaddress";
 	$scope.NodeType ="Software Name";
 	$scope.Model ="Version";
@@ -37,7 +38,8 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
         	$scope.Model ="Version";
         	$http({
                 method: 'GET',
-                url: 'http://' + hostUrl + '/AECPortalMgmt/softwareRover.txt',
+                url: appContext+'/softwareRover.txt',
+               // url: 'http://' + hostUrl + '/AECPortalMgmt/softwareRover.txt',
                 headers: {
                     'Content-Type': "application/json",
                     'Accept': "application/json"
@@ -53,7 +55,8 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
         	$scope.Model ="Version";
         	$http({
                 method: 'GET',
-                url: 'http://' + hostUrl + '/AECPortalMgmt/softwareUnicycle.txt',
+                url: appContext+'/softwareUnicycle.txt',
+                //url: 'http://' + hostUrl + '/AECPortalMgmt/softwareUnicycle.txt',
                 headers: {
                     'Content-Type': "application/json",
                     'Accept': "application/json"
@@ -86,7 +89,8 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
     }
     $http({
         method: 'GET',
-        url: 'http://' + hostUrl + '/AECPortalMgmt/blueprint.json',
+        url: appContext+'/blueprint.json',
+        //url: 'http://' + hostUrl + '/AECPortalMgmt/blueprint.json',
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json"

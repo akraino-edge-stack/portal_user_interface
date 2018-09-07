@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.akraino.portal.service.AkrainoSiteService;
+import org.akraino.portal.service.EdgeSiteService;
 import org.akraino.portal.service.RegionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class RegionController {
 		//List <org.akraino.portal.data.Region> list = new ArrayList<org.akraino.portal.data.Region> ();
 		List <org.akraino.portal.entity.Region> list = new ArrayList<org.akraino.portal.entity.Region> ();
 		logger.error("test error msg");
-		AkrainoSiteService akraionSiteService = new AkrainoSiteService();
+		EdgeSiteService akraionSiteService = new EdgeSiteService();
 		
 		try {
 			//list = akraionSiteService.getRegions(); //--> working with sql

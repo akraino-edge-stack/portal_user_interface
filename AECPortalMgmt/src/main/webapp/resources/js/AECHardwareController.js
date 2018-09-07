@@ -18,7 +18,7 @@ var blueprintList = new Array();
 var dataArray = "";
 var controlNodeTypeCount = 0;
 var abc = new Array();
-angular.module('PortalManagement').controller('AECHardwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller, $rootScope, $controller, hostUrl) {
+angular.module('PortalManagement').controller('AECHardwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller, $rootScope, $controller,appContext) {
 
     $scope.stepNumber = 1;
     $scope.hardwareButton = "Add Node";
@@ -30,15 +30,16 @@ angular.module('PortalManagement').controller('AECHardwareController', function(
     $scope.tokenId = localStorage.getItem("tokenId");
     $scope.displayForm = true;
 
-    /*$controller('commonController', {
+    $controller('commonController', {
         $scope: $scope
-    });*/
+    });
     $controller('PopUpHardwareController', {
         $scope: $scope
     });
     $http({
         method: 'GET',
-        url: 'http://' + hostUrl + '/AECPortalMgmt/blueprint.txt',
+        url: appContext+ '/blueprint.txt',
+        //url: 'http://' + hostUrl + '/AECPortalMgmt/blueprint.txt',
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json"

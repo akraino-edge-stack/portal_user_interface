@@ -63,7 +63,7 @@ limitations under the License.
                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
                      <input type="text" style="width:300px" class="form-control" placeholder="Search Edge Sites" ng-model="searchtempestSites">
                      <div style="float:right">
-                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="selectedtempestRegionChange()"> Refresh 
+                        <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="refreshtempestRegionChange()"> Refresh 
                         </a>
                         <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="tempestSelectButton" ng-click="runTempest(siteIndex)">Run Tempest</button>
                      </div>
@@ -85,7 +85,7 @@ limitations under the License.
                         <input type="radio" ng-model="$parent.tempestselection" name="selectionRadio" value="{{site.edgeSiteName}}" ng-click="tempestUpdate($index)" />
                         <form>
                      </td>
-                     <td style="padding-left:10px;width:23%">{{site.regionName}}</td>
+                     <td style="padding-left:10px;width:23%">{{site.region.regionName}}</td>
                      <td  style="width:23%"> <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedtempestSites" ng-click="opentempestDialog($index)">{{ site.edgeSiteName }}</a></td>
                      <td style="padding-left:10px;width:23%">{{site.blueprint}}</td>
                      <td style="padding-left:10px;width:23%;font-style: italic;">{{site.tempestStatus ? site.tempestStatus : 'Not started'}}</td>
@@ -93,16 +93,17 @@ limitations under the License.
                </tbody>
             </table>
          </div>
-      </div>
-      <div class="pagination">
+         <div class="pagination">
          <ul>
-            <li ng-class="{disabled: currentPage == 0}"> <a href ng-click="prevPage()">« Prev</a> </li>
+            <li ng-class="{disabled: currentPage == 0}"> <a href ng-click="prevPage()"> Prev</a> </li>
             <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()"> <a href ng-bind="n + 1">1</a> </li>
-            <li ng-class="{disabled: currentPage == pagedItems.length - 1}"> <a href ng-click="nextPage()">Next »</a> </li>
+            <li ng-class="{disabled: currentPage == pagedItems.length - 1}"> <a href ng-click="nextPage()">Next </a> </li>
          </ul>
       </div>
       </div>
       </div>
+      </div>
+      
    </body>
    <script type="text/ng-template" id="tempestForm">
       <form class="tempestclassForm">

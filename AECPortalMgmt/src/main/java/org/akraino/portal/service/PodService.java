@@ -16,11 +16,15 @@
 package org.akraino.portal.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.akraino.portal.dao.PodDAO;
 import org.akraino.portal.entity.Pod;
-import org.akraino.portal.entity.Rack;
+import org.akraino.portal.entity.GenericRack;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,28 +35,71 @@ import org.springframework.transaction.annotation.Transactional;
 public class PodService {
 
 	private static final Logger logger = Logger.getLogger(PodService.class);
-	
+
 	@Autowired
 	private PodDAO podDAO;
-	
+
 	public void savePod(Pod pod) throws ClassNotFoundException, SQLException {
-		
-		podDAO.save(pod);
-		
-		for (Rack rack : pod.getRacks()) {
-			rack.setPod(pod);
-			saveRack(rack);
+
+		podDAO.saveOrUpdate(pod);
+
+	}
+
+	public void updatePod(Pod modifiedPod) throws ClassNotFoundException, SQLException {
+
+		Pod persistedPod = getPodDetails(modifiedPod.getPodId());
+
+		persistedPod.setPodname(modifiedPod.getPodname());
+
+		if (persistedPod.getRacks() != null) {
+			Iterator<GenericRack> itr = persistedPod.getRacks().iterator();
+			while (itr.hasNext()) {
+				GenericRack persistedRack = itr.next();
+	
+				boolean found = false;
+				for (GenericRack modifiedRack : modifiedPod.getRacks()) {
+					if (modifiedRack.getRackId() != null) {
+						if (persistedRack.getRackId() == modifiedRack.getRackId()) {
+							found = true;
+							// update existing racks
+							persistedRack.setRackname(modifiedRack.getRackname());
+							persistedRack.setRackPersonality(modifiedRack.getRackPersonality());
+						}
+					}
+				}
+				if (!found) {
+					// delete removed racks in the pod
+					itr.remove();
+				}
+			}
 		}
+		// add new racks to the pod
+		for (GenericRack modifiedRack : modifiedPod.getRacks()) {
+			if (modifiedRack.getRackId() == null) {
+				persistedPod.addRack(modifiedRack);
+			}
+		}
+
+		// flush to DB
+		podDAO.merge(persistedPod);
 	}
-	
-	private void saveRack(Rack rack) throws ClassNotFoundException, SQLException {
-		podDAO.save(rack);
-	}
-	
+
 	public List<Pod> getPods() throws ClassNotFoundException, SQLException {
-		
+
 		return podDAO.getPods();
 
 	}
+
+	public Pod getPodDetails(Long podId) {
+		return podDAO.getPod(podId);
+	}
 	
+	public void deletePod(Pod pod) throws ClassNotFoundException, SQLException {
+
+		Pod persistentPod = getPodDetails(pod.getPodId());
+		
+		podDAO.deletePod(persistentPod);
+
+	}
+
 }

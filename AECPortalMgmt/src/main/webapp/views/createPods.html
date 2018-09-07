@@ -73,6 +73,7 @@ input[type=text], select, textarea {
 
 <body ng-controller="AECPodsController">
     <div id="akrainopodscontent" style="padding-left:20px;padding-right:20px">
+       <div ng-show="showPod">
         <div style="width:70%;">
           <div style="float:left;">
             <h2>POD List</h2>
@@ -106,7 +107,7 @@ input[type=text], select, textarea {
                      <input   type="radio"
                         ng-model="$parent.selection"
                         name="subscriptionPod"
-                        value="{{pod.name}}" ng-click="update(pod.podname)"/>
+                        value="{{pod.podname}}" ng-click="update(pod.podname)"/>
                      <form>
                   </td>	
                 <td style="padding-left:10px;font-size: 15px;">{{$index +1}}</td>
@@ -119,13 +120,16 @@ input[type=text], select, textarea {
         </table>
         <pagination total-items="totalItems" ng-model="currentPage"  
              max-size="5" boundary-links="true"  
-             items-per-page="numPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+             items-per-page="numPerPage" class="pagination-sm" style="float:right;background:transparent;" previous-text="&lsaquo;"
+    next-text="&rsaquo;"
+    first-text="&laquo;"
+    last-text="&raquo;">  
        </pagination>
-        
-         </div><br></br><br>
+       </div> 
+         </div><br>
         <!--ng-if="showCreatePods"--->
-        <div ng-show="showCreatePods" style="width:70%;">
-        <div class="borderFrame">
+        <div ng-show="showCreatePods" style="width:50%;">
+        <!--<div class="borderFrame">--->
          <div id="createPocontent" style="padding-left:5px;padding-right:5px;padding-bottom:5px;">
            <div ng-show="showSaveButton" style="float:right" >
            
@@ -163,7 +167,7 @@ input[type=text], select, textarea {
                 </br>
                 <label style="width:200px">Rack personality:</label>
                 <select style="height:40px;width:300px;" class="exampleTable" ng-model="rackType" />
-                <option value="" slected>Choose personality</option>
+                <option value="" selected>Choose personality</option>
                 <option value="control">Control</option>
 
                 <option value="compute">Compute</option>
@@ -183,7 +187,7 @@ input[type=text], select, textarea {
             </form>
             
             
-            <div ng-show="rackTableShow" style="width:60%;">
+            <div ng-show="rackTableShow" >
                 <h3>Racks</h3>
                 <table class="rackTable">
                     <tr>
@@ -214,12 +218,15 @@ input[type=text], select, textarea {
                 </table>
                  <pagination total-items="totalRacks" ng-model="currentrackPage"  
              max-size="5" boundary-links="true"  
-             items-per-page="rackPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+             items-per-page="rackPerPage" class="pagination-sm" style="float:right;background:transparent;" previous-text="&lsaquo;"
+    next-text="&rsaquo;"
+    first-text="&laquo;"
+    last-text="&raquo;">  
        </pagination>
        
             </div><br><br><br>
             
-            </div>
+            
             </div>
         </div>
         <div ng-if="showPodDetails" style="width:70%;">

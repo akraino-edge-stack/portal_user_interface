@@ -1,315 +1,427 @@
-
 <!--
-Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
-
+   Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+   
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+          http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   -->
 <!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="PortalManagement">
-<style>
-  
-        input[type=text],
-        select,
-        textarea {
-            width: 40%;
-            padding: 3px;
-            border: 0.5px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 3px;
-            margin-bottom: 3px;
-            resize: vertical;
-        }
-    	
-   #tabs ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-#tabs li {
-    float: left;
-    border: 2px solid #cdcdcd;
-    border-bottom-width: 0;
-    margin: 0px 0px 2px 3px;
-    padding: 5px 5px 0px 5px;
-    background-color: #CCC;
-    color: #696969;
-}
-.mainView {
-    border: 1px solid #cdcdcd;
-	clear: both;
-	/*padding-left: 5px;
-padding-right: 5px;
-padding-top: 3px;
-padding-bottom: 3px;*/
-	
-}
-.mainView1 {
-    border: 1px solid #cdcdcd;
-	clear: both;
-	width:84%;
-	/*padding-left: 5px;
-padding-right: 5px;
-padding-top: 3px;
-padding-bottom: 3px;*/
-	
-}
-#tabs .active {
-    background-color: #FFF;
-    color: #000;
-}
-.createborderFrame{
-margin-top:2px;
-	border:0px solid #cdcdcd;
-}
-.headerbackground{
-background-color: #cdcdcd;
-height:30px
-}
-.selected{
-background-color:#F9F4E5;
-}
-.tableWidth{
-width:84%;
-}
-</style>
-
-<body ng-controller="AECSiteBuildController" id="akrainositebuildcontent">
-    <div style="padding-left:20px;padding-right:20px;">
-    
-
-    <div style="width:50%">
-        <div>
-            <h1>Akraino Blueprints
-            </h1>
-        </div>
-        <div style="float:right">
-            <button class="refreshbutton" ng-click="createBlueprint()">Create Blueprint</button>
-
-        </div>
-
-    </div>
-
-    <div style="width:50%;">
-        <h3 style="margin-top:5px">Blueprints</h3>
-
-        <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px;">
-            <table cellspacing="0" cellpadding="0" class="shardwareTable">
-                <tbody>
-                    <tr>
+   <style>
+      input[type=text],
+      select,
+      textarea {
+      width: 40%;
+      padding: 3px;
+      border: 0.5px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 3px;
+      margin-bottom: 3px;
+      resize: vertical;
+      }
+      #tabs ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      }
+      #tabs li {
+      float: left;
+      border: 2px solid #cdcdcd;
+      border-bottom-width: 0;
+      margin: 0px 0px 2px 3px;
+      padding: 5px 5px 0px 5px;
+      background-color: #CCC;
+      color: #696969;
+      }
+      .mainView {
+      border: 1px solid #cdcdcd;
+      clear: both;
+      /*padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 3px;
+      padding-bottom: 3px;*/
+      }
+      .mainView1 {
+      border: 1px solid #cdcdcd;
+      clear: both;
+      width:84%;
+      /*padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 3px;
+      padding-bottom: 3px;*/
+      }
+      #tabs .active {
+      background-color: #FFF;
+      color: #000;
+      }
+      .createborderFrame{
+      margin-top:2px;
+      border:0px solid #cdcdcd;
+      }
+      .headerbackground{
+      background-color: #cdcdcd;
+      height:30px
+      }
+      .selected{
+      background-color:#F9F4E5;
+      }
+      .tableWidth{
+      width:84%;
+      }
+      .selected {
+      border:2px solid #ddd;
+      }
+   </style>
+   <body ng-controller="AECSiteBuildController" id="akrainositebuildcontent">
+      <div style="padding-left:20px;padding-right:20px;width:75%;float:left;">
+         <div style="width:75%;">
+            <div>
+               <h1>Akraino Blueprints
+               </h1>
+            </div>
+            <div style="float:right">
+               <button class="refreshbutton" ng-click="createBlueprint()">Create Blueprint</button>
+            </div>
+         </div>
+         <div style="width:75%;">
+            <h3 style="margin-top:5px">Blueprints</h3>
+            <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px;">
+               <table cellspacing="0" cellpadding="0" class="shardwareTable">
+                  <tbody>
+                     <tr>
                         <th>Blueprint name</th>
                         <th>POD name</th>
-                    </tr>
-                    <tr class="border_bottom" ng-repeat="blueprint in BlueprintTable" ng-class="{'selected':$index ==selectedRow}">
+                     </tr>
+                     <tr class="border_bottom" ng-repeat="blueprint in BlueprintTable" ng-class="{'selected':$index ==selectedRow}">
                         <td><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="BlueprintSelected(blueprint.name,blueprint.pod,$index)">{{blueprint.name}}</a></td>
-                              <td style="padding-left:10px;font-size: 15px;width:50%;">{{blueprint.pod.name}}</td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-              
-            </div> 
-            <div ng-show="createPod" style="width:80%">
-             <div class="createborderFrame" style="padding-left:3px;padding-right:3px;padding-top:2px;">
-             <div>
-             <div ng-show = "saveBlueprint" style="float:right;margin-right:28%;">
-             <button class="refreshbutton"   ng-click="save()" >Save</button>
-              <button class="refreshbutton" style="margin-left:5px;"  ng-click="cancel()" >Cancel</button>
+                        <td style="padding-left:10px;font-size: 15px;width:50%;">{{blueprint.pod.name}}</td>
+                     </tr>
+                  </tbody>
+               </table>
             </div>
-            <h3 style="margin-top:10px">{{showBlueprintHeader}}
-            </h3>
-        </div>
-        <div>
-        <form  ng-show="createForm" class="podForm">
-            <label style="width:100px">Blueprint name:</label>
-            <input type="text"  style="width:140px;height:30px;" placeholder="Enter Blueprint Name" ng-model="blueprintName" required/>
-            <label style="width:100px">POD Name:</label>
-            <select style="height:30px;width:140px;" class="exampleTable" ng-model="selectPodName" ng-change="selectedPod()" 
-               ng-options="pod.name for pod in podList" >
-               <option value="">Choose POD</option>
-            </select>
-            <label style="width:100px">Rack Name:</label>
-            <select style="height:30px;width:140px;" class="exampleTable" ng-model="selectRackName" ng-change="createNode(selectRackName.name,selectRackName.rackType)" 
-               ng-options="rack.name for rack in rackSelectList" >
-               <option value="">Choose Rack</option>
-            </select>
-            
-         </form>
-         </div><br>
-         
-         <div ng-show="showRackTable" style="width:63%">
-               
-              <div id="tabs">
-              <ul>
-            <li  class="active" >Racks</li>
-        </ul>
-               
-               <div class="mainView">
-               
-                  <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px">
-                     <table cellspacing="0" cellpadding="0" class="shardwareTable">
-                        <tbody>
-                           <tr>
-                              <th>Rack name</th>
-                              <th>Rack Type</th>
-                           </tr>
-                           <tr class="border_bottom" ng-repeat="rack in rackList"  ng-class="{'selected':$index == selectedRackRow}" >
-                              <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="createNodeTable(rack.name,rack.type,$index)">{{rack.name}}</a></td>
-                              <td style="padding-left:10px;font-size: 15px;width:50%;">{{rack.type}}</td>
-                           </tr>
-                        </tbody>
-                     </table>
+         </div>
+         <div ng-show="createPod">
+            <div class="createborderFrame" style="padding-left:3px;padding-right:3px;padding-top:2px;">
+               <div>
+                  <div ng-show = "saveBlueprint" style="float:right;margin-right:28%;">
+                     <button class="refreshbutton"   ng-click="save()" >Save</button>
+                     <button class="refreshbutton" style="margin-left:5px;"  ng-click="cancel()" >Cancel</button>
                   </div>
-                  </div>
-              </div>
-            </div>
-         <br>
-         <div ng-show="showNode" style="width:75%">
-          <div id="tabs">
-              <ul>
-            <li class="active">Nodes</li>
-        </ul>
-               
-               <div ng-class="{mainView:check != 1,mainView1:check == 1}">
-            
-               <!--  <div ng-class="{borderFrame: check != 1}" style="border-radius:1px;margin-bottom:10px;">-->
-                  <!-- -ng-class="{headerbackground: check != 1}" -->
-                  <div>
-                     <h4 ng-class="{headerbackground: check != 1}" ng-show ="showNodeHeader" style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">{{nodeHeader}}</h4>
-                   </div> 
-                   <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px"> 
-                     <form ng-show="showNodeForm" class="podForm">
-                        <label style="width:100px">Node name:</label>
-                        <input type="text"  style="width:140px;height:30px;" placeholder="Enter Node Name" ng-model="nodeName" required/>
-                        <label style="width:100px">Node Type:</label>
-                        <select style="height:30px;width:140px;"  class="exampleTable"  ng-model="nodeType">
-                           <option value="" slected>Choose Node</option>
-                           <option value="control">Control</option>
-                           <option value="compute">Compute</option>
-                           <option value="compute">Storage</option>
-                           <option value="compute">Network</option>
-                        </select>
-                        <button class="refreshbutton" style="margin-left:5px;height:30px;"  ng-click="addNodes()" >Add Node</button>
-                     </form>
-                     <div ng-class="{tableWidth: check != 1}">
-                     <table ng-show="showNodeTable" class="shardwareTable"  >
-                        <tr>
-                           <th>Node name</th>
-                           <th>Node Type</th>
-                        </tr>
-                        <tr class="border_bottom" ng-repeat="node in nodeList" ng-class="{'selected':$index == selectedNodeRow}">
-                           <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="addHardwareSoftware(node.name,node.type,$index)">{{node.name}}</a></td>
-                           <td style="padding-left:10px;font-size: 15px;width:50%;">{{node.type}}</td>
-                        </tr>
-                     </table>
+                  <h3 style="margin-top:10px">{{showBlueprintHeader}}
+                  </h3>
+               </div>
+               <div>
+                  <form  ng-show="createForm" class="podForm">
+                     <label style="width:100px">Blueprint name:</label>
+                     <input type="text"  style="width:185px;height:30px;" placeholder="Enter Blueprint Name" ng-model="blueprintName" required/>
+                     <label style="width:100px">POD Name:</label>
+                     <select style="height:30px;width:185px;" class="exampleTable" ng-model="selectPodName" ng-change="selectedPod()" 
+                        ng-options="pod.name for pod in podList" >
+                        <option value="">Choose POD</option>
+                     </select>
+                     <label style="width:100px">Rack Name:</label>
+                     <select style="height:30px;width:185px;" class="exampleTable" ng-model="selectRackName" ng-change="createNode(selectRackName)">
+                        <option value="">Choose Rack</option>
+                        <option ng-repeat="rack in rackSelect" >{{rack}}</option>
+                     </select>
+                  </form>
+               </div>
+               <br>
+               <div ng-show="showRackTable" style="width:75%;">
+                  <div id="tabs">
+                     <ul>
+                        <li  class="active" >Racks</li>
+                     </ul>
+                     <div class="mainView">
+                        <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px">
+                           <table cellspacing="0" cellpadding="0" class="shardwareTable">
+                              <tbody>
+                                 <tr>
+                                    <th>Rack name</th>
+                                    <th>Rack Type</th>
+                                 </tr>
+                                 <tr class="border_bottom" ng-repeat="rack in rackList"  ng-class="{'selected':$index == selectedRackRow}" >
+                                    <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="createNodeTable(rack.name,rack.type,$index)">{{rack.name}}</a></td>
+                                    <td style="padding-left:10px;font-size: 15px;width:50%;">{{rack.type}}</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
+                  </div>
+               </div>
+               <br>
+               <div ng-show="showNode" >
+                  <div style="height:350px;overflow-y:auto;overflow-x:auto;">
+                     <table style="border:0px;">
+                        <tr style="border:0px;">
+                           
+                              <td style="width:10%;padding-right:10px;border:0px;" ng-repeat = "rack in rackList">
+                                 <table cellspacing="0" cellpadding="0"  class="nodeTable" style="width:200px;">
+                                    <tr>
+                                       <th></th>
+                                       <th>{{rack.name}}</th>
+                                       <th></th>
+                                      <!--  <th style="padding-left:10%;"><button class="refreshbutton"   ng-click="addNodeTable(rack.name)" ng-click="setSelected(array.number,rack.name)"	 >Add Node</button></th>-->
+                                    </tr>
+                                    <tbody>
+                                       <tr class="border_bottom" ng-repeat="array in rack.nodes" ng-mouseover="hoverIn(array.name)" ng-mouseleave="hoverOut()"  ng-class="{selected : ((array.number === idSelectedVote) && (rack.name === rackNName))}">
+                                          <td style="width:1%;padding-left:10px;font-size: 15px;">{{array.number}}</td>
+                                          <td style="padding-left:10px;font-size: 15px;width:49%"><a ng-click ="addSoftwareHardwrae(array.name)">{{array.name}}</a></td>
+                                          <td style="width:49%" ><a  ng-show="hoverEdit"  ng-click="addNodeTable(array.number,rack.name)" >Add Node</a></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </td>
+                           
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+               <div ng-show="showNode1" style="width:75%;">
+               <div id="tabs">
+                  <ul>
+                  <li class="active">Nodes</li>
+                  </ul>
+                   
+                   <div class="mainView">
+                  
+               <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px">
+                  <table ng-show="showNodeTable" class="shardwareTable"  >
+                     <tr>
+                        <th>Node name</th>
+                        <th>Node Type</th>
+                     </tr>
+                     <tr class="border_bottom" ng-repeat="node in nodeList" ng-class="{'selected':$index == selectedNodeRow}">
+                        <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="addHardwareSoftware(node.name,node.type,$index)">{{node.name}}</a></td>
+                        <td style="padding-left:10px;font-size: 15px;width:50%;">{{node.type}}</td>
+                     </tr>
+                  </table>
+                  </div>
                   </div>
                   
+                  </div>
+                  </div>
+               <!--  <div ng-show="showNode1" style="width:75%;">
+               <div id="tabs">
+                  <ul>
+                  <li class="active">Nodes</li>
+                  </ul>
+                   
+                   <div ng-class="{mainView:check != 1,mainView1:check == 1}">
+                  
+               <div ng-class="{borderFrame: check != 1}" style="border-radius:1px;margin-bottom:10px;">
+               <!-- -ng-class="{headerbackground: check != 1}" -->
+              <!--  <div>
+                  <h4 ng-class="{headerbackground: check != 1}" ng-show ="showNodeHeader" style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">{{nodeHeader}}</h4>
+                  </div> --> 
+                  <!-- <div style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:3px"> 
+                 <!--  <form ng-show="showNodeForm" class="podForm">
+                     <label style="width:100px">Node name:</label>
+                     <input type="text"  style="width:140px;height:30px;" placeholder="Enter Node Name" ng-model="nodeName" required/>
+                     <label style="width:100px">Node Type:</label>
+                     <select style="height:30px;width:140px;"  class="exampleTable"  ng-model="nodeType">
+                        <option value="" selected>Choose Node</option>
+                        <option value="control">Control</option>
+                        <option value="compute">Compute</option>
+                        <option value="compute">Storage</option>
+                        <option value="compute">Network</option>
+                     </select>
+                     <button class="refreshbutton" style="margin-left:5px;height:30px;"  ng-click="addNodes()" >Add Node</button>
+                  </form>-->
+                  <!-- -<div>
+                  <table ng-show="showNodeTable" class="shardwareTable"  >
+                     <tr>
+                        <th>Node name</th>
+                        <th>Node Type</th>
+                     </tr>
+                     <tr class="border_bottom" ng-repeat="node in nodeList" ng-class="{'selected':$index == selectedNodeRow}">
+                        <td ><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:50%;" ng-click="addHardwareSoftware(node.name,node.type,$index)">{{node.name}}</a></td>
+                        <td style="padding-left:10px;font-size: 15px;width:50%;">{{node.type}}</td>
+                     </tr>
+                  </table>
+                  </div>
+                  </div>
+                  
+                  </div>
+                  </div>
+                  
+                  </div>
+                  </div>--->
+               <br>
+               <div id="tabs" ng-show="showSoftwareHardware" style="width:90%">
+                  <ul>
+                     <li ng-repeat="tab in tabs" 
+                        ng-class="{active:isActiveTab(tab.url)}" 
+                        ng-click="onClickTab(tab)">{{tab.title}}</li>
+                  </ul>
+                  <div ng-class="{mainView:check != 1,mainView1:check == 1}">
+                     <div ng-include="currentTab"></div>
+                  </div>
                </div>
-                </div>
-                
-            </div> 
-           <br>
-            <div id="tabs" ng-show="showSoftwareHardware" style="width:75%;">
-        <ul>
-            <li ng-repeat="tab in tabs" 
-                ng-class="{active:isActiveTab(tab.url)}" 
-                ng-click="onClickTab(tab)">{{tab.title}}</li>
-        </ul>
-        <div ng-class="{mainView:check != 1,mainView1:check == 1}">
-            <div ng-include="currentTab"></div>
-        </div>
-    </div>
-            </div> 
-             
-            </div>   
-             <script type="text/ng-template" id="hardware.html">
-		<div>
-               
-                  <div>
-                     <div ng-show="headerHardware" style="background-color: #cdcdcd;height:30px;">
-                     <h4 style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">Add Hardwares to node {{nodeHName}}</h4>
-                     </div>
-                      <div style="padding-left:5px;padding-right:5px;padding-top:3px;padding-bottom:3px">
-                     <form ng-show="showHardwareForm" class="podForm">
-                        <label style="width:120px">Hardware name:</label>
-                        <input type="text"  style="width:140px;height:30px;" placeholder="Enter Hardware Name" ng-model="$parent.HardwareName" required/>
-                        <label style="width:120px">Hardware Type:</label>
-                        <select style="height:30px;width:140px;"   class="exampleTable" ng-model="$parent.hardwareType" ng-change="addHardware()">
-
-                           <option value="" slected>Choose hardware</option>
-                           <option value="dell">Dell</option>
-                           <option value="hp">HP</option>
-                        </select>
-                       <!-- <button class="refreshbutton" style="margin-left:5px;"  ng-click="addHardware()" >Add Hardware</button>-->
-                     </form>
-                     <div ng-class="{tableWidth: check != 1}">
-                     <table  ng-show="showHardwareTable" class="shardwareTable">
-                        <tr>
-                           <th>Hardware name</th>
-                           <th>Hardware Type</th>
-                        </tr>
-                        <tr class="border_bottom" ng-repeat="hardware in hardwareList" >
-                           <td>{{hardware.name}}</a></td>
-                           <td style="padding-left:10px;font-size: 15px;">{{hardware.type}}</td>
-                        </tr>
-                     </table>
-                      </div>
-                  </div>
-                  </div>
-               
             </div>
-	</script>
-	
-	<script type="text/ng-template" id="software.html">
-		<div>
+         </div>
+         <script type="text/ng-template" id="hardware.html">
+            <div>
+                         
+                            <div>
+                               <div ng-show="headerHardware" style="background-color: #cdcdcd;height:30px;">
+                               <h4 style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">Add Hardwares to node {{nodeHName}}</h4>
+                               </div>
+                                <div style="padding-left:5px;padding-right:5px;padding-top:3px;padding-bottom:3px">
+                               <form ng-show="showHardwareForm" class="podForm">
+                                  <label style="width:120px">Hardware name:</label>
+                                  <input type="text"  style="width:140px;height:30px;" placeholder="Enter Hardware Name" ng-model="$parent.HardwareName" required/>
+                                  <label style="width:120px">Hardware Type:</label>
+                                  <select style="height:30px;width:140px;"   class="exampleTable" ng-model="$parent.hardwareType" ng-change="addHardware()">
             
-                  <div>
-                     <div  ng-show="headerdSoftware"  style="background-color: #cdcdcd;height:30px;">
-                     <h4 style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">Add Softwares to node {{nodeHName}}</h4>
-                     </div>
-                     <div style="padding-left:5px;padding-right:5px;padding-top:3px;padding-bottom:3px">
-                     <form ng-show="showSoftwareForm" class="podForm">
-                        <label style="width:120px">Software name:</label>
-                        <input type="text"  style="width:140px;height:30px;" placeholder="Enter Software Name" ng-model="$parent.softwareName" required/>
-                        <label style="width:120px">Software Type:</label>
-                        <select style="height:30px;width:140px;"   class="exampleTable" ng-model="$parent.softwareType">
-                           <option value="" slected>Choose Software</option>
-                           <option value="openstack">OpenStack</option>
-                           <option value=""></option>
-                        </select><br>
-                        <label style="width:120px">Software version:</label>
-                        <input type="text"  style="width:140px;height:30px;" placeholder="Enter Software Version" ng-model="$parent.softwareVersion" required/>
-                        <button class="refreshbutton" style="margin-left:5px;height:30px"  ng-click="addSoftware()" >Add Software</button>
-                     </form>
-                     <div ng-class="{tableWidth: check != 1}">
-                     <table ng-show="showSoftwareTable" class="shardwareTable">
-                        <tr>
-                           <th>Software name</th>
-                           <th>Software Type</th>
-                           <th>Software Version</th>
-                        </tr>
-                        <tr class="border_bottom" ng-repeat="software in softwareList" >
-                           <td style="padding-left:10px;font-size: 15px;">{{software.name}}</a></td>
-                           <td style="padding-left:10px;font-size: 15px;">{{software.type}}</td>
-                           <td style="padding-left:10px;font-size: 15px;">{{software.version}}</td>
-                        </tr>
-                     </table>
-                   <div>
-                  </div>
-               </div>
-	</script> 
-  </div>
-  </body>
+                                     <option value="" selected>Choose hardware</option>
+                                     <option value="dell">Dell</option>
+                                     <option value="hp">HP</option>
+                                  </select>
+                                 <!-- <button class="refreshbutton" style="margin-left:5px;"  ng-click="addHardware()" >Add Hardware</button>-->
+                               </form>
+                               <div>
+                               <table  ng-show="showHardwareTable" class="shardwareTable">
+                                  <tr>
+                                     <th>Hardware name</th>
+                                     <th>Hardware Type</th>
+                                  </tr>
+                                  <tr class="border_bottom" ng-repeat="hardware in hardwareList" >
+                                     <td>{{hardware.name}}</a></td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{hardware.type}}</td>
+                                  </tr>
+                               </table>
+                                </div>
+                            </div>
+                            </div>
+                         
+                      </div>
+         </script>
+         <script type="text/ng-template" id="software.html">
+            <div>
+                      
+                            <div>
+                               <div  ng-show="headerdSoftware"  style="background-color: #cdcdcd;height:30px;">
+                               <h4 style="margin-top:0px;padding-left:5px;padding-right:5px;padding-bottom:3px">Add Softwares to node {{nodeHName}}</h4>
+                               </div>
+                               <div style="padding-left:5px;padding-right:5px;padding-top:3px;padding-bottom:3px">
+                               <form ng-show="showSoftwareForm" class="podForm">
+                                  <label style="width:120px">Software name:</label>
+                                  <input type="text"  style="width:140px;height:30px;" placeholder="Enter Software Name" ng-model="$parent.softwareName" required/>
+                                  <label style="width:120px">Software Type:</label>
+                                  <select style="height:30px;width:140px;"   class="exampleTable" ng-model="$parent.softwareType">
+                                     <option value="" selected>Choose Software</option>
+                                     <option value="openstack">OpenStack</option>
+                                     <option value=""></option>
+                                  </select><br>
+                                  <label style="width:120px">Software version:</label>
+                                  <input type="text"  style="width:140px;height:30px;" placeholder="Enter Software Version" ng-model="$parent.softwareVersion" required/>
+                                  <button class="refreshbutton" style="margin-left:5px;height:30px"  ng-click="addSoftware()" >Add Software</button>
+                               </form>
+                               <div>
+                               <table ng-show="showSoftwareTable" class="shardwareTable">
+                                  <tr>
+                                     <th>Software name</th>
+                                     <th>Software Type</th>
+                                     <th>Software Version</th>
+                                  </tr>
+                                  <tr class="border_bottom" ng-repeat="software in softwareList" >
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.name}}</a></td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.type}}</td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.version}}</td>
+                                  </tr>
+                               </table>
+                             <div>
+                            </div>
+                         </div>
+         </script> 
+      </div>
+      <div style="float:right;background-color:#cccccc;width:25%; height:100vh;bottom:0; margin-top:20px;" ng-show="addNodeMenu">
+         <div>
+            <form class="siteForm">
+               <h2 style="background-color:#999999;margin-top:0px;padding-left:10px;">Add Nodes to {{rackNName}}:</h2>
+               <label style="width:100%;margin-bottom:1px;padding-left:10px;"> Rack Number: </label>
+               <input type="text" style="width:90%;margin-left:10px;height:30px;" placeholder="" ng-model="rackNumber" ng-required="true" />
+               <label style="width:100%;margin-bottom:1px;padding-left:10px;"> Node Name: </label>
+               <input type="text" style="width:90%;margin-left:10px;height:30px;" placeholder="" ng-model="nodeName" required/> <br>
+               <label style="width:100%;padding-left:10px;"> Node Type: </label>
+               <input type="text" style="width:90%;margin-left:10px;height:30px;" placeholder="" ng-model="nodeType" required/> <br>
+               <button style="margin-left:35%" class="refreshbutton" ng-click="cancel()">Close</button>
+               <button class="refreshbutton" ng-click="addNodes()">Submit</button>
+            </form>
+         </div>
+      </div>
+       <div style="float:right;background-color:#cccccc;width:25%; height:100vh;bottom:0; margin-top:20px;" ng-show="addSoftwareHardwareMenu">
+         <div>
+             <h2 style="background-color:#999999;margin-top:0px;padding-left:10px;">Node {{nodeName}}:</h2>
+              <div style="padding-left:10px;">
+            <input type="radio" id="hardware" ng-model = "myVar" value="hardware" ng-change ="newValue(myVar)" checked />
+            <label for="hardware">Add Hardware</label>
+        </div>
+
+        <div style="padding-left:10px;">
+            <input type="radio" id="software" ng-model = "myVar" value="software" ng-change ="newValue(myVar)"/>
+            <label for="software">Add Software</label>
+        </div>
+        <form ng-show="showHardwareForm" class="podForm">
+             <label style="width:100%;margin-bottom:1px;padding-left:10px;">Hardware name:</label>
+             <input type="text"  style="width:90%;margin-left:10px;height:30px;"  placeholder="Enter Hardware Name" ng-model="$parent.HardwareName" required/>
+             <label style="width:100%;margin-bottom:1px;padding-left:10px;">Hardware Type:</label>
+             <select style="height:30px;width:90%;margin-left:10px;"   class="exampleTable" ng-model="$parent.hardwareType" ng-change="addHardware()">
+            	<option value="" selected>Choose hardware</option>
+                <option value="dell">Dell</option>
+                <option value="hp">HP</option>
+            </select>
+            <button style="margin-left:35%" class="refreshbutton" ng-click="cancel()">Close</button>
+           <button class="refreshbutton" style="margin-left:5px;"  ng-click="addHardware()" >Submit</button>
+        </form>
+        <table  ng-show="showHardwareTable" class="shardwareTable">
+                                  <tr>
+                                     <th>Hardware name</th>
+                                     <th>Hardware Type</th>
+                                  </tr>
+                                  <tr class="border_bottom" ng-repeat="hardware in hardwareList" >
+                                     <td>{{hardware.name}}</a></td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{hardware.type}}</td>
+                                  </tr>
+                               </table>
+        <form ng-show="showSoftwareForm" class="podForm">
+                                  <label style="width:100%;margin-bottom:1px;padding-left:10px;">Software name:</label>
+                                  <input type="text"  style="width:90%;margin-left:10px;height:30px;" placeholder="Enter Software Name" ng-model="$parent.softwareName" required/>
+                                  <label  style="width:100%;margin-bottom:1px;padding-left:10px;">Software Type:</label>
+                                  <select style="height:30px;width:90%;margin-left:10px;"   class="exampleTable" ng-model="$parent.softwareType">
+                                     <option value="" selected>Choose Software</option>
+                                     <option value="openstack">OpenStack</option>
+                                     <option value=""></option>
+                                  </select><br>
+                                  <label style="width:100%;margin-bottom:1px;padding-left:10px;">Software version:</label>
+                                  <input type="text"  style="height:30px;width:90%;margin-left:10px;" placeholder="Enter Software Version" ng-model="$parent.softwareVersion" required/>
+                                  <button style="margin-left:35%" class="refreshbutton" ng-click="cancel()">Close</button>
+                                  <button class="refreshbutton" style="margin-left:5px;"  ng-click="addSoftware()" >Submit</button>
+                               </form>
+             <table ng-show="showSoftwareTable" class="shardwareTable">
+                                  <tr>
+                                     <th>Software name</th>
+                                     <th>Software Type</th>
+                                     <th>Software Version</th>
+                                  </tr>
+                                  <tr class="border_bottom" ng-repeat="software in softwareList" >
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.name}}</a></td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.type}}</td>
+                                     <td style="padding-left:10px;font-size: 15px;">{{software.version}}</td>
+                                  </tr>
+            </table>
+         </div>
+      </div>
+   </body>
 </html>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-angular.module('PortalManagement').controller('AECeteTestController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,hostUrl,camundaUrl) {
+angular.module('PortalManagement').controller('AECeteTestController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,appContext) {
     $scope.sortingOrder = '';
     $scope.signOut = "Sign Out";
     $scope.reverse = false;
@@ -31,6 +31,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         }
         return haystack.ignoreCase().toindexOf(needle.ignoreCase()) !== -1;
     }
+    
     $scope.search = function() {
         $scope.filteredItems = $filter('filter')($scope.tempestSites, function(item) {
             for (var attr in item) {
@@ -79,17 +80,31 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     $scope.setPage = function() {
         $scope.currentPage = this.n;
     }
+    $scope.refreshtempestRegionChange = function(){
+    	$scope.tempestselection = false;
+    	eteTestSitesDisplay ();
+    	 $scope.siteIndex  = "";
+    }
     eteTestSitesDisplay = function() {
         $http({
             method: 'GET',
-            url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
+            url: appContext+'/edgeSites/0',
+            //url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
                 	'tokenId' : $scope.tokenId
             }
         }).then(function(response) {
-            $scope.tempestSites = response.data;
+            $scope.tempestSites = response.data.sort(function(a, b){
+    		    //note the minus before -cmp, for descending order
+    		    return $scope.cmp( 
+    		        [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+    		        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+    		    );
+    		});
+            
+            console.log($scope.tempestSites);
             $scope.search();
             $scope.showtempestSitesTable = true;
         }, function(error) {
@@ -103,14 +118,23 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         } else {
             $http({
                 method: 'GET',
-                url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/' + $scope.selectedtempestRegion.regionId,
+                url: appContext+'/edgeSites/0',
+               // url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/' + $scope.selectedtempestRegion.regionId,
                 headers: {
                     'Content-Type': "application/json",
                     'Accept': "application/json",
                     'tokenId' : $scope.tokenId
                 }
             }).then(function(response) {
-                $scope.tempestSites = response.data;
+                $scope.tempestSites = response.data.sort(function(a, b){
+        		    //note the minus before -cmp, for descending order
+        		    return $scope.cmp( 
+        		        [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+        		        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+        		    );
+        		});
+                var abc =  $scope.tempestSites.filter(function(d) { return d.region.regionId === $scope.selectedtempestRegion.regionId });
+                $scope.tempestSites = abc;
                 $scope.showtempestSitesTable = true;
                 $scope.search();
             }, function(error) {
@@ -137,7 +161,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     	$scope.tempestSites[siteIndex].tempestStatus = 'In Progress...';
     	$http({
      method: 'POST',
-     url: 'http://'+camundaUrl+'/tempest/',
+     url: appContext+'/test/tempest',
      data: {
     	 "sitename": $scope.tempestSites[siteIndex].edgeSiteName,
         "remoteserver": $scope.tempestSites[siteIndex].edgeSiteIP,
@@ -162,9 +186,10 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
  }).then(function(response) {
  	if (response.status == 200) {
         //$scope.tempestSites[siteIndex].tempestStatus = 'Completed...';
-        $http({
+       /* $http({
                      method: 'POST',
-                     url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+                     url:appContext+'/edgeSites/status',
+                     //url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
                      data:{
                      "siteName": $scope.tempestSites[siteIndex].edgeSiteName,
                      "tempestStatus":"In Progress" 
@@ -179,7 +204,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
                  	
                  }, function(error) {
                  	$scope.errorHandle(error);
-                 });
+                 });*/
        
     	}
     	else {
@@ -214,7 +239,8 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     }
     $http({
         method: 'GET',
-        url: 'http://'+hostUrl+'/AECPortalMgmt/regions/',
+        url: appContext+'/regions/',
+        //url: 'http://'+hostUrl+'/AECPortalMgmt/regions/',
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json",
