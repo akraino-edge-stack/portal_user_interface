@@ -96,10 +96,10 @@
 }
  #sidebar-wrapper {
      z-index: 1000;
-     position: fixed;
+     position: absolute;
      left: 250px;
      width: 0;
-     height: 100%;
+      height:100vh;
      margin-left: -250px;
      overflow-y: auto;
      background: #cccccc;
@@ -241,16 +241,22 @@ sidebar-nav > .sidebar-brand {
          margin-right: 0;
     }
 }
- body {
-     background-color: wheat;
-}
+
  * {
     box-sizing: border-box;
 }
  body {
      margin: 0;
+     padding:0;
+     
      font-family: Arial;
+    height:calc(100% - 70px);
+    height:-moz-calc(100% - 70px);
+    height:-webkit-calc(100% - 70px);
+    
 }
+html{margin:0;padding:0;}
+
  .header {
      overflow: hidden;
      background-color: #000000;
@@ -312,12 +318,22 @@ sidebar-nav > .sidebar-brand {
      width: 100%;}
 
  .siteStatusTable th {
-     padding: 10px;
+     padding: 5px;
      text-align: left;
      background-color: #cccccc;
      border: 1px solid #ddd;
 }
  .siteStatusTable td {
+     padding-top: 5px;
+     padding-bottom:5px;
+}
+.nodeTable th {
+     padding: 10px;
+     text-align: left;
+     background-color: #cccccc;
+     border: 0px solid #ddd;
+}
+ .nodeTable td {
      padding-top: 5px;
      padding-bottom:5px;
 }

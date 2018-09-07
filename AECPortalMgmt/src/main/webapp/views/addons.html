@@ -41,6 +41,10 @@ limitations under the License.
      color: white;
      border: 1px solid #ddd;
 }
+pre {
+font-size: 15px;
+color: black;
+}
       </style>
    </head>
    <body ng-controller="AECaddOnsController">
@@ -71,7 +75,7 @@ limitations under the License.
                      <div style="float:right">
                         <a style="padding-left:5px;font-size:16px;cursor: pointer;margin-top:20px;color:#4d4d4d" ng-click="refreshRegionChange()"> Refresh 
                         </a>
-                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="!(addOnsites[siteIndex].fileUploadStatus == 'Completed')" ng-click="installOnap(siteIndex)">Install ONAP
+                        <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="!((addOnsites[siteIndex].fileUploadStatus == 'Completed') || (addOnsites[siteIndex].inputFile != null))" ng-click="installOnap(siteIndex)">Install ONAP
                         </button>
                      </div>
                   </div>
@@ -93,30 +97,32 @@ limitations under the License.
                   <tr class="border_bottom" ng-repeat="site in pagedItems[currentPage] | orderBy:sortType:sortReverse | filter:searchaddOnSites">
                      <td style="text-align: center;width:8%;">
                         <form>
-                        <input type="radio" ng-model="$parent.addOnselection" name="selectionRadio" value="{{site.edgeSiteName}}" ng-click="addOnUpdate($index)" />
+                        <input type="radio" ng-model="$parent.addOnselection" name="selectionRadio" value="{{site.edgeSite.edgeSiteName}}" ng-click="addOnUpdate($index)" />
                         <form>
                      </td>
-                     <td style="padding-left:10px;width:23%">{{site.regionName}}
+                     <td style="padding-left:10px;width:23%">{{site.edgeSite.region.regionName}}
                      </td>
                      <td style="width:23%"> 
-                        <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedaddOnSites" ng-click="openDialog($index)">{{ site.edgeSiteName }}
+                        <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedaddOnSites" ng-click="openDialog($index)">{{ site.edgeSite.edgeSiteName }}
                         </a>
                         
-                        <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!(site.addOnselection)" ng-click ="uploadOnapfile(siteIndex)">Upload</button>
+                        <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!(site.addOnselection)" ng-click ="uploadOnapfile(siteIndex)">Upload</button><br>
+                        <a ng-click ="viewInputfile(site.edgeSite.edgeSiteName)" style="font-style: italic;cursor: pointer;" ng-if="((site.fileUploadStatus == 'Completed') || (site.inputFile != null))">View input File</a>
                         <label>{{site.fileUploadMessage}}</label>
                      </td>
-                     <td style="padding-left:10px;width:23%">{{site.blueprint}}</td>
-                     <td style="padding-left:10px;width:23%;font-style: italic;">{{site.onapStatus ? site.onapStatus : 'Not started'}}
+                     <td style="padding-left:10px;width:23%">{{site.edgeSite.blueprint}}
+                     
+                     </td>
+                     <td style="padding-left:10px;width:23%;font-style: italic;">{{site.edgeSite.onapStatus ? site.edgeSite.onapStatus : 'Not started'}}
                      </td>
                   </tr>
                </tbody>
             </table>
          </div>
-      </div>
-      <div class="pagination">
+         <div class="pagination">
          <ul>
             <li ng-class="{disabled: currentPage == 0}"> 
-               <a href ng-click="prevPage()">« Prev
+               <a href ng-click="prevPage()"> Prev
                </a> 
             </li>
             <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()"> 
@@ -124,13 +130,14 @@ limitations under the License.
                </a> 
             </li>
             <li ng-class="{disabled: currentPage == pagedItems.length - 1}"> 
-               <a href ng-click="nextPage()">Next »
+               <a href ng-click="nextPage()">Next 
                </a> 
             </li>
          </ul>
       </div>
       </div>
-      </div>
+      
+     
    </body>
    <script type="text/ng-template" id="addOnstemplateForm">
       <form class="addOnForm">
@@ -185,5 +192,12 @@ limitations under the License.
        <button  class="refreshbutton" ng-click="addOnUpload($parent.siteIndex,file)">Submit</button>
    </form>
    </script>
+   <script type="text/ng-template" id="onapinputtemplateForm">
+    <h1>Input File:</h1><br>
+    <div style="overflow:auto;height:250px;">
+    <pre>{{$parent.inputFile}}</pre>
+</div>
+    <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
+</script>
 </html>
 

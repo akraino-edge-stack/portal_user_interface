@@ -18,6 +18,7 @@ package org.akraino.portal.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.akraino.portal.data.AECPortalResponse;
 import org.akraino.portal.entity.Pod;
 import org.akraino.portal.service.PodService;
 import org.apache.log4j.Logger;
@@ -55,19 +56,68 @@ public class PodController {
 		return new ResponseEntity<List<Pod>>(list, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/pod", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> createPod(@RequestBody Pod pod) {
+	public ResponseEntity<AECPortalResponse> createPod(@RequestBody Pod pod) {
+		
+		AECPortalResponse response = new AECPortalResponse();
 		
 		try {
-			
+
 			podService.savePod(pod);
+			
+			response.setStatusCode("200");
+			response.setEntity("pod");
+			response.setMessage("created successfully");
+			
+		} catch (Exception e) {
+			response.setStatusCode("406");
+			logger.error(e);
+		}
+		
+		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AECPortalResponse> updatePod(@RequestBody Pod pod) {
+		
+		AECPortalResponse response = new AECPortalResponse();
+		
+		try {
+
+			podService.updatePod(pod);
+			
+			response.setStatusCode("200");
+			response.setEntity("pod");
+			response.setMessage("updated successfully");
 			
 		} catch (Exception e) {
 			logger.error(e);
 		}
 		
-		return new ResponseEntity<String>("pod saved successfuly", HttpStatus.OK);
+		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AECPortalResponse> deletePod(@RequestBody Pod pod) {
+		
+		AECPortalResponse response = new AECPortalResponse();
+		
+		try {
+
+			podService.deletePod(pod);
+			
+			response.setStatusCode("200");
+			response.setEntity("pod");
+			response.setMessage("delete successfully");
+			
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		
+		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
 	}
 
 }

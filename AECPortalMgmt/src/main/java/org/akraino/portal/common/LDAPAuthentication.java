@@ -26,7 +26,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
-import org.akraino.portal.data.AuthenticationResponse;
+import org.akraino.portal.data.AccessResponse;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -38,9 +38,9 @@ public class LDAPAuthentication {
 	public static final String AUTHORIZED = "Authorized";
 	public static final String UNAUTHORIZED = "Unauthorized";
 	
-	public synchronized AuthenticationResponse authenticateUser(String user, String pwd) {
+	public synchronized AccessResponse authenticateUser(String user, String pwd) {
 		
-		AuthenticationResponse authResponse = new AuthenticationResponse();
+		AccessResponse authResponse = new AccessResponse();
 		
 		try {
 			

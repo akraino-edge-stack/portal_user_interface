@@ -16,20 +16,20 @@
 
 package org.akraino.portal.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.akraino.portal.data.EdgeSite;
-import org.akraino.portal.data.Onap;
-import org.akraino.portal.data.SiteStatusRequest;
+import org.akraino.portal.data.AECPortalResponse;
+import org.akraino.portal.data.BuildRequest;
+import org.akraino.portal.data.EdgeSiteState;
+import org.akraino.portal.data.SiteDeployRequest;
 import org.akraino.portal.data.SiteStatusResponse;
-import org.akraino.portal.data.WFEBuildSiteReponse;
-import org.akraino.portal.data.WFEBuildSiteRequest;
-import org.akraino.portal.service.AkrainoSiteService;
+import org.akraino.portal.data.WorkflowRequest;
+import org.akraino.portal.entity.EdgeSite;
+import org.akraino.portal.entity.EdgeSiteYamlTemplate;
+import org.akraino.portal.service.EdgeSiteService;
 import org.apache.log4j.Logger;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,187 +40,193 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/edgeSites")
 public class SitesController {
 
+	@Autowired
+	EdgeSiteService edgeSiteService;
+
 	private static final Logger logger = Logger.getLogger(SitesController.class);
-	
-	@RequestMapping(value = "/{regionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
-	public ResponseEntity<List<EdgeSite>> getAllEdgeSites(  @PathVariable("regionId") Integer regionId) {
-		
-		List <EdgeSite> list = new ArrayList<EdgeSite> ();
-		
-		AkrainoSiteService akrainoSiteService = new AkrainoSiteService();
+
+	@RequestMapping(value = "/{regionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<EdgeSite>> getAllEdgeSites(@PathVariable("regionId") Integer regionId) {
+
+		List<EdgeSite> list = new ArrayList<EdgeSite>();
+
 		try {
-			if (regionId == null) {
-				regionId = 0;
-			}
-			list = akrainoSiteService.getSites(regionId.intValue());
-		} catch (ClassNotFoundException e) {
-			logger.error(e);
-		} catch (SQLException e) {
+
+			list = edgeSiteService.getSites(regionId);
+
+		} catch (Exception e) {
 			logger.error(e);
 		}
-		
+
 		return new ResponseEntity<List<EdgeSite>>(list, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/build", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<WFEBuildSiteReponse> buildEdgeSite(@RequestBody WFEBuildSiteRequest buildRequest) {
-		
-		
-		WFEBuildSiteReponse response = new WFEBuildSiteReponse();
-	    try {
-	    
-	         HttpHeaders headers = new HttpHeaders();
-	         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-	         headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
-	    
-	         RestTemplate restTemplate = new RestTemplate();
-	         
-	         // Data attached to the request.
-	         HttpEntity<WFEBuildSiteRequest> requestBody = new HttpEntity<>(buildRequest, headers);
-	         	        response = restTemplate.postForObject(
-	        		 "http://135.16.101.85:8070/build/", 
-	        		 requestBody, WFEBuildSiteReponse.class);
-	    	
-	        if (response.getStatus() == String.valueOf(200)) {
-	        	
-	        	AkrainoSiteService akrainoSiteService = new AkrainoSiteService(); 
-	        	
-	        	SiteStatusRequest statusReqeust = new SiteStatusRequest();
-	        	
-	        	akrainoSiteService.updateSiteStatus(statusReqeust);
-	        	
-	        	return new ResponseEntity<WFEBuildSiteReponse>(response, HttpStatus.OK);
-	        } else {
-	        	return new ResponseEntity<WFEBuildSiteReponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-	        }
-	         
-		} catch (Exception e) {
-			
-			
-			
-			logger.error("site build failed-" + e);
-		}
-	   
-	    
-	    return new ResponseEntity<WFEBuildSiteReponse>(response, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/upload", method = RequestMethod.POST,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file, @ModelAttribute("siteName") String siteName,
-			@ModelAttribute("blueprint") String blueprint, @ModelAttribute("edgeSiteIP") String edgeSiteIP, 
-			@ModelAttribute("edgeSiteUser") String edgeSiteUser, @ModelAttribute("edgeSitePwd") String edgeSitePwd) {
-		AkrainoSiteService akrainoSiteService = new AkrainoSiteService(); 
+	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
+			@ModelAttribute("siteName") String siteName, @ModelAttribute("blueprint") String blueprint,
+			@ModelAttribute("edgeSiteIP") String edgeSiteIP, @ModelAttribute("edgeSiteUser") String edgeSiteUser,
+			@ModelAttribute("edgeSitePwd") String edgeSitePwd) {
+
 		SiteStatusResponse response = new SiteStatusResponse();
-		
-		SiteStatusRequest siteRequest = new SiteStatusRequest();
-		
+
+		EdgeSiteState siteRequest = new EdgeSiteState();
+
 		siteRequest.setSiteName(siteName);
 		siteRequest.setBlueprint(blueprint);
 		siteRequest.setEdgeSiteIP(edgeSiteIP);
 		siteRequest.setEdgeSiteUser(edgeSiteUser);
 		siteRequest.setEdgeSitePwd(edgeSitePwd);
-		
-		 try {
-		    	boolean copyStatus = akrainoSiteService.saveAndCopyInput(file.getBytes(), siteRequest);
-		    	if(copyStatus) {
-		    		response.setStatusCode("200");
-		    		response.setMessage("Input file copied successfully");
-		    	} else {
-		    		response.setStatusCode("406");
-		    		response.setMessage("Input file copy failed");
-		    	}
-		    	
-		    	
-			} catch (Exception e) {
+
+		try {
+			boolean copyStatus = edgeSiteService.saveAndCopyInput(file.getBytes(), siteRequest);
+			if (copyStatus) {
+				response.setStatusCode("200");
+				response.setMessage("Input file copied successfully");
+			} else {
 				response.setStatusCode("406");
-				response.setMessage(e.getMessage());
+				response.setMessage("Input file copy failed");
 			}
-		   
-		    
-		    return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
-		
+
+		} catch (Exception e) {
+			response.setStatusCode("406");
+			response.setMessage(e.getMessage());
+		}
+
+		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+
 	}
-	
-	@RequestMapping(value = "/status", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SiteStatusResponse> updateSiteStatus(@RequestBody SiteStatusRequest statusRequest) {
-		AkrainoSiteService akrainoSiteService = new AkrainoSiteService(); 
-		int updateRecords;
+
+	@RequestMapping(value = "/status", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SiteStatusResponse> updateSiteStatus(@RequestBody EdgeSiteState statusRequest) {
+
 		SiteStatusResponse response = new SiteStatusResponse();
 		response.setSiteName(statusRequest.getSiteName());
-	    try {
-	    	updateRecords = akrainoSiteService.updateSiteStatus(statusRequest);
-	    	if(updateRecords > 0) {
-	    		response.setStatusCode("200");
-	    		response.setMessage("install status updated successfully");
-	    	} else {
-	    		response.setStatusCode("406");
-	    		response.setMessage("install status update failed");
-	    	}
-	    	
-	    	
-		} catch (ClassNotFoundException | SQLException e) {
+
+		try {
+
+			edgeSiteService.updateSiteStatus(statusRequest);
+
+		} catch (Exception e) {
 			response.setStatusCode("406");
-			response.setMessage(e.getMessage());
+			response.setMessage("install status update failed");
 		}
-	   
-	    
-	    return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+
+		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/onap/{siteName}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SiteStatusResponse> updateSiteOnap(@RequestBody Onap onap) {
-		AkrainoSiteService akrainoSiteService = new AkrainoSiteService(); 
-		int updateRecords;
+	@RequestMapping(value = "/build", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SiteStatusResponse> buildEdgeSite(@RequestBody BuildRequest buildRequest) {
+
 		SiteStatusResponse response = new SiteStatusResponse();
-		response.setSiteName(onap.getSiteName());
-	    try {
-	    	updateRecords = akrainoSiteService.updateSiteOnap(onap);
-	    	if(updateRecords > 0) {
-	    		response.setStatusCode("200");
-	    		response.setMessage("Update Onap successfully");
-	    	} else {
-	    		response.setStatusCode("406");
-	    		response.setMessage("Update Onap failed");
-	    	}
-	    	
-		} catch (ClassNotFoundException | SQLException e) {
+		response.setSiteName(buildRequest.getSitename());
+
+		try {
+
+			edgeSiteService.buildEdgeSite(buildRequest);
+
+		} catch (Exception e) {
 			response.setStatusCode("406");
-			response.setMessage(e.getMessage());
+			response.setMessage("build status call initiation failed");
+		}
+
+		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/files/build/{siteName}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> getBuildYamlFile(@PathVariable("siteName") String siteName) {
+
+		String generatedYamlFileContent = null;
+		try {
+			generatedYamlFileContent = edgeSiteService.getBuildYamlContent(siteName);
+		} catch (Exception e) {
+			logger.error("error reading yaml file:" + e);
+		}
+
+		return new ResponseEntity<String>(generatedYamlFileContent, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/files/yamlTemplate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<EdgeSiteYamlTemplate>> getYamlTemplateFiles() {
+
+		List<EdgeSiteYamlTemplate> yamlTemplateList = null;
+		try {
+			yamlTemplateList = edgeSiteService.getYamlTemplates();
+		} catch (Exception e) {
+			logger.error("error reading yaml template files:" + e);
+		}
+
+		return new ResponseEntity<List<EdgeSiteYamlTemplate>>(yamlTemplateList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/files/heat/{vnfName}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> getHeatTemplateFile(@PathVariable("vnfName") String vnfName) {
+
+		logger.error("get heat template file for VNF");
+
+		String heatFileContent = null;
+		try {
+			heatFileContent = edgeSiteService.getHeatContent(vnfName);
+		} catch (Exception e) {
+			logger.error("error - get heat template file for VNF:" + e);
+		}
+
+		return new ResponseEntity<String>(heatFileContent, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/onboardVNF", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AECPortalResponse> onBoardVNF(@RequestBody WorkflowRequest vnfRequest) {
+
+		AECPortalResponse response = new AECPortalResponse();
+
+		try {
+
+			edgeSiteService.onBoardVNF(vnfRequest);
+
+			response.setEntity("VNF Onboard");
+			response.setStatusCode("200");
+			response.setMessage("VNF Onboard call initiated successfuly");
+
+		} catch (Exception e) {
+
+			response.setEntity("VNF Onboard");
+			response.setStatusCode("406");
+			response.setMessage("VNF Onboard call initiation failed");
 
 		}
-	   
-	    
-	    return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+
+		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+
 	}
 	
-	@RequestMapping(value = "/onap/{siteName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
-	public ResponseEntity<Onap> getOnapDetails(  @PathVariable("siteName") String siteName) {
-		
-		List <Onap> list = new ArrayList<Onap> ();
-		
-		AkrainoSiteService akrainoSiteService = new AkrainoSiteService();
+	@RequestMapping(value = "/deploy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AECPortalResponse> deploySite(@RequestBody SiteDeployRequest siteDeployRequest) {
+
+		AECPortalResponse response = new AECPortalResponse();
+
 		try {
-			list = akrainoSiteService.getOnapForSite(siteName);
-		} catch (ClassNotFoundException e) {
-			logger.error(e);
-		} catch (SQLException e) {
-			logger.error(e);
+
+			edgeSiteService.deploySite(siteDeployRequest);
+
+			response.setEntity("Site Deploy");
+			response.setStatusCode("200");
+			response.setMessage("Site Deploy call initiated successfuly");
+
+		} catch (Exception e) {
+
+			response.setEntity("Site Deploy");
+			response.setStatusCode("406");
+			response.setMessage("Site Deploy call initiation failed");
+
 		}
-	
-		
-		return new ResponseEntity<Onap>(list.get(0), HttpStatus.OK);
+
+		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+
 	}
-	
+
 }

@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
+
    
-   <div class="header" style="width: 100%" style="padding-top:5px; padding-bottom:5px;background-color:#000000;">
+  
+
+
+<div>
+<div class="header" style="width: 100%" style="padding-top:5px; padding-bottom:5px;background-color:#000000;">
       <a href="https://www.akraino.org/">
       <img src="./resources/images/logo_akraino_edge_stack.png" alt="Akraino" width="150" height="30" border="0">
       </a>
@@ -26,8 +30,6 @@ limitations under the License.
          <a href="#" style="font-color:#FFFFFF" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-click="goLogout()" >Sign Out</a>
       </div>
    </div>
-</div>
-<div>
    <div id="wrapper" style="margin-top:0.1px;">
       <div id="sidebar-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-cloak>
          <ul class="sidebar-nav">
@@ -103,10 +105,11 @@ limitations under the License.
       </div>
       <!-- /#sidebar-wrapper -->
       <!-- Page Content -->
-      <div id="page-content-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-cloak>
+      <div id="page-content-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" style="overflow:auto;" ng-cloak>
+      
          <div class="container-fluid">
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col-lg-12" style="padding-right:0px;">
                   <div id="wrapper">
                      <!-- Carrega todas as páginas-->
                      <div ui-view="main"></div>

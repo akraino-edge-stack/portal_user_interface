@@ -23,7 +23,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -40,28 +43,29 @@ public class Onap implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "onap_id_generator")
 	@SequenceGenerator(name="onap_id_generator", sequenceName = "akraino.seq_onap", allocationSize=1)
 	@Column(name="onap_id")
-	private Long onapId; 
+	private int onapId; 
 	
-	@Column(name = "edge_site_name")
-	private String siteName;
+	@OneToOne
+    @JoinColumn(name = "edge_site_id")
+	private EdgeSite edgeSite;
 	
 	@Column(name = "input_file")
 	private byte [] inputFile;
 
-	public Long getOnapId() {
+	public int getOnapId() {
 		return onapId;
 	}
 
-	public void setOnapId(Long onapId) {
+	public void setOnapId(int onapId) {
 		this.onapId = onapId;
 	}
 
-	public String getSiteName() {
-		return siteName;
+	public EdgeSite getEdgeSite() {
+		return edgeSite;
 	}
 
-	public void setSiteName(String siteName) {
-		this.siteName = siteName;
+	public void setEdgeSite(EdgeSite edgeSite) {
+		this.edgeSite = edgeSite;
 	}
 
 	public static long getSerialversionuid() {

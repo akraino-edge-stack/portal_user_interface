@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-angular.module('PortalManagement').controller('AECInvController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,hostUrl) {
+angular.module('PortalManagement').controller('AECInvController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,appContext) {
+	 $controller('commonController', { $scope: $scope }); 
 });

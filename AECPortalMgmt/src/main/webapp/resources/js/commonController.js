@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-angular.module('PortalManagement').controller('commonController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$state) {
+angular.module('PortalManagement').controller('commonController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$state,$window,$templateCache,$location) {
   $scope.errorHandle = function(error){
 	  if (error.status == 400) {
 		  localStorage.removeItem("tokenId");
@@ -31,4 +31,38 @@ angular.module('PortalManagement').controller('commonController', function($scop
     	  $rootScope.message = 'Session expired,Please try again...';
       }
   }
+  
+ 
+  $scope.$on('onBeforeUnload', function (e, confirmation) {
+		var e = e || window.event;
+		if(e){
+     confirmation.message = "All data willl be lost.";
+      e.preventDefault();
+		}
+  });
+  $scope.$on('onUnload', function (e) {
+	  $templateCache.removeAll();
+  });
+
+  /*var windowElement = angular.element($window);
+  window.onbeforeunload = function(event){
+	  event.preventDefault();
+  }*/
+	/*windowElement.on('onbeforeunload', function (event) {
+		 $window.alert("Hi");
+		//$templateCache.removeAll();
+	    event.preventDefault();
+	    //below is the redirect part.
+	    //$window.location.href = '/purchase1';
+	    
+			
+			//$window.location.reload();
+	       
+	
+	});*/
+  
+  $scope.cmp = function(x, y){
+      return x > y ? 1 : x < y ? -1 : 0; 
+  };
+  
 });
