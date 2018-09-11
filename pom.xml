@@ -20,7 +20,7 @@ limitations under the License.
   <groupId>org.akraino</groupId>
   <artifactId>portal_user_interface</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>AECPortalMgmt Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>

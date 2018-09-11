@@ -68,6 +68,13 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 		$scope.sitePassword == null;
 		$scope.file == null;*/
     	//$mdSidenav('right').toggle();
+    	/*var selectedSites = $scope.sites.find(function(element) {
+            return element.edgeSiteName === siteName
+        });
+   	 $scope.siteIPaddress = selectedSites.edgeSiteIP;
+   	 $scope.siteUsername = selectedSites.edgeSiteUser;
+   	 $scope.sitePassword = selectedSites.edgeSitePwd;
+   	 console.log($scope.popupSiteIP);*/
     	ngDialog.open({
             scope: $scope,
             template: 'siteUploadForm',
@@ -249,9 +256,9 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             url: appContext +'/edgeSites/build',
             data: {
             	"sitename": $scope.sites[index].edgeSiteName,
-                "filepath": '/root/camunda_test.sh',
-                "targetfolder": '/tmp/yaml_builds',
-                "fileparams": '/root/yaml_builds',
+                "filepath": '/opt/akraino/yaml_builds/tools/generate_yamls.sh',
+                "targetfolder": '/opt/akraino/yaml_builds/site/dellgen10',
+                "fileparams": 'dellgen10',
                 "blueprint":$scope.sites[index].blueprintType,
             },
             headers: {
@@ -374,7 +381,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             "file1params":"dellgen10",
             "winscpfilepath":"/opt/akraino/yaml_builds/tools/2genesis.sh",
             "winscpfileparams":"dellgen10",
-            "remotserver":$scope.sites[index].edgeSiteIP,
+            "remoteserver":$scope.sites[index].edgeSiteIP,
             "port": 22,
             "username": $scope.sites[index].edgeSiteUser, 
             "password": $scope.sites[index].edgeSitePwd ,

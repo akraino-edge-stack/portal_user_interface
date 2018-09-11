@@ -22,13 +22,13 @@ public class WorkflowRequest {
 	private String remoteserver;
 	private String username;
 	private String password;
-	private int port;
+	private Integer port;
 	private String srcdir;
 	private String destdir;
 	private String filename;
 	private String fileparams;
-	private int noofiterations;
-	private int waittime;
+	private Integer noofiterations;
+	private Integer waittime;
 	private String filetrasferscript;
 	private String filetransferparams;
 	public String getSitename() {
@@ -37,11 +37,12 @@ public class WorkflowRequest {
 	public void setSitename(String sitename) {
 		this.sitename = sitename;
 	}
-	public String getRemoteserver() {
+
+	public String getRemotserver() {
 		return remoteserver;
 	}
-	public void setRemoteserver(String remoteserver) {
-		this.remoteserver = remoteserver;
+	public void setRemotserver(String remotserver) {
+		this.remoteserver = remotserver;
 	}
 	public String getUsername() {
 		return username;
@@ -55,11 +56,12 @@ public class WorkflowRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getPortnumber() {
+
+	public Integer getPort() {
 		return port;
 	}
-	public void setPortnumber(int portnumber) {
-		this.port = portnumber;
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 	public String getSrcdir() {
 		return srcdir;
@@ -85,16 +87,17 @@ public class WorkflowRequest {
 	public void setFileparams(String fileparams) {
 		this.fileparams = fileparams;
 	}
-	public int getNoofiterations() {
+
+	public Integer getNoofiterations() {
 		return noofiterations;
 	}
-	public void setNoofiterations(int noofiterations) {
+	public void setNoofiterations(Integer noofiterations) {
 		this.noofiterations = noofiterations;
 	}
-	public int getWaittime() {
+	public Integer getWaittime() {
 		return waittime;
 	}
-	public void setWaittime(int waittime) {
+	public void setWaittime(Integer waittime) {
 		this.waittime = waittime;
 	}
 	public String getFiletrasferscript() {

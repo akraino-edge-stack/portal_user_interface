@@ -121,7 +121,7 @@ color: black;
                         </a>
                             <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!((sites[hostIndex].blueprintType == 'Unicycle') && ((sites[hostIndex].fileUploadStatus == 'Completed') || (sites[hostIndex].inputFile != null)))" ng-click="buildEdgeSite(hostIndex)">Build 
                         </button>
-                            <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!(((sites[hostIndex].blueprintType == 'Rover') && ((sites[hostIndex].fileUploadStatus == 'Completed') || (sites[hostIndex].inputFile != null))) || (sites[hostIndex].edgeSiteBuildStatus.toLowerCase() == 'success'))" ng-click="deployEdgeSite(hostIndex)">Deploy
+                            <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!(((sites[hostIndex].blueprintType == 'Rover') && ((sites[hostIndex].fileUploadStatus == 'Completed') || (sites[hostIndex].inputFile != null))) || (sites[hostIndex].edgeSiteBuildStatus.toLowerCase() == 'success') || (sites[hostIndex].edgeSiteBuildStatus.toLowerCase() == 'completed'))" ng-click="deployEdgeSite(hostIndex)">Deploy
                         </button>
                             <button class="refreshbutton" style="margin-left:5px;" ng-disabled="!((sites[hostIndex].deployStatus.toLowerCase() == 'success') || (sites[hostIndex].deployStatus.toLowerCase() == 'complete'))" ng-click="vnfOnboard(hostIndex)">VNF Onboard
                         </button>
@@ -181,7 +181,7 @@ color: black;
                    <td style="width:12%;">
                         <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.edgeSiteBuildStatus ?site.edgeSiteBuildStatus : 'Not started'}}
                      </label></br>
-                    <a ng-show = "site.edgeSiteBuildStatus == 'success'" href="#" ng-click="viewYamlBuildFile($index)">
+                    <a ng-show = "((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed'))" href="#" ng-click="viewYamlBuildFile($index)">
                      <i >view yaml build file
                      </i>
                      </a>

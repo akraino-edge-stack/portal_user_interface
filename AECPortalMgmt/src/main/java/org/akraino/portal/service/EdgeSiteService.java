@@ -258,6 +258,15 @@ public class EdgeSiteService {
 
 		if (StringUtil.notEmpty(statusReqeust.getBuildStatus()))
 			edgeSite.setEdgeSiteBuildStatus(statusReqeust.getBuildStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getCreateTarStatus()))
+			edgeSite.setEdgeSiteDeployCreateTarStatus(statusReqeust.getCreateTarStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getGenesisNodeStatus()))
+			edgeSite.setEdgeSiteDeployGenesisNodeStatus(statusReqeust.getGenesisNodeStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getDeployToolsStatus()))
+			edgeSite.setEdgeSiteDeployDeployToolStatus(statusReqeust.getDeployToolsStatus());
 
 		if (StringUtil.notEmpty(statusReqeust.getDeployStatus()))
 			edgeSite.setDeployStatus(statusReqeust.getDeployStatus());
