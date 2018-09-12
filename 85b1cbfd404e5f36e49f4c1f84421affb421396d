@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa4c592e_726ac1f7",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/data/WorkflowRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-12T01:28:10Z",
+      "side": 1,
+      "message": "why is \"remote\" spelled wrong now (it was correct before)",
+      "revId": "85b1cbfd404e5f36e49f4c1f84421affb421396d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b049c912_47515d61",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/EdgeSiteService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-12T01:28:10Z",
+      "side": 1,
+      "message": "note: request is spelled wrong",
+      "revId": "85b1cbfd404e5f36e49f4c1f84421affb421396d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
