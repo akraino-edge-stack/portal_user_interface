@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d21b2ce_659734b9",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/EdgeSiteService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-13T21:27:26Z",
+      "side": 1,
+      "message": "why are two constnts concatenated here?  join them in the source code",
+      "revId": "e8b6c87b243e5fad7f082715e9fbc38f569110e1",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79c784f9_1d2dbdf2",
+        "filename": "AECPortalMgmt/src/main/webapp/views/sites.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-13T21:27:26Z",
+      "side": 1,
+      "message": "This /form tag is incorrect - it should be inside the previous div",
+      "revId": "e8b6c87b243e5fad7f082715e9fbc38f569110e1",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebc2f851_6d157f67",
+        "filename": "AECPortalMgmt/src/main/webapp/views/sites.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-13T21:27:26Z",
+      "side": 1,
+      "message": "Does this belong here?  Where is the matching /form?",
+      "revId": "e8b6c87b243e5fad7f082715e9fbc38f569110e1",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be3d9a1e_7a0532e3",
+        "filename": "AECPortalMgmt/src/main/webapp/views/sites.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-13T21:27:26Z",
+      "side": 1,
+      "message": "Does this belong here?  Where is the matching /form?",
+      "revId": "e8b6c87b243e5fad7f082715e9fbc38f569110e1",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
