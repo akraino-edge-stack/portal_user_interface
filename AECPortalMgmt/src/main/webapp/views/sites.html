@@ -181,7 +181,7 @@ color: black;
                    <td style="width:12%;">
                         <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.edgeSiteBuildStatus ?site.edgeSiteBuildStatus : 'Not started'}}
                      </label></br>
-                    <a ng-show = "((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed'))" href="#" ng-click="viewYamlBuildFile($index)">
+                    <a ng-show = "((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed'))"  ng-click="viewYamlBuildFile($index)">
                      <i >view yaml build file
                      </i>
                      </a>
