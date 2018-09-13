@@ -92,7 +92,7 @@ public class EdgeSiteService {
 
 			byte[] array = null;
 
-			String filePath = akrainoBaseDir + "/site/" + siteName + "/" + yamlTemplate.getFileLocation()
+			String filePath = akrainoBaseDir + "/yaml_builds/site/" + siteName + "/" + yamlTemplate.getFileLocation()
 					+ yamlTemplate.getFileName() + ".yaml";
 
 			array = Files.readAllBytes(new File(filePath).toPath());

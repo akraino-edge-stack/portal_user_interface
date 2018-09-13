@@ -58,7 +58,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     
     
     
-    $scope.uploadFile = function(index){
+    $scope.uploadFile = function(siteName){
     	/*$scope.sideMenu = true;
     	$scope.sideInfoBar = false;
     	$scope.sideVNFMenu = false;
@@ -68,16 +68,18 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 		$scope.sitePassword == null;
 		$scope.file == null;*/
     	//$mdSidenav('right').toggle();
-    	/*var selectedSites = $scope.sites.find(function(element) {
+    	var selectedSites = $scope.sites.find(function(element) {
             return element.edgeSiteName === siteName
         });
+    	if(selectedSites != undefined){
    	 $scope.siteIPaddress = selectedSites.edgeSiteIP;
    	 $scope.siteUsername = selectedSites.edgeSiteUser;
    	 $scope.sitePassword = selectedSites.edgeSitePwd;
-   	 console.log($scope.popupSiteIP);*/
+    	}
+   	 //console.log($scope.popupSiteIP);
     	ngDialog.open({
             scope: $scope,
-            template: 'siteUploadForm',
+            template: 'siteUpload',
             closeByDocument: false,
             controller: 'PopUpUploadController',
             appendClassName: 'ngdialog-custom',
@@ -257,8 +259,8 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             data: {
             	"sitename": $scope.sites[index].edgeSiteName,
                 "filepath": '/opt/akraino/yaml_builds/tools/generate_yamls.sh',
-                "targetfolder": '/opt/akraino/yaml_builds/site/dellgen10',
-                "fileparams": 'dellgen10',
+                "targetfolder": '/opt/akraino/yaml_builds/site/'+ $scope.sites[index].edgeSiteName,
+                "fileparams": $scope.sites[index].edgeSiteName,
                 "blueprint":$scope.sites[index].blueprintType,
             },
             headers: {
@@ -381,7 +383,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             "file1params":"dellgen10",
             "winscpfilepath":"/opt/akraino/yaml_builds/tools/2genesis.sh",
             "winscpfileparams":"dellgen10",
-            "remoteserver":$scope.sites[index].edgeSiteIP,
+            "remotserver":$scope.sites[index].edgeSiteIP,
             "port": 22,
             "username": $scope.sites[index].edgeSiteUser, 
             "password": $scope.sites[index].edgeSitePwd ,
@@ -406,7 +408,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         });
     }
     }
-    $scope.viewYamlBuildFile = function(index) {
+   $scope.viewYamlBuildFile = function(index) {
     	if($scope.itemsPerPage > 4){
         	$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
            index = $scope.rowIndex;
@@ -415,6 +417,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         }
         $http({
             method: 'GET',
+            //url: appContext+'/regions/',
             url: appContext+'/edgeSites/files/build/' + $scope.sites[index].edgeSiteName,
             //url: 'http://'+hostUrl+'/AECPortalMgmt/files/' + $scope.sites[index].edgeSiteName,
             headers: {
@@ -423,14 +426,19 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             }
         }).then(function(response) {
             $scope.buildyamloutput = response.data;
+            console.log($scope.buildyamloutput);
             loadPopUp();
+            
             /*var file = new Blob([response], {type: 'application/text'});
             var fileURL = URL.createObjectURL(file);
             $scope.content = $sce.trustAsResourceUrl(fileURL);
             $scope.viewBuildFileFlag = true;*/
+            console.log(response);
         }, function(error) {
+        	console.log(error);
         	//$scope.errorHandle(error);
         });
+       
     	
     }
     loadPopUp = function() {
@@ -444,7 +452,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             height:'450px'
             	
         });
-        /*ngDialog.open({
+       /* ngDialog.open({
             template: 'yamlbuildfile.html',
             className: 'ngdialog-theme-plain',
             scope: $scope,
@@ -799,7 +807,8 @@ angular.module('PortalManagement').controller('PopUpUploadController', function(
                 "edgeSiteIP": $scope.siteIPaddress,
                
                 "edgeSiteUser":$scope.siteUsername,
-                "edgeSitePwd":$scope.sitePassword
+                "edgeSitePwd":$scope.sitePassword,
+                "deploymentMode":$scope.deploymentMode
             	
             },
             headers: {'Content-Type': undefined}
