@@ -172,7 +172,7 @@ color: black;
                     <td style="width:19%;">
                         <a style="padding-left:10px;font-size: 15px;cursor: pointer;" ng-model="selectedSites" ng-click="loadSitePopup($index)">{{ site.edgeSiteName }}
                      </a>
-                       <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && ((site.blueprintType == 'Rover') || (site.blueprintType == 'Unicycle')))" ng-click="uploadFile()">Upload</button><br>
+                       <button style="float:right;margin-right:5px;" class="refreshbutton" ng-disabled="!((site.selection) && ((site.blueprintType == 'Rover') || (site.blueprintType == 'Unicycle')))" ng-click="uploadFile(site.edgeSiteName)">Upload</button><br>
                         <a ng-click ="viewInputfile($index)" style="font-style: italic;cursor: pointer;" ng-if="site.fileUploadStatus.toLowerCase() == 'completed' || site.inputFile != null">View input File</a>
                         <label>{{site.fileUploadMessage}}</label>
                     </td>
@@ -216,10 +216,10 @@ color: black;
                         
                         <div><div style="float:left"><label style="font-size: 13px;padding-left:10px;display:block;margin-bottom:1px;">Genesis Node status:</label></div><div style="float:right;padding-right:3px;"> <label style="font-size: 13px;text-align:right;font-style: italic;display:block;margin-bottom:1px;">{{site.edgeSiteDeployGenesisNodeStatus ? site.edgeSiteDeployGenesisNodeStatus : 'Not started'}}
                         </label></div></div></br>
-                        <div><div style="float:left"><label style="font-size: 13px;padding-left:10px;display:block;margin-bottom:1px;">Tools status:</label> </div><div style="float:right;padding-right:3px;"><label style="font-size: 13px;text-align:right;font-style: italic;display:block;margin-bottom:1px;">{{site.edgeSiteDeployDeployToolStatus ? site.edgeSiteDeployDeployToolStatus : 'Not started'}}
+                        <div><div style="float:left"><label style="font-size: 13px;padding-left:10px;display:block;margin-bottom:1px;">Deploy site status:</label> </div><div style="float:right;padding-right:3px;"><label style="font-size: 13px;text-align:right;font-style: italic;display:block;margin-bottom:1px;">{{site.edgeSiteDeployDeployToolStatus ? site.edgeSiteDeployDeployToolStatus : 'Not started'}}
                         </label></div></div></br>
-                        <div><div style="float:left"><label style="font-size: 15px;padding-left:10px;display:block;margin-bottom:1px;font-weight:bold !important;">Overall status:</label> </div><div style="float:right;padding-right:3px;"><label style="font-size: 15px;text-align:right;font-style: italic;display:block;margin-bottom:1px;font-weight:bold !important;">{{site.deployStatus ? site.deployStatus : 'Not started'}}
-                        </label></div></div>
+                       <!--  <div><div style="float:left"><label style="font-size: 15px;padding-left:10px;display:block;margin-bottom:1px;font-weight:bold !important;">Overall status:</label> </div><div style="float:right;padding-right:3px;"><label style="font-size: 15px;text-align:right;font-style: italic;display:block;margin-bottom:1px;font-weight:bold !important;">{{site.deployStatus ? site.deployStatus : 'Not started'}}
+                        </label></div></div>-->
                       </div>
                       <div ng-if ="site.blueprintType == 'Rover'">
                         <label style="font-size: 15px;font-style: italic;padding-left:10px;">{{site.deployStatus ?site.deployStatus : 'Not started'}}
@@ -253,7 +253,7 @@ color: black;
             </ul>
         </div>
     </div>
-    <div style="float:right;background-color:#cccccc;width:25%;  height:100vh;bottom:0; margin-top:20px;" ng-show="sideMenu">
+  <!--    <div style="float:right;background-color:#cccccc;width:25%;  height:100vh;bottom:0; margin-top:20px;" ng-show="sideMenu">
        <div>
         <form class="siteForm">
         <h2 style="background-color:#999999;margin-top:0px;padding-left:10px;">Upload:</h2>
@@ -310,7 +310,7 @@ color: black;
             <p class="formfield">
             <label style="width:30%;" for="textarea">Yaml File: </label>
         <textarea style="width:500px;" id="textarea" rows="5" disabled>{{Data}}</textarea></p>-->
-            <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
+    <!--         <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
         </form>
     </div>
     </div>
@@ -359,17 +359,30 @@ color: black;
      </div>
     <button style="margin-left:45%" class="akrbutton" ng-click="cancel()">Close</button>
        </div>
-       </div>      
-        <script type="text/ng-template" id="siteUploadForm">
+       </div>-->      
+        <script type="text/ng-template" id="siteUpload">
             <form class="uploadForm">
                 <h1>Input Details:</h1><br>
-                <label style="width:30%;"> Site Ipaddress: </label>
+                <label style="width:30%;"> Host IP address: </label>
                 <input type="text" placeholder="" ng-model="siteIPaddress" /> <br>
-                <label style="width:30%;"> Site Username: </label>
+                <label style="width:30%;"> Host username: </label>
                 <input type="text" placeholder="" ng-model="siteUsername" /> <br>
-                <label style="width:30%;"> Site Password: </label>
+                <label style="width:30%;"> Host password: </label>
 
                 <input type="text" placeholder="" ng-model="sitePassword" /> <br>
+               <!-- <div ng-if ="sites[$parent.hostIndex].blueprintType == 'Unicycle'">
+                <label style="width:30%"> Select deployment option: </label>
+                
+                
+                <input type ="radio"  ng-model = "deploymentMode" value="new" ng-change ="newValue(deploymentMode)"/>
+                <label for="new">New deployment</label></br>
+                <label style="width:30%"> </label>
+                 <input type ="radio"  ng-model = "deploymentMode" value="addnode" ng-change ="newValue(deploymentMode)"/>
+                <label for="addnode">Add a node to existing deployment</label></br>
+                <label style="width:30%"> </label>
+                <input  type ="radio"  ng-model = "deploymentMode" value="deletenode" ng-change ="newValue(deploymentMode)"/>
+                <label for="deletenode">Delete a node to existing deployment</label></br>
+                 </div>-->
                 <label style="width:30%;">Input File: </label>
                 <input type="file" name="Input File" accept="**" ngf-select ng-model="file" />
                 <br>
