@@ -195,7 +195,7 @@ public class EdgeSiteService {
 
 			EdgeSiteYamlTemplate yamlTemplate = yamlTemplates.get(i);
 
-			String filePath = akrainoBaseDir + "/yaml_builds/templates" + yamlTemplate.getFileLocation()
+			String filePath = akrainoBaseDir + "/yaml_builds/templates/" + yamlTemplate.getFileLocation()
 					+ yamlTemplate.getFileName() + ".j2";
 
 			FileUtility.writeToFile(filePath, yamlTemplate.getFileContent());
