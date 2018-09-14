@@ -19,18 +19,26 @@ package org.akraino.portal.data;
 public class WorkflowRequest {
 
 	private String sitename;
-	private String remoteserver;
+	private String remotserver;
 	private String username;
 	private String password;
 	private Integer port;
 	private String srcdir;
 	private String destdir;
 	private String filename;
+	private String filepath;
 	private String fileparams;
 	private Integer noofiterations;
 	private Integer waittime;
 	private String filetrasferscript;
 	private String filetransferparams;
+	
+	public String getFilepath() {
+		return filepath;
+	}
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
 	public String getSitename() {
 		return sitename;
 	}
@@ -39,10 +47,10 @@ public class WorkflowRequest {
 	}
 
 	public String getRemotserver() {
-		return remoteserver;
+		return remotserver;
 	}
 	public void setRemotserver(String remotserver) {
-		this.remoteserver = remotserver;
+		this.remotserver = remotserver;
 	}
 	public String getUsername() {
 		return username;
