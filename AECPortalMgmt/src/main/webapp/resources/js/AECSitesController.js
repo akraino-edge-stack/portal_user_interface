@@ -380,9 +380,9 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             data:  {
             "sitename":$scope.sites[index].edgeSiteName,
             "file1":"/opt/akraino/yaml_builds/tools/1prom-gen.sh", 
-            "file1params":"dellgen10",
+            "file1params":$scope.sites[index].edgeSiteName,
             "winscpfilepath":"/opt/akraino/yaml_builds/tools/2genesis.sh",
-            "winscpfileparams":"dellgen10",
+            "winscpfileparams":$scope.sites[index].edgeSiteName,
             "remotserver":$scope.sites[index].edgeSiteIP,
             "port": 22,
             "username": $scope.sites[index].edgeSiteUser, 
