@@ -172,6 +172,8 @@ public class EdgeSiteService {
 			edgeSite.setEdgeSiteDeployDeployToolStatus(STATUS_NOT_STARTED);
 			
 			String inputfilepath = akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName() + ".yaml";
+			//String inputfilepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + ".yaml";
+			
 
 			FileUtility.writeToFile(inputfilepath, bfileContent);
 			
