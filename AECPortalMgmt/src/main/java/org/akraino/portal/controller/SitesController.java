@@ -16,6 +16,8 @@
 
 package org.akraino.portal.controller;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,10 @@ public class SitesController {
 		} catch (Exception e) {
 			response.setStatusCode("406");
 			response.setMessage(e.getMessage());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String exceptionAsString = sw.toString();
+			logger.error(exceptionAsString);
 		}
 
 		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
