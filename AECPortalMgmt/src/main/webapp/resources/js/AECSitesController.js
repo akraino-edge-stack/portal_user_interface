@@ -268,14 +268,14 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
                 'Accept': "application/json",
             }
         }).then(function(response) {
-            if (response.data.status == '200') {
+            if (response.status == '200') {
                 //$scope.sites[index].edgeSiteBuildStatus = 'build complete';
                 
                 //$scope.buildCompleteDate = new Date();
                // updateEdgeSiteStatus($scope.sites[index].edgeSiteName, $scope.sites[index].buildStatus,buildCompleteDate);
             } else {
                 $scope.sites[index].edgeSiteBuildStatus = response.data.message;
-                $scope.buildCompleteDate = new Date();
+               // $scope.buildCompleteDate = new Date();
                 //updateEdgeSiteStatus($scope.sites[index].edgeSiteName, $scope.sites[index].buildStatus,buildCompleteDate);
             }
         }, function(error) {
