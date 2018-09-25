@@ -69,6 +69,22 @@ public class SitesController {
 		return new ResponseEntity<List<EdgeSite>>(list, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/{sitename}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EdgeSite> getEdgeSiteDetails(@PathVariable("sitename") String sitename) {
+
+		EdgeSite site = null;
+		
+		try {
+
+			site = edgeSiteService.getEdgeSiteDetails(sitename);
+
+		} catch (Exception e) {
+			logger.error(e);
+		}
+
+		return new ResponseEntity<EdgeSite>(site, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
 			@ModelAttribute("siteName") String siteName, @ModelAttribute("blueprint") String blueprint,

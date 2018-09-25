@@ -76,6 +76,12 @@ public class EdgeSiteService {
 
 	}
 
+	public EdgeSite getEdgeSiteDetails(String siteName) {
+
+		return edgeSiteDAO.getEdgeSiteDetails(siteName);
+
+	}
+	
 	public String getBuildYamlContent(String siteName) throws IOException {
 
 		logger.info(EdgeSiteService.class.getName() + "-" + "getYamlContent-begin");
