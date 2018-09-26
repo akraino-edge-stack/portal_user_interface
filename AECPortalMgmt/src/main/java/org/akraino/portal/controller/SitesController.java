@@ -69,7 +69,7 @@ public class SitesController {
 		return new ResponseEntity<List<EdgeSite>>(list, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{sitename}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/site/{sitename}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EdgeSite> getEdgeSiteDetails(@PathVariable("sitename") String sitename) {
 
 		EdgeSite site = null;
@@ -102,6 +102,9 @@ public class SitesController {
 		siteRequest.setEdgeSitePwd(edgeSitePwd);
 
 		try {
+			
+			response.setSiteName(siteName);
+			
 			boolean copyStatus = edgeSiteService.saveAndCopyInput(file.getBytes(), siteRequest);
 			if (copyStatus) {
 				response.setStatusCode("200");
@@ -156,6 +159,9 @@ public class SitesController {
 			response.setStatusCode("406");
 			response.setMessage("build status call initiation failed");
 		}
+		
+		response.setStatusCode("200");
+		response.setMessage("build status call initiation success");
 
 		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
 	}
