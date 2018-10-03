@@ -68,13 +68,13 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 		$scope.sitePassword == null;
 		$scope.file == null;*/
     	//$mdSidenav('right').toggle();
-    	var selectedSites = $scope.sites.find(function(element) {
+    	var selectedSites = $scope.sites.filter(function(element) {
             return element.edgeSiteName === siteName
         });
     	if(selectedSites != undefined){
-   	 $scope.siteIPaddress = selectedSites.edgeSiteIP;
-   	 $scope.siteUsername = selectedSites.edgeSiteUser;
-   	 $scope.sitePassword = selectedSites.edgeSitePwd;
+   	 $scope.siteIPaddress = selectedSites[0].edgeSiteIP;
+   	 $scope.siteUsername = selectedSites[0].edgeSiteUser;
+   	 $scope.sitePassword = selectedSites[0].edgeSitePwd;
     	}
    	 //console.log($scope.popupSiteIP);
     	ngDialog.open({
