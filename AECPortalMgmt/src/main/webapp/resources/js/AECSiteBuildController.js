@@ -82,7 +82,57 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
                 }]
             }]
         },
-        "$$hashKey": "object:10"
+        
+    },{
+        "name": "Unicycle",
+        "pod": {
+            "name": "UnicyclePod",
+            "racks": [{
+                "name": "multiNode",
+                "type": "Control,Compute,Storage,Network",
+                "nodes": [{
+                    "name": "multiNodeServer",
+                    "type": "Control,Compute,Storage,Network",
+                    "softwares": [{
+                    	"name": "Container",
+                        "type": "Kubernetes",
+                        "version": "v1.10.2"
+                    },
+                    {
+                        "name": "Network",
+                        "type": "OVS",
+                        "version": "OpenVSwitch"
+                    },
+                    {
+                        "name": "OS",
+                        "type": "Ubuntu",
+                        "version": "16.04"
+                    },
+                    {
+                        "name": "Container",
+                        "type": "Calico",
+                        "version": "2.6.5"
+                    },
+                    {
+                        "name": "Storage",
+                        "type": "Ceph",
+                        "version": "10.2.7"
+                    }
+                    
+                    ],
+                    "hardwares": [{
+                        "name": "HP",
+                        "type": "Gen 10"
+                    },
+                    {
+                        "name": "Dell",
+                        "type": "Dell 45"
+                    }],
+                    
+                }]
+            }]
+        },
+       
     }] //response.data;
     $scope.BlueprintTable = Blueprints;
     $scope.podList = [{
@@ -184,6 +234,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
     	$scope.selectedRow = index;
     	$scope.showBlueprintHeader = "Blueprint Details";
     	$scope.showNode = false;
+    	$scope.showNode1 = false;
         $scope.showNodeForm = false;
         $scope.showSoftwareHardware = false;
     	$scope.createForm = false;
@@ -200,7 +251,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
                  $scope.showRackTable = true;
     }
     $scope.selectedPod = function() {
-        if ($scope.selectPodName.name == null) {} else {
+        if ($scope.selectPodName.name != null)
             var currentPod = $scope.podList.find(function(element) {
                 return element.name === $scope.selectPodName.name;
             });
@@ -223,7 +274,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
             $scope.rackSelect.push(newRack);
             console.log($scope.rackSelect);*/
             //$scope.showRackTable = true;
-        }
+            
     }
     $scope.createBlueprint = function() {
     	$scope.check ==0;
@@ -280,19 +331,19 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
          console.log($scope.rackList);
         }
         else{
-        	var Racks = new Array();
-        	var Nodes = new Array();
+        	var rackArray = new Array();
+        	var nodeArray = new Array();
         	 for(var i = 0;i<52;i++){
-	    	     var newNode =$scope.createNodeObject(i,"", "",[],[]);
-	   	   		 Nodes.push(newNode);
-	   	   		 $scope.nodeList = Nodes;
+	    	     var newNodeArray =$scope.createNodeObject(i,"", "",[],[]);
+	   	   		 nodeArray.push(newNodeArray);
+	   	   		 $scope.nodeList = nodeArray;
 	   	   	 }
-        	 var newRack = $scope.createRackObject($scope.rackNName, "", Nodes);
-        	 Racks.push(newRack);
-             $scope.rackList = Racks;
-        	 var newPod = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
-	         var newBlueprint = $scope.createBlueprintObject($scope.blueprintName, newPod);   
-	         Blueprints.push(newBlueprint);
+        	 var newRackArray = $scope.createRackObject($scope.rackNName, "", nodeArray);
+        	 rackArray.push(newRackArray);
+             $scope.rackList = rackArray;
+        	 var newPodArray = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
+	         var newBlueprintArray = $scope.createBlueprintObject($scope.blueprintName, newPodArray);   
+	         Blueprints.push(newBlueprintArray);
         }
         }
         else{
@@ -307,40 +358,40 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
         		             return element.name ===  $scope.rackSelectList[j].name;
         		          });
         				 if(currRackcheck == undefined){
-        					 var Nodes = new Array();
+        					 var nodesArr = new Array();
         					 for(var i = 0 ;i<52;i++){
-        			    	     var newNode =$scope.createNodeObject(i,"", "",[],[]);
-        			   	   		 Nodes.push(newNode);
-        			   	   		 $scope.nodeList = Nodes;
+        			    	     var newNodeArr =$scope.createNodeObject(i,"", "",[],[]);
+        			   	   		 nodesArr.push(newNodeArr);
+        			   	   		 $scope.nodeList = nodesArr;
         			   	   	 } 
-        					 var newRack = $scope.createRackObject($scope.rackSelectList[j].name, $scope.rackSelectList[j].type, Nodes);
-        					 currentBlueprint.pod.racks.push(newRack);
-        				 }
+        					 var newRackArr = $scope.createRackObject($scope.rackSelectList[j].name, $scope.rackSelectList[j].type, nodesArr);
+        					 currentBlueprint.pod.racks.push(newRackArr);
+        				 }	
         			 }
         			 $scope.rackList= currentBlueprint.pod.racks;
         			 
         		 }else{
-             	var Nodes = new Array();
+             	var nodeStr = new Array();
              	 for(var i = 0;i<52;i++){
-     	    	     var newNode =$scope.createNodeObject(i,"", "",[],[]);
-     	   	   		 Nodes.push(newNode);
-     	   	   		 $scope.nodeList = Nodes;
+     	    	     var newNodeStr =$scope.createNodeObject(i,"", "",[],[]);
+     	   	   		 nodeStr.push(newNodeStr);
+     	   	   		 $scope.nodeList = nodeStr;
      	   	   	 }
-             	var Racks = new Array();
-             	 var newRack = $scope.createRackObject($scope.rackNName, "", Nodes);
-             	Racks.push(newRack);
-                  $scope.rackList = Racks;
+             	var rackStr = new Array();
+             	 var newRackStr = $scope.createRackObject($scope.rackNName, "", nodeStr);
+             	rackStr.push(newRackStr);
+                  $scope.rackList = rackStr;
              	 //var newPod = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
      	         //var newBlueprint = $scope.createBlueprintObject($scope.blueprintName, newPod);   
-                  currentBlueprint.pod.racks.push(Racks);
+                  currentBlueprint.pod.racks.push(rackStr);
         		 }
         		 
         	 }
         	 else{
-        		 var Racks = new Array();
-        		 Racks.push(currRack);
+        		 var rackData = new Array();
+        		 rackData.push(currRack);
         		 console.log(currRack);
-        		 $scope.rackList = Racks;
+        		 $scope.rackList = rackData;
         	 }
         }
     }
@@ -363,8 +414,8 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
     	var currRack = currentBlueprint.pod.racks.find(function(element){
             return element.name === $scope.rackNName;
          }); 
-    	var newNode =$scope.createNodeObject($scope.rackNumber,$scope.nodeName, $scope.nodeType, [], []); 
-		 currRack.nodes[$scope.rackNumber] =newNode;
+    	var newNodeData =$scope.createNodeObject($scope.rackNumber,$scope.nodeName, $scope.nodeType, [], []); 
+		 currRack.nodes[$scope.rackNumber] =newNodeData;
 		 $scope.rackList = currentBlueprint.pod.racks;
 		 console.log( $scope.rackList);
 		 $scope.nodeList =  currRack.nodes;

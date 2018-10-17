@@ -78,10 +78,7 @@
                  $scope.showRackTable($scope.podName);
                  $scope.showSaveButton = true;
                  //Find pod by name
-             } else {
-
-             }
-
+             } 
          }
          $scope.update = function(podIndex) {
              //console.log(hostIndex)
@@ -104,7 +101,7 @@
         	 $scope.rackSelection = false;
         	 $scope.editRackButton = true;
              $scope.deleteRackButton = true;
-             var h = pods.length;
+            // var h = pods.length;
              console.log($scope.rackName + $scope.podName);
              for (var i = 0; i < pods.length; i++) {
             	 if(pods[i].podname == $scope.podName){
@@ -132,7 +129,7 @@
         	 $scope.showProcessMessage = true;
         	 $scope.editRackButton = true;
              $scope.deleteRackButton = true;
-             var h = pods.length;
+            // var h = pods.length;
              for (var i = 0; i < pods.length; i++) {
 
                 if(pods[i].podname == $scope.podName){

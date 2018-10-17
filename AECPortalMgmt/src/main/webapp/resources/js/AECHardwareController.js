@@ -30,9 +30,7 @@ angular.module('PortalManagement').controller('AECHardwareController', function(
     $scope.tokenId = localStorage.getItem("tokenId");
     $scope.displayForm = true;
 
-    $controller('commonController', {
-        $scope: $scope
-    });
+   
     $controller('PopUpHardwareController', {
         $scope: $scope
     });
@@ -217,7 +215,7 @@ angular.module('PortalManagement').controller('PopUpHardwareController', functio
                 } else if ($scope.$parent.hardwareDetails.length == 10) {
                     $scope.$parent.addNodesButton = true;
                     $scope.$parent.showSaveButton = true;
-                } else {}
+                }
                 $scope.closeThisDialog();
             }
 

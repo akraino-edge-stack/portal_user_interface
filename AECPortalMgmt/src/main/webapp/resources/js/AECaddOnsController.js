@@ -301,9 +301,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     	        console.log($scope.rowIndex);
     	        index  = $scope.rowIndex;
     	    	}
-    	    	else{
-    	    		index = index;
-    	   }
+    	    	
         $scope.siteName = $scope.addOnsites[index].edgeSiteName;
         $scope.readOnapData = "";
         $http({

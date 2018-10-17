@@ -99,9 +99,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
           console.log($scope.rowIndex);
           index = $scope.rowIndex;
       	}
-      	else{
-          index = index;
-      	}
+      	
         $scope.selectedSites = $scope.sites[index].edgeSiteName;
         $scope.popupregionName = $scope.sites[index].region.regionName;
         $scope.popupsiteName = $scope.selectedSites;
@@ -218,6 +216,12 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         $scope.selection = false;
     	$scope.hostIndex = "";
     	$scope.selectedRegion = null;
+        allSitesDisplay();
+    }
+    $scope.refreshUploadChange = function() {
+       // $scope.selection = false;
+    	//$scope.hostIndex = "";
+    	//$scope.selectedRegion = null;
         allSitesDisplay();
     }
     $scope.selectedRegionChange = function() {
@@ -441,7 +445,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
        
     	
     }
-    loadPopUp = function() {
+    var loadPopUp = function() {
     	ngDialog.open({
             scope: $scope,
             template: 'yamltemplateForm',
@@ -816,7 +820,7 @@ angular.module('PortalManagement').controller('PopUpUploadController', function(
 			if(response.data.statusCode == '200'){
 			$scope.sites[index].fileUploadMessage = "File uploaded,successfully.";
 			$scope.sites[index].fileUploadStatus = "Completed";
-			$scope.refreshRegionChange();
+			$scope.refreshUploadChange();
 			console.log(response.statusCode);
 			}
 			else{

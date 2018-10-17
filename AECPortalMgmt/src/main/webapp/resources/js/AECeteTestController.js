@@ -85,7 +85,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     	eteTestSitesDisplay ();
     	 $scope.siteIndex  = "";
     }
-    eteTestSitesDisplay = function() {
+    var eteTestSitesDisplay = function() {
         $http({
             method: 'GET',
             url: appContext+'/edgeSites/0',
@@ -220,9 +220,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     	        console.log($scope.rowIndex);
     	        index  = $scope.rowIndex;
     	    	}
-    	    	else{
-    	    		index = index;
-    	    	}
+    	    	
         $scope.siteName = $scope.tempestSites[index].edgeSiteName;
         $scope.osUsername = "admin";
         $scope.osPassword = "password";
