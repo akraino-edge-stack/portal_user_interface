@@ -42,6 +42,15 @@ public class SiteDeployRequest extends WorkflowRequest {
 	
 	private String destdir2;
 
+	@Override
+	public String toString() {
+		return "SiteDeployRequest [winscpdir=" + winscpdir + ", winscpfilepath=" + winscpfilepath
+				+ ", winscpfileparams=" + winscpfileparams + ", remotefilename=" + remotefilename + ", filepath="
+				+ filepath + ", blueprint=" + blueprint + ", file1=" + file1 + ", file1params=" + file1params
+				+ ", remotefile1=" + remotefile1 + ", remotefile2=" + remotefile2 + ", destdir1=" + destdir1
+				+ ", destdir2=" + destdir2 + "]";
+	}
+
 	public String getWinscpdir() {
 		return winscpdir;
 	}

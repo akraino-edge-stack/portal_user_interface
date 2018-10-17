@@ -16,8 +16,6 @@
 
 package org.akraino.portal.controller;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +28,7 @@ import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
 import org.akraino.portal.entity.EdgeSiteYamlTemplate;
 import org.akraino.portal.service.EdgeSiteService;
+import org.akraino.portal.service.EdgeSiteYamlTemplateService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,28 +49,37 @@ public class SitesController {
 
 	@Autowired
 	EdgeSiteService edgeSiteService;
+	
+	@Autowired
+	private EdgeSiteYamlTemplateService edgeSiteYamlTemplateService;
 
 	private static final Logger logger = Logger.getLogger(SitesController.class);
 
 	@RequestMapping(value = "/{regionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EdgeSite>> getAllEdgeSites(@PathVariable("regionId") Integer regionId) {
 
-		List<EdgeSite> list = new ArrayList<EdgeSite>();
+		logger.info("getAllEdgeSites - start, for region:" + regionId);
+		
+		List<EdgeSite> list = new ArrayList<>();
 
 		try {
 
 			list = edgeSiteService.getSites(regionId);
 
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("Exception retrieving sites for region", e);
 		}
 
-		return new ResponseEntity<List<EdgeSite>>(list, HttpStatus.OK);
+		logger.info("getAllEdgeSites - end, for region" + regionId);
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value = "/site/{sitename}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EdgeSite> getEdgeSiteDetails(@PathVariable("sitename") String sitename) {
 
+		logger.info("getEdgeSiteDetails - start, for site:" + sitename);
+		
 		EdgeSite site = null;
 		
 		try {
@@ -79,12 +87,14 @@ public class SitesController {
 			site = edgeSiteService.getEdgeSiteDetails(sitename);
 
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("Exception retrieving site details", e);
 		}
+		
+		logger.info("getEdgeSiteDetails - end, for site:" + sitename);
 
-		return new ResponseEntity<EdgeSite>(site, HttpStatus.OK);
+		return new ResponseEntity<>(site, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
 			@ModelAttribute("siteName") String siteName, @ModelAttribute("blueprint") String blueprint,
@@ -100,15 +110,17 @@ public class SitesController {
 		siteRequest.setEdgeSiteIP(edgeSiteIP);
 		siteRequest.setEdgeSiteUser(edgeSiteUser);
 		siteRequest.setEdgeSitePwd(edgeSitePwd);
+		logger.info("upload input file for request:"+ siteRequest);
 
 		try {
-			
 			response.setSiteName(siteName);
 			
 			boolean copyStatus = edgeSiteService.saveAndCopyInput(file.getBytes(), siteRequest);
+			
 			if (copyStatus) {
 				response.setStatusCode("200");
 				response.setMessage("Input file copied successfully");
+				
 			} else {
 				response.setStatusCode("406");
 				response.setMessage("Input file copy failed");
@@ -117,19 +129,21 @@ public class SitesController {
 		} catch (Exception e) {
 			response.setStatusCode("406");
 			response.setMessage(e.getMessage());
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String exceptionAsString = sw.toString();
-			logger.error(exceptionAsString);
+			
+			logger.error("Error uploading input file", e);
 		}
 
-		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+		logger.info("upload input file for request:" + response);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 
 	@RequestMapping(value = "/status", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> updateSiteStatus(@RequestBody EdgeSiteState statusRequest) {
 
+		logger.info("update site status:"+ statusRequest);
+		
 		SiteStatusResponse response = new SiteStatusResponse();
 		response.setSiteName(statusRequest.getSiteName());
 
@@ -139,15 +153,21 @@ public class SitesController {
 
 		} catch (Exception e) {
 			response.setStatusCode("406");
-			response.setMessage("install status update failed");
+			response.setMessage("update site status failed");
+			
+			logger.error("update site status failed", e);
 		}
+		
+		logger.info("update site status response:" + response);
 
-		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/build", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> buildEdgeSite(@RequestBody BuildRequest buildRequest) {
 
+		logger.info("build site call:"+ buildRequest);
+		
 		SiteStatusResponse response = new SiteStatusResponse();
 		response.setSiteName(buildRequest.getSitename());
 
@@ -157,59 +177,73 @@ public class SitesController {
 
 		} catch (Exception e) {
 			response.setStatusCode("406");
-			response.setMessage("build status call initiation failed");
+			response.setMessage("build site call initiation failed");
+			
+			logger.error("build site call initiation failed" + e);
 		}
 		
 		response.setStatusCode("200");
-		response.setMessage("build status call initiation success");
+		response.setMessage("build site call initiation success");
+		
+		logger.info("build site call:"+ response);
 
-		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/files/build/{siteName}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getBuildYamlFile(@PathVariable("siteName") String siteName) {
 
+		logger.info("getBuildYamlFile:"+ siteName);
+		
 		String generatedYamlFileContent = null;
 		try {
 			generatedYamlFileContent = edgeSiteService.getBuildYamlContent(siteName);
 		} catch (Exception e) {
-			logger.error("error reading yaml file:" + e);
+			logger.error("error reading yaml file:", e);
 		}
 
-		return new ResponseEntity<String>(generatedYamlFileContent, HttpStatus.OK);
+		return new ResponseEntity<>(generatedYamlFileContent, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/files/yamlTemplate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EdgeSiteYamlTemplate>> getYamlTemplateFiles() {
 
+		logger.info("getYamlTemplateFiles:");
+		
 		List<EdgeSiteYamlTemplate> yamlTemplateList = null;
+		
 		try {
-			yamlTemplateList = edgeSiteService.getYamlTemplates();
+			
+			yamlTemplateList = edgeSiteYamlTemplateService.getYamlTemplates();
+			
 		} catch (Exception e) {
+			
 			logger.error("error reading yaml template files:" + e);
 		}
 
-		return new ResponseEntity<List<EdgeSiteYamlTemplate>>(yamlTemplateList, HttpStatus.OK);
+		return new ResponseEntity<>(yamlTemplateList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/files/heat/{vnfName}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getHeatTemplateFile(@PathVariable("vnfName") String vnfName) {
 
-		logger.error("get heat template file for VNF");
+		logger.info("get heat template file for VNF" + vnfName);
 
 		String heatFileContent = null;
 		try {
 			heatFileContent = edgeSiteService.getHeatContent(vnfName);
 		} catch (Exception e) {
-			logger.error("error - get heat template file for VNF:" + e);
+			logger.error("error - get heat template file for VNF:", e);
 		}
 
-		return new ResponseEntity<String>(heatFileContent, HttpStatus.OK);
+		return new ResponseEntity<>(heatFileContent, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/onboardVNF", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AECPortalResponse> onBoardVNF(@RequestBody WorkflowRequest vnfRequest) {
 
+		logger.info("onBoardVNF" + vnfRequest);
+		
 		AECPortalResponse response = new AECPortalResponse();
 
 		try {
@@ -225,16 +259,22 @@ public class SitesController {
 			response.setEntity("VNF Onboard");
 			response.setStatusCode("406");
 			response.setMessage("VNF Onboard call initiation failed");
+			
+			logger.error("onBoardVNF failed", e);
 
 		}
+		
+		logger.info("onBoardVNF response: " + response);
 
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 	
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AECPortalResponse> deploySite(@RequestBody SiteDeployRequest siteDeployRequest) {
 
+		logger.info("deploy site request: " + siteDeployRequest);
+		
 		AECPortalResponse response = new AECPortalResponse();
 
 		try {
@@ -250,10 +290,13 @@ public class SitesController {
 			response.setEntity("Site Deploy");
 			response.setStatusCode("406");
 			response.setMessage("Site Deploy call initiation failed");
-
+			
+			logger.error("Site Deploy call initiation failed", e);
 		}
+		
+		logger.info("deploy site response: " + response);
 
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 

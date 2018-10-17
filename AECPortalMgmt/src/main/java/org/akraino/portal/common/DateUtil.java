@@ -24,6 +24,10 @@ import org.apache.log4j.Logger;
 public class DateUtil {
 	
 	private static final Logger logger = Logger.getLogger(DateUtil.class);
+	
+	private DateUtil() {
+		throw new IllegalStateException("Utility class");
+	}
 
 	public static java.util.Date sqlToUtil(java.sql.Date sqldate) {
 

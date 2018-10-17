@@ -30,7 +30,6 @@ import org.akraino.portal.common.RestRequestBody;
 import org.akraino.portal.common.RestResponseBody;
 import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.dao.EdgeSiteDAO;
-import org.akraino.portal.dao.EdgeSiteYamlTemplateDAO;
 import org.akraino.portal.data.BuildRequest;
 import org.akraino.portal.data.EdgeSiteState;
 import org.akraino.portal.data.SiteDeployRequest;
@@ -48,9 +47,9 @@ public class EdgeSiteService {
 
 	@Autowired
 	private EdgeSiteDAO edgeSiteDAO;
-
+	
 	@Autowired
-	private EdgeSiteYamlTemplateDAO edgeSiteYamlTemplateDAO;
+	private EdgeSiteYamlTemplateService edgeSiteYamlTemplateService;
 
 	private static final Logger logger = Logger.getLogger(EdgeSiteService.class);
 
@@ -63,32 +62,38 @@ public class EdgeSiteService {
 	private static final String STATUS_NOT_STARTED = "Not Started";
 
 	private static final String BLUEPRINT_UNICYCLE = "Unicycle";
+	
+	private static final String YAML_FILE_EXT = ".yaml";
 
 	public EdgeSiteService() {
 		
-		akrainoBaseDir = PropertyUtil.getInstance().getProperty("yaml.base.dir");
+		akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
 		
 	}
 
 	public List<EdgeSite> getSites(int regionId) {
+		
+		logger.info("getSites");
 
 		return edgeSiteDAO.listAllEdgeSites(regionId);
 
 	}
-
+	
 	public EdgeSite getEdgeSiteDetails(String siteName) {
+		
+		logger.info("getEdgeSiteDetails");
 
 		return edgeSiteDAO.getEdgeSiteDetails(siteName);
 
 	}
-	
+
 	public String getBuildYamlContent(String siteName) throws IOException {
 
-		logger.info(EdgeSiteService.class.getName() + "-" + "getYamlContent-begin");
+		logger.info("getBuildYamlContent");
 
-		StringBuffer output = new StringBuffer();
+		StringBuilder output = new StringBuilder();
 
-		List<EdgeSiteYamlTemplate> yamlTemplates = edgeSiteYamlTemplateDAO.getYamlTemplates();
+		List<EdgeSiteYamlTemplate> yamlTemplates = edgeSiteYamlTemplateService.getYamlTemplates();
 
 		List<byte[]> yamlContentList = new ArrayList<byte[]>();
 
@@ -99,7 +104,9 @@ public class EdgeSiteService {
 			byte[] array = null;
 
 			String filePath = akrainoBaseDir + "/yaml_builds/site/" + siteName + "/" + yamlTemplate.getFileLocation()
-					+ yamlTemplate.getFileName() + ".yaml";
+					+ "/" + yamlTemplate.getFileName() + YAML_FILE_EXT;
+			
+			logger.info("fetching generated yaml files from:" + filePath);
 
 			array = Files.readAllBytes(new File(filePath).toPath());
 
@@ -132,6 +139,9 @@ public class EdgeSiteService {
 		edgeSite.setOutputYaml19(yamlContentList.get(18));
 		edgeSite.setOutputYaml20(yamlContentList.get(19));
 		edgeSite.setOutputYaml21(yamlContentList.get(20));
+		edgeSite.setOutputYaml22(yamlContentList.get(21));
+		edgeSite.setOutputYaml23(yamlContentList.get(22));
+		edgeSite.setOutputYaml24(yamlContentList.get(23));
 
 		edgeSiteDAO.updateEdgeSite(edgeSite);
 
@@ -141,14 +151,10 @@ public class EdgeSiteService {
 
 	}
 
-	public List<EdgeSiteYamlTemplate> getYamlTemplates() {
-
-		return edgeSiteYamlTemplateDAO.getYamlTemplates();
-
-	}
-
 	public boolean saveAndCopyInput(byte[] bfileContent, EdgeSiteState siteRequest) throws Exception {
 
+		logger.info("saveAndCopyInput");
+		
 		EdgeSite edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteRequest.getSiteName());
 
 		edgeSite.setBlueprint(siteRequest.getBlueprint());
@@ -165,8 +171,10 @@ public class EdgeSiteService {
 			edgeSite.setEdgeSiteBuildStatus(ROVER_BUILD_STATUS_NA);
 			
 			String filepath = akrainoBaseDir + "/server-build/"+siteRequest.getSiteName();
-			//String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + ".yaml";
+			//String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + YAML_FILE_EXT;
 
+			logger.info("writing input file to:" + filepath);
+			
 			FileUtility.writeToFile(filepath, bfileContent);
 			
 
@@ -177,9 +185,9 @@ public class EdgeSiteService {
 			edgeSite.setEdgeSiteDeployGenesisNodeStatus(STATUS_NOT_STARTED);
 			edgeSite.setEdgeSiteDeployDeployToolStatus(STATUS_NOT_STARTED);
 			
-			String inputfilepath = akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName() + ".yaml";
-			//String inputfilepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + ".yaml";
-			
+			String inputfilepath = akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName() + YAML_FILE_EXT;
+			//String inputfilepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + YAML_FILE_EXT;
+			logger.info("writing input file to:" + inputfilepath);
 
 			FileUtility.writeToFile(inputfilepath, bfileContent);
 			
@@ -197,7 +205,7 @@ public class EdgeSiteService {
 
 	private boolean pushJ2TemplateFiles() throws Exception {
 
-		List<EdgeSiteYamlTemplate> yamlTemplates = edgeSiteYamlTemplateDAO.getYamlTemplates();
+		List<EdgeSiteYamlTemplate> yamlTemplates = edgeSiteYamlTemplateService.getYamlTemplates();
 
 		for (int i = 0; i < yamlTemplates.size(); i++) {
 
@@ -205,6 +213,8 @@ public class EdgeSiteService {
 
 			String filePath = akrainoBaseDir + "/yaml_builds/templates/" + yamlTemplate.getFileLocation()
 					+ yamlTemplate.getFileName() + ".j2";
+			
+			logger.info("pushing all j2 templates files to:"+filePath);
 
 			FileUtility.writeToFile(filePath, yamlTemplate.getFileContent());
 
@@ -216,16 +226,17 @@ public class EdgeSiteService {
 
 	public String getHeatContent(String vnfName) throws ClassNotFoundException, SQLException, Exception {
 
-		logger.info(EdgeSiteService.class.getName() + "-" + "getHeatContent-begin");
+		logger.info("getHeatContent");
 
 		String fileName = "";
-		String fileExtension = ".yaml";
 
-		StringBuffer output = new StringBuffer();
+		StringBuilder output = new StringBuilder();
 
 		byte[] array = null;
 
-		String filePath = akrainoBaseDir + fileName + fileExtension;
+		String filePath = akrainoBaseDir + fileName + YAML_FILE_EXT;
+		
+		logger.info("looking for heat file:"+filePath);
 
 		try {
 			array = Files.readAllBytes(new File(filePath).toPath());
@@ -234,10 +245,10 @@ public class EdgeSiteService {
 			output.append(heatFileContent);
 
 		} catch (Exception e) {
-			logger.error("heat template file not found=" + e);
+			logger.error("heat template file retreival failed", e);
 		}
 
-		logger.info(EdgeSiteService.class.getName() + "-" + "getHeatContent-end");
+		logger.info("getHeatContent");
 
 		return output.toString();
 
@@ -261,6 +272,8 @@ public class EdgeSiteService {
 	}*/
 
 	public void updateSiteStatus(EdgeSiteState statusReqeust) {
+		
+		logger.info("updateSiteStatus");
 
 		EdgeSite edgeSite = edgeSiteDAO.getEdgeSiteDetails(statusReqeust.getSiteName());
 
@@ -293,6 +306,8 @@ public class EdgeSiteService {
 
 	public EdgeSiteState buildEdgeSite(BuildRequest buildRequest) {
 
+		logger.info("buildEdgeSite");
+		
 		EdgeSiteState siteState = new EdgeSiteState();
 		siteState.setSiteName(buildRequest.getSitename());
 
@@ -326,34 +341,28 @@ public class EdgeSiteService {
 	}
 	
 	public EdgeSiteState onBoardVNF(WorkflowRequest vnfRequest) {
+		
+		logger.info("onBoardVNF");
 
 		EdgeSiteState siteState = new EdgeSiteState();
 		siteState.setSiteName(vnfRequest.getSitename());
 
-		try {
+		String vnfOnboardURI = PropertyUtil.getInstance().getProperty("camunda.vnf.onboard.uri");
 
-			String vnfOnboardURI = PropertyUtil.getInstance().getProperty("camunda.vnf.onboard.uri");
+		RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<>();
+		requestObj.setT(vnfRequest);
 
-			RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
-			requestObj.setT(vnfRequest);
+		RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<>();
+		responseObj.setT(siteState);
 
-			RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
-			responseObj.setT(siteState);
+		siteState = RestInterface.sendPOST(vnfOnboardURI, requestObj, responseObj);
 
-			siteState = RestInterface.sendPOST(vnfOnboardURI, requestObj, responseObj);
-
-		} catch (Exception e) {
-
-			throw e;
-
-		} finally {
-			
-			if (!StringUtil.notEmpty(siteState.getvCDNStatus())) {
-				siteState.setvCDNStatus("Error invoking Camunda API");
-			}
-
-			updateSiteStatus(siteState);
+		
+		if (!StringUtil.notEmpty(siteState.getvCDNStatus())) {
+			siteState.setvCDNStatus("Error invoking Camunda API");
 		}
+
+		updateSiteStatus(siteState);
 
 		return siteState;
 
@@ -361,6 +370,8 @@ public class EdgeSiteService {
 
 	public EdgeSiteState deploySite(SiteDeployRequest siteDeployRequest) {
 
+		logger.info("deploySite");
+		
 		EdgeSiteState siteState = new EdgeSiteState();
 		siteState.setSiteName(siteDeployRequest.getSitename());
 
@@ -378,11 +389,11 @@ public class EdgeSiteService {
 			}
 
 
-			RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
-			requestObj.setT(siteDeployRequest);
+		RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<>();
+		requestObj.setT(siteDeployRequest);
 
-			RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
-			responseObj.setT(siteState);
+		RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<>();
+		responseObj.setT(siteState);
 
 			siteState = RestInterface.sendPOST(deployURI, requestObj, responseObj);
 

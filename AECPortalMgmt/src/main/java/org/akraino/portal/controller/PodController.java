@@ -43,7 +43,7 @@ public class PodController {
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Pod>> getPods() {
 		
-		List <Pod> list = new ArrayList<Pod> ();
+		List <Pod> list = new ArrayList<> ();
 		
 		try {
 			
@@ -53,7 +53,7 @@ public class PodController {
 			logger.error(e);
 		}
 		
-		return new ResponseEntity<List<Pod>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -75,7 +75,7 @@ public class PodController {
 			logger.error(e);
 		}
 		
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -96,7 +96,7 @@ public class PodController {
 			logger.error(e);
 		}
 		
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -117,7 +117,7 @@ public class PodController {
 			logger.error(e);
 		}
 		
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 }

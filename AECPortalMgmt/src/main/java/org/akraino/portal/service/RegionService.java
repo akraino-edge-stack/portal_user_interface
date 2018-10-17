@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.entity.Region;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +29,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RegionService {
 
+	private static final Logger logger = Logger.getLogger(RegionService.class);
+
 	@Autowired
 	private RegionDAO regionDAO;
-	
+
 	public List<Region> listAllRegions() {
-	  return regionDAO.listAllRegions();
-	 }
-	
+
+		logger.info("listAllRegions");
+		
+		return regionDAO.listAllRegions();
+	}
+
 }

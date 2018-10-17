@@ -33,6 +33,15 @@ public class WorkflowRequest {
 	private String filetrasferscript;
 	private String filetransferparams;
 	
+	@Override
+	public String toString() {
+		return "WorkflowRequest [sitename=" + sitename + ", remotserver=" + remotserver + ", username=" + username
+				+ ", password=" + password + ", port=" + port + ", srcdir=" + srcdir + ", destdir=" + destdir
+				+ ", filename=" + filename + ", filepath=" + filepath + ", fileparams=" + fileparams
+				+ ", noofiterations=" + noofiterations + ", waittime=" + waittime + ", filetrasferscript="
+				+ filetrasferscript + ", filetransferparams=" + filetransferparams + "]";
+	}
+	
 	public String getFilepath() {
 		return filepath;
 	}

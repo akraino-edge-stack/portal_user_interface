@@ -24,6 +24,7 @@ import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.EdgeSiteDAO;
 import org.akraino.portal.entity.EdgeSite;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -33,6 +34,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EdgeSiteDAOImpl implements EdgeSiteDAO {
 
+	private static final Logger logger = Logger.getLogger(EdgeSiteDAOImpl.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -42,6 +45,8 @@ public class EdgeSiteDAOImpl implements EdgeSiteDAO {
 	
 	@Override
 	public List<EdgeSite> listAllEdgeSites(int regionId) {
+		
+		logger.info("listAllEdgeSites");
 		
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
@@ -67,6 +72,9 @@ public class EdgeSiteDAOImpl implements EdgeSiteDAO {
 
 	@Override
 	public EdgeSite getEdgeSiteDetails(String siteName) {
+		
+		logger.info("getEdgeSiteDetails");
+		
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
 

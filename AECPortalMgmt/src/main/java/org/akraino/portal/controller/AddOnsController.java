@@ -60,19 +60,23 @@ public class AddOnsController {
 		try {
 			boolean copyStatus = addOnsService.saveOnapInput(file.getBytes(), siteName);
 			if (copyStatus) {
+				logger.info("Onap input file copied successfully");
 				response.setStatusCode("200");
 				response.setMessage("Input file copied successfully");
 			} else {
+				logger.warn("Edge site not found");
 				response.setStatusCode("406");
 				response.setMessage("Input file copy failed");
 			}
 
 		} catch (Exception e) {
+			logger.error("Error copying onap input file", e);
+			
 			response.setStatusCode("406");
 			response.setMessage(e.getMessage());
 		}
 
-		return new ResponseEntity<SiteStatusResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 
@@ -85,7 +89,7 @@ public class AddOnsController {
 			onap = addOnsService.getOnap(siteName);
 
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("Error retrieving onap details", e);
 		}
 
 		return new ResponseEntity<Onap>(onap, HttpStatus.OK);
@@ -100,10 +104,10 @@ public class AddOnsController {
 			onapList = addOnsService.getOnapList();
 
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("Error retrieving onap list", e);
 		}
 
-		return new ResponseEntity<List<Onap>>(onapList, HttpStatus.OK);
+		return new ResponseEntity<>(onapList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/onap", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -124,10 +128,11 @@ public class AddOnsController {
 			response.setEntity("ONAP install");
 			response.setStatusCode("406");
 			response.setMessage("ONAP install call initiation failed");
-
+			
+			logger.error("Error triggering onap install", e);
 		}
 
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 

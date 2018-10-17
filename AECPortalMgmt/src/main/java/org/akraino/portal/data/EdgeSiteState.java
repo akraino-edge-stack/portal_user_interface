@@ -35,6 +35,17 @@ public class EdgeSiteState {
 	private String edgeSiteUser;
 	private String edgeSitePwd;
 	
+	@Override
+	public String toString() {
+		return "EdgeSiteState [siteName=" + siteName + ", buildStatus=" + buildStatus + ", createTarStatus="
+				+ createTarStatus + ", genesisNodeStatus="
+				+ genesisNodeStatus + ", deployToolsStatus=" + deployToolsStatus 
+				+ ", buildDate=" + buildDate + ", deployDate=" + deployDate + ", deployStatus=" + deployStatus
+				+ ", onapStatus=" + onapStatus + ", tempestStatus=" + tempestStatus + ", vCDNStatus=" + vCDNStatus
+				+ ", blueprint=" + blueprint + ", edgeSiteIP=" + edgeSiteIP + ", edgeSiteUser=" + edgeSiteUser
+				+ ", edgeSitePwd=" + edgeSitePwd + "]";
+	}
+	
 	public String getBlueprint() {
 		return blueprint;
 	}

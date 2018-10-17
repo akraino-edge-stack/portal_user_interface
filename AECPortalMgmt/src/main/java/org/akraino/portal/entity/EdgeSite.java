@@ -142,16 +142,25 @@ public class EdgeSite implements Serializable {
 	@Column(name="output_yaml_file_21")
 	private byte[] outputYaml21;
 	
+	@Column(name="output_yaml_file_22")
+	private byte[] outputYaml22;
+	
+	@Column(name="output_yaml_file_23")
+	private byte[] outputYaml23;
+	
+	@Column(name="output_yaml_file_24")
+	private byte[] outputYaml24;
+	
 	@Column(name="build_status")
 	private String edgeSiteBuildStatus;
 	
-	@Column(name="deploy_createtar_status")
+	@Column(name="multinode_createtar_status")
 	private String edgeSiteDeployCreateTarStatus;
 	
-	@Column(name="deploy_genesisnodestatus_status")
+	@Column(name="multinode_genesisnode_status")
 	private String edgeSiteDeployGenesisNodeStatus;
 	
-	@Column(name="deploy_deploytoolstatus_status")
+	@Column(name="multinode_deploytool_status")
 	private String edgeSiteDeployDeployToolStatus;
 
 	public int getEdgeSiteId() {
@@ -432,6 +441,30 @@ public class EdgeSite implements Serializable {
 
 	public void setOutputYaml21(byte[] outputYaml21) {
 		this.outputYaml21 = outputYaml21;
+	}
+
+	public byte[] getOutputYaml22() {
+		return outputYaml22;
+	}
+
+	public void setOutputYaml22(byte[] outputYaml22) {
+		this.outputYaml22 = outputYaml22;
+	}
+
+	public byte[] getOutputYaml23() {
+		return outputYaml23;
+	}
+
+	public void setOutputYaml23(byte[] outputYaml23) {
+		this.outputYaml23 = outputYaml23;
+	}
+
+	public byte[] getOutputYaml24() {
+		return outputYaml24;
+	}
+
+	public void setOutputYaml24(byte[] outputYaml24) {
+		this.outputYaml24 = outputYaml24;
 	}
 
 	public String getEdgeSiteBuildStatus() {
