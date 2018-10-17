@@ -22,16 +22,39 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.log4j.Logger;
+
 public class FileUtility {
+	
+	private static final Logger logger = Logger.getLogger(FileUtility.class);
 
 	public static void writeToFile(String filePath, byte[] fileContent) throws IOException {
 		
-		Path path = Paths.get(filePath);
-		Files.createDirectories(path.getParent());
-
-		FileOutputStream out = new FileOutputStream(filePath);
-		out.write(fileContent);
-		out.close();
+		FileOutputStream out = null;
+		try {
+			Path path = Paths.get(filePath);
+			Files.createDirectories(path.getParent());
+	
+			out = new FileOutputStream(filePath);
+			out.write(fileContent);
+			
+		} finally {
+			out.close();
+		}
+			
+			convertDOSToUnix(filePath);
+	}
+	
+	private static void convertDOSToUnix(String filePath) {
+		
+		try {
+			
+			Runtime.getRuntime().exec("dos2unix " + filePath);
+			
+		} catch (IOException e) {
+			
+			logger.error("Error converting windows file to unix", e);
+		}
 	}
 	
 }

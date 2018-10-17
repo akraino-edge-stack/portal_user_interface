@@ -24,4 +24,8 @@ public interface EdgeSiteYamlTemplateDAO {
 
 	public List<EdgeSiteYamlTemplate> getYamlTemplates();
 	
+	public void save(EdgeSiteYamlTemplate template);
+	
+	public void deleteAll();
+	
 }

@@ -21,6 +21,11 @@ public class BuildRequest extends WorkflowRequest {
 	private String blueprint;
 	private String targetfolder;
 	
+	@Override
+	public String toString() {
+		return "BuildRequest [blueprint=" + blueprint + ", targetfolder=" + targetfolder + "]";
+	}
+	
 	public String getBlueprint() {
 		return blueprint;
 	}

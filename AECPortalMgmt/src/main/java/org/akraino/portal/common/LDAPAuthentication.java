@@ -60,7 +60,7 @@ public class LDAPAuthentication {
 	        
 	        while (namingEnum.hasMore()) {
 	            SearchResult result = (SearchResult) namingEnum.next ();    
-	            Attributes attrs = result.getAttributes ();
+	            Attributes attrs = result.getAttributes();
 	            
 				authResponse.setMessage(AUTHORIZED);
 

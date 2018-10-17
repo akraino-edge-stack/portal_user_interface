@@ -24,6 +24,7 @@ import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.EdgeSiteYamlTemplateDAO;
 import org.akraino.portal.entity.EdgeSiteYamlTemplate;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -33,6 +34,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EdgeSiteYamlTemplateDAOImpl implements EdgeSiteYamlTemplateDAO {
 
+	private static final Logger logger = Logger.getLogger(EdgeSiteYamlTemplateDAOImpl.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -42,6 +45,8 @@ public class EdgeSiteYamlTemplateDAOImpl implements EdgeSiteYamlTemplateDAO {
 	
 	@Override
 	public List<EdgeSiteYamlTemplate> getYamlTemplates() {
+		
+		logger.info("getYamlTemplates");
 
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<EdgeSiteYamlTemplate> criteria = builder.createQuery(EdgeSiteYamlTemplate.class);
@@ -55,4 +60,25 @@ public class EdgeSiteYamlTemplateDAOImpl implements EdgeSiteYamlTemplateDAO {
 		
 	}
 
+	@Override
+	public void save(EdgeSiteYamlTemplate template) {
+		
+		logger.info("save");
+		
+		getSession().saveOrUpdate(template);
+	}
+
+	@Override
+	public void deleteAll() {
+		// clean all j2 files
+		
+		Query query = getSession().createQuery("delete from EdgeSiteYamlTemplate");
+		 
+		int result = query.executeUpdate();
+		
+		if (result > 0) {
+			logger.info("all j2 templates are cleaned up");
+		}
+		
+	}
 }
