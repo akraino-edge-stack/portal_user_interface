@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91da9ddb_cee6506e",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/SessionManagerFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "remove the \"?true:false\".  Not needed",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10286b66_52119938",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/StringUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "The \"?true:false\" stuff at the end is unnecessary.\nJust return the result of the expression.",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "429fd3e6_4c795ac7",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/AddOnsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "ONAP should be all caps since it is an acronym",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9a10677_cd88b15a",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/AddOnsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "ONAP should be all caps since it is an acronym",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de3483cd_91fa67ef",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/AddOnsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "ONAP should be all caps since it is an acronym",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef8357a9_0fe195ea",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/AddOnsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "ONAP should be all caps since it is an acronym",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9c75634_d93f1e97",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/controller/AddOnsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "ONAP should be all caps since it is an acronym",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4981758e_23fa25ff",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/AddOnsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "add check \"if (out !\u003d null)\"",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7173790a_937d50a8",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/EdgeSiteService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "spelling - retrieval",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706ccbe2_101e59f2",
+        "filename": "AECPortalMgmt/src/main/resources/log4j.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-10-22T18:51:32Z",
+      "side": 1,
+      "message": "Not a correct file path for Linux",
+      "revId": "0cced8792d5d56a8138efcdcf9e6308a0a2bda70",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
