@@ -60,6 +60,8 @@ public class AccessController {
 			String username = LoginUtil.getUserName(userPwd);
 
 			String pwd = LoginUtil.getPassword(userPwd);
+			
+			logger.info("User attempt to log in:" + username);
 
 			response = ldapAuth.authenticateUser(username, pwd);
 
@@ -90,6 +92,8 @@ public class AccessController {
 				response.setStatusCode("200");
 				response.setTokenId(sessionToken);
 				response.setMessage(LDAPAuthentication.AUTHORIZED);
+				
+				logger.info("User authorized:" + username);
 
 			} else {
 				// Authentication failed, invalid user
@@ -101,11 +105,10 @@ public class AccessController {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("failed to login-" + e);
+			logger.error("failed to login-", e);
 		}
 
-		return new ResponseEntity<AccessResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -113,21 +116,22 @@ public class AccessController {
 
 		AccessResponse response = new AccessResponse();
 		try {
+			
+			String userName = LoginUtil.decode(LoginUtil.getUserName(authToken));
 
 			accessService.deleteUserSession(authToken);
 
 			response.setTokenId(null);
-			response.setMessage("User successfuly logged out");
 			response.setStatusCode("200");
-
-			logger.info("User logged out");
+			
+			logger.info("User logged out" + userName);
 
 		} catch (Exception e) {
 
-			logger.error("failed to logout-" + e);
+			logger.error("failed to logout", e);
 		}
 
-		return new ResponseEntity<AccessResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 }

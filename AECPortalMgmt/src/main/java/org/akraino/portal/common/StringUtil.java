@@ -17,15 +17,15 @@
 package org.akraino.portal.common;
 
 public class StringUtil {
+	
+	private StringUtil() {
+		throw new IllegalStateException("Utility service");
+	}
 
 	public static boolean notEmpty(String str) {
 
-		if (str != null && !str.equals(""))
-			return true;
-		
-		return false;
-	}
-	
+		return (str != null && !str.equals(""));
 
-	
+	}
+
 }

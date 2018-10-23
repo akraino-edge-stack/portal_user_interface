@@ -22,6 +22,7 @@ import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.AccessDAO;
 import org.akraino.portal.entity.UserSession;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -31,6 +32,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AccessDAOImpl implements AccessDAO {
 
+	private static final Logger logger = Logger.getLogger(AccessDAOImpl.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -41,6 +44,8 @@ public class AccessDAOImpl implements AccessDAO {
 	@Override
 	public void createUserSession(UserSession usersession) {
 		
+		logger.info("createUserSession");
+		
 		getSession().save(usersession);
 
 	}
@@ -48,12 +53,16 @@ public class AccessDAOImpl implements AccessDAO {
 	@Override
 	public void updateUserSession(UserSession usersession) {
 
+		logger.info("updateUserSession");
+		
 		getSession().update(usersession);
 
 	}
 
 	@Override
 	public UserSession getUserSession(String userId) {
+		
+		logger.info("getUserSession");
 		
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<UserSession> criteria = builder.createQuery(UserSession.class);
@@ -70,6 +79,8 @@ public class AccessDAOImpl implements AccessDAO {
 
 	@Override
 	public void deleteUserSession(String userId) {
+		
+		logger.info("deleteUserSession");
 
 		UserSession userSession = getUserSession(userId);
 		

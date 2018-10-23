@@ -20,11 +20,9 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.akraino.portal.controller.AccessController;
 import org.akraino.portal.entity.UserSession;
-import org.akraino.portal.service.EdgeSiteService;
+import org.akraino.portal.service.AccessService;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,14 +34,16 @@ public class SessionManagerFilter implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
-		// TODO Auto-generated method stub
+		
+		logger.info("user authenticated");
 		
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
-		// TODO Auto-generated method stub
+
+		logger.info("user authenticated");
 		
 	}
 
@@ -56,7 +56,7 @@ public class SessionManagerFilter implements HandlerInterceptor {
 				
 				String clientToken = req.getHeader("tokenId");
 				
-				AkrainoSiteService service = new AkrainoSiteService();
+				AccessService service = new AccessService();
 						
 				UserSession user = service.getUserSession(LoginUtil.decode(LoginUtil.getUserName(clientToken)));
 				
@@ -95,11 +95,7 @@ public class SessionManagerFilter implements HandlerInterceptor {
 		long t= session.getCreatedDate().getTime();
 		Date afterAddingTimeOut = new Date(t + (sessionTimeOut * ONE_MINUTE_IN_MILLIS));
 		
-		if (t > afterAddingTimeOut.getTime())
-			return true;
-		
-		
-		return false;
+		return t > afterAddingTimeOut.getTime();
 
 	}
 

@@ -24,6 +24,7 @@ import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.entity.Region;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -33,16 +34,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RegionDAOImpl implements RegionDAO {
 
+	private static final Logger logger = Logger.getLogger(RegionDAOImpl.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	protected Session getSession() {
+		
+		logger.info("get Hibernate session");
+		
 		return sessionFactory.getCurrentSession();
 	}
 
 	@Override
 	public List<Region> listAllRegions() {
 
+		logger.info("listAllRegions");
+		
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<Region> criteria = builder.createQuery(Region.class);
 

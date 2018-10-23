@@ -56,7 +56,7 @@ public class TestETEController {
 
 		}
 
-		return new ResponseEntity<AECPortalResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 }

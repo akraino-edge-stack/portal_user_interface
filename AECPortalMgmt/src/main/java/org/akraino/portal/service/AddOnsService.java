@@ -33,7 +33,6 @@ import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.dao.AddOnsDAO;
 import org.akraino.portal.dao.EdgeSiteDAO;
 import org.akraino.portal.data.EdgeSiteState;
-import org.akraino.portal.data.TempestRequest;
 import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
 import org.akraino.portal.entity.Onap;
@@ -57,9 +56,19 @@ public class AddOnsService {
 	@Autowired
 	EdgeSiteService edgeSiteService;
 	
+	private String akrainoBaseDir = null;
+	
+	public AddOnsService() {
+		
+		akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
+		
+	}
+	
 	public boolean saveOnapInput(byte[] fileContent, String siteName) throws IOException {
 
 		EdgeSite edgeSite = null;
+		FileOutputStream out = null;
+		
 		try {
 			// read input file from db
 			edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteName);
@@ -76,15 +85,15 @@ public class AddOnsService {
 				addOnsDAO.saveOnap(onap);
 				
 				// copy input file
-				String filepath = "/opt/akraino/onap/parameters.env";
+				String filepath = akrainoBaseDir + "/onap/parameters.env";
 				//String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteName + ".onap";
 				
 				Path path = Paths.get(filepath);
 	            Files.createDirectories(path.getParent());
 
-				FileOutputStream out = new FileOutputStream(filepath);
+				out = new FileOutputStream(filepath);
 				out.write(fileContent);
-				out.close();
+				
 
 
 				return true;
@@ -93,6 +102,10 @@ public class AddOnsService {
 			
 		} catch (NoResultException e) {
 			logger.info("no edge site found");
+		} finally {
+			if (out != null) {
+				out.close();
+			}
 		}
 		
 		return false;

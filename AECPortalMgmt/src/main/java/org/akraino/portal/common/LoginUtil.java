@@ -20,6 +20,10 @@ package org.akraino.portal.common;
 import java.util.Base64;
 
 public class LoginUtil {
+	
+	private LoginUtil() {
+		throw new IllegalStateException("Utility class");
+	}
 
 	public static synchronized String getUserName(String base64Str) {
 		

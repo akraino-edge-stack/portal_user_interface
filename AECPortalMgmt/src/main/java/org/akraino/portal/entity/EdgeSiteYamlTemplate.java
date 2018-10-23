@@ -18,24 +18,29 @@ package org.akraino.portal.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="akraino.edge_site_input_yaml_files")
+@Table(name="akraino.edge_site_template_file")
 public class EdgeSiteYamlTemplate {
 
 	@Id
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "template_id_generator")
+	@SequenceGenerator(name = "template_id_generator", sequenceName = "akraino.seq_yamltemplate", allocationSize = 1)
+	@Column(name="yamltemplate_id")
 	private int id; 
 	
-	@Column(name = "input_yaml_file_name")
+	@Column(name = "template_file_name")
 	private String fileName;
 	
-	@Column(name = "input_yaml_file_location")
+	@Column(name = "template_file_location")
 	private String fileLocation;
 	
-	@Column(name = "input_yaml_file_content")
+	@Column(name = "template_file_content")
 	private byte [] fileContent;
 
 	public int getId() {
