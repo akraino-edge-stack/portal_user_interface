@@ -19,11 +19,16 @@ package org.akraino.portal.data;
 
 public class EdgeSiteState {
 
+	
 	private String siteName;
 	private String buildStatus;
 	private String createTarStatus;
+	private String transferFileStatus;
 	private String genesisNodeStatus;
 	private String deployToolsStatus;
+	private String nodeYamlStatus;
+	private String nodetransferFileStatus;
+	private String nodeDeployStatus;
 	private String buildDate;
 	private String deployDate;
 	private String deployStatus;
@@ -34,16 +39,18 @@ public class EdgeSiteState {
 	private String edgeSiteIP;
 	private String edgeSiteUser;
 	private String edgeSitePwd;
+	private String deployMode;
 	
 	@Override
 	public String toString() {
 		return "EdgeSiteState [siteName=" + siteName + ", buildStatus=" + buildStatus + ", createTarStatus="
-				+ createTarStatus + ", genesisNodeStatus="
-				+ genesisNodeStatus + ", deployToolsStatus=" + deployToolsStatus 
+				+ createTarStatus + ", transferFileStatus=" + transferFileStatus + ", genesisNodeStatus="
+				+ genesisNodeStatus + ", deployToolsStatus=" + deployToolsStatus + ", nodeYamlStatus=" + nodeYamlStatus
+				+ ", nodetransferFileStatus=" + nodetransferFileStatus + ", nodeDeployStatus=" + nodeDeployStatus
 				+ ", buildDate=" + buildDate + ", deployDate=" + deployDate + ", deployStatus=" + deployStatus
 				+ ", onapStatus=" + onapStatus + ", tempestStatus=" + tempestStatus + ", vCDNStatus=" + vCDNStatus
 				+ ", blueprint=" + blueprint + ", edgeSiteIP=" + edgeSiteIP + ", edgeSiteUser=" + edgeSiteUser
-				+ ", edgeSitePwd=" + edgeSitePwd + "]";
+				+ ", edgeSitePwd=" + edgeSitePwd + ", deployMode=" + deployMode + "]";
 	}
 	
 	public String getBlueprint() {
@@ -51,6 +58,13 @@ public class EdgeSiteState {
 	}
 	public void setBlueprint(String blueprint) {
 		this.blueprint = blueprint;
+	}
+	
+	public String getDeployMode() {
+		return deployMode;
+	}
+	public void setDeployMode(String deployMode) {
+		this.deployMode = deployMode;
 	}
 	public String getEdgeSiteIP() {
 		return edgeSiteIP;
@@ -135,6 +149,30 @@ public class EdgeSiteState {
 	}
 	public void setvCDNStatus(String vCDNStatus) {
 		this.vCDNStatus = vCDNStatus;
+	}
+	public String getNodeYamlStatus() {
+		return nodeYamlStatus;
+	}
+	public void setNodeYamlStatus(String nodeYamlStatus) {
+		this.nodeYamlStatus = nodeYamlStatus;
+	}
+	public String getNodetransferFileStatus() {
+		return nodetransferFileStatus;
+	}
+	public void setNodetransferFileStatus(String nodetransferFileStatus) {
+		this.nodetransferFileStatus = nodetransferFileStatus;
+	}
+	public String getNodeDeployStatus() {
+		return nodeDeployStatus;
+	}
+	public void setNodeDeployStatus(String nodeDeployStatus) {
+		this.nodeDeployStatus = nodeDeployStatus;
+	}
+	public String getTransferFileStatus() {
+		return transferFileStatus;
+	}
+	public void setTransferFileStatus(String transferFileStatus) {
+		this.transferFileStatus = transferFileStatus;
 	}
 	
 }

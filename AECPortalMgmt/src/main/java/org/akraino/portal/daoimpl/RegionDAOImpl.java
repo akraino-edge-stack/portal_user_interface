@@ -18,6 +18,7 @@ package org.akraino.portal.daoimpl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -60,6 +61,14 @@ public class RegionDAOImpl implements RegionDAO {
 		Query<Region> query = getSession().createQuery(criteria);
 
 		return query.getResultList();
+	}
+
+	@Override
+	public Region getRegion(Long regionId) {
+
+		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
+
+		return em.find(Region.class, regionId);
 	}
 
 }

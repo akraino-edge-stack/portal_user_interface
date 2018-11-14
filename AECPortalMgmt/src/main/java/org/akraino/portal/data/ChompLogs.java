@@ -16,26 +16,24 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+import java.util.Arrays;
+
+public class ChompLogs {
 	
-	private String deploymentverifier;
-	private String verifierparams;
 	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	private LogPair[] logpair;
+
+	public LogPair[] getLogpair() {
+		return logpair;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public void setLogpair(LogPair[] logpair) {
+		this.logpair = logpair;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
-	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
-	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "ChompLogs [logpair=" + Arrays.toString(logpair) + "]";
 	}
-	
+
 }

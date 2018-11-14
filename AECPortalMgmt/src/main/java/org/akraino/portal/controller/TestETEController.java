@@ -19,6 +19,7 @@ package org.akraino.portal.controller;
 import org.akraino.portal.data.AECPortalResponse;
 import org.akraino.portal.data.TempestRequest;
 import org.akraino.portal.service.TestETEService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,11 +35,15 @@ public class TestETEController {
 
 	@Autowired
 	TestETEService testETEService;
+	
+	private static final Logger logger = Logger.getLogger(TestETEController.class);
 
 	@RequestMapping(value = "/tempest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AECPortalResponse> runTempest(@RequestBody TempestRequest requestPayLoad) {
 
 		AECPortalResponse response = new AECPortalResponse();
+		
+		logger.info("runTempest - " + requestPayLoad);
 
 		try {
 

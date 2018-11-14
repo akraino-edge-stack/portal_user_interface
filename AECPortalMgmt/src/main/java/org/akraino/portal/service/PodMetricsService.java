@@ -14,19 +14,25 @@
  * limitations under the License.
  */
 
-package org.akraino.portal.dao;
+package org.akraino.portal.service;
 
-import java.util.List;
+import org.akraino.portal.data.ChompData;
 
-import org.akraino.portal.entity.EdgeSite;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public interface EdgeSiteDAO {
+public class PodMetricsService {
 	
-	public List<EdgeSite> listAllEdgeSites(int regionId);
-	
-	public void updateEdgeSite(EdgeSite edgeSite);
-	
-	public EdgeSite getEdgeSiteDetails(String siteName);
+	public boolean processChompInputFile(byte[] bfileContent) throws Exception {
+		
+		ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+		
+		ChompData chompData = mapper.readValue(bfileContent, ChompData.class);
+		
+		System.out.println("chomp data:" + chompData);
+		
+		return true;
+		
+	}
 
-	public void saveOrUpdate(EdgeSite site);
 }

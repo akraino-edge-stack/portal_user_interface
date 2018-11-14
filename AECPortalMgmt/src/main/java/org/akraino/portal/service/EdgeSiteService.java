@@ -17,11 +17,15 @@
 package org.akraino.portal.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.akraino.portal.common.FileUtility;
 import org.akraino.portal.common.PropertyUtil;
@@ -30,16 +34,23 @@ import org.akraino.portal.common.RestRequestBody;
 import org.akraino.portal.common.RestResponseBody;
 import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.dao.EdgeSiteDAO;
+import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.data.BuildRequest;
 import org.akraino.portal.data.EdgeSiteState;
+import org.akraino.portal.data.NPod;
 import org.akraino.portal.data.SiteDeployRequest;
+import org.akraino.portal.data.SiteRequest;
 import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
 import org.akraino.portal.entity.EdgeSiteYamlTemplate;
+import org.akraino.portal.entity.Region;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 @Service("edgeSiteService")
 @Transactional
@@ -47,6 +58,9 @@ public class EdgeSiteService {
 
 	@Autowired
 	private EdgeSiteDAO edgeSiteDAO;
+	
+	@Autowired
+	private RegionDAO regionDAO;
 	
 	@Autowired
 	private EdgeSiteYamlTemplateService edgeSiteYamlTemplateService;
@@ -85,6 +99,37 @@ public class EdgeSiteService {
 
 		return edgeSiteDAO.getEdgeSiteDetails(siteName);
 
+	}
+	
+	public NPod getEdgeSitePodInfo(String sitename, String blueprint) throws IOException {
+		
+		EdgeSite site = null;
+		FileOutputStream fileOuputStream = null;
+		NPod npod = null;
+		try {
+			
+			getEdgeSitePodInfo(sitename, blueprint);
+			
+			site = getEdgeSiteDetails(sitename);
+
+			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+			File yamlFile = new File("multinodeInputFile.yaml");
+			
+			fileOuputStream = new FileOutputStream(yamlFile, false); 
+		    fileOuputStream.write(site.getInputFile());
+			
+		    // read yaml file into java object
+		    npod = mapper.readValue(yamlFile, NPod.class);
+		
+		} finally {
+			try {
+				fileOuputStream.close();
+			} catch (IOException io) {
+				logger.error("Failed to read Yaml File Read", io);
+			}
+		}
+		
+		return npod;
 	}
 
 	public String getBuildYamlContent(String siteName) throws IOException {
@@ -163,6 +208,7 @@ public class EdgeSiteService {
 		edgeSite.setInputFile(bfileContent);
 		edgeSite.setDeployStatus(STATUS_NOT_STARTED);
 		edgeSite.setvCDNStatus(STATUS_NOT_STARTED);
+		//edgeSite.setDeployMode(siteRequest.getDeployMode());
 		
 		// copy input file
 		if (siteRequest.getBlueprint().equals(BLUEPRINT_ROVER)) {
@@ -299,8 +345,37 @@ public class EdgeSiteService {
 
 		if (StringUtil.notEmpty(statusReqeust.getvCDNStatus()))
 			edgeSite.setvCDNStatus(statusReqeust.getvCDNStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getTransferFileStatus()))
+			edgeSite.setTransferFileStatus(statusReqeust.getTransferFileStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getNodeDeployStatus()))
+			edgeSite.setNodeDeployStatus(statusReqeust.getNodeDeployStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getNodetransferFileStatus()))
+			edgeSite.setNodetransferFileStatus(statusReqeust.getNodetransferFileStatus());
+		
+		if (StringUtil.notEmpty(statusReqeust.getNodeYamlStatus()))
+			edgeSite.setNodeYamlStatus(statusReqeust.getNodeYamlStatus());
 
 		edgeSiteDAO.updateEdgeSite(edgeSite);
+	}
+	
+	public void createSite(SiteRequest siteRequest) {
+		
+		logger.info("createEdgeSite");
+		
+		Region region = regionDAO.getRegion(siteRequest.getRegionId().longValue());
+		
+		if (region == null) {
+			throw new EntityNotFoundException();
+		}
+		
+		EdgeSite site = new EdgeSite();
+		site.setEdgeSiteName(siteRequest.getName());
+		site.setRegion(region);
+		
+		edgeSiteDAO.saveOrUpdate(site);
 	}
 
 	public EdgeSiteState buildEdgeSite(BuildRequest buildRequest) {
@@ -374,19 +449,27 @@ public class EdgeSiteService {
 		EdgeSiteState siteState = new EdgeSiteState();
 		siteState.setSiteName(siteDeployRequest.getSitename());
 
-		try {
-
-			String deployURI = null;
+		String deployURI = null;
+		
+		if (siteDeployRequest.getBlueprint().equalsIgnoreCase(BLUEPRINT_ROVER)) {
 			
-			if (siteDeployRequest.getBlueprint().equalsIgnoreCase(BLUEPRINT_ROVER)) {
-				
-				deployURI = PropertyUtil.getInstance().getProperty("camunda.site.rover.deploy.uri");
-				
-			} else if(siteDeployRequest.getBlueprint().equalsIgnoreCase(BLUEPRINT_UNICYCLE)) {
+			deployURI = PropertyUtil.getInstance().getProperty("camunda.site.rover.deploy.uri");
+			
+		} else if(siteDeployRequest.getBlueprint().equalsIgnoreCase(BLUEPRINT_UNICYCLE)) {
+			
+			EdgeSite edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteDeployRequest.getSitename());
+			
+			if (edgeSite.getDeployMode().equalsIgnoreCase("new")) {
 				
 				deployURI = PropertyUtil.getInstance().getProperty("camunda.site.multinode.deploy.uri");
+				
+			} else if (edgeSite.getDeployMode().equalsIgnoreCase("addNode") || 
+					edgeSite.getDeployMode().equalsIgnoreCase("deleteNode")) {
+				
+				deployURI = PropertyUtil.getInstance().getProperty("camunda.site.multinode.node.adddelete.uri");
+				
 			}
-
+		}
 
 		RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<>();
 		requestObj.setT(siteDeployRequest);
@@ -394,20 +477,13 @@ public class EdgeSiteService {
 		RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<>();
 		responseObj.setT(siteState);
 
-			siteState = RestInterface.sendPOST(deployURI, requestObj, responseObj);
+		siteState = RestInterface.sendPOST(deployURI, requestObj, responseObj);
 
-		} catch (Exception e) {
-
-			throw e;
-
-		} finally {
-			
-			if (!StringUtil.notEmpty(siteState.getDeployStatus())) {				
-				siteState.setDeployStatus("Error invoking Camunda API");
-			}
-
-			updateSiteStatus(siteState);
+		if (!StringUtil.notEmpty(siteState.getDeployStatus())) {				
+			siteState.setDeployStatus("Error invoking Camunda API");
 		}
+
+		updateSiteStatus(siteState);
 
 		return siteState;
 
