@@ -16,26 +16,37 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"start", "endRange"})
+public class NCIDRRange {
+
+	@JsonProperty("start")
+	private String startRange;
+
+	@JsonProperty("end")
+	private String endRange;
 	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	public String getEndRange() {
+		return endRange;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public String getStartRange() {
+		return startRange;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public void setEndRange(String endRange) {
+		this.endRange = endRange;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setStartRange(String startRange) {
+		this.startRange = startRange;
 	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NCIDRRange [endRange=" + endRange + ", startRange=" + startRange + "]";
 	}
-	
+
 }

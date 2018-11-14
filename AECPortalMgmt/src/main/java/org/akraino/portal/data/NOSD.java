@@ -16,26 +16,30 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
-	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+public class NOSD {
+
+	private String data;
+	private String journal;
+
+	public String getData() {
+		return data;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public String getJournal() {
+		return journal;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public void setData(String data) {
+		this.data = data;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setJournal(String journal) {
+		this.journal = journal;
 	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NOSD [data=" + data + ", journal=" + journal + "]";
 	}
-	
+
 }

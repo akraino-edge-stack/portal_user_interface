@@ -16,26 +16,47 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class NStorage {
+
+	private List<NOSD> osds;
 	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	@JsonProperty("osd_count")
+	private int osdCount;
+
+	@JsonProperty("total_osd_count")
+	private int totalOSDCount;
+
+	public List<NOSD> getOsds() {
+		return osds;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public void setOsds(List<NOSD> osds) {
+		this.osds = osds;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public int getOsdCount() {
+		return osdCount;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setOsdCount(int osdCount) {
+		this.osdCount = osdCount;
 	}
+
+	public int getTotalOSDCount() {
+		return totalOSDCount;
+	}
+
+	public void setTotalOSDCount(int totalOSDCount) {
+		this.totalOSDCount = totalOSDCount;
+	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NStorage [osds=" + osds + ", osdCount=" + osdCount + ", totalOSDCount=" + totalOSDCount + "]";
 	}
-	
+
 }

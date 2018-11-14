@@ -16,26 +16,42 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
-	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"ip", "scope", "asnumber"})
+public class NPeerNw {
+
+	private Integer asnumber;
+	private String ip;
+	private String scope;
+
+	public Integer getAsnumber() {
+		return asnumber;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public String getIp() {
+		return ip;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public String getScope() {
+		return scope;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setAsnumber(Integer asnumber) {
+		this.asnumber = asnumber;
 	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NPeerNw [asnumber=" + asnumber + ", ip=" + ip + ", scope=" + scope + "]";
 	}
-	
+
 }

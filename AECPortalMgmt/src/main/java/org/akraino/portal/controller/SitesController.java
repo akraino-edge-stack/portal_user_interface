@@ -22,7 +22,9 @@ import java.util.List;
 import org.akraino.portal.data.AECPortalResponse;
 import org.akraino.portal.data.BuildRequest;
 import org.akraino.portal.data.EdgeSiteState;
+import org.akraino.portal.data.NPod;
 import org.akraino.portal.data.SiteDeployRequest;
+import org.akraino.portal.data.SiteRequest;
 import org.akraino.portal.data.SiteStatusResponse;
 import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
@@ -94,12 +96,32 @@ public class SitesController {
 
 		return new ResponseEntity<>(site, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/site/podInfo/{sitename}/{blueprint}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<NPod> getEdgeSitePodInfo(@PathVariable("sitename") String sitename, @PathVariable("blueprint") String blueprint) {
+
+		logger.info("getEdgeSitePodInfo - start, for site/blueprint:" + sitename + "/" + blueprint);
+		
+		NPod npod = null;
+		try {
+			
+			edgeSiteService.getEdgeSitePodInfo(sitename, blueprint);
+			
+
+		} catch (Exception e) {
+			logger.error("Exception retrieving site details", e);
+		} 
+		
+		logger.info("getEdgeSitePodInfo - end, for site/blueprint:" + sitename + "/" + blueprint);
+
+		return new ResponseEntity<>(npod, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
 			@ModelAttribute("siteName") String siteName, @ModelAttribute("blueprint") String blueprint,
 			@ModelAttribute("edgeSiteIP") String edgeSiteIP, @ModelAttribute("edgeSiteUser") String edgeSiteUser,
-			@ModelAttribute("edgeSitePwd") String edgeSitePwd) {
+			@ModelAttribute("edgeSitePwd") String edgeSitePwd, @ModelAttribute("deployMode") String deployMode) {
 
 		SiteStatusResponse response = new SiteStatusResponse();
 
@@ -110,6 +132,8 @@ public class SitesController {
 		siteRequest.setEdgeSiteIP(edgeSiteIP);
 		siteRequest.setEdgeSiteUser(edgeSiteUser);
 		siteRequest.setEdgeSitePwd(edgeSitePwd);
+		siteRequest.setDeployMode(deployMode);
+		
 		logger.info("upload input file for request:"+ siteRequest);
 
 		try {
@@ -137,6 +161,30 @@ public class SitesController {
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
+	}
+	
+	@RequestMapping(value = "/site", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SiteStatusResponse> createSite(@RequestBody SiteRequest siteRequest) {
+
+		logger.info("create new site:"+ siteRequest);
+		
+		SiteStatusResponse response = new SiteStatusResponse();
+		response.setSiteName(siteRequest.getName());
+
+		try {
+
+			edgeSiteService.createSite(siteRequest);
+
+		} catch (Exception e) {
+			response.setStatusCode("406");
+			response.setMessage("site create failed");
+			
+			logger.error("site create failed", e);
+		}
+		
+		logger.info("create new site response:" + response);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/status", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

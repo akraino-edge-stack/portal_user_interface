@@ -21,9 +21,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +39,8 @@ public class EdgeSite implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "site_id_generator")
+	@SequenceGenerator(name = "site_id_generator", sequenceName = "akraino.seq_site", allocationSize = 1)
 	@Column(name="edge_site_id")
 	private int edgeSiteId;
 	
@@ -163,6 +168,21 @@ public class EdgeSite implements Serializable {
 	@Column(name="multinode_deploytool_status")
 	private String edgeSiteDeployDeployToolStatus;
 
+	@Column(name="multinode_transferfile_status")
+	private String transferFileStatus;
+	
+	@Column(name="deploy_mode")
+	private String deployMode;
+	
+	@Column(name="singlenode_createyaml_status")
+	private String nodeYamlStatus;
+	
+	@Column(name="singlenode_transferfile_status")
+	private String nodetransferFileStatus;
+	
+	@Column(name="singlenode_deploy_status")
+	private String nodeDeployStatus;
+	
 	public int getEdgeSiteId() {
 		return edgeSiteId;
 	}
@@ -497,6 +517,46 @@ public class EdgeSite implements Serializable {
 
 	public void setEdgeSiteDeployDeployToolStatus(String edgeSiteDeployDeployToolStatus) {
 		this.edgeSiteDeployDeployToolStatus = edgeSiteDeployDeployToolStatus;
+	}
+
+	public String getDeployMode() {
+		return deployMode;
+	}
+
+	public void setDeployMode(String deployMode) {
+		this.deployMode = deployMode;
+	}
+
+	public String getTransferFileStatus() {
+		return transferFileStatus;
+	}
+
+	public void setTransferFileStatus(String transferFileStatus) {
+		this.transferFileStatus = transferFileStatus;
+	}
+
+	public String getNodeYamlStatus() {
+		return nodeYamlStatus;
+	}
+
+	public void setNodeYamlStatus(String nodeYamlStatus) {
+		this.nodeYamlStatus = nodeYamlStatus;
+	}
+
+	public String getNodetransferFileStatus() {
+		return nodetransferFileStatus;
+	}
+
+	public void setNodetransferFileStatus(String nodetransferFileStatus) {
+		this.nodetransferFileStatus = nodetransferFileStatus;
+	}
+
+	public String getNodeDeployStatus() {
+		return nodeDeployStatus;
+	}
+
+	public void setNodeDeployStatus(String nodeDeployStatus) {
+		this.nodeDeployStatus = nodeDeployStatus;
 	}
 
 	public static long getSerialversionuid() {
