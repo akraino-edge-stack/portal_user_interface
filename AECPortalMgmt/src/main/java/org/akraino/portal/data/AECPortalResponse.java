@@ -28,6 +28,11 @@ public class AECPortalResponse {
 		return statusCode;
 	}
 
+	@Override
+	public String toString() {
+		return "AECPortalResponse [statusCode=" + statusCode + ", message=" + message + ", entity=" + entity + "]";
+	}
+
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
 	}

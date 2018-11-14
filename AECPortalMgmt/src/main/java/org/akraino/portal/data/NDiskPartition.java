@@ -16,26 +16,43 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"name", "size", "mountpoint"})
+public class NDiskPartition {
+
+	private String mountpoint;
 	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	private String name;
+	private String size;
+
+	public String getName() {
+		return name;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public String getSize() {
+		return size;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setSize(String size) {
+		this.size = size;
 	}
+
+	public String getMountpoint() {
+		return mountpoint;
+	}
+
+	public void setMountpoint(String mountpoint) {
+		this.mountpoint = mountpoint;
+	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NDiskPartition [mountPoint=" + mountpoint + ", name=" + name + ", size=" + size + "]";
 	}
-	
+
 }

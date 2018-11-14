@@ -16,26 +16,21 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+public class NSRIOVWhitelist {
 	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	private String address;
+
+	public String getAddress() {
+		return address;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
-	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
-	}
+
 	@Override
 	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+		return "NSRIOVWhitelist [address=" + address + "]";
 	}
 	
 }

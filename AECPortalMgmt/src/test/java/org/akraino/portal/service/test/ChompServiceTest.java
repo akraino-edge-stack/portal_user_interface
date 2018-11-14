@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package org.akraino.portal.dao;
+package org.akraino.portal.service.test;
 
-import java.util.List;
+import java.io.File;
 
-import org.akraino.portal.entity.EdgeSite;
+import org.junit.Test;
 
-public interface EdgeSiteDAO {
+import junit.framework.TestCase;
+
+public class ChompServiceTest extends TestCase {
 	
-	public List<EdgeSite> listAllEdgeSites(int regionId);
-	
-	public void updateEdgeSite(EdgeSite edgeSite);
-	
-	public EdgeSite getEdgeSiteDetails(String siteName);
+	@Test
+	public void testRun() {
+		
+		File yamlFile = new File("C:\\Users\\ld261v\\Downloads\\multi-node-input-file-hpgen10.yaml");
+		
+		
+		
+	}
 
-	public void saveOrUpdate(EdgeSite site);
 }
