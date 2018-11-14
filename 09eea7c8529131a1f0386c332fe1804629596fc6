@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9dad669_780f9e7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-11-14T20:13:40Z",
+      "side": 1,
+      "message": "This needs to be spelled out more.\nWhat is this change for?  You multiple lines if needed.",
+      "revId": "09eea7c8529131a1f0386c332fe1804629596fc6",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "852169fe_ca9319e1",
+        "filename": "AECPortalMgmt/src/test/java/org/akraino/portal/service/test/ChompServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-11-14T20:13:40Z",
+      "side": 1,
+      "message": "Not a valid (LINUX) path",
+      "revId": "09eea7c8529131a1f0386c332fe1804629596fc6",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
