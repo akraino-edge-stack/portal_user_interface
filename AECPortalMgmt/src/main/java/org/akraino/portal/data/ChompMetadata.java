@@ -24,4 +24,33 @@ public class ChompMetadata {
 	
 	private String namespace;
 
+	public String getPod() {
+		return pod;
+	}
+
+	public void setPod(String pod) {
+		this.pod = pod;
+	}
+
+	public String getLatency() {
+		return latency;
+	}
+
+	public void setLatency(String latency) {
+		this.latency = latency;
+	}
+
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
+	}
+
+	@Override
+	public String toString() {
+		return "ChompMetadata [pod=" + pod + ", latency=" + latency + ", namespace=" + namespace + "]";
+	}
+
 }

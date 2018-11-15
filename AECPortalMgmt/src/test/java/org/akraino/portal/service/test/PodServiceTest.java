@@ -70,14 +70,14 @@ public class PodServiceTest extends TestCase {
 			rack.setRackname("rack111");
 			rack.setRackPersonality("Control");
 
-			dbpod.addRack(rack);
+			//dbpod.addRack(rack);
 			
 			//pod.setRacks(racks);
-			podService.updatePod(dbpod);
+			//podService.updatePod(dbpod);
 
 			//List<Pod> pods = podService.getPods();
 			
-			System.out.println("id"+dbpod.getPodId());
+			//System.out.println("id"+dbpod.getPodId());
 			
 			//System.out.println("id"+pods.size());
 			

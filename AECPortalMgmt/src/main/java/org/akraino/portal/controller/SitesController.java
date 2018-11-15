@@ -105,7 +105,7 @@ public class SitesController {
 		NPod npod = null;
 		try {
 			
-			edgeSiteService.getEdgeSitePodInfo(sitename, blueprint);
+			npod = edgeSiteService.getEdgeSitePodInfo(sitename, blueprint);
 			
 
 		} catch (Exception e) {

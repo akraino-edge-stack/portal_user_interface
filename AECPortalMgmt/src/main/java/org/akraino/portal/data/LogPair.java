@@ -22,9 +22,9 @@ public class LogPair {
 	
 	private String signature;
 	
-	private Timestamp tStart;
+	private Timestamp tstart;
 	
-	private Timestamp tStop;
+	private Timestamp tstop;
 
 	private ChompSysData sysdata;
 	
@@ -40,20 +40,20 @@ public class LogPair {
 		this.signature = signature;
 	}
 
-	public Timestamp gettStart() {
-		return tStart;
+	public Timestamp getTstart() {
+		return tstart;
 	}
 
-	public void settStart(Timestamp tStart) {
-		this.tStart = tStart;
+	public void setTstart(Timestamp tstart) {
+		this.tstart = tstart;
 	}
 
-	public Timestamp gettStop() {
-		return tStop;
+	public Timestamp getTstop() {
+		return tstop;
 	}
 
-	public void settStop(Timestamp tStop) {
-		this.tStop = tStop;
+	public void setTstop(Timestamp tstop) {
+		this.tstop = tstop;
 	}
 
 	public ChompSysData getSysdata() {
@@ -82,8 +82,8 @@ public class LogPair {
 
 	@Override
 	public String toString() {
-		return "LogPair [signature=" + signature + ", tStart=" + tStart + ", tStop=" + tStop + ", sysdata=" + sysdata
+		return "LogPair [signature=" + signature + ", tstart=" + tstart + ", tstop=" + tstop + ", sysdata=" + sysdata
 				+ ", log=" + log + ", chMetadata=" + chMetadata + "]";
 	}
-	
+
 }

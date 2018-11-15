@@ -64,7 +64,7 @@ public class RegionDAOImpl implements RegionDAO {
 	}
 
 	@Override
-	public Region getRegion(Long regionId) {
+	public Region getRegion(Integer regionId) {
 
 		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
 

@@ -45,33 +45,70 @@ public class Pod implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pod_id_generator")
 	@SequenceGenerator(name = "pod_id_generator", sequenceName = "akraino.seq_pod", allocationSize = 1)
 	@Column(name = "pod_id")
-	private Long podId;
+	private Integer podId;
 
 	@Column(name = "pod_name")
 	private String podname;
+	
+	@Column(name = "pod_type")
+	private String podType;
+	
+	@Column(name="pod_json")
+	private byte[] podjson;
+	
+	@Column(name="site_id")
+	private Integer siteId;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
+/*	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
 	        orphanRemoval = true)
 	@JoinColumn(name = "pod_id")
-	private Set<GenericRack> racks;
-
-	public Long getPodId() {
-		return podId;
-	}
-
-	public void setPodId(Long podId) {
-		this.podId = podId;
-	}
+	private Set<GenericRack> racks;*/
 
 	public String getPodname() {
 		return podname;
+	}
+
+	public Integer getPodId() {
+		return podId;
+	}
+
+	public void setPodId(Integer podId) {
+		this.podId = podId;
 	}
 
 	public void setPodname(String podname) {
 		this.podname = podname;
 	}
 
-	public Set<GenericRack> getRacks() {
+	public String getPodType() {
+		return podType;
+	}
+
+	public void setPodType(String podType) {
+		this.podType = podType;
+	}
+
+	public byte[] getPodjson() {
+		return podjson;
+	}
+
+	public void setPodjson(byte[] podjson) {
+		this.podjson = podjson;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Integer getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+	
+/*	public Set<GenericRack> getRacks() {
 		return racks;
 	}
 
@@ -81,5 +118,6 @@ public class Pod implements Serializable {
 	
 	public void addRack(GenericRack rack) {
 		this.getRacks().add(rack);
-	}
+	}*/
+
 }
