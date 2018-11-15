@@ -16,26 +16,36 @@
 
 package org.akraino.portal.data;
 
-public class TempestRequest extends WorkflowRequest {
+public class SiteRequest {
+
+	private String name;
 	
-	private String deploymentverifier;
-	private String verifierparams;
+	private Integer regionId;
 	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
+	private String location;
+
+	public String getName() {
+		return name;
 	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getVerifierparams() {
-		return verifierparams;
+
+	public Integer getRegionId() {
+		return regionId;
 	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
 	}
-	@Override
-	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 }
