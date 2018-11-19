@@ -51,7 +51,7 @@ public class PodService {
 
 		persistedPod.setPodname(modifiedPod.getPodname());
 
-		if (persistedPod.getRacks() != null) {
+		/*if (persistedPod.getRacks() != null) {
 			Iterator<GenericRack> itr = persistedPod.getRacks().iterator();
 			while (itr.hasNext()) {
 				GenericRack persistedRack = itr.next();
@@ -78,7 +78,7 @@ public class PodService {
 			if (modifiedRack.getRackId() == null) {
 				persistedPod.addRack(modifiedRack);
 			}
-		}
+		}*/
 
 		// flush to DB
 		podDAO.merge(persistedPod);
@@ -90,7 +90,7 @@ public class PodService {
 
 	}
 
-	public Pod getPodDetails(Long podId) {
+	public Pod getPodDetails(Integer podId) {
 		return podDAO.getPod(podId);
 	}
 	

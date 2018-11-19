@@ -16,27 +16,63 @@
 
 package org.akraino.portal.service;
 
-import org.akraino.portal.data.ChompData;
+import java.io.InputStream;
+import java.util.List;
+
+import org.akraino.portal.common.StringUtil;
+import org.akraino.portal.config.AppConfig;
+import org.akraino.portal.data.ChompObject;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Service("podMetricsService")
 @Transactional
 public class PodMetricsService {
 	
+	private static final Logger logger = Logger.getLogger(PodMetricsService.class);
+	
+	private static final String CHOMP_JSON_FILENAME = "chomp.json";
+	
 	public boolean processChompInputFile(byte[] bfileContent) throws Exception {
 		
-		ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+		String jsonString = StringUtil.unescape(bfileContent.toString());
 		
-		ChompData chompData = mapper.readValue(bfileContent, ChompData.class);
+		logger.info("chomp json input as is:" + jsonString);
 		
-		System.out.println("chomp data:" + chompData);
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		TypeFactory typeFactory = objectMapper.getTypeFactory();
+		List<ChompObject> chompList = objectMapper.readValue(jsonString, typeFactory.constructCollectionType(List.class, ChompObject.class));
+		
+		logger.info("processed following chomp data" + chompList.toString());
 		
 		return true;
 		
 	}
-
+	
+	public List<ChompObject> getChompData() throws Exception {
+		
+		InputStream input = AppConfig.class.getClassLoader().getResourceAsStream(CHOMP_JSON_FILENAME);
+		
+		String jsonString = StringUtil.unescape(IOUtils.toString(input));
+		
+		logger.info("chomp json input as is:" + jsonString);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		TypeFactory typeFactory = objectMapper.getTypeFactory();
+		List<ChompObject> chompList = objectMapper.readValue(jsonString, typeFactory.constructCollectionType(List.class, ChompObject.class));
+		
+		logger.info("chomp json to java object: "+ chompList.toString());
+		
+		return chompList;
+		
+	}
+	
 }

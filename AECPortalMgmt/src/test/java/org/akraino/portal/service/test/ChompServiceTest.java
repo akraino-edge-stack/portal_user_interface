@@ -16,45 +16,53 @@
 
 package org.akraino.portal.service.test;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
+import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.config.AppConfig;
+import org.akraino.portal.data.ChompObject;
 import org.akraino.portal.service.PodMetricsService;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import junit.framework.TestCase;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
+@WebAppConfiguration
 public class ChompServiceTest extends TestCase {
 	
 	@Autowired
     @Qualifier("podMetricsService")
 	PodMetricsService podMetricsService;
 	
-	private static final String CHOMP_JSON_FILENAME = "chomp.json";
+	
 	
 	@Test
 	public void testRun() {
 		
 		try {
-			//InputStream input = AppConfig.class.getClassLoader().getResourceAsStream(CHOMP_JSON_FILENAME);
 			
-			//podMetricsService.processChompInputFile(IOUtils.toByteArray(input));
+			List<ChompObject> chomps = podMetricsService.getChompData();
 			
-			String file1 = AppConfig.class.getClassLoader().getResource("multi-node-input-file-hpgen10.yaml").getFile();
-			
-			String file2 = AppConfig.class.getClassLoader().getResource("multi-node-input-file-hpgen10.yaml").getPath();
-			
-			System.out.println("file1:" + file1);
-			System.out.println("file2:" + file2);
-			
+			System.out.println("chomp:" + chomps.toString());
+		
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 		
 	}
-
+	
 }

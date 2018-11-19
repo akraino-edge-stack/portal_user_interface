@@ -102,39 +102,16 @@ public class EdgeSiteService {
 		return edgeSiteDAO.getEdgeSiteDetails(siteName);
 
 	}
-	
-	public NPod getEdgeSitePodInfo(String sitename, String blueprint) throws IOException {
-		
-		EdgeSite site = null;
-		FileOutputStream fileOuputStream = null;
-		NPod npod = null;
-		
-		try {
-			
-			getEdgeSitePodInfo(sitename, blueprint);
-			
-			site = getEdgeSiteDetails(sitename);
-			
-			//String multinodefile = AppConfig.class.getClassLoader().getResource(MULTI_NODE_INPUT_FILE_NAME_HPGEN10).getPath();
 
-			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-			File yamlFile = new File(akrainoBaseDir + "/yaml_builds/" + sitename + "_gen.yaml");
-			
-			fileOuputStream = new FileOutputStream(yamlFile, false); 
-		    fileOuputStream.write(site.getInputFile());
-			
-		    // read yaml file into java object
-		    npod = mapper.readValue(yamlFile, NPod.class);
-		
-		} finally {
-			try {
-				fileOuputStream.close();
-			} catch (IOException io) {
-				logger.error("Failed to read Yaml File Read", io);
-			}
-		}
-		
-		return npod;
+	public NPod getEdgeSitePodInfo(String sitename, String blueprint) throws IOException {
+
+		EdgeSite site = getEdgeSiteDetails(sitename);
+
+		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+		// read yaml file into java object
+		return mapper.readValue(site.getInputFile(), NPod.class);
+
 	}
 
 	public String getBuildYamlContent(String siteName) throws IOException {
@@ -370,7 +347,7 @@ public class EdgeSiteService {
 		
 		logger.info("createEdgeSite");
 		
-		Region region = regionDAO.getRegion(siteRequest.getRegionId().longValue());
+		Region region = regionDAO.getRegion(siteRequest.getRegionId());
 		
 		if (region == null) {
 			throw new EntityNotFoundException();

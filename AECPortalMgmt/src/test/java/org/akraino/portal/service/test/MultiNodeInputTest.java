@@ -19,6 +19,7 @@ package org.akraino.portal.service.test;
 import java.io.File;
 import java.io.IOException;
 
+import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.data.NPod;
 import org.junit.Test;
 
@@ -34,12 +35,14 @@ import junit.framework.TestCase;
 
 public class MultiNodeInputTest extends TestCase {
 	
+	private static final String MULTI_NODE_INPUT_FILENAME = "multi-node-input-file-hpgen10.yaml";
+	
+	private static final String MULTI_NODE_OUTPUT_FILENAME = "/multi-node-output-file-hpgen10.yaml";
+	
 	@Test
 	public void testRun() {
 		
-		//File yamlFile = new File("C:\\Users\\ld261v\\Downloads\\multi-node-input-file-hpgen10.yaml");
-		
-		File yamlFile = new File("/multi-node-input-file-hpgen10.yaml");
+		File yamlFile = new File(AppConfig.class.getClassLoader().getResource(MULTI_NODE_INPUT_FILENAME).getPath());
 		
 		ObjectMapper mapper = new ObjectMapper(
 				new YAMLFactory()
@@ -52,10 +55,7 @@ public class MultiNodeInputTest extends TestCase {
 		try {
 			NPod npod = mapper.readValue(yamlFile, NPod.class);
 			
-			
-			System.out.println("NPOD:" + npod);
-			
-			mapper.writeValue(new File("/multi-node-output-file-hpgen10.yaml"), npod);
+			mapper.writeValue(new File(yamlFile.getParent()+MULTI_NODE_OUTPUT_FILENAME), npod);
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block

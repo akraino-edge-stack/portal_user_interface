@@ -18,6 +18,7 @@ package org.akraino.portal.data;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -45,7 +46,7 @@ public class ChompObject {
 	@JsonProperty("latency_avg")
 	private Float latencyAvg;
 	
-	private ChompLogs[] logs;
+	private List<LogPair[]> logs;
 
 	public String getName() {
 		return name;
@@ -119,11 +120,11 @@ public class ChompObject {
 		this.latencyAvg = latencyAvg;
 	}
 
-	public ChompLogs[] getLogs() {
+	public List<LogPair[]> getLogs() {
 		return logs;
 	}
 
-	public void setLogs(ChompLogs[] logs) {
+	public void setLogs(List<LogPair[]> logs) {
 		this.logs = logs;
 	}
 
@@ -131,7 +132,7 @@ public class ChompObject {
 	public String toString() {
 		return "ChompObject [name=" + name + ", tstart=" + tstart + ", tstop=" + tstop + ", type=" + type
 				+ ", logCount=" + logCount + ", latency=" + Arrays.toString(latency) + ", latencyMax=" + latencyMax
-				+ ", latencyMin=" + latencyMin + ", latencyAvg=" + latencyAvg + ", logs=" + Arrays.toString(logs) + "]";
+				+ ", latencyMin=" + latencyMin + ", latencyAvg=" + latencyAvg + ", logs=" + logs + "]";
 	}
-	
+
 }

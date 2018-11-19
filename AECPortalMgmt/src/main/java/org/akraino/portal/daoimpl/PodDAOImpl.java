@@ -56,7 +56,7 @@ public class PodDAOImpl implements PodDAO {
 	}
 
 	@Override
-	public Pod getPod(Long podId) {
+	public Pod getPod(Integer podId) {
 
 		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
 

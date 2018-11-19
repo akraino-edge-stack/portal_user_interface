@@ -24,6 +24,6 @@ public interface RegionDAO {
 
 	public List<Region> listAllRegions();
 	
-	public Region getRegion(Long id);
+	public Region getRegion(Integer id);
 	
 }

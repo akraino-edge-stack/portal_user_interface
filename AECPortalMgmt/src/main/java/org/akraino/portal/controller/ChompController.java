@@ -16,6 +16,9 @@
 
 package org.akraino.portal.controller;
 
+import java.util.List;
+
+import org.akraino.portal.data.ChompObject;
 import org.akraino.portal.data.SiteStatusResponse;
 import org.akraino.portal.service.PodMetricsService;
 import org.apache.log4j.Logger;
@@ -72,6 +75,26 @@ public class ChompController {
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ChompObject>> getChompData() {
+
+		logger.info("getChompData - start");
+		
+		List<ChompObject> chompdata = null;
+		try {
+			
+			chompdata = podMetricsService.getChompData();
+			
+
+		} catch (Exception e) {
+			logger.error("Exception retrieving site details", e);
+		} 
+		
+		logger.info("getChompData - end");
+
+		return new ResponseEntity<>(chompdata, HttpStatus.OK);
 	}
 
 }

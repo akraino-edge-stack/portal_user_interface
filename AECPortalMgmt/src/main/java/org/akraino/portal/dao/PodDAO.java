@@ -28,7 +28,7 @@ public interface PodDAO {
 	
 	public List<Pod> getPods();
 	
-	public Pod getPod(Long podId);
+	public Pod getPod(Integer podId);
 	
 	public void deletePod(Pod pod);
 	

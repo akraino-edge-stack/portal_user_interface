@@ -24,4 +24,33 @@ public class ChompSysData {
 	
 	private String namespace;
 
+	public String getPod() {
+		return pod;
+	}
+
+	public void setPod(String pod) {
+		this.pod = pod;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
+	}
+
+	@Override
+	public String toString() {
+		return "ChompSysData [pod=" + pod + ", host=" + host + ", namespace=" + namespace + "]";
+	}
+	
 }
