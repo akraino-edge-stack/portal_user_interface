@@ -16,9 +16,11 @@
 package org.akraino.portal.controller;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.akraino.portal.data.AECPortalResponse;
+import org.akraino.portal.data.PodData;
 import org.akraino.portal.entity.Pod;
 import org.akraino.portal.service.PodService;
 import org.apache.log4j.Logger;
@@ -58,11 +60,18 @@ public class PodController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AECPortalResponse> createPod(@RequestBody Pod pod) {
+	public ResponseEntity<AECPortalResponse> createPod(@RequestBody PodData podData) {
 		
 		AECPortalResponse response = new AECPortalResponse();
 		
 		try {
+			
+			Pod pod = new Pod();
+			pod.setPodname(podData.getPodName());
+			pod.setPodType(podData.getPodType());
+			pod.setSiteId(podData.getSiteId());
+			
+			pod.setPodjson(Base64.getDecoder().decode(podData.getPodJson()));
 
 			podService.savePod(pod);
 			
@@ -72,7 +81,7 @@ public class PodController {
 			
 		} catch (Exception e) {
 			response.setStatusCode("406");
-			logger.error(e);
+			logger.error("Error creating pod", e);
 		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
