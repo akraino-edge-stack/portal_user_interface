@@ -44,13 +44,13 @@ limitations under the License.
                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>Akraino Blueprint<span class="caret">
                </span></a>
                <ul id="configuracoes" class="collapse">
-               <li>
+              <!--   <li>
                      <a  ng-class ="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
                      PODs</a>
-                  </li>
+                  </li>-->
                 <li>
                      <a  ng-class ="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
-                     Blueprints</a>
+                    PODs</a>
                   </li>
                   <li>
                      <a ng-class ="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>
@@ -95,12 +95,25 @@ limitations under the License.
                <i class="fa fa-info"></i> <span>Inventory</span>
                </a>
             </li>-->
+             <li class"dropdown">
+               <a class="dropdown-toggle" data-toggle="collapse" data-target="#configuracoes1" role="button"
+                  aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>ETE Testing<span class="caret">
+               </span></a>
+               <ul id="configuracoes1" class="collapse">
             <li>
+            
                <a ng-class ="{example : $state.current.name == 'eteTest'}" ui-sref="eteTest">
-               <i class="fa fa-check"></i><span>ETE Testing</span>
+               <i class="fa fa-check"></i><span>ETE Testing(Tempest)</span>
+               </a>
+            </li>
+             <li>
+            
+               <a ng-class ="{example : $state.current.name == 'eteChomp'}" ui-sref="eteChomp">
+               <i class="fa fa-check"></i><span>Chomp</span>
                </a>
             </li>
          </ul>
+         </li>
          
       </div>
       <!-- /#sidebar-wrapper -->

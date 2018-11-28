@@ -1,0 +1,165 @@
+<!--
+   Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+   
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+          http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   -->
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+ <style>
+ .addNodeFormTemplate input[type=text],
+      select
+      {
+      width: 150px;
+      height:16px;
+      padding: 3px;
+      border: 0.5px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 0px;
+      margin-bottom: 0.1px;
+      resize: vertical;
+      box-shadow: 0.5px 1px #888888
+      }
+       .addNodeFormTemplate label{
+      font-size:12px !important;
+      margin-bottom:0px;
+      line-height:1;
+      width:30%;
+      }
+ </style>
+  <body>
+  <h1>hi</h1>
+<form class="addNodeFormTemplate">
+ 
+         <h3 style="margin-bottom:1px;margin-top:1px;">Add Node:</h3>
+         <div style="height:120px">
+         <div style="float:left;width:260px">
+         <label style="width:100px;text-align:right;"> Node Name: </label>
+         <input type="text" placeholder="" ng-model="nodeName" /> </br>
+ <label style="width:100px;text-align:right;"> Rack: </label>
+         <select class="exampleTable" style="width:30%;height:20px;width:150px;" ng-model="rackName" ng-change="" ng-options="rack.name for rack in $parent.rackList">
+         <option value="">Select Rack
+          </option>
+         </select> </br>
+         <label style="width:100px;text-align:right;"> Rack Units Req: </label>
+         <input type="text" placeholder="" ng-model="rackUnits" /></br>
+         <label style="width:100px;text-align:right;"> Manufacturer: </label>
+         <input type="text" placeholder="" ng-model="manufacturer" /></br>
+          <label style="width:100px;text-align:right;">Node hardware: </label>
+         <input type="text" placeholder="" ng-model="nodeHardware" /></br>
+         <label style="width:100px;text-align:right;"> Rack Position: </label>
+         <input type="text" placeholder="" ng-model="rackPosition" /></br>
+         </div>
+         <div style="float:left;width:260px">
+         
+         <label style="width:100px;text-align:right;"> Node Type: </label>
+         <select class="exampleTable" style="width:150px;height:20px;" ng-model="nodeType" ng-change="">
+                       <option value ="">Select Node Type</option>
+                       <option value="compute">Compute</option>
+                       <option value="control">Control</option>
+                       <option value="storage">Storage</option>
+                       <option value="network">Network</option>
+                    </select></br>
+         <label style="width:100px;text-align:right;"> OOB IP: </label>
+         <input type="text" placeholder="" ng-model="oobIP" /> </br>
+          <label style="width:100px;text-align:right;"> Host IP: </label>
+         <input type="text" placeholder="" ng-model="hostIP" /> </br>
+          <label style="width:100px;text-align:right;"> Storage IP: </label>
+         <input type="text" placeholder="" ng-model="storageIP" /> </br>
+           <label style="width:100px;text-align:right;"> PXE IP: </label>
+         <input type="text" placeholder="" ng-model="pxeIP" /> </br>
+          <label style="width:100px;text-align:right;"> Kubernetes IP: </label>
+         <input type="text" placeholder="" ng-model="kubernetesIP" /> </br>
+         
+        </div>
+         <div style="float:right;width:260px;">
+           <label style="width:100px;text-align:right;"> Neutron IP: </label>
+         <input type="text" placeholder="" ng-model="neutronIp" /> </br>
+          <label style="width:100px;text-align:right;"> OOB User Name: </label>
+         <input type="text" placeholder="" ng-model="oobUserName" /> </br>
+          <label style="width:100px;text-align:right;"> OOB password: </label>
+         <input type="text" placeholder="" ng-model="oobPassword" /> </br>
+          <label style="width:100px;text-align:right;"> Cooling Req: </label>
+         <input type="text" placeholder="" ng-model="coolingReq" /> </br>
+         <label style="width:100px;text-align:right;"> Power Req: </label>
+         <input type="text" placeholder="" ng-model="powerReq" /> </br>
+         </div>
+         </div></br>
+         <div>
+         <div style-"float:left">
+         <label style="width:15%;text-align:right;"> Add Hardware: </label>
+         
+         <select class="exampleTable" style="width:30%;height:30px;" ng-model="hardwareType" ng-change="">
+                       <option value ="">Select Hardware</option>
+                       <option value="NVIDIA Tesla v100">NVIDIA Tesla v100</option>
+                       
+                    </select><button  class="smallbutton" style="margin-left:5px;" ng-click="addHardware()">Add</button></br>
+         <div class="borderFrame1" style="height:130px;padding-top:5px;width:600px;">
+         <p style="padding-left:10px;font-weight:bold;">Hardware</p>
+         <table>
+         <tbody>
+         <tr ng-repeat="hardware in hardwareList track by $index" >
+         <td ng-if='hardware' style="width:1%;padding-left:10px;font-size: 15px;"><input type="checkbox" ng-model="tohardwareDelete[$index]" name="subscriptionRadio" value="{{hardware}}" /></td>
+         <td style="padding-left:10px;font-size: 15px;width:49%">{{hardware}}</td>
+         </tr> </tbody>
+         </table>
+         </div>
+         <label style="width:15%;text-align:right;"> Add Software: </label>
+         <select class="exampleTable" style="width:30%;height:30px;" ng-model="softwareType" ng-change="">
+                       <option value ="">Select Software</option>
+                       <option value="Acme Smart-V-Switch">Acme Smart-V-Switch</option>
+                       
+                    </select><button style="margin-left:5px;" class="smallbutton" ng-click="addSoftware()">Add</button></br>
+         <div class="borderFrame1" style="height:150px;padding-top:5px;height:130px;width:600px;">
+         <p style="padding-left:10px;font-weight:bold;">Software</p>
+         <table>
+         <tbody>
+         <tr ng-repeat="software in softwareList track by $index" >
+         <td ng-if='software' style="width:1%;padding-left:10px;font-size: 15px;"><input type="checkbox" ng-model="tosoftwareDelete[$index]" name="subscriptionRadio" value="{{software}}" /></td>
+         <td style="padding-left:10px;font-size: 15px;width:49%">{{software}}</td>
+         </tr> </tbody>
+         </table>
+         </div>
+         
+         
+         <label style="width:15%;text-align:right;"> Add-Ons: </label>
+         <select class="exampleTable" style="width:30%;height:30px;" ng-model="softwareType" ng-change="">
+                       <option value ="">Select Add-ons</option>
+                       <option value="Acme Smart-V-Switch">Onap</option>
+                       
+                    </select><button style="margin-left:5px;" class="smallbutton" ng-click="addSoftware()">Add</button></br>
+         <div class="borderFrame1" style="height:130px;padding-top:5px;width:600px;">
+         <p style="padding-left:10px;font-weight:bold;">Install Add-On's</p>
+         <table>
+         <tbody>
+         <tr ng-repeat="software in softwareList track by $index" >
+         <td ng-if='software' style="width:1%;padding-left:10px;font-size: 15px;"><input type="checkbox" ng-model="tosoftwareDelete[$index]" name="subscriptionRadio" value="{{software}}" /></td>
+         <td style="padding-left:10px;font-size: 15px;width:49%">{{software}}</td>
+         </tr> </tbody>
+         </table>
+         </div>
+         </div>
+         <div style="float:right;margin-top:-30px;">
+         <button  class="button" ng-click="">Cancel</button>
+         <button class="button"  ng-click="addNodes()">Save</button>
+         </div>
+         
+         
+         
+         
+         </form>
+         </body>
+         
+ </body>
+</html>         
+         
