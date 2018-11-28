@@ -15,164 +15,9 @@
    -->
 <!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="PortalManagement">
-   <style>
-      .leftpane {
-      width: 290px;
-      height: 100%;
-      float: left;
-      }
-      .middlepane {
-      width: 300px;
-      height: 100%;
-      float: left;
-      }
-      .rightpane {
-      width: 280px;
-      height: 100%;
-      float: right;
-      }
-      .toppane {
-      width: 700px;
-      height: 100px;
-      }
-      .borderFrame2{
-      border-radius: 10px;
-      border: 1px solid #c0c0c0;
-      width:310px;
-      }
-      .borderFrame3{
-      border-radius: 10px;
-      border: 1px solid #c0c0c0;
-      width:260px;
-      }
-      .borderFrame4{
-      border-radius: 10px;
-      border: 1px solid #c0c0c0;
-      }
-      .popUpbutton {
-      background-color: #2c87f0;
-      border: none;
-      color: white;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 5px;
-      padding:0px 10px 0px 10px;
-      font-size:11px;
-      }
-      nav {
-      position: relative;
-      z-index: 1;
-      white-space: nowrap;
-      }
-      nav a {
-      position: relative;
-      display: inline-block;
-      padding: 1.5em 2.5em 1em;
-      color: inherit;
-      text-decoration: none;
-      margin: 0 -7px;
-      } 
-      nav a::before,
-      main {
-      border: .1em solid #aaa;
-      }
-      nav a::before {
-      content: ''; /* To generate the box */
-      position: absolute;
-      top: 0; right: 0; bottom: .5em; left: 0;
-      z-index: -1;
-      border-bottom: none;
-      border-radius: 10px 10px 0 0;
-      background: #ddd;
-      box-shadow: 0 2px hsla(0,0%,100%,.5) inset;
-      transform: perspective(5px) rotateX(2deg);
-      transform-origin: bottom;
-      }
-      nav a.choose {
-      z-index: 9;
-      }
-      nav a.choose::before {
-      margin-bottom: -1px;
-      border-top-width: 1px;
-      }
-      nav a.choose::before,
-      main {
-      background: white;
-      }
-      .ngdialog.ngdialog-theme-default .ngdialog-content {
-      line-height:1.2em;
-      }
-      .tab-content input[type=text],
-      select
-      {
-      width: 150px;
-      height:16px;
-      padding: 3px;
-      border: 0.5px solid #ccc;
-      border-radius: 2px;
-      box-sizing: border-box;
-      margin-top: 0px;
-      margin-bottom: 0.1px;
-      resize: vertical;
-      box-shadow: 0.1px 0.1px #888888;
-      font-size:12px;
-      }
-      .tab-content p{
-      padding-left:5px;
-      }
-      .tab-content input[type=textarea] {
-      overflow-y: scroll;
-      width: 150px;
-      height:33px;
-      padding: 3px;
-      border: 0.5px solid #ccc;
-      border-radius: 2px;
-      box-sizing: border-box;
-      margin-top: 1px;
-      margin-bottom: 1px;
-      resize: vertical;
-      box-shadow: 0.1px 0.1px #888888;
-      font-size:12px;
-      }     
-      .tab-content label{
-      font-size:12px !important;
-      margin-bottom:0px;
-      line-height:1;
-      width:30%;
-      }
-      .tabLeft label{
-      width:28%;
-      }
-      #headerContent{
-      margin-top:-65.2px;
-      }
-      .bigText input[type=text]{
-      width: 200px;
-      height:16px;
-      padding: 3px;
-      border: 0.5px solid #ccc;
-      border-radius: 2px;
-      box-sizing: border-box;
-      margin-top: 0px;
-      margin-bottom: 0.1px;
-      resize: vertical;
-      box-shadow: 0.5px 1px #888888
-      font-size:12px;
-      }
-      .bigText label{
-      width:32%;
-      }
-      select {
-      font-size: 11px;
-      }
-      .selectedMaster {
-  background-color: grey;
-}
-      
-     
-   </style>
+   <head>
+   <link rel="stylesheet" href="./resources/css/inputFile.css">
+   </head>
    <body>
       <nav id="headerContent">
          <a  ng-class="{choose: selectedTab == 1}" ng-click="selectedTab = 1;">General</a>
@@ -180,21 +25,21 @@
          <a  ng-class="{choose: selectedTab == 3}" ng-click="selectedTab = 3;">Storage</a>
       </nav>
       <div class="tab-content" ng-show="selectedTab == 1">
-         <label style="font-weight:15px">New Pod</label></br>
+         <label style="font-weight:15px">New Pod</label><br>
          <div class="toppane">
             <!--  <div style="height:100px;">-->
             <div style="width:300px;float:left">
                <label style="text-align:right;"> Pod Name: </label>
-               <input type="text" style="" placeholder="" ng-model="podName" /> *</br>
+               <input type="text" style="" placeholder="" ng-model="podName" /> *<br>
                <label style="text-align:right;"> Pod Type: </label>
-               <input type="text" style="" placeholder="" ng-model="podType" /> *</br>
+               <input type="text" style="" placeholder="" ng-model="podType" /> *<br>
                
                <label style="text-align:right;">Host IP: </label>
-               <input type="text" style="" placeholder="" ng-model="hostIP" /> *</br>
+               <input type="text" style="" placeholder="" ng-model="hostIP" /> *<br>
                <label style="text-align:right;"> Host Username: </label>
-               <input type="text" style="" placeholder="" ng-model="hostUserName" /> *</br>
+               <input type="text" style="" placeholder="" ng-model="hostUserName" /> *<br>
                <label style="text-align:right;"> Host Password: </label>
-               <input type="text" style="" placeholder="" ng-model="hostPassword" /> *</br>
+               <input type="text" style="" placeholder="" ng-model="hostPassword" /> *<br>
                <!--  <label style="text-align:right;"> Add Rack: </label>
                <input type="text" style="" placeholder="" ng-model="rackName" />
                <button style="margin-left:5px;" class="popUpbutton" ng-click="">Add</button>-->
@@ -227,7 +72,7 @@
             <div style="height:80px;width:280px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">IPMI</p>
                <label style="text-align:right;"> IPMI Admin: </label>
-               <input type="text" style="" placeholder="" ng-model="podData.ipmi_admin.username" /></br>
+               <input type="text" style="" placeholder="" ng-model="podData.ipmi_admin.username" /><br>
                <label style="text-align:right;"> IPMI Password: </label>
                <input type="text" style="" placeholder="" ng-model="podData.ipmi_admin.password" />
             </div>
@@ -237,12 +82,12 @@
                <div style="display:inline">
                 <input type="radio"/>Yes
                 <input type = "radio"/>No
-               </div></br>
+               </div><br>
                
                <label style="text-align:right;"> Primary: </label>
                <input type="text" style="" placeholder="" ng-model="primary" />
                 <label style="text-align:right;"> Slaves: </label>
-               <input type="textarea" style="" placeholder="" ng-model="slaves" /></br></br>
+               <input type="textarea" style="" placeholder="" ng-model="slaves" /><br><br>
                
                <div style="float:right;">
                <button   class="popUpbutton" ng-click="">Add</button>
@@ -253,30 +98,30 @@
             <div style="height:100px;margin-top:5px;width:280px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Hardware</p>
                <label style="text-align:right;"> Vendor: </label>
-               <input type="text"  placeholder="" ng-model="podData.hardware.vendor" /></br>
+               <input type="text"  placeholder="" ng-model="podData.hardware.vendor" /><br>
                <label style="text-align:right;"> Generation </label>
-               <input type="text"  placeholder="" ng-model="podData.hardware.generation" /></br>
+               <input type="text"  placeholder="" ng-model="podData.hardware.generation" /><br>
                <label style="text-align:right;"> Hardware Ver: </label>
-               <input type="text"  placeholder="" ng-model="podData.hardware.hw_version" /></br>
+               <input type="text"  placeholder="" ng-model="podData.hardware.hw_version" /><br>
                <label style="text-align:right;"> BIOS Ver: </label>
-               <input type="text"  placeholder="" ng-model="podData.hardware.bios_version" /></br>
+               <input type="text"  placeholder="" ng-model="podData.hardware.bios_version" /><br>
             </div>
             <div style="height:100px;margin-top:5px;width:280px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Kubernetes</p>
                <label style="text-align:right;"> API Service IP: </label>
-               <input type="text"  placeholder="" ng-model="podData.kubernetes.api_service_ip" /></br>
+               <input type="text"  placeholder="" ng-model="podData.kubernetes.api_service_ip" /><br>
                <label style="text-align:right;"> Etcd Service IP </label>
-               <input type="text"  placeholder="" ng-model="podData.kubernetes.etcd_service_ip" /></br>
+               <input type="text"  placeholder="" ng-model="podData.kubernetes.etcd_service_ip" /><br>
                <label style="text-align:right;"> POD CIDR: </label>
                <input type="text"  placeholder="" ng-model="podData.kubernetes.pod_cidr" />
               
                <label style="text-align:right;"> Service CIDR: </label>
-               <input type="text"  placeholder="" ng-model="podData.kubernetes.service_cidr" /></br>
+               <input type="text"  placeholder="" ng-model="podData.kubernetes.service_cidr" /><br>
             </div>
             <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-right:10px;width:280px;" class="borderFrame4" >
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Racks</p>
                <ul style="list-style-type:none;" ng-repeat="name in podData.networks.slaves"">
-               <li ></li></br>
+               <li ></li><br>
                </ul>
             </div>
          </div>
@@ -289,19 +134,19 @@
                      <label style="text-align:right;"> Interface: </label>
                      <input type="text" style="" placeholder="" ng-model="oobinterface" /> 
                      <label style="text-align:right;"> CIDR: </label>
-                     <input type="text" style="" placeholder="" ng-model="oobcidr" /></br>
-                     <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label></br>
+                     <input type="text" style="" placeholder="" ng-model="oobcidr" /><br>
+                     <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label><br>
                      <label style="text-align:right;"> gateway: </label>
                      <input type="text" style="" placeholder="" ng-model="oobgateway" />
-                     <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label></br>
+                     <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label><br>
                      <label style="text-align:right;"> Reserved start: </label>
                      <input type="text" style="" placeholder="" ng-model="oobreserveStart" /> 
                      <label style="text-align:right;"> Reserved End: </label>
                      <input type="text" style="" placeholder="" ng-model="oobreverseEnd" /> 
                      <label style="text-align:right;"> Static Start: </label>
-                     <input type="text" style="" placeholder="" ng-model="oobstaticStart" /></br>
+                     <input type="text" style="" placeholder="" ng-model="oobstaticStart" /><br>
                      <label style="text-align:right;"> Static End: </label>
-                     <input type="text" style="" placeholder="" ng-model="oobstaticEnd" /></br>
+                     <input type="text" style="" placeholder="" ng-model="oobstaticEnd" /><br>
                   </form>-->
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Genesis Node</p>
                <label style="text-align:right;"> Name: </label>
@@ -366,7 +211,7 @@
                 <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-left:10px;width:280px;" class="borderFrame4">
                   <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Node List</p>      
                <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="data in podData.masters.concat(podData.workers)" ng-click="setSelected(data.name)" ng-class="{selectedMaster : data.name=== idSelectedVote}">
-               <li style="font-size:12px;margin:0 0 0px 0;" >{{data.name}},{{data.oob}}</li></br>
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{data.name}},{{data.oob}}</li><br>
                </ul>
                      </div>
                <div style="margin-top:130px;float:right;">
@@ -395,9 +240,9 @@
                   
                   
                   
-                   <textarea id="textarea2" style="height:60px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="slaves"></textarea> </br>
+                   <textarea id="textarea2" style="height:60px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="slaves"></textarea> <br>
                <!--  <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="name in podData.networks.slaves"">
-               <li >{{name.name}}</li></br>
+               <li >{{name.name}}</li><br>
                </ul>-->
             
             
@@ -405,7 +250,7 @@
                      <button   class="popUpbutton" ng-click="" disabled>Add</button>
                      <button  class="popUpbutton" ng-click="" disabled>Delete</button>
                   </div>
-                  </br></br>
+                  <br><br>
                  
                </form>
             </div>
@@ -417,28 +262,28 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.host.interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.cidr" /></br>
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.cidr" /><br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.host.gateway" />
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label></br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label><br>
                   <label style="text-align:right;"> Reserved start: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.reserved.start" /> 
                   <label style="text-align:right;"> Reserved End: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.reserved.end" /> 
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.static.start" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.static.start" /><br>
                   <label style="text-align:right;"> Static End: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.static.end" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.static.end" /><br>
                </form>
             </div>
             <div style="height:160px;margin-top:5px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Service DNS</p>
                <label style="text-align:right;width:33%;"> Upstream Servers: </label>
                <input type="text"  placeholder="" ng-model="podData.dns.upstream_servers" />
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button></br>
+               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button><br>
                <input  style="margin-left:32%"type="textarea" placeholder="" ng-model="podData.dns.upstream_servers_joined"/>
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Delete</button></br>
+               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Delete</button><br>
                <label style="text-align:right;width:32%;"> Ingress Domain: </label>
                <input type="text"  style="width:200px" placeholder="" ng-model="podData.dns.ingress_domain" />
             </div>
@@ -450,7 +295,7 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text"  placeholder="" ng-model="pxeinterface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" placeholder="" ng-model="pxecidr" /></br>
+                  <input type="text" placeholder="" ng-model="pxecidr" /><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text"  placeholder="" ng-model="pxegateway" />
                   <label style="text-align:right;"> Reserved start: </label>
@@ -458,35 +303,35 @@
                   <label style="text-align:right;"> Reserved End: </label>
                   <input type="text"  placeholder="" ng-model="pxereverseEnd" /> 
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text"  placeholder="" ng-model="pxestaticStart" /></br>
+                  <input type="text"  placeholder="" ng-model="pxestaticStart" /><br>
                   <label style="text-align:right;"> Static End: </label>
-                  <input type="text"  placeholder="" ng-model="pxestaticEnd" /></br>
+                  <input type="text"  placeholder="" ng-model="pxestaticEnd" /><br>
                </form>
                </div>
                <div style="height:210px;margin-top:5px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Calico Network</p>
                <label style="text-align:right;"> Vlan: </label>
-               <input type="text"  placeholder="" ng-model="calicovLan" /></br>
+               <input type="text"  placeholder="" ng-model="calicovLan" /><br>
                <label style="text-align:right;"> Interface: </label>
-               <input type="text"  placeholder="" ng-model="calicoInterface" /></br>
+               <input type="text"  placeholder="" ng-model="calicoInterface" /><br>
                <label style="text-align:right;"> CIDR: </label>
-               <input type="text"  placeholder="" ng-model="calicovCidr" /></br>
+               <input type="text"  placeholder="" ng-model="calicovCidr" /><br>
                <label style="text-align:right;"> Mesh: </label>
                <div style="display:inline">
                   <input type="radio" value="Yes" ng-model="calicoMesh" />Yes
                   <input type="radio"  value="No" ng-model="calicoMesh" />No<br>
                </div>
                <label style="text-align:right;"> local AS: </label>
-               <input type="text"  placeholder="" ng-model="calicolocalAs" /></br>
+               <input type="text"  placeholder="" ng-model="calicolocalAs" /><br>
                <label style="text-align:right;"> Static start: </label>
-               <input type="text"  placeholder="" ng-model="calicoStaticStart" /></br>
+               <input type="text"  placeholder="" ng-model="calicoStaticStart" /><br>
                <label style="text-align:right;"> Static End: </label>
-               <input type="text"  placeholder="" ng-model="calicoStaticEnd" /></br>
+               <input type="text"  placeholder="" ng-model="calicoStaticEnd" /><br>
                <label style="text-align:right;"> Add CIDRs: </label>
                <input type="text"  placeholder="" ng-model="calicoCidr" />
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="">Add</button></br>
+               <button  class="popUpbutton" style="margin-left:5px;" ng-click="">Add</button><br>
                <input  style="margin-left:29%"type="textarea" placeholder="" ng-model="calicoTextarea"/>
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="">Delete</button></br>
+               <button  class="popUpbutton" style="margin-left:5px;" ng-click="">Delete</button><br>
                </div>-->
          </div>
           <div class="middlepane" style="margin-left:30px;">
@@ -502,11 +347,11 @@
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[0].vlan_end" />  
                <button class="popUpbutton" disabled>Add</button>   
               <label for="textarea2" style="text-align:right;vertical-align: top;"> Whitelist: </label>
-               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log"></textarea> </br>
+               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log"></textarea> <br>
                <div style="float:right;padding-right:50px;padding-top:5px;">
-                  <button style="" class="popUpbutton" disabled>Delete</button></br>  
+                  <button style="" class="popUpbutton" disabled>Delete</button><br>  
                </div>
-               </br></br>
+               <br><br>
                <label style="text-align:right;"> Physical: </label>
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[1].physical" />
                <label style="text-align:right;"> Interface: </label>
@@ -517,7 +362,7 @@
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[1].vlan_end" />  
                <button class="popUpbutton" disabled>Add</button>   
                <label for="textarea2" style="text-align:right;vertical-align: top;"> Whitelist: </label>
-               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log2"></textarea> </br>
+               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log2"></textarea> <br>
                <div style="float:right;padding-right:50px;padding-top:5px;">
                   <button style="" class="popUpbutton" disabled>Delete</button>  
                </div>
@@ -532,7 +377,7 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text"  placeholder="" ng-model="podData.networks.storage.interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" placeholder="" ng-model="podData.networks.storage.cidr" /></br>
+                  <input type="text" placeholder="" ng-model="podData.networks.storage.cidr" /><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text"  placeholder="" ng-model="podData.networks.storage.gateway" />
                   <label style="text-align:right;"> Reserved start: </label>
@@ -540,9 +385,9 @@
                   <label style="text-align:right;"> Reserved End: </label>
                   <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.reserved.end" /> 
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.static.start" /></br>
+                  <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.static.start" /><br>
                   <label style="text-align:right;"> Static End: </label>
-                  <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.static.end" /></br>
+                  <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.static.end" /><br>
                </form>
             </div>
             <div style="height:150px;width:240px;margin-top:5px;" class="borderFrame2">
@@ -553,15 +398,15 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.cidr" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.cidr" /><br>
                   <label style="text-align:right;"> Start: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.reserved.start" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.reserved.start" /><br>
                   <label style="text-align:right;"> End: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.reserved.end" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.reserved.end" /><br>
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.static.start" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.static.start" /><br>
                   <label style="text-align:right;"> Static End: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.static.end" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.static.end" /><br>
                </form>
             </div>
             <div style="height:270px;margin-top:5px;width:240px;" class="borderFrame3">
@@ -572,17 +417,17 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.cidr" /></br>
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.cidr" /><br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.gateway" />
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label></br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label><br>
                   <label style="text-align:right;"> Reserved start: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.ranges.reserved.start" /> 
                   <label style="text-align:right;"> Reserved End: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.ranges.reserved.end" /> 
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.ranges.static.start" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.ranges.static.start" /><br>
                   <label style="text-align:right;"> Static End: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.ranges.static.end" />
                   <label style="text-align:right;"> DNS Domain: </label>
@@ -597,39 +442,39 @@
             <div style="height:100px;width:295px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Peers</p>
                <label style="text-align:right;"> IP: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.ip" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.ip" /><br>
                <label style="text-align:right;"> Scope: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.scope" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.scope" /><br>
                <label style="text-align:right;"> AS Number: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.asnumber" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.asnumber" /><br>
                <label style="text-align:right;"> VRRP IP: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.vrrp_ip" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.vrrp_ip" /><br>
             </div>
             <div style="height:240px;margin-top:5px;width:295px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Calico Network</p>
                <label style="text-align:right;"> Vlan: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.vlan" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.vlan" /><br>
                <label style="text-align:right;"> Interface: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.interface" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.interface" /><br>
                <label style="text-align:right;"> CIDR: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.cidr" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.cidr" /><br>
                <label style="text-align:right;"> Mesh: </label>
                <div style="display:inline">
                   <input type="radio" value="yes" ng-model="podData.networks.ksn.mesh" />Yes
                   <input type="radio"  value="no" ng-model="podData.networks.ksn.mesh" />No<br>
                </div>
                <label style="text-align:right;"> local AS: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.local_asnumber" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.local_asnumber" /><br>
                <label style="text-align:right;"> Static start: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.ranges.static.start" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.ranges.static.start" /><br>
                <label style="text-align:right;"> Static End: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.ranges.static.end" /></br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.ranges.static.end" /><br>
                <label style="text-align:right;"> Add CIDRs: </label>
                <input type="text"  placeholder="" ng-model="calicoCidr" />
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button></br>
-               <input  style="margin-left:32%"type="textarea" placeholder="" ng-model="calicoTextarea"/></br>
+               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button><br>
+               <input  style="margin-left:32%"type="textarea" placeholder="" ng-model="calicoTextarea"/><br>
                <div style="float:right;padding-right:50px;">
-                  <button  class="popUpbutton" style="margin-left:25px;" ng-click="" disabled>Delete</button></br>
+                  <button  class="popUpbutton" style="margin-left:25px;" ng-click="" disabled>Delete</button><br>
                </div>
             </div>
             <div style="height:210px;margin-top:5px;width:295px;" class="borderFrame2">
@@ -640,21 +485,21 @@
                   <label style="text-align:right;"> Interface: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.oob.interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.cidr" /></br>
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.cidr" /><br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.oob.gateway" />
-                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label></br>
+                  <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Ranges</label><br>
                   <label style="text-align:right;"> Reserved start: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.reserved.start" /> 
                   <label style="text-align:right;"> Reserved End: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.reserved.end" /> 
                   <label style="text-align:right;"> Static Start: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.static.start" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.static.start" /><br>
                   <label style="text-align:right;"> Static End: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.static.end" /></br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.oob.ranges.static.end" /><br>
                </form>
-               </br>
+               <br>
                <div style="float:right;">
                   <button   class="button" ng-click="cancel()">Cancel</button>
                   <button  class="button" ng-click="savePod()">Save</button>
@@ -697,7 +542,7 @@
                <label style="text-align:right;">Host OSD Count: </label>
                <input type="text"  placeholder="" ng-model="podData.storage.osd_count" />
                <label style="text-align:right;">Total OSD Count: </label>
-               <input type="text"  placeholder="" ng-model="podData.storage.total_osd_count" /> </br>
+               <input type="text"  placeholder="" ng-model="podData.storage.total_osd_count" /> <br>
                <form class="bigText">
                   <label style="text-align:right;"> Data Volume: </label>
                   <input type="text"  placeholder="" ng-model="dataVolume" />
@@ -708,7 +553,7 @@
                      <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-left:10px;width:280px;" class="borderFrame4">
                        
                <ul style="list-style-type:none;height:30px;padding: 0;margin:0;" ng-repeat="data in podData.storage.osds" ng-click="setstorageSelected(data.data,data.journal)" ng-class="{selectedMaster : data.data=== idSelectedData}" >
-               <li style="font-size:12px;margin:0 0 0px 0;">{{data.data}},{{data.journal}}</li></br>
+               <li style="font-size:12px;margin:0 0 0px 0;">{{data.data}},{{data.journal}}</li><br>
                </ul>
                      </div>
                   </div>

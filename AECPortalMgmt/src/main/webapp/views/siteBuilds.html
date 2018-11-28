@@ -15,245 +15,9 @@
    -->
 <!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="PortalManagement">
-   <style>
-   
-      .nav-tabs>li>a {
-      margin-right: 0.8px;
-      line-height: 1.42857143;
-      border: 1px solid transparent;
-      border-radius: 4px 4px 0 0;
-      }
-      .nav>li>a {
-      position: relative;
-      display: block;
-      padding: 10px 15px;
-      color: black;
-      font-weight:bold;
-      font-size:13px;
-      background-color: #D0D0D0;
-      }
-      input[type=text],
-      select,
-      textarea {
-      width: 40%;
-      padding: 3px;
-      border: 0.5px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      margin-top: 3px;
-      margin-bottom: 3px;
-      resize: vertical;
-      box-shadow: 1px 2px #888888
-      }
-      
-      .tabForm label{
-      width:100px;
-      }
-      /*#tabs ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      }
-      #tabs li {
-      float: left;
-      border: 2px solid #cdcdcd;
-      border-bottom-width: 0;
-      margin: 0px 0px 2px 3px;
-      padding: 5px 5px 0px 5px;
-      background-color: #CCC;
-      color: #696969;
-      }*/
-      #headerContent{
-      margin-top:-65px;
-      }
-      .mainView {
-      border: 1px solid #cdcdcd;
-      clear: both;
-      /*padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 3px;
-      padding-bottom: 3px;*/
-      }
-      .mainView1 {
-      border: 1px solid #cdcdcd;
-      clear: both;
-      width:84%;
-      /*padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 3px;
-      padding-bottom: 3px;*/
-      }
-      #tabs .active {
-      background-color: #FFF;
-      color: #000;
-      }
-      .createborderFrame{
-      margin-top:2px;
-      border:0px solid #cdcdcd;
-      }
-      .headerbackground{
-      background-color: #cdcdcd;
-      height:30px
-      }
-      .selected{
-      background-color:#F9F4E5;
-      }
-      .tableWidth{
-      width:84%;
-      }
-      .selected {
-      border:2px solid #ddd;
-      }
-      .borderFrame{
-      border-radius: 20px;
-      border: 2px solid #ddd;
-      }
-      .borderFrame1{
-      border-radius: 20px;
-      border: 2px solid #c0c0c0;
-      }
-      
-      .borderFrame3{
-      border-radius: 5px;
-      border: 2px solid #c0c0c0;
-      }
-      table{
-      border: 0px solid #ddd;
-      }
-      table td{
-      color:#2c87f0;
-      padding: 4px;
-      border: 0px solid #ddd;
-      }
-      table th{
-      padding: 10px;
-      text-align: left;
-      color:#2c87f0;
-      border: 3px solid #ddd;
-      border-top: none !important;
-      }
-      .noderackTable th{
-      padding: 3px;
-      text-align: left;
-      color:#2c87f0;
-      border: 0;
-      border-top: none !important;
-      }
-      .noderackTable tr{
-      border: 2px solid #ddd;
-      }
-      .pagination {text-align: center;
-      }
-      .pagination > li > a
-      {
-      background-color: white;
-      color: #4d4d4d;;
-      }
-      .pagination > li > a:focus,
-      .pagination > li > a:hover,
-      .pagination > li > span:focus,
-      .pagination > li > span:hover
-      {
-      color: #4d4d4d;;
-      background-color: #2c87f0;
-      border-color: #ddd;
-      }
-      .pagination > .active > a
-      {
-      color: white;
-      background-color: #2c87f0;
-      border: solid 1px #4d4d4d;;
-      }
-      .pagination > .active > a:hover
-      {
-      background-color: #4d4d4d;;
-      border: solid 1px #4d4d4d;;
-      }
-      .pagination > .active > a:active
-      {
-      background-color: #4d4d4d;;
-      border: solid 1px #4d4d4d;;
-      }
-      .button {
-      background-color: #2c87f0;
-      border: none;
-      color: white;
-      padding: 7px 14px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 5px;
-      }
-      .smallbutton {
-      background-color: #2c87f0;
-      border: none;
-      color: white;
-      padding: 4px 7px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 5px;
-      }
-      .racksTable{
-      width:300px;
-      }
-      .color-orange{
-      background-color:#FFD700;
-      }
-      .color-blue{
-      background-color:#0000CD;
-      }
-      .color-green{
-      background-color:#32CD32;
-      }
-      .color-red{
-      background-color:#FF0000;
-      }
-      .popover-inner{
-      width:300px;
-      }
-      .popover-title{
-      width:280px;
-      }
-      .addNodeFormTemplate input[type=text],
-      select
-      {
-      width: 150px;
-      height:16px;
-      padding: 3px;
-      border: 0.5px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      margin-top: 0px;
-      margin-bottom: 0.1px;
-      resize: vertical;
-      box-shadow: 0.5px 1px #888888
-      }
-       .addNodeFormTemplate label{
-      font-size:12px !important;
-      margin-bottom:0px;
-      line-height:1;
-      width:30%;
-      }
-      .ngdialog.ngdialog-theme-default .ngdialog-content {
-  -webkit-animation: ngdialog-flyin .5s;
-  animation: ngdialog-flyin .5s;
-  background: #FFFFFF;
-  border-radius: 5px;
-  color: #444;
-  font-family: 'Helvetica',sans-serif;
-  font-size: 1.1em;
-  line-height: 1.5em;
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 1em;
-  position: relative;
-  width: 450px;
-}
-      .tabLe
-   </style>
+   <head>
+   <link rel="stylesheet" href="./resources/css/siteBuild.css">
+   </head>
    <body ng-controller="AECSiteBuildController">
     <div id="akrainocontent" style="padding-left:10px;padding-right:10px;">
       <div class="borderFrame" style="margin-top:2%;height:280px;">
@@ -356,20 +120,20 @@
          <div style="height:120px">
          <div style="float:left;width:260px">
          <label style="width:100px;text-align:right;"> Node Name: </label>
-         <input type="text" placeholder="" ng-model="nodeName" /> </br>
+         <input type="text" placeholder="" ng-model="nodeName" /> <br>
  <label style="width:100px;text-align:right;"> Rack: </label>
          <select class="exampleTable" style="width:30%;height:20px;width:150px;" ng-model="rackName" ng-change="" ng-options="rack.name for rack in $parent.rackList">
          <option value="">Select Rack
           </option>
-         </select> </br>
+         </select> <br>
          <label style="width:100px;text-align:right;"> Rack Units Req: </label>
-         <input type="text" placeholder="" ng-model="rackUnits" /></br>
+         <input type="text" placeholder="" ng-model="rackUnits" /><br>
          <label style="width:100px;text-align:right;"> Manufacturer: </label>
-         <input type="text" placeholder="" ng-model="manufacturer" /></br>
+         <input type="text" placeholder="" ng-model="manufacturer" /><br>
           <label style="width:100px;text-align:right;">Node hardware: </label>
-         <input type="text" placeholder="" ng-model="nodeHardware" /></br>
+         <input type="text" placeholder="" ng-model="nodeHardware" /><br>
          <label style="width:100px;text-align:right;"> Rack Position: </label>
-         <input type="text" placeholder="" ng-model="rackPosition" /></br>
+         <input type="text" placeholder="" ng-model="rackPosition" /><br>
          </div>
          <div style="float:left;width:260px">
          
@@ -382,28 +146,28 @@
                        <option value="network">Network</option>
                     </select></br>
          <label style="width:100px;text-align:right;"> OOB IP: </label>
-         <input type="text" placeholder="" ng-model="oobIP" /> </br>
+         <input type="text" placeholder="" ng-model="oobIP" /> <br>
           <label style="width:100px;text-align:right;"> Host IP: </label>
-         <input type="text" placeholder="" ng-model="hostIP" /> </br>
+         <input type="text" placeholder="" ng-model="hostIP" /> <br>
           <label style="width:100px;text-align:right;"> Storage IP: </label>
-         <input type="text" placeholder="" ng-model="storageIP" /> </br>
+         <input type="text" placeholder="" ng-model="storageIP" /> <br>
            <label style="width:100px;text-align:right;"> PXE IP: </label>
-         <input type="text" placeholder="" ng-model="pxeIP" /> </br>
+         <input type="text" placeholder="" ng-model="pxeIP" /> <br>
           <label style="width:100px;text-align:right;"> Kubernetes IP: </label>
-         <input type="text" placeholder="" ng-model="kubernetesIP" /> </br>
+         <input type="text" placeholder="" ng-model="kubernetesIP" /> <br>
          
         </div>
          <div style="float:right;width:260px;">
            <label style="width:100px;text-align:right;"> Neutron IP: </label>
-         <input type="text" placeholder="" ng-model="neutronIp" /> </br>
+         <input type="text" placeholder="" ng-model="neutronIp" /> <br>
           <label style="width:100px;text-align:right;"> OOB User Name: </label>
-         <input type="text" placeholder="" ng-model="oobUserName" /> </br>
+         <input type="text" placeholder="" ng-model="oobUserName" /> <br>
           <label style="width:100px;text-align:right;"> OOB password: </label>
-         <input type="text" placeholder="" ng-model="oobPassword" /> </br>
+         <input type="text" placeholder="" ng-model="oobPassword" /> <br>
           <label style="width:100px;text-align:right;"> Cooling Req: </label>
-         <input type="text" placeholder="" ng-model="coolingReq" /> </br>
+         <input type="text" placeholder="" ng-model="coolingReq" /> <br>
          <label style="width:100px;text-align:right;"> Power Req: </label>
-         <input type="text" placeholder="" ng-model="powerReq" /> </br>
+         <input type="text" placeholder="" ng-model="powerReq" /> <br>
          </div>
          </div></br>
          <div>

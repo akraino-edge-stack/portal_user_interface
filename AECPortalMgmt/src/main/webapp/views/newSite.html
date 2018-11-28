@@ -15,100 +15,9 @@
    -->
 <!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="PortalManagement">
-   <style>
-      .borderFrame{
-      border-radius: 20px;
-      border: 2px solid #ddd;
-      }
-      table{
-      border: 0px solid #ddd;
-      }
-      table td{
-      color:#2c87f0;
-      padding: 0.8px;
-      border: 0px solid #ddd;
-      }
-      table th{
-      padding: 10px;
-      text-align: left;
-      color:#2c87f0;
-      border: 3px solid #ddd;
-      border-top: none !important;
-      }
-      .button {
-      background-color: #2c87f0;
-      border: none;
-      color: white;
-      padding: 7px 14px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 5px;
-      }
-      .button {
-      background-color: #2c87f0;
-      border: none;
-      color: white;
-      padding: 7px 14px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 4px;
-      }
-      .readyButton {
-      background-color: #90EE90;
-      border: none;
-      color: white;
-      padding: 7px 14px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 4px;
-      width:100px;
-      }
-      .buildButton {
-      background-color:#FFFDF6;
-      border: none;
-      color: black;
-      padding: 7px 14px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 4px;
-      width:100px;
-      }
-      .readystatusButton{
-       background-color: #90EE90;
-      border: none;
-      color: white;
-      padding: 7px 0px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 4px;
-      width:100px;
-      }
-       .ngdialog.ngdialog-theme-default .ngdialog-content {
-  -webkit-animation: ngdialog-flyin .5s;
-  animation: ngdialog-flyin .5s;
-  background: #FFFFFF;
-  border-radius: 5px;
-  color: #444;
-  font-family: 'Helvetica',sans-serif;
-  font-size: 1.1em;
-  line-height: 1.5em;
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 1em;
-  position: relative;
-  width: 450px;
-}
-   </style>
+   <head>
+   <link rel="stylesheet" href="./resources/css/newSite.css">
+   </head>
    <body ng-controller="AECnewSiteController">
       <div class="borderFrame" style="margin-top:2%;height:400px;">
          <div style="background-color:#f8f8f8;height:45px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
@@ -186,21 +95,21 @@
          </div>
          <div>
             <div style="float:left;width:400px;padding-left:20px;">
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >Site Name : </label><label style="color:blue !important">{{selectedSiteName}}</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;">Region :</label><label style="color:blue !important">{{selectedRegionName}}</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >OOB IP Range :</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >Host IP Range :</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of racks :</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of Nodes :</label></br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Site Name : </label><label style="color:blue !important">{{selectedSiteName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;">Region :</label><label style="color:blue !important">{{selectedRegionName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >OOB IP Range :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Host IP Range :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of racks :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of Nodes :</label><br>
                <label style="font-weight:bold !important;width:100px;text-align:right;" >Total Power :</label>
             </div>
             <div style="float:left;">
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >POD Name :</label><label style="color:blue !important">{{selectedpodName}}</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;">POD Type :</label><label style="color:blue !important">{{selectedpodType}}</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right" >Blueprint :</label><label style="color:blue !important">{{selectedBlueprint}}</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label></br>
-               <label style="font-weight:bold !important;width:100px;text-align:right;" >Racks :</label></br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >POD Name :</label><label style="color:blue !important">{{selectedpodName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;">POD Type :</label><label style="color:blue !important">{{selectedpodType}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right" >Blueprint :</label><label style="color:blue !important">{{selectedBlueprint}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Racks :</label><br>
             </div>
          </div>
       </div>
