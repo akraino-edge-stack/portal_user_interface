@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e9d48b_1e03bf3f",
+        "filename": "AECPortalMgmt/src/main/webapp/views/indexMain.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-11-28T20:40:14Z",
+      "side": 1,
+      "message": "space after ng-class should be removed (throughout this file)",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "ef993dd662b764fdb9b28341e2ffc9da8b23f5d8",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
