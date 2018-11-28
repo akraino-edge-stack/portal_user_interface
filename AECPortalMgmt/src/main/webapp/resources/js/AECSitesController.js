@@ -812,7 +812,7 @@ angular.module('PortalManagement').controller('PopUpUploadController', function(
                
                 "edgeSiteUser":$scope.siteUsername,
                 "edgeSitePwd":$scope.sitePassword,
-                "deploymentMode":$scope.deploymentMode
+                "deployMode":"new"
             	
             },
             headers: {'Content-Type': undefined}

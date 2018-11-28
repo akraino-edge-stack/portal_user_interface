@@ -48,11 +48,16 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('sitebuild', {
             url: "/sitebuild",
+            params: {
+                siteInfo: null
+              },
             parent: "common",
             views: {
                 "main": {
                     controller: 'AECSiteBuildController',
+                    
                     templateUrl: 'views/siteBuilds.html'
+                    
                 }
             }
         })
@@ -126,6 +131,7 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        
         .state('eteTest', {
             url: "/eteTest",
             parent: "common",
@@ -138,6 +144,9 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('siteBuilds', {
             url: "/siteBuilds",
+            
+            
+            
             parent: "common",
             views: {
                 "main": {
@@ -153,6 +162,26 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
                 "main": {
                     controller: 'AECtoolsController',
                     templateUrl: 'views/toolbox.html'
+                }
+            }
+        })
+        .state('newSite', {
+            url: "/newSite",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECnewSiteController',
+                    templateUrl: 'views/newSite.html'
+                }
+            }
+        })
+        .state('eteChomp', {
+            url: "/eteChomp",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECeteChompController',
+                    templateUrl: 'views/eteChomp.html'
                 }
             }
         })
