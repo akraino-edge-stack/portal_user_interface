@@ -32,4 +32,6 @@ public interface PodDAO {
 	
 	public void deletePod(Pod pod);
 	
+	public Pod getPodBySiteId(int siteId);
+	
 }

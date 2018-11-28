@@ -28,6 +28,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="akraino.edge_site")
@@ -49,6 +50,12 @@ public class EdgeSite implements Serializable {
 	
 	@Column(name="input_file")
 	private byte [] inputFile;
+	
+	@Transient
+	private String podName;
+	
+	@Transient
+	private String podType;
 	
 	@ManyToOne
     @JoinColumn(name = "region_id")
@@ -557,6 +564,22 @@ public class EdgeSite implements Serializable {
 
 	public void setNodeDeployStatus(String nodeDeployStatus) {
 		this.nodeDeployStatus = nodeDeployStatus;
+	}
+
+	public String getPodName() {
+		return podName;
+	}
+
+	public void setPodName(String podName) {
+		this.podName = podName;
+	}
+
+	public String getPodType() {
+		return podType;
+	}
+
+	public void setPodType(String podType) {
+		this.podType = podType;
 	}
 
 	public static long getSerialversionuid() {

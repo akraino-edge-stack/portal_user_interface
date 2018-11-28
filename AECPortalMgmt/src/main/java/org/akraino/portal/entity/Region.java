@@ -28,17 +28,16 @@ import javax.persistence.Table;
 public class Region {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "region_id")
-	int regionId;
+	Integer regionId;
 	
 	@Column(name = "region_name")
 	String regionName;
 	
-	public int getRegionId() {
+	public Integer getRegionId() {
 		return regionId;
 	}
-	public void setRegionId(int regionId) {
+	public void setRegionId(Integer regionId) {
 		this.regionId = regionId;
 	}
 	public String getRegionName() {

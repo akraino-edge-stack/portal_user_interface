@@ -18,12 +18,14 @@ package org.akraino.portal.daoimpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.PodDAO;
 import org.akraino.portal.entity.Pod;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -32,6 +34,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PodDAOImpl implements PodDAO {
+	
+	private static final Logger logger = Logger.getLogger(PodDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -79,6 +83,31 @@ public class PodDAOImpl implements PodDAO {
 	public void deletePod(Pod pod) {
 		getSession().delete(pod);
 
+	}
+
+	@Override
+	public Pod getPodBySiteId(int siteId) {
+
+		Pod pod = null;
+		try {
+
+			CriteriaBuilder builder = getSession().getCriteriaBuilder();
+			CriteriaQuery<Pod> criteria = builder.createQuery(Pod.class);
+
+			Root<Pod> root = criteria.from(Pod.class);
+			criteria.select(root);
+
+			criteria.where(builder.equal(root.get("siteId"), siteId));
+
+			Query<Pod> query = getSession().createQuery(criteria);
+
+			pod = query.getSingleResult();
+
+		} catch (NoResultException nre) {
+			logger.warn("pod was not found for the site:" + siteId);
+		}
+
+		return pod;
 	}
 
 }

@@ -17,7 +17,6 @@
 package org.akraino.portal.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
@@ -32,8 +31,8 @@ import org.akraino.portal.common.RestInterface;
 import org.akraino.portal.common.RestRequestBody;
 import org.akraino.portal.common.RestResponseBody;
 import org.akraino.portal.common.StringUtil;
-import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.dao.EdgeSiteDAO;
+import org.akraino.portal.dao.PodDAO;
 import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.data.BuildRequest;
 import org.akraino.portal.data.EdgeSiteState;
@@ -43,6 +42,7 @@ import org.akraino.portal.data.SiteRequest;
 import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
 import org.akraino.portal.entity.EdgeSiteYamlTemplate;
+import org.akraino.portal.entity.Pod;
 import org.akraino.portal.entity.Region;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +58,9 @@ public class EdgeSiteService {
 
 	@Autowired
 	private EdgeSiteDAO edgeSiteDAO;
+	
+	@Autowired
+	private PodDAO podDAO;
 	
 	@Autowired
 	private RegionDAO regionDAO;
@@ -91,8 +94,21 @@ public class EdgeSiteService {
 		
 		logger.info("getSites");
 
-		return edgeSiteDAO.listAllEdgeSites(regionId);
+		List<EdgeSite> sites = edgeSiteDAO.listAllEdgeSites(regionId);
+		
+		for (EdgeSite site : sites) {
+			
+			Pod pod = podDAO.getPodBySiteId(site.getEdgeSiteId());
+			
+			if (pod != null) {
+			
+				site.setPodName(pod.getPodname());
+				site.setPodType(pod.getPodType());
+			}
+		}
 
+		
+		return sites;
 	}
 	
 	public EdgeSite getEdgeSiteDetails(String siteName) {
