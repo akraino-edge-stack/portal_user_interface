@@ -56,7 +56,7 @@ public class EdgeSiteDAOImpl implements EdgeSiteDAO {
 		criteria.select(root);
 		
 		if (regionId > 0) {
-			criteria.where(builder.equal(root.get("regionId"), regionId));
+			criteria.where(builder.equal(root.get("region_id"), regionId));
 		}
 
 		Query<EdgeSite> query = getSession().createQuery(criteria);
