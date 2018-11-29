@@ -35,7 +35,7 @@ limitations under the License.
          <ul class="sidebar-nav">
            
             <li>
-               <a ng-class ="{example : $state.current.name == 'sites'}" ui-sref="sites">
+               <a ng-class="{example : $state.current.name == 'sites'}" ui-sref="sites">
                <i class="fa fa-home"></i> <span>Akraino Sites</span>
                </a>
             </li>
@@ -44,21 +44,21 @@ limitations under the License.
                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>Akraino Blueprint<span class="caret">
                </span></a>
                <ul id="configuracoes" class="collapse">
-               <li>
-                     <a  ng-class ="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
+              <!--   <li>
+                     <a  ng-class="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
                      PODs</a>
-                  </li>
+                  </li>-->
                 <li>
-                     <a  ng-class ="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
-                     Blueprints</a>
+                     <a  ng-class="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
+                    PODs</a>
                   </li>
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>
                      Hardware</a>
                   </li>
                   
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'software'}" ui-sref="software"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'software'}" ui-sref="software"><i class="fa fa-users"></i>
                      Software</a>
                   </li>
                   <!--  <li>
@@ -66,7 +66,7 @@ limitations under the License.
                      Common Config</a>
                   </li>-->
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'addons'}" ui-sref="addons"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'addons'}" ui-sref="addons"><i class="fa fa-users"></i>
                      Add - Ons</a>
                   </li>
                </ul>
@@ -95,12 +95,25 @@ limitations under the License.
                <i class="fa fa-info"></i> <span>Inventory</span>
                </a>
             </li>-->
+             <li class"dropdown">
+               <a class="dropdown-toggle" data-toggle="collapse" data-target="#configuracoes1" role="button"
+                  aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>ETE Testing<span class="caret">
+               </span></a>
+               <ul id="configuracoes1" class="collapse">
             <li>
-               <a ng-class ="{example : $state.current.name == 'eteTest'}" ui-sref="eteTest">
-               <i class="fa fa-check"></i><span>ETE Testing</span>
+            
+               <a ng-class="{example : $state.current.name == 'eteTest'}" ui-sref="eteTest">
+               <i class="fa fa-check"></i><span>ETE Testing(Tempest)</span>
+               </a>
+            </li>
+             <li>
+            
+               <a ng-class="{example : $state.current.name == 'eteChomp'}" ui-sref="eteChomp">
+               <i class="fa fa-check"></i><span>Chomp</span>
                </a>
             </li>
          </ul>
+         </li>
          
       </div>
       <!-- /#sidebar-wrapper -->
