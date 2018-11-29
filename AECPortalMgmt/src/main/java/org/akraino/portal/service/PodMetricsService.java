@@ -21,9 +21,12 @@ import java.util.List;
 
 import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.config.AppConfig;
+import org.akraino.portal.dao.PodMetricsDAO;
 import org.akraino.portal.data.ChompObject;
+import org.akraino.portal.entity.PodMetrics;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,11 +40,14 @@ public class PodMetricsService {
 	
 	private static final Logger logger = Logger.getLogger(PodMetricsService.class);
 	
+	@Autowired
+	private PodMetricsDAO podMetricsDAO;
+	
 	private static final String CHOMP_JSON_FILENAME = "chomp.json";
 	
-	public boolean processChompInputFile(byte[] bfileContent) throws Exception {
+	public boolean processChompInputFile(String chompData) throws Exception {
 		
-		String jsonString = StringUtil.unescape(bfileContent.toString());
+		String jsonString = StringUtil.unescape(chompData);
 		
 		logger.info("chomp json input as is:" + jsonString);
 		
@@ -49,6 +55,33 @@ public class PodMetricsService {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		TypeFactory typeFactory = objectMapper.getTypeFactory();
 		List<ChompObject> chompList = objectMapper.readValue(jsonString, typeFactory.constructCollectionType(List.class, ChompObject.class));
+		
+		// store chomp output in db
+		for (ChompObject chomp : chompList) {
+			
+			PodMetrics metric = new PodMetrics();
+			
+			metric.setName(chomp.getName());
+			metric.settStart(chomp.getTstart());
+			metric.settStop(chomp.getTstop());
+			
+			String latencySeries = "";
+			for (String latency : chomp.getLatency()) {
+				if (StringUtil.notEmpty(latencySeries)) {
+					latencySeries += ",";
+				}
+				latencySeries += latency;
+			}
+			metric.setLatency(latencySeries);
+			
+			metric.setLatencyAvg(chomp.getLatencyAvg());
+			metric.setLatencyMin(chomp.getLatencyMin());
+			metric.setLatencyMax(chomp.getLatencyMax());
+			metric.setLogCount(chomp.getLogCount());
+			metric.setType(chomp.getType());
+			
+			podMetricsDAO.createPodMetrics(metric);
+		}
 		
 		logger.info("processed following chomp data" + chompList.toString());
 		
