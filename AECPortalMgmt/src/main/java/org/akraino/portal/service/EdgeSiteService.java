@@ -206,7 +206,7 @@ public class EdgeSiteService {
 		edgeSite.setInputFile(bfileContent);
 		edgeSite.setDeployStatus(STATUS_NOT_STARTED);
 		edgeSite.setvCDNStatus(STATUS_NOT_STARTED);
-		//edgeSite.setDeployMode(siteRequest.getDeployMode());
+		edgeSite.setDeployMode(siteRequest.getDeployMode());
 		
 		// copy input file
 		if (siteRequest.getBlueprint().equals(BLUEPRINT_ROVER)) {
@@ -457,7 +457,7 @@ public class EdgeSiteService {
 			
 			EdgeSite edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteDeployRequest.getSitename());
 			
-			if (edgeSite.getDeployMode().equalsIgnoreCase("new")) {
+			if (!StringUtil.notEmpty(edgeSite.getDeployMode()) || edgeSite.getDeployMode().equalsIgnoreCase("new")) {
 				
 				deployURI = PropertyUtil.getInstance().getProperty("camunda.site.multinode.deploy.uri");
 				
