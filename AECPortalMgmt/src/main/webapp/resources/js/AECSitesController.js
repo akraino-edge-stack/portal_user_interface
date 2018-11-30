@@ -39,7 +39,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     	for(var i =0;i< $scope.sites.length; i++){
     	$scope.sites[i].selection = false;
     	}
-    	console.log($scope.sites.selection);
+    	//console.log($scope.sites.selection);
     if($scope.itemsPerPage > 4){
     	$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+hostIndex+1;
         $scope.hostIndex = $scope.rowIndex;
@@ -96,7 +96,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     	$scope.sideFileMenu = false;*/
     	if($scope.itemsPerPage > 4){
     	  $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
-          console.log($scope.rowIndex);
+         // console.log($scope.rowIndex);
           index = $scope.rowIndex;
       	}
       	
@@ -196,7 +196,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
                 'tokenId' : $scope.tokenId
             }
         }).then(function(response) {
-        	console.log(response.data);
+        	//console.log(response.data);
         	 $scope.sites = response.data.sort(function(a, b){
         		    //note the minus before -cmp, for descending order
         		    return $scope.cmp( 
@@ -204,7 +204,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
         		        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
         		    );
         		});
-        	 console.log($scope.sites);
+        	 //console.log($scope.sites);
             $scope.search();
             $scope.showSitesTable = true;
         }, function(error) {
@@ -295,7 +295,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 	            data: {
 	            	 "sitename": $scope.sites[index].edgeSiteName,
 	            	 "filepath":"/opt/akraino/redfish/install_server_os.sh  ", 
-	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/"+ $scope.sites[index].edgeSiteName + " --no-confirm", 
+	            	 "fileparams": "/opt/akraino/redfish/install_server_os.sh --rc /opt/akraino/server-build/"+ $scope.sites[index].edgeSiteName + " --skip-confirm", 
 	            	 "winscpdir": "/opt/akraino/airshipinabottle_deploy", 
 	            	 "winscpfilepath": "mv.sh", 
 	            	 "winscpfileparams":$scope.sites[index].edgeSiteIP, 
@@ -430,16 +430,16 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
             }
         }).then(function(response) {
             $scope.buildyamloutput = response.data;
-            console.log($scope.buildyamloutput);
+            //console.log($scope.buildyamloutput);
             loadPopUp();
             
             /*var file = new Blob([response], {type: 'application/text'});
             var fileURL = URL.createObjectURL(file);
             $scope.content = $sce.trustAsResourceUrl(fileURL);
             $scope.viewBuildFileFlag = true;*/
-            console.log(response);
+            //console.log(response);
         }, function(error) {
-        	console.log(error);
+        	//console.log(error);
         	//$scope.errorHandle(error);
         });
        
@@ -473,14 +473,14 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
     	$scope.sideFileMenu = true;*/
     	if($scope.itemsPerPage > 4){
       	  $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
-            console.log($scope.rowIndex);
+            //console.log($scope.rowIndex);
             index = $scope.rowIndex;
         	}
         	else{
             index = index;
         	}
     	$scope.inputFileData = atob($scope.sites[index].inputFile);
-    	console.log($scope.inputFileData);
+    	//console.log($scope.inputFileData);
     	
     	 ngDialog.open({
              scope: $scope,
@@ -526,7 +526,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
    $scope.vnfOnboard = function(index){
 	   $scope.popupsiteName = $scope.sites[index].edgeSiteName;
        $scope.popupregionName = $scope.sites[index].region.regionName;
-       console.log($scope.popupregionName);
+       //console.log($scope.popupregionName);
     	/*$scope.sideVNFMenu = true;
     	$scope.sideMenu = false;
     	$scope.sideInfoBar = false;
@@ -737,7 +737,7 @@ angular.module('PortalManagement').controller('PopUpvnfController', function($sc
 	$scope.onBoard = function(index){
 		$scope.sites[index].vCDNStatus = "In Progress.."
 		$scope.fileparams = "OS_USER_DOMAIN_NAME="+$scope.osDomainname+" OS_PROJECT_DOMAIN_NAME="+$scope.osProjectname+" OS_USERNAME="+$scope.osUsername+" OS_PASSWORD="+$scope.osPassword+" OS_REGION_NAME="+$scope.osRegionname+" NETWORK_NAME="+$scope.osNetworkname;
-	console.log("fileparams" + $scope.fileparams);
+	//console.log("fileparams" + $scope.fileparams);
 	$http({	
      method: 'POST',
      url: appContext+'/edgeSites/onboardVNF',
@@ -821,7 +821,7 @@ angular.module('PortalManagement').controller('PopUpUploadController', function(
 			$scope.sites[index].fileUploadMessage = "File uploaded,successfully.";
 			$scope.sites[index].fileUploadStatus = "Completed";
 			$scope.refreshUploadChange();
-			console.log(response.statusCode);
+			//console.log(response.statusCode);
 			}
 			else{
 				$scope.sites[index].fileUploadMessage = response.data.message;	
