@@ -1,7 +1,7 @@
 angular.module('PortalManagement').controller('AECnewSiteController', function($scope, $http, $sce, ngDialog, $filter, filterFilter,$rootScope,$controller,appContext,$localStorage,$window,$templateCache,Upload,$state) {
 	$controller('commonController', { $scope: $scope });
 	$scope.showSiteDetails = false;
-	$scope.siteStatus = "Build";
+	$scope.siteListtatus = "Build";
 var allSitesDisplay = function() {
         $http({
             method: 'GET',
@@ -13,7 +13,7 @@ var allSitesDisplay = function() {
                 'tokenId' : $scope.tokenId
             }
         }).then(function(response) {
-        	console.log(response.data);
+        	//console.log(response.data);
         	 $scope.siteList = response.data.sort(function(a, b){
         		    //note the minus before -cmp, for descending order
         		    return $scope.cmp( 
@@ -99,7 +99,7 @@ $scope.deploySite = function(index){
          }
      }).then(function(response) {
          if (response.status == 200) {
-             //$scope.sites[index].deployStatus = 'Completed';
+             //$scope.siteList[index].deployStatus = 'Completed';
          } else {
              $scope.siteList[index].deployStatus = response.data.message;
          }
@@ -126,19 +126,59 @@ $scope.buildEdgeSite = function(index) {
         }
     }).then(function(response) {
         if (response.status == '200') {
-            //$scope.sites[index].edgeSiteBuildStatus = 'build complete';
+            //$scope.siteList[index].edgeSiteBuildStatus = 'build complete';
             
             //$scope.buildCompleteDate = new Date();
-           // updateEdgeSiteStatus($scope.sites[index].edgeSiteName, $scope.sites[index].buildStatus,buildCompleteDate);
+           // updateEdgeSiteStatus($scope.siteList[index].edgeSiteName, $scope.siteList[index].buildStatus,buildCompleteDate);
         } else {
-            $scope.sites[index].edgeSiteBuildStatus = response.data.message;
+            $scope.siteList[index].edgeSiteBuildStatus = response.data.message;
            // $scope.buildCompleteDate = new Date();
-            //updateEdgeSiteStatus($scope.sites[index].edgeSiteName, $scope.sites[index].buildStatus,buildCompleteDate);
+            //updateEdgeSiteStatus($scope.siteList[index].edgeSiteName, $scope.siteList[index].buildStatus,buildCompleteDate);
         }
     }, function(error) {
     	$scope.siteList[index].edgeSiteBuildStatus = "build error..";
     
     });
+}
+var loadPopUp = function() {
+	ngDialog.open({
+        scope: $scope,
+        template: 'yamltemplateForm',
+        closeByDocument: false,
+        controller: 'PopUpYamlController',
+        appendClassName: 'ngdialog-custom',
+        width: '800px',
+        height:'450px'
+        	
+    });
+}
+$scope.viewYamlBuildFile = function(index) {
+	
+    $http({
+        method: 'GET',
+        //url: appContext+'/regions/',
+        url: appContext+'/edgeSites/files/build/' + $scope.siteList[index].edgeSiteName,
+        //url: 'http://'+hostUrl+'/AECPortalMgmt/files/' + $scope.siteList[index].edgeSiteName,
+        headers: {
+            "Content-Type": "text/plain",
+            'tokenId' : $scope.tokenId
+        }
+    }).then(function(response) {
+        $scope.buildyamloutput = response.data;
+        //console.log($scope.buildyamloutput);
+        loadPopUp();
+        
+        /*var file = new Blob([response], {type: 'application/text'});
+        var fileURL = URL.createObjectURL(file);
+        $scope.content = $sce.trustAsResourceUrl(fileURL);
+        $scope.viewBuildFileFlag = true;*/
+        //console.log(response);
+    }, function(error) {
+    	//console.log(error);
+    	//$scope.errorHandle(error);
+    });
+   
+	
 }
 });
 angular.module('PortalManagement').controller(
