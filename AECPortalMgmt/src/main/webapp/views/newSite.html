@@ -53,30 +53,35 @@
                          <td style="padding-left:10px;font-size: 15px;width:15%;">{{site.podName}}</td>
                         <td style="padding-left:10px;font-size: 15px;width:20%;">
                            <div 
-                              ng-if ="site.blueprint == null">
+                              ng-if ="site.podName == null">
                               <button  style="width:200px" ng-click="createPod(site.edgeSiteName)" >Create Pod</button>
                            </div>
-                           <div ng-if= "((site.blueprint != null) && (site.edgeSiteBuildStatus == 'Not Started'))"><button style="width:200px" ng-click="buildEdgeSite($index)">Build</button></div>
+                           <div ng-if= "((site.podName != null) && ((site.edgeSiteBuildStatus == 'Not Started') || (site.edgeSiteBuildStatus == null)))"><button style="width:200px" ng-click="buildEdgeSite($index)">Build</button></div>
                            <div ng-if= "site.edgeSiteBuildStatus == 
-                              'In Progress...'"><button class="readyButton" style="width:200px">In Progress</button></div>
-                           <div ng-if= "site.edgeSiteBuildStatus == 
-                              'build error..'"><button  style="width:200px">Build Error</button></div>
-                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployCreateTarStatus == 'Not Started'))">
+                              'In Progress...'"><button class="statusButton" style="width:200px">In Progress</button></div>
+                           <div ng-if= "((site.edgeSiteBuildStatus.includes('problem')) || (site.edgeSiteBuildStatus.includes('error')) || (site.edgeSiteBuildStatus.includes('exception')))"><button  style="width:200px" ng-click="buildEdgeSite($index)">Re-build</button><p style="width:200px;font-size : 12px;color:red;">{{site.edgeSiteBuildStatus}}</p></div>
+                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployCreateTarStatus.toLowerCase() == 'not started'))">
                               <button  style="width:200px" ng-click="deploySite($index)">Deploy</button>
                            </div>
-                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployCreateTarStatus != 'Not Started') && (site.edgeSiteDeployGenesisNodeStatus == 'Not Started'))">
-                              <button class="readystatusButton" style="width:200px" >Tar File Status {{site.edgeSiteDeployCreateTarStatus}}</button>
+                           <div ng-if = "((site.edgeSiteDeployCreateTarStatus != null) && (site.edgeSiteDeployCreateTarStatus != 'not started')) && ((site.edgeSiteDeployGenesisNodeStatus.toLowerCase() == 'not started') || (site.edgeSiteDeployGenesisNodeStatus  == null))"><button class="statusButton" style="width:200px" >Tar File Status {{site.edgeSiteDeployCreateTarStatus.toLowerCase()}}</button>
                            </div>
-                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployGenesisNodeStatus != 'Not Started') && (site.edgeSiteDeployDeployToolStatus == 'Not Started'))">
-                              <button  class="readystatusButton" style="width:200px" >Genesis Node Status {{site.edgeSiteDeployGenesisNodeStatus}}</button>
+                           <div  ng-if ="((site.edgeSiteDeployGenesisNodeStatus.toLowerCase() != 'not started') && (site.edgeSiteDeployGenesisNodeStatus != null)) && ((site.edgeSiteDeployDeployToolStatus.toLowerCase() == 'not started') || (site.edgeSiteDeployDeployToolStatus  == null)) ">
+                              <button class="statusButton" style="width:200px" >Genesis Node Status {{site.edgeSiteDeployGenesisNodeStatus}}</button>
                            </div>
-                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployDeployToolStatus != 'Not Started') && (site.deployStatus == 'Not Started'))">
-                              <button  class="readystatusButton" style="width:200px" >Deploy Site Status {{site.edgeSiteDeployDeployToolStatus}}</button>
+                            <div  ng-if ="((site.edgeSiteDeployDeployToolStatus.toLowerCase() != 'not started') && (site.edgeSiteDeployDeployToolStatus != null)) && ((site.deployStatus.toLowerCase() == 'not started') || (site.deployStatus  == null)) ">
+                              <button class="statusButton" style="width:200px" >Deploy Site Status {{site.edgeSiteDeployDeployToolStatus}}</button>
                            </div>
-                           
-                            <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && ((site.deployStatus == 'completed') || (site.deployStatus == 'success')))">
+                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && ((site.deployStatus.includes('problem')) || (site.deployStatus.includes('error')) || (site.deployStatus.includes('exception'))))">
+                              <button  style="width:200px" ng-click="deploySite($index)" >Re Deploy</button>
+                              <p style="width:200px;font-size:12px;color:red;">{{site.deployStatus}}</p>
+                           </div>
+                            <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && ((site.deployStatus.toLowerCase() == 'completed') || (site.deployStatus.toLowerCase() == 'success')))">
                               <button  class="readystatusButton" style="width:200px" >Ready</button>
                            </div>
+                           <a ng-show = "((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed'))"  ng-click="viewYamlBuildFile($index)">
+                     <i >view yaml build file
+                     </i>
+                     </a>
                         </td>
                      </tr>
                   </tbody>
@@ -136,5 +141,12 @@
            <button style="margin-left:80%" class="button" ng-click="cancel()">Close</button>
             <button class="button" ng-click="createSite()">Save</button>
       </script>
+      <script type="text/ng-template" id="yamltemplateForm">
+      <h1> Build Yaml File:</h1><br>
+       <div style="overflow:auto;height:250px;">
+      <pre>{{$parent.buildyamloutput}}</pre>
+        </div>
+      <button style="margin-left:45%" class="button" ng-click="cancel()">Close</button>
+   </script>
    </body>
 </html>

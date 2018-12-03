@@ -17,27 +17,23 @@
 <html ng-app="PortalManagement">
 <style>
 <style>
-        body {
-            font: 14px sans-serif;
-        }
-        .axis path, .axis line {
-            fill: none;
-            stroke: black;
-            shape-rendering: crispEdges;
-        }
-        .axis path{
-            fill: none;
-            stroke: none;
-        }
-        .bar {
-            fill: steelblue;
-        }
+        
  </style>
 <body ng-controller="AECeteChompController">
-       
-        <chart-form></chart-form>
+        <h3>POD KPI Metrics</h3>
+        <Label style="font-size:16px">KPI :</Label>
+        <select class="exampleTable" style="width:200px" ng-model="selectedKPI" ng-change="">
+                  <option value="">POD Create Success Ratio
+                  
+                  
+                  </option>
+               </select>
+        <!--  <chart-form></chart-form>
         <bar-chart height="options.height" data="data" hovered="hovered(args)"></bar-chart>
         <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
+         <div style="margin-top:30px">
+        <histogram data=data></histogram>   
+        </div>
     
  </body>
  </html>

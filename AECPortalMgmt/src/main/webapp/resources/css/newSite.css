@@ -66,6 +66,18 @@
       border-radius: 4px;
       width:100px;
       }
+      .statusButton {
+      background-color: #FFD700;
+      border: none;
+      color: white;
+      padding: 7px 0px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 4px;
+      width:100px;
+      }
       .buildButton {
       background-color:#FFFDF6;
       border: none;
