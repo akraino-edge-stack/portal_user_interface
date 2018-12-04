@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83c3c8f7_3aa215d4",
+        "filename": "AECPortalMgmt/src/main/webapp/views/eteChomp.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-04T13:32:13Z",
+      "side": 1,
+      "message": "Two \u003cstyle\u003e tags in a row?!\nAlso you should just remove these since these, as well as the \u003c/style\u003e\nsince there is no style information included.",
+      "revId": "407cbe28da59b75611ab1d9cd244099ce2ead4cf",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
