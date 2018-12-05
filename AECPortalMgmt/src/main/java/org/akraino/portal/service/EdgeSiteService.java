@@ -16,12 +16,15 @@
 
 package org.akraino.portal.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -36,9 +39,16 @@ import org.akraino.portal.dao.PodDAO;
 import org.akraino.portal.dao.RegionDAO;
 import org.akraino.portal.data.BuildRequest;
 import org.akraino.portal.data.EdgeSiteState;
+import org.akraino.portal.data.NDNS;
+import org.akraino.portal.data.NNetwork;
+import org.akraino.portal.data.NNetworks;
+import org.akraino.portal.data.NNode;
 import org.akraino.portal.data.NPod;
+import org.akraino.portal.data.NSlaveNw;
+import org.akraino.portal.data.RoverPod;
 import org.akraino.portal.data.SiteDeployRequest;
 import org.akraino.portal.data.SiteRequest;
+import org.akraino.portal.data.UnicyclePod;
 import org.akraino.portal.data.WorkflowRequest;
 import org.akraino.portal.entity.EdgeSite;
 import org.akraino.portal.entity.EdgeSiteYamlTemplate;
@@ -82,8 +92,6 @@ public class EdgeSiteService {
 	
 	private static final String YAML_FILE_EXT = ".yaml";
 	
-	private static final String MULTI_NODE_INPUT_FILE_NAME_HPGEN10 = "multi-node-input-file-hpgen10.yaml";
-
 	public EdgeSiteService() {
 		
 		akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
@@ -121,13 +129,104 @@ public class EdgeSiteService {
 
 	public NPod getEdgeSitePodInfo(String sitename, String blueprint) throws IOException {
 
+		NPod pod = null;
+		
 		EdgeSite site = getEdgeSiteDetails(sitename);
+		
+		if (blueprint.equalsIgnoreCase(BLUEPRINT_ROVER)) {
+			
+			/*
+			 * rover blueprint
+			 * reads site specific environment input from a text file
+			 * @returns RoverPod
+			 */
+			
+			RoverPod rpod = new RoverPod();
+			rpod.setSiteName(site.getEdgeSiteName());
+			
+			pod = buildRoverPod(rpod, site.getInputFile());
+			
+			
+		} else {
+			/*
+			 * unicycle blueprint
+			 * reads site specific environment input from a yaml file
+			 * @return UnicyclePod
+			 */
+			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+			// read yaml file into java object
+			pod = mapper.readValue(site.getInputFile(), UnicyclePod.class);
 
-		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+		}
 
-		// read yaml file into java object
-		return mapper.readValue(site.getInputFile(), NPod.class);
+		return pod;
 
+	}
+	
+	private RoverPod buildRoverPod(RoverPod rpod, byte[] roverInput) throws IOException {
+		
+		//byte [] roverInput = site.getInputFile();
+		
+		InputStream inStream = new ByteArrayInputStream(roverInput);
+		Properties prop = new Properties();
+		
+		prop.load(inStream);
+		
+		// set web ip and ports
+		rpod.setWebIP(prop.getProperty("BUILD_WEBIP"));
+		rpod.setWebPort(new Integer(prop.getProperty("BUILD_WEBPORT")));
+		
+		// set networks
+		NNetworks networks = new NNetworks();
+		networks.setBonded("yes");
+		networks.setPrimary(prop.getProperty("SRV_BOND"));
+		
+		NSlaveNw slave1 = new NSlaveNw();
+		slave1.setName(prop.getProperty("SRV_SLAVE1"));
+		networks.addSlaves(slave1);
+		
+		NSlaveNw slave2 = new NSlaveNw();
+		slave2.setName(prop.getProperty("SRV_SLAVE2"));
+		networks.addSlaves(slave2);
+		
+		NNetwork host = new NNetwork();
+		host.setVlan(new Integer(prop.getProperty("SRV_VLAN")));
+		host.setInf(prop.getProperty("SRV_BLD_INF"));
+		host.setSubnet(prop.getProperty("SRV_SUBNET"));
+		host.setNetmask(prop.getProperty("SRV_NETMASK"));
+		host.setGateway(prop.getProperty("SRV_GATEWAY"));
+		host.setDns(new NDNS(prop.getProperty("SRV_DOMAIN"), prop.getProperty("SRV_DNS"),
+				prop.getProperty("SRV_DNSSEARCH"), prop.getProperty("SRV_NTP")));
+		host.setMtu(new Integer(prop.getProperty("SRV_MTU")));
+		
+		networks.setHost(host);
+		
+		NNetwork pxe = new NNetwork();
+		pxe.setInf(prop.getProperty("SRV_IPXE_INF"));
+		networks.setPxe(pxe);
+		
+		//set host node
+		NNode singlenode = new NNode();
+		singlenode.setName(prop.getProperty("SRV_NAME"));
+		singlenode.setRack(1);
+		singlenode.setPos(1);
+		singlenode.setOob(prop.getProperty("SRV_OOB_IP"));
+		singlenode.setOobUser(prop.getProperty("SRV_OOB_USR"));
+		singlenode.setOobPwd(prop.getProperty("SRV_OOB_PWD"));
+		singlenode.setMacAddress(prop.getProperty("SRV_MAC"));
+		singlenode.setOem(prop.getProperty("SRV_OEM"));
+		singlenode.setBootDevice(prop.getProperty("SRV_BOOT_DEVICE"));
+		singlenode.setPxe(prop.getProperty("SRV_BLD_SCRIPT"));
+		singlenode.setBiosTemplate(prop.getProperty("SRV_BIOS_TEMPLATE"));
+		singlenode.setBootTemplate(prop.getProperty("SRV_BOOT_TEMPLATE"));
+		singlenode.setHttpBootDevice(prop.getProperty("SRV_HTTP_BOOT_DEV"));
+		singlenode.setHost(prop.getProperty("SRV_IP"));
+		singlenode.setRootPwd(prop.getProperty("SRV_PWD"));
+		
+		rpod.setNetworks(networks);
+		rpod.addMasterNode(singlenode);
+		
+		return rpod;
 	}
 
 	public String getBuildYamlContent(String siteName) throws IOException {

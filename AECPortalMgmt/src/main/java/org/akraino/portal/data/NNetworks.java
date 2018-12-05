@@ -16,11 +16,18 @@
 
 package org.akraino.portal.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * class construct to hold the networks info for various components attached to a pod
+ * 
+ * @author ld261v
+ *
+ */
 @JsonPropertyOrder({"bonded", "primary", "slaves", "oob", "host", "nwStorage", "pxe", "ksn", "neutron"})
 public class NNetworks {
 
@@ -62,6 +69,16 @@ public class NNetworks {
 
 	public void setSlaves(List<NSlaveNw> slaves) {
 		this.slaves = slaves;
+	}
+	
+	public void addSlaves(NSlaveNw slave) {
+		
+		if (this.getSlaves() == null) {
+			this.setSlaves(new ArrayList<>());
+		}
+		
+		this.getSlaves().add(slave);
+		
 	}
 
 	public NNetwork getOob() {
