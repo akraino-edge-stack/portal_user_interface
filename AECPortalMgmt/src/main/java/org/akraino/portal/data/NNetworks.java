@@ -16,6 +16,7 @@
 
 package org.akraino.portal.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -62,6 +63,16 @@ public class NNetworks {
 
 	public void setSlaves(List<NSlaveNw> slaves) {
 		this.slaves = slaves;
+	}
+	
+	public void addSlaves(NSlaveNw slave) {
+		
+		if (this.getSlaves() == null) {
+			this.setSlaves(new ArrayList<>());
+		}
+		
+		this.getSlaves().add(slave);
+		
 	}
 
 	public NNetwork getOob() {

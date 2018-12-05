@@ -21,14 +21,30 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"domain", "servers", "upstreamServers", "serversJoined", "ingressDomain"})
+@JsonPropertyOrder({"domain", "servers", "upstreamServers", "serversJoined", "ingressDomain, dnsSearch, ntp"})
 public class NDNS {
 
 	private String domain;
 	
 	private String servers;
 	
+	private String dnsSearch;
 	
+	private String ntp;
+	
+	public NDNS() {
+		
+	}
+
+	public NDNS(String domain, String servers, String dnsSearch, String ntp) {
+		super();
+		this.domain = domain;
+		this.servers = servers;
+		this.dnsSearch = dnsSearch;
+		this.ntp = ntp;
+	}
+
+
 
 	@JsonProperty("upstream_servers")
 	private String[] upstreamServers;

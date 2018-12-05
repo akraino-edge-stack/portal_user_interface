@@ -16,14 +16,19 @@
 
 package org.akraino.portal.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"name", "oob", "host", "storage", "pxe", "ksn", "neutron", "rootPwd", "oem", 
-	"macAddress", "biosTemplate", "bootTemplate", "httpBootDevice", "oobUser", "oobPwd"})
+@JsonPropertyOrder({"name", "rack", "pos", "oob", "host", "storage", "pxe", "ksn", "neutron", "rootPwd", "oem", 
+	"macAddress", "biosTemplate", "bootTemplate", "httpBootDevice", "oobUser", "oobPwd, bootDevice"})
 public class NNode {
 
 	private String name;
+	
+	private Integer rack;
+	
+	private Integer pos;
 	
 	private String oob;
 	
@@ -53,6 +58,8 @@ public class NNode {
 	
 	@JsonProperty("http_boot_device")
 	private String httpBootDevice;
+	
+	private String bootDevice;
 	
 	@JsonProperty("oob_user")
 	private String oobUser;
@@ -180,12 +187,37 @@ public class NNode {
 		this.oobPwd = oobPwd;
 	}
 
+	public Integer getRack() {
+		return rack;
+	}
+
+	public void setRack(Integer rack) {
+		this.rack = rack;
+	}
+
+	public Integer getPos() {
+		return pos;
+	}
+
+	public void setPos(Integer pos) {
+		this.pos = pos;
+	}
+
+	public String getBootDevice() {
+		return bootDevice;
+	}
+
+	public void setBootDevice(String bootDevice) {
+		this.bootDevice = bootDevice;
+	}
+
 	@Override
 	public String toString() {
-		return "NNode [name=" + name + ", oob=" + oob + ", host=" + host + ", storage=" + storage + ", pxe=" + pxe
-				+ ", ksn=" + ksn + ", neutron=" + neutron + ", rootPwd=" + rootPwd + ", oem=" + oem + ", macAddress="
-				+ macAddress + ", biosTemplate=" + biosTemplate + ", bootTemplate=" + bootTemplate + ", httpBootDevice="
-				+ httpBootDevice + ", oobUser=" + oobUser + ", oobPwd=" + oobPwd + "]";
+		return "NNode [name=" + name + ", rack=" + rack + ", pos=" + pos + ", oob=" + oob + ", host=" + host
+				+ ", storage=" + storage + ", pxe=" + pxe + ", ksn=" + ksn + ", neutron=" + neutron + ", rootPwd="
+				+ rootPwd + ", oem=" + oem + ", macAddress=" + macAddress + ", biosTemplate=" + biosTemplate
+				+ ", bootTemplate=" + bootTemplate + ", httpBootDevice=" + httpBootDevice + ", oobUser=" + oobUser
+				+ ", oobPwd=" + oobPwd + "]";
 	}
 
 }
