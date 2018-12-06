@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d44d5d3_82fe0f7d",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/data/NDNS.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-06T00:45:08Z",
+      "side": 1,
+      "message": "Why have a constructor that does not initialize its variables?\nThis is a good way to cause null pointer errors.\nEither initialize the variables or remove the constructor",
+      "revId": "b99e33e143f47a90592bfb39d07a95ace082419d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a60ab67_7628d2e3",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/EdgeSiteService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-06T00:45:08Z",
+      "side": 1,
+      "message": "Why not make this a string switch statement (since we will have more blueprints later)?",
+      "revId": "b99e33e143f47a90592bfb39d07a95ace082419d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faa83c43_e2d51bc8",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/service/EdgeSiteService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-06T00:45:08Z",
+      "side": 1,
+      "message": "Why no unicycle pod to be consistent?\nAgain you need javadoc to explain these decisions.",
+      "revId": "b99e33e143f47a90592bfb39d07a95ace082419d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
