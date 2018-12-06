@@ -21,14 +21,39 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"domain", "servers", "upstreamServers", "serversJoined", "ingressDomain"})
+/**
+ * class construct to hold the domain network info for a site/pod
+ * 
+ * @author ld261v
+ *
+ */
+@JsonPropertyOrder({"domain", "servers", "upstreamServers", "serversJoined", "ingressDomain, dnsSearch, ntp"})
 public class NDNS {
 
 	private String domain;
 	
 	private String servers;
 	
+	private String dnsSearch;
 	
+	private String ntp;
+	
+	public NDNS() {
+		this.domain = "";
+		this.servers = "";
+		this.dnsSearch = "";
+		this.ntp = "";
+	}
+
+	public NDNS(String domain, String servers, String dnsSearch, String ntp) {
+		super();
+		this.domain = domain;
+		this.servers = servers;
+		this.dnsSearch = dnsSearch;
+		this.ntp = ntp;
+	}
+
+
 
 	@JsonProperty("upstream_servers")
 	private String[] upstreamServers;
@@ -77,6 +102,22 @@ public class NDNS {
 
 	public void setIngressDomain(String ingressDomain) {
 		this.ingressDomain = ingressDomain;
+	}
+
+	public String getDnsSearch() {
+		return dnsSearch;
+	}
+
+	public void setDnsSearch(String dnsSearch) {
+		this.dnsSearch = dnsSearch;
+	}
+
+	public String getNtp() {
+		return ntp;
+	}
+
+	public void setNtp(String ntp) {
+		this.ntp = ntp;
 	}
 
 	@Override

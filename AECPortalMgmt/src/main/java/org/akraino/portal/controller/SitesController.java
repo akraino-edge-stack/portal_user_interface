@@ -97,6 +97,15 @@ public class SitesController {
 		return new ResponseEntity<>(site, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * api that returns pod details for a given site name and blueprint
+	 * currently handles rover and unicycle blueprints for any given site.
+	 * 
+	 * @param sitename
+	 * @param blueprint
+	 * @return NPod
+	 */
 	@RequestMapping(value = "/site/podInfo/{sitename}/{blueprint}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<NPod> getEdgeSitePodInfo(@PathVariable("sitename") String sitename, @PathVariable("blueprint") String blueprint) {
 

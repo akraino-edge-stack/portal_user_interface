@@ -21,6 +21,12 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * class construct to hold the basic network info 
+ * 
+ * @author ld261v
+ *
+ */
 @JsonPropertyOrder({"vlan", "vlanInterface", "cidr", "gateway", "subnet", "netmask", "routes", "ranges", "dns", })
 public class NNetwork {
 
@@ -41,10 +47,12 @@ public class NNetwork {
 	private Map<String, String> routes;
 
 	private String subnet;
-	private int vlan;
+	private Integer vlan;
 
 	@JsonProperty("interface")
 	private String vlanInterface;
+	
+	private Integer mtu;
 
 	public String getCidr() {
 		return cidr;
@@ -76,10 +84,6 @@ public class NNetwork {
 
 	public String getSubnet() {
 		return subnet;
-	}
-
-	public int getVlan() {
-		return vlan;
 	}
 
 	public String getVlanInterface() {
@@ -126,14 +130,25 @@ public class NNetwork {
 		this.subnet = subnet;
 	}
 
-	public void setVlan(int vlan) {
-		this.vlan = vlan;
-	}
-
 	public void setVlanInterface(String vlanInterface) {
 		this.vlanInterface = vlanInterface;
 	}
 
+	public Integer getVlan() {
+		return vlan;
+	}
+
+	public void setVlan(Integer vlan) {
+		this.vlan = vlan;
+	}
+
+	public Integer getMtu() {
+		return mtu;
+	}
+
+	public void setMtu(Integer mtu) {
+		this.mtu = mtu;
+	}
 
 	@Override
 	public String toString() {

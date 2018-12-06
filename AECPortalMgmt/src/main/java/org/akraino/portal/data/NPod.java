@@ -16,12 +16,19 @@
 
 package org.akraino.portal.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * class construct to hold the generic pod details for any blueprint 
+ * 
+ * @author ld261v
+ *
+ */
 @JsonPropertyOrder({"siteName", "ipmiAdmin", "networks", "dns", "sriovnets", "storage", 
 	"genesis", "masters", "workers", "hardware", "disks", "disks_compute", "sshKey", "kubernetes", "regionalServer"})
 public class NPod {
@@ -131,6 +138,15 @@ public class NPod {
 
 	public void setMasters(List<NNode> masters) {
 		this.masters = masters;
+	}
+	
+	public void addMasterNode(NNode node) {
+		
+		if (this.getMasters() == null) {
+			this.setMasters(new ArrayList<>());
+		}
+		
+		this.getMasters().add(node);
 	}
 
 	public List<NNode> getWorkers() {
