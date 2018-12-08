@@ -35,6 +35,8 @@ public class NNode {
 	
 	private Integer pos;
 	
+	private Integer units;
+	
 	private String oob;
 	
 	private String host;
@@ -214,6 +216,14 @@ public class NNode {
 
 	public void setBootDevice(String bootDevice) {
 		this.bootDevice = bootDevice;
+	}
+
+	public Integer getUnits() {
+		return units;
+	}
+
+	public void setUnits(Integer units) {
+		this.units = units;
 	}
 
 	@Override
