@@ -16,6 +16,7 @@
 
 package org.akraino.portal.common;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,10 +33,13 @@ public class FileUtility {
 		
 		FileOutputStream out = null;
 		try {
+			
 			Path path = Paths.get(filePath);
 			Files.createDirectories(path.getParent());
+			
+			File file = new File(filePath);
 	
-			out = new FileOutputStream(filePath);
+			out = new FileOutputStream(file);
 			out.write(fileContent);
 			
 		} finally {
