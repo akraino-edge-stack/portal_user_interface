@@ -18,6 +18,7 @@ package org.akraino.portal.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -60,7 +61,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 
 @Service("edgeSiteService")
 @Transactional
@@ -318,7 +321,6 @@ public class EdgeSiteService {
 			logger.info("writing input file to:" + filepath);
 			
 			FileUtility.writeToFile(filepath, bfileContent);
-			
 
 		} else if (siteRequest.getBlueprint().equals(BLUEPRINT_UNICYCLE)) {
 
@@ -335,6 +337,25 @@ public class EdgeSiteService {
 			
 			// copy j2 template files
 			pushJ2TemplateFiles();
+			
+			// read the input yaml file into a yaml parser
+			ObjectMapper mapper = new ObjectMapper(
+					new YAMLFactory()
+					.configure(Feature.USE_NATIVE_TYPE_ID, false)
+					//.configure(Feature.ALWAYS_QUOTE_NUMBERS_AS_STRINGS, true)
+					//.enable(Feature.MINIMIZE_QUOTES)
+					.enable(Feature.WRITE_DOC_START_MARKER)
+					)
+					.enable(SerializationFeature.INDENT_OUTPUT);
+					//.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+					//.disable(SerializationFeature.WRITE_NULL_MAP_VALUES)
+					//.setSerializationInclusion(Include.NON_NULL);
+			
+			//read yaml file into a datamodel, in future release, this yaml read will be replaced with Narad data fetch
+			NPod npod = mapper.readValue(new File(inputfilepath), NPod.class);
+			
+			//write yaml file from datamodel
+			mapper.writeValue(new File(akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName()+"_portal"+YAML_FILE_EXT), npod);
 
 		}
 		
