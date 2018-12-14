@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd29a83_04040c16",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/FileUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-14T14:06:23Z",
+      "side": 1,
+      "message": "check for out being null ptr",
+      "revId": "20fbf9d3130e5d2e95ff6716ce9e37edb38bd28d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6913c712_7f6d3fde",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/FileUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-12-14T14:06:23Z",
+      "side": 1,
+      "message": "indentation is wrong",
+      "revId": "20fbf9d3130e5d2e95ff6716ce9e37edb38bd28d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
