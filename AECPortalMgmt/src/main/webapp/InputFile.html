@@ -22,7 +22,7 @@
       <nav id="headerContent">
          <a  ng-class="{choose: selectedTab == 1}" ng-click="selectedTab = 1;">General</a>
          <a  ng-class="{choose: selectedTab == 2}" ng-click="selectedTab = 2;">Networking</a>
-         <a  ng-class="{choose: selectedTab == 3}" ng-click="selectedTab = 3;">Storage</a>
+         <a  ng-class="{choose: selectedTab == 3}" ng-click="selectedTab = 3;" ng-show="hideTab">Storage</a>
       </nav>
       <div class="tab-content" ng-show="selectedTab == 1">
          <label style="font-weight:15px">New Pod</label><br>
@@ -54,7 +54,8 @@
                  
                </select> *
                <label style="text-align:right;padding-top:10px;width:40%;"> Existing Blueprint: </label>
-               <select class="exampleTable" style="width:30%;height:20px;width:150px;" ng-model="blueprint" >
+               <select class="exampleTable" style="width:30%;height:20px;width:150px;" ng-model="blueprint" ng-change="blueprintType()" >
+              
                   <option value="">Select Blueprint
                   </option>
                   <option value="Unicycle">Unicycle
@@ -65,10 +66,54 @@
             </div>
             <div style="margin-left:600px;width:300px;">
                <input type="file" name="Input File" accept="**" ngf-select ng-model="inputFile" */>
-               <button class="popUpbutton" ng-click="uploadFile(inputFile)" ng-disabled = "(!podName || !podType || !hostIP || !hostUserName || !hostPassword || !siteName || !blueprint || !inputFile)" style="width:200px;">Upload Inventory File</button>
+               <button class="popUpbutton" ng-click="uploadFile(inputFile)" ng-disabled = "(!podName || !podType || !hostIP || !hostUserName || !hostPassword || !blueprint || !inputFile)" style="width:200px;">Upload Inventory File</button>
             </div>
          </div>
-         <div class="leftpane">
+           <div class="leftpane" ng-show="hideRov">
+            <div style="height:210px;width:300px;" class="borderFrame2">
+             <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Server</p>
+             <label style="text-align:right;"> Vendor : </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].oem" /><br>
+              <label style="text-align:right;"> Server Name: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].name" /><br> 
+               <label style="text-align:right;"> Server Password: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].root_password" /><br> 
+               <label style="text-align:right;">OOB User Name: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].oob_user" /><br> 
+               <label style="text-align:right;">OOB Password: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].oob_password" /><br> 
+               <label style="text-align:right;"> OOb MAC: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].mac_address" /><br>  
+               <label style="text-align:right;">IPX Interface: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].pxe" /><br> 
+               <label style="text-align:right;">Build Interface: </label>
+               <input type="text" style="" placeholder="" ng-model="" /><br> 
+               <label style="text-align:right;"> Boot Device: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.masters[0].bootDevice" /><br> 
+            </div>
+           <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-right:10px;width:300px;" class="borderFrame4" >
+               <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Racks</p>
+              <!--  <ul style="list-style-type:none;" ng-repeat="name in podData.networks.slaves">
+               <li ></li><br>
+               </ul>-->
+            </div>
+           </div>
+         <div class="middlepane"  ng-show="hideRov" style="margin-left:30px;">
+              <div style="height:210px;width:300px;" class="borderFrame2">
+                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;"> BIOS/RAID Templates : </p>
+                 <label style="text-align:right;width:35%;"> Bios Template: </label>
+               <input type="textarea"  placeholder="" ng-model="podData.masters[0].bios_template" />
+               <label style="text-align:right;right;width:35%;"> Boot Template: </label>
+               <input type="textarea"  placeholder="" ng-model="podData.masters[0].boot_template" />
+               <label style="text-align:right;right;width:35%;"> First Boot Template: </label>
+               <input type="text"  placeholder="" ng-model="podData.masters[0].http_boot_device" />
+              </div>
+               <div style="margin-top:20px;float:right;margin-left:30px;">
+                  <button   class="button" ng-click="cancel()">Cancel</button>
+                  <button  class="button" ng-click="savePod()">Save</button>
+               </div>
+          </div>
+         <div class="leftpane" ng-show="hideUni">
             <div style="height:80px;width:280px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">IPMI</p>
                <label style="text-align:right;"> IPMI Admin: </label>
@@ -125,7 +170,7 @@
                </ul>
             </div>
          </div>
-         <div class="middlepane" style="height:500px;">
+         <div class="middlepane" style="height:500px;" ng-show="hideUni">
               <div style="height:475px;width:290px;" class="borderFrame2">
                <!--   <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">OOB Network</p>
                   <form class="tabForm">
@@ -181,7 +226,7 @@
                <input type="text"  placeholder="" ng-model="podData.genesis.oob_user" />
          </div>
          </div>
-         <div class="middlepane" style="height:500px;">
+         <div class="middlepane" style="height:500px;" ng-show="hideUni">
           <div style="height:475px;width:290px;" class="borderFrame2">
            <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Master/Worker Nodes</p>
           
@@ -208,13 +253,19 @@
                <input type="text"  placeholder="" ng-model="nodeCalicoIP" />
                <label style="text-align:right;"> Neutron IP: </label>
                <input type="text"  placeholder="" ng-model="nodeNeutronIP" />
+                 
                 <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-left:10px;width:280px;" class="borderFrame4">
                   <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Node List</p>      
                <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="data in podData.masters.concat(podData.workers)" ng-click="setSelected(data.name)" ng-class="{selectedMaster : data.name=== idSelectedVote}">
                <li style="font-size:12px;margin:0 0 0px 0;" >{{data.name}},{{data.oob}}</li><br>
                </ul>
                      </div>
-               <div style="margin-top:130px;float:right;">
+                     <div style="float:right;margin-right:20px">
+                     
+                     <button class="popUpbutton" ng-click="addNode()">Add</button> 
+                     <button class="popUpbutton" ng-click="deleteNode($index)">Delete</button> 
+                     </div>
+               <div style="margin-top:110px;float:right;margin-left:30px;">
                   <button   class="button" ng-click="cancel()">Cancel</button>
                   <button  class="button" ng-click="savePod()">Save</button>
                </div>
@@ -224,7 +275,62 @@
       </div>
       <div class="tab-content" ng-show="selectedTab == 2">
          <p style="font-weight:15px">New Pod</p>
-         <div class="leftpane" style="width:290px;">
+         <div class="leftpane" style="width:290px;" ng-show="hideRov">
+         <div style="height:200px;" class="borderFrame2">
+               <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Host Interfaces</p>
+               <form class="tabForm">
+                  <label style="text-align:right;"> Bonded: </label>
+                  <div style="display:inline">
+                     <input type="radio" value="yes" ng-model="podData.networks.bonded" />Yes
+                     <input type="radio"  value="no" ng-model="podData.networks.bonded" />No<br>
+                  </div>
+                  <label style="text-align:right;"> Primary: </label>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.primary" />
+                  <label style="text-align:right;"> Slaves: </label>
+                  <input type="text" style="" placeholder="" ng-model="slaves" />   
+                 
+                <div style="height:50px;overflow-y: scroll;margin-left:32%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="slaves in podData.networks.slaves" ng-click="setslaveSelected(slaves.name)" ng-class="{selectedMaster : slaves.name=== idSelectedSlave}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{slaves.name}}</li><br>
+               </ul>
+                     </div>
+            
+                  <div style="float:right;padding-right:50px;">
+                     <button class="popUpbutton" ng-click="addSlaves()">Add</button> 
+                     <button  class="popUpbutton" ng-click="deleteSlave($index)" >Delete</button>
+                  </div>
+                  <br><br>
+                 
+               </form>
+            </div>
+            </div>
+            <div class="middlepane" style="margin-left:30px;" ng-show="hideRov">
+            <div style="height:200px;width:300px;" class="borderFrame2">
+             <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Network Addresses</p>
+               <label style="text-align:right;"> MTU: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.mtu" />
+                <label style="text-align:right;"> IP: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.subnet" />
+                <label style="text-align:right;"> Network Mask: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.netmask" />
+                <label style="text-align:right;"> Gateway: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.gateway" />
+                <label style="text-align:right;"> DNS: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.dns.domain" />
+                <label style="text-align:right;"> Domain Name: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.dns.domain" />
+                <label style="text-align:right;"> DNS Search Addr: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.networks.host.dns.servers" />
+                <label style="text-align:right;"> NTP Addr: </label>
+               <input type="text" style="" placeholder="" ng-model="podData.sriovnets[0].physical" />
+            </div>
+             <div style="margin-top:20px;float:right;margin-left:30px;">
+                  <button   class="button" ng-click="cancel()">Cancel</button>
+                  <button  class="button" ng-click="savePod()">Save</button>
+               </div>
+            </div>
+         <div class="leftpane" style="width:290px;" ng-show="hideUni">
             <div style="height:200px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Host Interfaces</p>
                <form class="tabForm">
@@ -235,26 +341,25 @@
                   </div>
                   <label style="text-align:right;"> Primary: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.primary" />
-                  
-                  <label for="textarea2" style="text-align:right;vertical-align: top;"> Slaves: </label>
-                  
-                  
-                  
-                   <textarea id="textarea2" style="height:60px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="slaves"></textarea> <br>
-               <!--  <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="name in podData.networks.slaves"">
-               <li >{{name.name}}</li><br>
-               </ul>-->
+                  <label style="text-align:right;"> Slaves: </label>
+                  <input type="text" style="" placeholder="" ng-model="slaves" />   
+                 
+                <div style="height:50px;overflow-y: scroll;margin-left:32%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="slaves in podData.networks.slaves" ng-click="setslaveSelected(slaves.name)" ng-class="{selectedMaster : slaves.name=== idSelectedSlave}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{slaves.name}}</li><br>
+               </ul>
+                     </div>
             
-            
-                  <div style="float:right;padding-right:5px;">
-                     <button   class="popUpbutton" ng-click="" disabled>Add</button>
-                     <button  class="popUpbutton" ng-click="" disabled>Delete</button>
+                  <div style="float:right;padding-right:50px;">
+                     <button class="popUpbutton" ng-click="addSlaves()">Add</button> 
+                     <button  class="popUpbutton" ng-click="deleteSlave($index)" >Delete</button>
                   </div>
                   <br><br>
                  
                </form>
             </div>
-            <div style="height:210px;margin-top:5px;" class="borderFrame2">
+            <div style="height:210px;margin-top:5px;" class="borderFrame2" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Host Network</p>
                <form class="tabForm">
                   <label style="text-align:right;font-size:12px !important;"> Vlan: </label>
@@ -277,13 +382,24 @@
                   <input type="text" style="" placeholder="" ng-model="podData.networks.host.ranges.static.end" /><br>
                </form>
             </div>
-            <div style="height:160px;margin-top:5px;" class="borderFrame2">
+            <div style="height:160px;margin-top:5px;" class="borderFrame2" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Service DNS</p>
                <label style="text-align:right;width:33%;"> Upstream Servers: </label>
-               <input type="text"  placeholder="" ng-model="podData.dns.upstream_servers" />
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button><br>
-               <input  style="margin-left:32%"type="textarea" placeholder="" ng-model="podData.dns.upstream_servers_joined"/>
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Delete</button><br>
+               
+                  <input type="text" style="" placeholder="" ng-model="servers" />   
+              
+                <div style="height:40px;overflow-y: scroll;margin-left:33%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="servers in podData.dns.upstream_servers track by $index" ng-click="setserverSelected(servers)" ng-class="{selectedMaster : servers=== idSelectedServer}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{servers}}</li><br>
+               </ul>
+                     </div>
+            
+             <div style="float:right;padding-right:50px;">
+                      <button class="popUpbutton" ng-click="addUpstreamserver()">Add</button>   
+                     <button  class="popUpbutton" ng-click="deleteServer($index)" >Delete</button>
+                  </div><br><br>
+               
                <label style="text-align:right;width:32%;"> Ingress Domain: </label>
                <input type="text"  style="width:200px" placeholder="" ng-model="podData.dns.ingress_domain" />
             </div>
@@ -334,7 +450,7 @@
                <button  class="popUpbutton" style="margin-left:5px;" ng-click="">Delete</button><br>
                </div>-->
          </div>
-          <div class="middlepane" style="margin-left:30px;">
+          <div class="middlepane" style="margin-left:30px;" ng-show="hideUni">
             <div style="height:460px;width:300px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">SRIOVNET</p>
                <label style="text-align:right;"> Physical: </label>
@@ -344,12 +460,20 @@
                <label style="text-align:right;"> VLAN: </label>
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[0].vlan_start" /> 
                <label style="text-align:right;"> Vlan END: </label>
-               <input type="text" style="" placeholder="" ng-model="podData.sriovnets[0].vlan_end" />  
-               <button class="popUpbutton" disabled>Add</button>   
-              <label for="textarea2" style="text-align:right;vertical-align: top;"> Whitelist: </label>
-               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log"></textarea> <br>
+               <input type="text" style="" placeholder="" ng-model="podData.sriovnets[0].vlan_end" /> 
+               <label style="text-align:right;"> Whitelist: </label>
+               <input type="text" style="" placeholder="" ng-model="whitelist" />   
+              
+                <div style="height:90px;overflow-y: scroll;margin-left:32%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="whitelist in podData.sriovnets[0].whitelists" ng-click="setwhitelistSelected(whitelist.address)" ng-class="{selectedMaster : whitelist.address=== idSelectedwhiteList}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{whitelist.address}}</li><br>
+               </ul>
+                     </div>
+              <!--  <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log"></textarea> <br>-->
                <div style="float:right;padding-right:50px;padding-top:5px;">
-                  <button style="" class="popUpbutton" disabled>Delete</button><br>  
+                   <button class="popUpbutton" ng-click="addWhiteList()">Add</button>   
+                  <button style="" class="popUpbutton" ng-click="deletewhiteList(index)">Delete</button><br>  
                </div>
                <br><br>
                <label style="text-align:right;"> Physical: </label>
@@ -360,15 +484,23 @@
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[1].vlan_start" /> 
                <label style="text-align:right;"> Vlan END: </label>
                <input type="text" style="" placeholder="" ng-model="podData.sriovnets[1].vlan_end" />  
-               <button class="popUpbutton" disabled>Add</button>   
-               <label for="textarea2" style="text-align:right;vertical-align: top;"> Whitelist: </label>
-               <textarea id="textarea2" style="height:90px;overflow-y:scroll;font-size:12px;width:150px;" ng-model="log2"></textarea> <br>
-               <div style="float:right;padding-right:50px;padding-top:5px;">
-                  <button style="" class="popUpbutton" disabled>Delete</button>  
+               <label style="text-align:right;"> Whitelist: </label>
+               <input type="text" style="" placeholder="" ng-model="secondwhitelist" />   
+                
+                <div style="height:90px;overflow-y: scroll;margin-left:32%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="whitelist in podData.sriovnets[1].whitelists" ng-click="setsecondwhitelistSelected(whitelist.address)" ng-class="{selectedMaster : whitelist.address=== idSelectedsecondwhitelist}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{whitelist.address}}</li><br>
+               </ul>
+                     </div>
+                      <div style="float:right;padding-right:50px;padding-top:5px;">
+                   <button class="popUpbutton" ng-click="addsecondWhiteList()">Add</button>    
+                  <button style="" class="popUpbutton" ng-click="deletesecondwhiteList($index)">Delete</button><br>  
                </div>
+                     
             </div>
             </div>
-         <div class="middlepane" style="margin-left:10px;width:240px;">
+         <div class="middlepane" style="margin-left:10px;width:240px;" ng-show="hideUni">
             <div style="height:180px;width:240px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Storage Network</p>
                <form class="tabForm">
@@ -390,7 +522,7 @@
                   <input type="text"  placeholder="" ng-model="podData.networks.storage.ranges.static.end" /><br>
                </form>
             </div>
-            <div style="height:150px;width:240px;margin-top:5px;" class="borderFrame2">
+            <div style="height:150px;width:240px;margin-top:5px;" class="borderFrame2" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Neutron Networking</p>
                <form class="tabForm">
                   <label style="text-align:right;font-size:12px !important;"> Vlan: </label>
@@ -409,15 +541,15 @@
                   <input type="text" style="" placeholder="" ng-model="podData.networks.neutron.ranges.static.end" /><br>
                </form>
             </div>
-            <div style="height:270px;margin-top:5px;width:240px;" class="borderFrame3">
+            <div style="height:270px;margin-top:5px;width:240px;" class="borderFrame3" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">PXE Network</p>
                <form class="tabForm">
                   <label style="text-align:right;font-size:12px !important;"> Vlan: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.vlan" /> 
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe[0].vlan" /> 
                   <label style="text-align:right;"> Interface: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.interface" /> 
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe[0].interface" /> 
                   <label style="text-align:right;"> CIDR: </label>
-                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.cidr" /><br>
+                  <input type="text" style="" placeholder="" ng-model="podData.networks.pxe[0].cidr" /><br>
                   <label style="padding-bottom: 0px;margin-bottom: 0px;font-weight:bold !important;text-align:right; text-decoration: underline;">Routes</label><br>
                   <label style="text-align:right;"> gateway: </label>
                   <input type="text" style="" placeholder="" ng-model="podData.networks.pxe.gateway" />
@@ -438,19 +570,19 @@
                </form>
             </div>
          </div>
-         <div style="height:570px;width:200px;float:right;margin-right:90px;">
+         <div style="height:570px;width:200px;float:right;margin-right:90px;" ng-show="hideUni">
             <div style="height:100px;width:295px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Peers</p>
                <label style="text-align:right;"> IP: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.ip" /><br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers[0].ip" /><br>
                <label style="text-align:right;"> Scope: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.scope" /><br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers[0].scope" /><br>
                <label style="text-align:right;"> AS Number: </label>
-               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers.asnumber" /><br>
+               <input type="text"  placeholder="" ng-model="podData.networks.ksn.peers[0].asnumber" /><br>
                <label style="text-align:right;"> VRRP IP: </label>
                <input type="text"  placeholder="" ng-model="podData.networks.ksn.vrrp_ip" /><br>
             </div>
-            <div style="height:240px;margin-top:5px;width:295px;" class="borderFrame2">
+            <div style="height:240px;margin-top:5px;width:295px;" class="borderFrame2" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Calico Network</p>
                <label style="text-align:right;"> Vlan: </label>
                <input type="text"  placeholder="" ng-model="podData.networks.ksn.vlan" /><br>
@@ -460,8 +592,8 @@
                <input type="text"  placeholder="" ng-model="podData.networks.ksn.cidr" /><br>
                <label style="text-align:right;"> Mesh: </label>
                <div style="display:inline">
-                  <input type="radio" value="yes" ng-model="podData.networks.ksn.mesh" />Yes
-                  <input type="radio"  value="no" ng-model="podData.networks.ksn.mesh" />No<br>
+                  <input type="radio" value="true"  ng-model="podData.networks.ksn.mesh" />Yes
+                  <input type="radio"  value="false"  ng-model="podData.networks.ksn.mesh" />No<br>
                </div>
                <label style="text-align:right;"> local AS: </label>
                <input type="text"  placeholder="" ng-model="podData.networks.ksn.local_asnumber" /><br>
@@ -471,13 +603,19 @@
                <input type="text"  placeholder="" ng-model="podData.networks.ksn.ranges.static.end" /><br>
                <label style="text-align:right;"> Add CIDRs: </label>
                <input type="text"  placeholder="" ng-model="calicoCidr" />
-               <button  class="popUpbutton" style="margin-left:5px;" ng-click="" disabled>Add</button><br>
-               <input  style="margin-left:32%"type="textarea" placeholder="" ng-model="calicoTextarea"/><br>
-               <div style="float:right;padding-right:50px;">
-                  <button  class="popUpbutton" style="margin-left:25px;" ng-click="" disabled>Delete</button><br>
-               </div>
+                  
+                <div style="height:40px;overflow-y: scroll;margin-left:32%;width:150px;" class="borderFrame5">
+                      
+               <ul style="list-style-type:none;height:20px;padding: 0;margin:0;" ng-repeat="calicoCIDR in podData.networks.ksn.additional_cidrs" ng-click="setCalico(calicoCIDR)" ng-class="{selectedMaster : calicoCIDR=== idSelectedCIDR}">
+               <li style="font-size:12px;margin:0 0 0px 0;" >{{calicoCIDR}}</li><br>
+               </ul>
+                     </div>
+               <div style="float:right;padding-right:50px;padding-top:5px;">
+                  <button class="popUpbutton" ng-click="addCidr()">Add</button> 
+                  <button style="" class="popUpbutton" ng-click="deleteCalico($index)">Delete</button><br>  
+               </div>      
             </div>
-            <div style="height:210px;margin-top:5px;width:295px;" class="borderFrame2">
+            <div style="height:210px;margin-top:5px;width:295px;" class="borderFrame2" ng-show="hideUni">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">OOB Network</p>
                <form class="tabForm">
                   <label style="text-align:right;font-size:12px !important;"> Vlan: </label>
@@ -537,18 +675,19 @@
                   <input type="text"  placeholder="" ng-model="podData.disks_compute[1].partitions[0].size" />
                </form>
             </div>
-            <div style="height:320px;" class="borderFrame2">
+            <div style="height:330px;" class="borderFrame2">
                <p style="color:blue;padding-bottom: 0px;margin-bottom: 0px;">Ceph Disk</p>
+               <form class="bigText">
                <label style="text-align:right;">Host OSD Count: </label>
                <input type="text"  placeholder="" ng-model="podData.storage.osd_count" />
                <label style="text-align:right;">Total OSD Count: </label>
                <input type="text"  placeholder="" ng-model="podData.storage.total_osd_count" /> <br>
-               <form class="bigText">
+               
                   <label style="text-align:right;"> Data Volume: </label>
                   <input type="text"  placeholder="" ng-model="dataVolume" />
                   <label style="text-align:right;"> Journal Volume: </label>
-                  <input type="textarea"  placeholder="" ng-model="journalVolume" />
-                  <button class="popUpbutton" disabled>Add</button> 
+                  <input type="text"  placeholder="" ng-model="journalVolume" />
+                   
                   <div style="padding-left:20px;">
                      <div style="height:180px;margin-top:5px;overflow-y: scroll;padding-left:10px;width:280px;" class="borderFrame4">
                        
@@ -557,6 +696,10 @@
                </ul>
                      </div>
                   </div>
+                  <div style="float:right;padding-right:50px;">
+                      <button class="popUpbutton" ng-click="addStorage()">Add</button>  
+                     <button  class="popUpbutton" ng-click="deleteStorage($index)" >Delete</button>
+                  </div></br>
                </form>
             </div>
          </div>

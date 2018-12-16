@@ -47,6 +47,10 @@
       border-radius: 10px;
       border: 1px solid #c0c0c0;
       }
+       .borderFrame5{
+      border-radius: 2px;
+      border: 1px solid #c0c0c0;
+      }
       .popUpbutton {
       background-color: #2c87f0;
       border: none;
@@ -166,6 +170,6 @@
       font-size: 11px;
       }
       .selectedMaster {
-  background-color: grey;
+  background-color: #D3D3D3;
 }
       
