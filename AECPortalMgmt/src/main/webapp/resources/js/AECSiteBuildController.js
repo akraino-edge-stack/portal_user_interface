@@ -33,7 +33,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
             showClose: false 
         });
 	}
-	console.log(abc);
+	//console.log(abc);
 	$scope.tokenId = localStorage.getItem("tokenId");
 	
 	$controller('commonController', {
@@ -42,7 +42,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
     $scope.currentblueprintPage = 1;
     $scope.showPopover = function() {
         $scope.popoverIsVisible = true;
-        console.log("hi");
+        //console.log("hi");
     };
 
     $scope.hidePopover = function() {
@@ -227,7 +227,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
                      'tokenId': $scope.tokenId
                  }
              }).then(function(response) {
-                 console.log(response.data);
+                 //console.log(response.data);
                  $scope.sites = response.data.sort(function(a, b) {
                      //note the minus before -cmp, for descending order
                      return $scope.cmp(
@@ -237,11 +237,11 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
                  });
                  $scope.sitemap ={};
             	 $scope.sites.forEach(function(site) {$scope.sitemap[site.edgeSiteId] = site;});
-            	 console.log($scope.sitemap);
+            	 //console.log($scope.sitemap);
             	 $scope.podList.forEach(function(pod) {
             		 pod.site =$scope.sitemap[pod.siteId];
             		});
-            	 console.log( $scope.podList);
+            	// console.log( $scope.podList);
 
 
              }, function(error) {
@@ -370,12 +370,15 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
         //$scope.blueprintName = blueprintName;
         $scope.selectedRow = index;
         $scope.podName = pod;
-        console.log("Hi" + pod);
-        console.log(Pods);
-        var currentPod = Pods.filter(function(element) {
+        //console.log("Hi" + pod);
+        //console.log(Pods);
+        var currentPod = $scope.podList.filter(function(element) {
             return element.podname === $scope.podName;
         });
-        console.log(currentPod);
+        $scope.podJson = $base64.decode(currentPod[0].podjson);
+       
+        $scope.podParse = JSON.parse($scope.podJson);
+        console.log($scope.podParse.networks);
         var Racks = new Array();
         for (var j = 0; j < 1; j++) {
             /*var currRackcheck = currentPod[0].racks.find(function(element){
@@ -383,25 +386,42 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 	          });*/
 
             var Nodes = new Array();
-            for (var i = 0; i < 52; i++) {
-            	if (i== 0 ){
-            		var newNode = $scope.createNodeObject(i, "control", "control", [], []);
-            	}
-            	else if(i == 1 || i== 2){
-            		var newNode = $scope.createNodeObject(i, "compute", "compute", [], []);
-            		
+            
+            for (var i = 1; i < 52; i++) {
+            	
+            		var newNode = $scope.createNodeObject(i, "", "", [], []);
+            	
+                Nodes.push(newNode);
+                
+            }
+           
+            angular.forEach($scope.podParse.masters, function (value, index) {
+            	//Nodes[1].name = "ooo";
+            	//console.log($scope.podParse.masters[0].pos);
+            	if($scope.podParse.masters[index].pos == 1){
+            	Nodes[$scope.podParse.masters[index].pos - 1].name = $scope.podParse.masters[index].name;
+            	Nodes[$scope.podParse.masters[index].pos - 1].type ="control";
             	}
             	else{
-            		var newNode = $scope.createNodeObject(i, "", "", [], []);
+            		Nodes[$scope.podParse.masters[index].pos - 1].name = $scope.podParse.masters[index].name;
+                	Nodes[$scope.podParse.masters[index].pos - 1].type ="compute";
             	}
-                Nodes.push(newNode);
-                $scope.nodeList = Nodes;
-            }
-
+            	console.log(Nodes);
+          	});
+            angular.forEach($scope.podParse.workers, function (value, index) {
+            	//Nodes[1].name = "ooo";
+            	//console.log($scope.podParse.masters[0].pos);
+            	Nodes[$scope.podParse.workers[index].pos - 1].name = $scope.podParse.workers[index].name;
+            	Nodes[$scope.podParse.workers[index].pos - 1].type ="compute";
+            	console.log(Nodes);
+          	});
+            
+            $scope.nodeList = Nodes;
+            
             var newRack = $scope.createRackObject("Rack1", "Compute", Nodes);
             Racks.push(newRack);
             //$scope.rackList = Racks;
-            console.log(Racks);
+           // console.log(Racks);
             //var newPod = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
             //var newBlueprint = $scope.createBlueprintObject($scope.blueprintName, newPod);   
             //currentBlueprint.pod.racks.push(Racks);
@@ -411,7 +431,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 
         $scope.rackList = Racks;
         currentPod[0].racks = Racks;
-        console.log($scope.rackList);
+        //console.log($scope.rackList);
 
 
     }
@@ -453,7 +473,8 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
             controller: 'popUpaddnewRackController',
             appendClassName: 'ngdialog-custom',
             width: '1200px',
-            height: '650px'
+            height: '650px',
+            showClose: false
         });
         /*ngDialog.open({
 	            scope: $scope,
@@ -476,8 +497,8 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
           return element.podname === $scope.findpodName;
       });
       $scope.check = 1;
-      console.log($scope.findPod);
-      console.log($scope.findPod[0].podjson);
+      //console.log($scope.findPod);
+      //console.log($scope.findPod[0].podjson);
       
       $scope.findpodData = $base64.decode($scope.findPod[0].podjson);
       console.log($scope.podData);
@@ -488,7 +509,8 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
             controller: 'popUpaddnewRackController',
             appendClassName: 'ngdialog-custom',
             width: '1200px',
-            height: '650px'
+            height: '650px',
+            showClose: false
         });
     }
 
@@ -787,7 +809,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
     }*/
     $scope.displayNode = function() {
         $scope.display = "Node";
-        console.log($scope.display);
+        //console.log($scope.display);
     }
     $scope.topodDelete = {};
     $scope.callCheck = function(index) {
@@ -796,16 +818,16 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
            
        
     	
-       console.log($scope.editIndex);
+       //console.log($scope.editIndex);
         var count = 0;
         for (var prop in $scope.topodDelete) {
             if ($scope.topodDelete[prop]) {
                 count = count + 1;
                 $scope.findpodName = $scope.podList[$scope.editIndex].podname;
-                console.log("Hi" +$scope.findpodName);
+                //console.log("Hi" +$scope.findpodName);
             }
         }
-        console.log($scope.topodDelete);
+        //console.log($scope.topodDelete);
         if (count == 0) {
             $scope.podSelect = true;
             $scope.deletePod = true;
@@ -822,7 +844,7 @@ angular.module('PortalManagement').controller('AECSiteBuildController', function
 
     }
     $scope.deletePods = function() {
-        console.log($scope.topodDelete);
+        //console.log($scope.topodDelete);
         for (var prop in $scope.topodDelete) {
             if ($scope.topodDelete[prop])
                 Pods.splice($scope.topodDelete[prop], 1);
@@ -870,12 +892,12 @@ angular.module('PortalManagement').controller('popUpaddNodeController', function
             var currentPod = Pods.filter(function(element) {
                 return element.name === $scope.$parent.podName;
             });
-            console.log(currentPod);
-            console.log($scope.rackName);
+            //console.log(currentPod);
+            //console.log($scope.rackName);
             var currRack = currentPod[0].racks.filter(function(element) {
                 return element.name === $scope.rackName.name;
             });
-            console.log(currRack);
+            //console.log(currRack);
             if (currRack[0].nodes == undefined) {
                 var Nodes = new Array();
                 for (var i = 0; i < 52; i++) {
@@ -884,30 +906,30 @@ angular.module('PortalManagement').controller('popUpaddNodeController', function
                     $scope.nodeList = Nodes;
                 }
                 currRack[0].nodes = Nodes;
-                console.log($scope.nodeType);
+                //console.log($scope.nodeType);
                 var newNode = $scope.$parent.createNodeObject($scope.rackPosition, $scope.nodeName, $scope.nodeType, $scope.softwareList, $scope.hardwareList);
                 currRack[0].nodes[$scope.rackPosition] = newNode;
                 $scope.$parent.rackList = currentPod[0].racks;
-                console.log($scope.$parent.rackList);
+                //console.log($scope.$parent.rackList);
                 $scope.nodeList = currRack[0].nodes;
                 // $scope.showNodeTable = true;
-                console.log(currentPod[0]);
+                //console.log(currentPod[0]);
 
             }
 
             var newNode = $scope.$parent.createNodeObject($scope.rackPosition, $scope.nodeName, $scope.nodeType, $scope.softwareList, $scope.hardwareList);
             currRack[0].nodes[$scope.rackPosition] = newNode;
             $scope.$parent.rackList = currentPod[0].racks;
-            console.log($scope.$parent.rackList);
+            //console.log($scope.$parent.rackList);
             $scope.nodeList = currRack[0].nodes;
             // $scope.showNodeTable = true;
-            console.log(currentPod[0]);
+            //console.log(currentPod[0]);
             //$scope.addNodeMenu = false;
             //$scope.idSelectedVote = null;
         }
     }
     $scope.addHardware = function() {
-        console.log($scope.hardwareType);
+        //console.log($scope.hardwareType);
         var Hardware = new Array();
         if ($scope.hardwareList != undefined) {
             Hardware = $scope.hardwareList;
@@ -917,10 +939,10 @@ angular.module('PortalManagement').controller('popUpaddNodeController', function
         }
 
         $scope.hardwareList = Hardware;
-        console.log($scope.hardwareList);
+        //console.log($scope.hardwareList);
     }
     $scope.addSoftware = function() {
-        console.log($scope.softwareType);
+        //console.log($scope.softwareType);
         var Software = new Array();
         if ($scope.softwareList != undefined) {
             Software = $scope.softwareList;
@@ -930,7 +952,7 @@ angular.module('PortalManagement').controller('popUpaddNodeController', function
         }
 
         $scope.softwareList = Software;
-        console.log($scope.softwareList);
+        //console.log($scope.softwareList);
     }
 
 });
@@ -947,7 +969,7 @@ angular.module('PortalManagement').controller('popUpaddPodController', function(
         var selectedPod = Pods.filter(function(element) {
             return element.name === podName;
         });
-        console.log(selectedRack);
+        //console.log(selectedRack);
         if (selectedPod[0] == undefined) {
             var exampleRack = new Array();
             exampleRack.push(selectedRack);
@@ -955,10 +977,10 @@ angular.module('PortalManagement').controller('popUpaddPodController', function(
             Pods.push(newPod);
 
             $scope.podRackList = exampleRack;
-            console.log(Pods);
+            //console.log(Pods);
         } else {
             var exampleRack = new Array();
-            console.log(selectedPod.racks);
+            //console.log(selectedPod.racks);
 
             if (selectedPod[0].racks.length != undefined) {
                 for (var i = 0; i <= selectedPod[0].racks.length; i++) {
@@ -977,9 +999,9 @@ angular.module('PortalManagement').controller('popUpaddPodController', function(
             }
             selectedPod[0].racks = exampleRack;
             $scope.podRackList = exampleRack;
-            console.log($scope.podRackList);
+            //console.log($scope.podRackList);
         }
-        console.log(Pods);
+        //console.log(Pods);
     }
 
     /*if(selectedPod == undefined){
@@ -1039,14 +1061,14 @@ angular.module('PortalManagement').controller('popUpaddRackController', function
         var newRack = $scope.createRackObject(rackName, rackType, Nodes);
         Racks.push(newRack);
         $scope.rackList = Racks;
-        console.log($scope.rackList);
+        // console.log($scope.rackList);
         $scope.showRackTable = true;
         $scope.rackName = "";
         $scope.rackType = "";
 
     }
     $scope.deleteRack = function() {
-        console.log($scope.toDelete);
+        //console.log($scope.toDelete);
         for (var prop in $scope.toDelete) {
             if ($scope.toDelete[prop])
                 Racks.splice($scope.toDelete[prop], 1);
@@ -1060,39 +1082,39 @@ angular.module('PortalManagement').controller(
     function($scope, $http, ngDialog) {
 
         // query popover
-        $scope.myPopover = {
+$scope.myPopover = {
+                
+		        isOpen: false,
 
-            isOpen: false,
+		        templateUrl: 'myPopoverTemplate.html',
+                
+		        open: function open(type,name) {
+		        	
+		        	if(type == ""){
+		        		/*$scope.myPopover.isOpen = false;
+		        		ngDialog.open({
+		    	            scope: $scope,
+		    	            template: 'addNode',
+		    	            closeByDocument: false,
+		    	            controller: 'popUpaddNodeController',
+		    	            appendClassName: 'ngdialog-custom',
+		    	            width: '850px'
+		    	        });*/
+		        
+		         
+		        }
+		        	else{
+		        		 $scope.myPopover.isOpen = true;
+				          $scope.myPopover.nodeName = name;
+				          $scope.myPopover.nodeType = type;
+		        		
+		        	}
+		        },
 
-            templateUrl: 'myPopoverTemplate.html',
-
-            open: function open(type, name) {
-
-              /*  if (type == "") {
-                    $scope.myPopover.isOpen = false;
-                    ngDialog.open({
-                        scope: $scope,
-                        template: 'addNode',
-                        closeByDocument: false,
-                        controller: 'popUpaddNodeController',
-                        appendClassName: 'ngdialog-custom',
-                        width: '850px'
-                    });
-
-
-                } else {*/
-                    $scope.myPopover.isOpen = true;
-                    $scope.myPopover.nodeName = name;
-                    console.log( $scope.myPopover.nodeName);
-                    $scope.myPopover.nodeType = type;
-
-                //}
-            },
-
-            close: function close() {
-                $scope.myPopover.isOpen = false;
-            }
-        };
+		        close: function close() {
+		          $scope.myPopover.isOpen = false;
+		        }
+		      };
 
     });
 /* $scope.myPopover = {
@@ -1116,8 +1138,80 @@ angular.module('PortalManagement').controller(
 angular.module('PortalManagement').controller(
     'popUpaddnewRackController',
     function($scope, $http, appContext, Upload,$base64) {
+    	$scope.hideTab = true;
+    	$scope.hideUni = true;
+    	$scope.hideRov = false;
+    	$scope.blueprintType = function(){
+    		if($scope.blueprint == "Rover" ){
+    			$scope.hideTab = false;
+    			$scope.hideUni = false;
+    			$scope.hideRov = true;
+    			
+    		}
+    		else{
+    			$scope.hideTab = true;
+    			$scope.hideUni = true;
+    			$scope.hideRov = false;
+    		}
+    	}
+    	$scope.createStorageObject = function(data,journal) {
+            var storage = {
+                data: "",
+                journal: ""
+                
+            };
+            storage.data = data;
+            storage.journal = journal;
+            
+            return storage;
+        }
+    	$scope.createWhitelistObject = function(whitelist) {
+            var whiteList = {
+                address: ""
+               
+                
+            };
+            whiteList.address = whitelist;
+            
+            
+            return whiteList;
+        }
+    	$scope.createNodeObject = function(name,oob,host,storage,pxe,ksn,neutron) {
+            var node = {
+            		name: "",
+                oob: "",
+                host:"",
+                storage:"",
+                pxe:"",
+                ksn:"",
+                neutron:"",
+                
+                	
+                	
+                
+            };
+            node.name =name;
+            node.oob = oob;
+            node.host = host;
+            node.storage = storage;
+            node.pxe = pxe;
+            node.ksn = ksn;
+            node.neutron = neutron;
+            
+            return node;
+        }
+    	$scope.createSlaveObject = function(slaveName) {
+            var slave = {
+               name: ""
+                
+            };
+            slave.name = slaveName;
+          
+            
+            return slave;
+        }
         $scope.selectedTab = 1;
-        console.log(abc);
+        //console.log(abc);
         $scope.checkSelectBox = abc;
         if($scope.checkSelectBox == null){
         	$scope.checkSelectBox = "Select Site";
@@ -1140,7 +1234,7 @@ angular.module('PortalManagement').controller(
                 $scope.siteInfo = $scope.sitesData.filter(function(element){
                 	return element.edgeSiteName === abc;
                 });
-                console.log(abc);
+                //console.log(abc);
                 $scope.siteName = $scope.siteInfo[0];
                
             }, function(error) {
@@ -1160,12 +1254,12 @@ angular.module('PortalManagement').controller(
         	$scope.blueprint= $scope.$parent.findPod[0].site.blueprint;
         	$scope.hostPassword= $scope.$parent.findPod[0].site.edgeSitePwd ;
         	$scope.siteName = $scope.$parent.findPod[0].site;
-        	console.log($scope.$parent.findpodData);
+        	//console.log($scope.$parent.findpodData);
 
             $scope.whiteListData1 =  $scope.podData.sriovnets[0].whitelists;
             $scope.whiteListData2 =  $scope.podData.sriovnets[1].whitelists;
             $scope.slaves =  $scope.podData.networks.slaves;
-            console.log($scope.slaves);
+            //console.log($scope.slaves);
             $scope.log = [];
             $scope.log2 = [];
             $scope.slaves = [];
@@ -1181,7 +1275,7 @@ angular.module('PortalManagement').controller(
          	});
          $scope.log2 = $scope.log2.join('\n');
          $scope.slaves = $scope.slaves.join('\n');
-         console.log($scope.slaves);
+         //console.log($scope.slaves);
          
         }
         else if($scope.check == 0)
@@ -1203,9 +1297,91 @@ angular.module('PortalManagement').controller(
         	$scope.dataVolume = data;
         	$scope.journalVolume = journal;
         }
+         $scope.addStorage = function(){
+        	 var storage = $scope.createStorageObject($scope.dataVolume,$scope.journalVolume);
+        	 $scope.podData.storage.osds.unshift(storage);
+        	 //$scope.podData.storage.osds.unshift($scope.podData.storage.osds[0],storage);
+        	 //console.log($scope.podData);
+         }
+         $scope.deleteStorage = function(index){
+        	 console.log("index" +index);
+        	 $scope.podData.storage.osds.splice(index,1); 
+         }
+         $scope.addSlaves = function(){
+        	 var slave = $scope.createSlaveObject($scope.slaves);
+        	 $scope.podData.networks.slaves.unshift(slave);
+        	 //$scope.podData.storage.osds.unshift($scope.podData.storage.osds[0],storage);
+        	 //console.log($scope.podData);
+         }
+         $scope.addWhiteList = function()
+         {
+        	 var whiteList = $scope.createWhitelistObject($scope.whitelist);
+        	 $scope.podData.sriovnets[0].whitelists.unshift(whiteList); 
+        	 
+         }
+         $scope.deletewhiteList = function(index){
+        	 $scope.podData.sriovnets[0].whitelists.splice(index,1);
+         }
+         $scope.deletesecondwhiteList = function(index){
+        	 $scope.podData.sriovnets[1].whitelists.splice(index,1);
+         }
+         $scope.addsecondWhiteList = function(){
+        	 var whiteList = $scope.createWhitelistObject($scope.secondwhitelist);
+        	 $scope.podData.sriovnets[1].whitelists.unshift(whiteList);
+         }
+         $scope.deleteSlave = function(index){
+        	 $scope.podData.networks.slaves.splice(index,1);
+         }
+         $scope.deleteNode = function(index){
+        	 if($scope.type == "master"){
+        	 $scope.podData.masters.splice(index,1);
+        	 }
+        	 else{
+        		 $scope.podData.workers.splice(index,1); 
+        	 }
+         }
+         $scope.addNode = function(){
+        	 var node = $scope.createNodeObject($scope.nodeName,$scope.nodeIP,$scope.nodeHostIP,$scope.nodeStorageIP,$scope.nodePxEIP,$scope.nodeCalicoIP,$scope.nodeNeutronIP);
+        	 if($scope.type=="master"){
+        		 $scope.podData.masters.unshift(node);
+        		 
+        	 }
+        	 else{
+        		 $scope.podData.workers.unshift(node);
+        	 }
+         }
+         $scope.addUpstreamserver = function(){
+        	 $scope.podData.dns.upstream_servers.unshift($scope.servers);
+        	 
+         }
+         $scope.deleteServer = function(index){
+        	 $scope.podData.dns.upstream_servers.splice(index,1);
+         }
+         $scope.addCidr = function(){
+        	 $scope.podData.networks.ksn.additional_cidrs.unshift($scope.calicoCidr);
+         }
+         $scope.deleteCalico = function(index){
+        	 $scope.podData.networks.ksn.additional_cidrs.splice(index,1) 
+         }
+         $scope.setslaveSelected = function(idSelectedSlave){
+        	 $scope.idSelectedSlave = idSelectedSlave;
+         }
+         $scope.setserverSelected = function(idSelectedServer){
+        	 $scope.idSelectedServer = idSelectedServer;
+         }
+         $scope.setwhitelistSelected = function(idSelectedwhiteList){
+        	 $scope.idSelectedwhiteList = idSelectedwhiteList;
+         }
+         
+         $scope.setsecondwhitelistSelected = function(idSelectedsecondwhitelist){
+        	 $scope.idSelectedsecondwhitelist = idSelectedsecondwhitelist;
+         }
+         $scope.setCalico = function(idSelectedCIDR){
+        	 $scope.idSelectedCIDR =idSelectedCIDR;
+         }
         $scope.setSelected = function(idSelectedVote) {
            $scope.idSelectedVote = idSelectedVote;
-           console.log(idSelectedVote);
+           //console.log(idSelectedVote);
            $scope.selectedValue = $scope.podData.masters.filter(function(element) {
                return element.name === $scope.idSelectedVote ;
            });
@@ -1219,7 +1395,7 @@ angular.module('PortalManagement').controller(
         	   $scope.Type = "master"; 
            }
            $scope.nodeName = $scope.selectedValue[0].name;
-           console.log($scope.nodeName);
+           //console.log($scope.nodeName);
           $scope.nodeIP = $scope.selectedValue[0].oob;
           $scope.nodeHostIP = $scope.selectedValue[0].host;
           $scope.nodeStorageIP = $scope.selectedValue[0].storage;
@@ -1232,7 +1408,7 @@ angular.module('PortalManagement').controller(
        
       
         $scope.uploadFile = function(file) {
-            console.log($scope.siteName);
+            //console.log($scope.siteName);
             file.upload = Upload.upload({
                 url: appContext + '/edgeSites/upload',
                 //url:'http://'+hostUrl+'/AECPortalMgmt/edgeSites/upload',
@@ -1278,10 +1454,10 @@ angular.module('PortalManagement').controller(
             }).then(function(response) {
                 if (response.status == 200) {
                     $scope.podData = response.data;
-                   
+                   if($scope.blueprint == 'Uncicyle'){
                     $scope.whiteListData1 = $scope.podData.sriovnets[0].whitelists;
                     $scope.whiteListData2 = $scope.podData.sriovnets[1].whitelists;
-                    $scope.slaves = $scope.podData.networks.slaves;
+                    $scope.slaves1 = $scope.podData.networks.slaves;
                    
                     $scope.log = [];
                     $scope.log2 = [];
@@ -1298,9 +1474,9 @@ angular.module('PortalManagement').controller(
                  	});
                  $scope.log2 = $scope.log2.join('\n');
                  $scope.slaves = $scope.slaves.join('\n');
-                 console.log($scope.slaves);
+                 //console.log($scope.slaves);
                  $scope.nodeName = $scope.podData.masters[0].name;
-                 console.log($scope.nodeName);
+                 //console.log($scope.nodeName);
                 $scope.nodeIP = $scope.podData.masters[0].oob;
                 $scope.nodeHostIP = $scope.podData.masters[0].host;
                 $scope.nodeStorageIP = $scope.podData.masters[0].storage;
@@ -1310,6 +1486,7 @@ angular.module('PortalManagement').controller(
                 $scope.type= "master";
                 $scope.dataVolume = $scope.podData.storage.osds[0].data;
                 $scope.journalVolume =  $scope.podData.storage.osds[0].journal;
+                   }
                 } else {
 
                 }
@@ -1324,9 +1501,9 @@ angular.module('PortalManagement').controller(
         	//$scope.$parent.podSelect = true;
      	   //$scope.$parent.topodDelete = {};
         	$scope.podData.site_name = $scope.siteName.edgeSiteName;
-        	console.log(JSON.stringify($scope.podData));
+        	//console.log(JSON.stringify($scope.podData));
         	$scope.encodePodJson = $base64.encode(JSON.stringify($scope.podData));
-        	console.log($scope.encodePodJson);
+        	//console.log($scope.encodePodJson);
         	$http({
                 method: 'POST',
                 url: appContext + '/pod/',
