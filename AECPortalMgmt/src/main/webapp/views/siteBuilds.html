@@ -95,12 +95,12 @@
                               <!-- - <td style="width:1%;padding-left:10px;font-size: 15px;">{{array.number}}-</td>-->
                               <td style="padding-left:10px;font-size: 15px;width:99%;"
                                  ng-class="{'color-green': array.type === 'compute','color-blue': array.type === 'control'}">
-                                 <a style="color: black;"ng-controller="myPopoverCtrl" 
+                                 <a style="color: black" ng-controller="myPopoverCtrl" 
                                     popover-template="myPopover.templateUrl" 
                                     popover-title="Node Details" 
                                     popover-placement="right" 
                                     popover-is-open="myPopover.isOpen" 
-                                    ng-click="myPopover.open(array.type,array.name)">{{array.number}}- {{array.type}}</a>
+                                    ng-click="myPopover.open(array.type,array.name)">{{array.number}}- {{array.name}}</a>
                               </td>
                               <!-- <td style="width:49%" ><a  ng-show="hoverEdit" 
                                  ng-click="addNodeTable(array.number,rack.name)" >Add Node</a></td>-->
@@ -318,14 +318,15 @@
          id="myPopoverTemplate.html" style="width:100px">
          <label>Node Name :{{myPopover.nodeName }}</label></br>
          <label>Node Type :{{myPopover.nodeType }}</label></br>
-         <label>xxxxx :xxxxx</label></br
+         
+         <!--<label>xxxxx :xxxxx</label></br
           <label>yyyyy :yyyyy</label></br>
          
          <button class="smallbutton" 
                  ng-click="myPopover.close()">Edit</button>
          <button class="smallbutton" 
-                 ng-click="myPopover.close()">Delete</button>
-         <button class="smallbutton" 
+                 ng-click="myPopover.close()">Delete</button>-->
+         <button class="smallbutton" style="float:right;margin-right:20px;"
                  ng-click="myPopover.close()">Close</button>
          
       </script>
