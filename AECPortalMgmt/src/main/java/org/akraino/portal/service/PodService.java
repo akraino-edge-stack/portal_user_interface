@@ -16,15 +16,10 @@
 package org.akraino.portal.service;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.akraino.portal.dao.PodDAO;
 import org.akraino.portal.entity.Pod;
-import org.akraino.portal.entity.GenericRack;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
