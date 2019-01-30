@@ -24,7 +24,6 @@ import javax.persistence.criteria.Root;
 
 import org.akraino.portal.dao.EdgeSiteDAO;
 import org.akraino.portal.entity.EdgeSite;
-import org.akraino.portal.entity.Pod;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

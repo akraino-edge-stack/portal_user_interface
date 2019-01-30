@@ -16,14 +16,11 @@
 
 package org.akraino.portal.service.test;
 
-import java.io.InputStream;
 import java.util.List;
 
-import org.akraino.portal.common.StringUtil;
 import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.data.ChompObject;
 import org.akraino.portal.service.PodMetricsService;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +28,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import junit.framework.TestCase;
 

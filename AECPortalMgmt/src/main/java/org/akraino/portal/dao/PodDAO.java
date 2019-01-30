@@ -18,7 +18,6 @@ package org.akraino.portal.dao;
 import java.util.List;
 
 import org.akraino.portal.entity.Pod;
-import org.akraino.portal.entity.GenericRack;
 
 public interface PodDAO {
 	

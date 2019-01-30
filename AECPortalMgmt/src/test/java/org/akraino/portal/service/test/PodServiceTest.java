@@ -15,9 +15,7 @@
  */
 package org.akraino.portal.service.test;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.entity.Pod;

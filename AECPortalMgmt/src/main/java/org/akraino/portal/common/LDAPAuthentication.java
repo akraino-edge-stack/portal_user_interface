@@ -47,7 +47,7 @@ public class LDAPAuthentication {
 			String serviceUserDN = "uid=" + user + "," + "ou=users,dc=akraino,dc=org";
 			String serviceUserPassword = pwd;
 			
-			Hashtable env = new Hashtable(11);
+			Hashtable<String, String> env = new Hashtable<String, String>(11);
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, PropertyUtil.getInstance().getProperty("apacheds.ldap.url"));
 			env.put(Context.SECURITY_AUTHENTICATION, "simple");

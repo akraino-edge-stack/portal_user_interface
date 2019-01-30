@@ -72,7 +72,7 @@ public class EdgeSiteYamlTemplateDAOImpl implements EdgeSiteYamlTemplateDAO {
 	public void deleteAll() {
 		// clean all j2 files
 		
-		Query query = getSession().createQuery("delete from EdgeSiteYamlTemplate");
+		Query<?> query = getSession().createQuery("delete from EdgeSiteYamlTemplate");
 		 
 		int result = query.executeUpdate();
 		

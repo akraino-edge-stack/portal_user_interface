@@ -16,7 +16,6 @@
 package org.akraino.portal.service.test;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 
 import org.akraino.portal.config.AppConfig;

@@ -15,15 +15,9 @@
  */
 package org.akraino.portal.service.test;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.util.List;
-
 import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.data.EdgeSiteState;
 import org.akraino.portal.data.TempestRequest;
-import org.akraino.portal.entity.Onap;
-import org.akraino.portal.service.AddOnsService;
 import org.akraino.portal.service.TestETEService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +28,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import junit.framework.TestCase;
-
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,5 +58,4 @@ public class TestETEServiceTest extends TestCase {
 		
 		
 	}
-
 }
