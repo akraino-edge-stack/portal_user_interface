@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2842c658_7319c380",
+        "filename": "AECPortalMgmt/src/main/java/org/akraino/portal/common/LDAPAuthentication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2019-01-30T17:25:25Z",
+      "side": 1,
+      "message": "Fix indentation",
+      "revId": "020b4924f8799b998233045aba756f167736c918",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
