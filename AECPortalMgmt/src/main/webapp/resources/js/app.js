@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var AECPortalController = angular.module('PortalManagement', ['ngDialog', 'ui.router', 'base64','myApp.config','ngStorage','ui.bootstrap', 'ngResource','ngFileUpload']);
+var AECPortalController = angular.module('PortalManagement', ['ngDialog', 'ui.router', 'base64','myApp.config','ngStorage','ui.bootstrap', 'ngResource','ngFileUpload','ngMaterial']);
 AECPortalController.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login')
     $stateProvider
         .state('common', {
             templateUrl: 'views/indexMain.html',
-            abstarct: true
+            abstract: true,
         })
         .state('login', {
             url: "/login",
@@ -48,11 +48,16 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('sitebuild', {
             url: "/sitebuild",
+            params: {
+                siteInfo: null
+              },
             parent: "common",
             views: {
                 "main": {
                     controller: 'AECSiteBuildController',
+                    
                     templateUrl: 'views/siteBuilds.html'
+                    
                 }
             }
         })
@@ -126,6 +131,7 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        
         .state('eteTest', {
             url: "/eteTest",
             parent: "common",
@@ -138,6 +144,9 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('siteBuilds', {
             url: "/siteBuilds",
+            
+            
+            
             parent: "common",
             views: {
                 "main": {
@@ -146,8 +155,68 @@ AECPortalController.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('tools', {
+            url: "/tools",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECtoolsController',
+                    templateUrl: 'views/toolbox.html'
+                }
+            }
+        })
+        .state('newSite', {
+            url: "/newSite",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECnewSiteController',
+                    templateUrl: 'views/newSite.html'
+                }
+            }
+        })
+        .state('eteChomp', {
+            url: "/eteChomp",
+            parent: "common",
+            views: {
+                "main": {
+                    controller: 'AECeteChompController',
+                    templateUrl: 'views/eteChomp.html'
+                }
+            }
+        })
+        
 });
-AECPortalController.controller('login',function($scope, $http, $filter, filterFilter, $state, $base64,$rootScope,$controller,hostUrl) {
+/*var unloadFunction = function( event){
+    event.returnValue = "do you really want to leave this page";
+    alert("unloading");
+};
+window.addEventListener('beforeunload', unloadFunction); */
+
+
+AECPortalController.factory('beforeUnload', function ($rootScope, $window) {
+    // Events are broadcast outside the Scope Lifecycle
+    
+    $window.onbeforeunload = function (e) {
+        var confirmation = {};
+        var event = $rootScope.$broadcast('onBeforeUnload', confirmation);
+        if (event.defaultPrevented) {
+            return confirmation.message;
+        }
+    };
+    
+    $window.onunload = function () {
+        $rootScope.$broadcast('onUnload');
+    };
+    return {};
+})
+.run(function (beforeUnload) {
+    // Must invoke the service at least once
+});
+
+
+
+AECPortalController.controller('login',function($scope, $http, $filter, filterFilter, $state, $base64,$rootScope,$controller,appContext) {
     //$scope.userid;
     //$scope.password;
     //$scope.signIn = "Sign In";
@@ -157,6 +226,10 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
     $scope.passwordVal = '';
     	$rootScope.message = "Please enter credentials";
     $scope.$state = $state;
+    
+    var baseURL = window.location.protocol + '//' + window.location.host;
+    console.log('Base URL for current frame is: ' + baseURL);
+    
     //$controller('commonController', { $scope: $scope }); 
     $scope.goLogin = function() {
         var arr = $scope.passwordVal;
@@ -181,7 +254,8 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
             var auth = $base64.encode(userPwd);
             $http({
                 method: 'POST',
-                url: 'http://'+hostUrl+'/AECPortalMgmt/login',
+                url: appContext+'/login',
+                //url: 'http://'+hostUrl+'/AECPortalMgmt/login',
                 headers: {
                     'Authorization': "Basic " + auth,
                     'Content-Type': "application/json",
@@ -222,10 +296,17 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
         }
     }
     $scope.goLogout = function() {
+    	/*AECPortalController.run(function($rootScope,$templateCache){
+    		$rootScope.$on('$viewContentLoaded',function(){
+    			$templateCache.remove('views/sites.html')
+    			//$window.location.reload();
+    		});
+    		});*/
     	//$scope.tokenId = $rootScope.tokenId;
         $http({
             method: 'POST',
-            url: 'http://'+hostUrl+'/AECPortalMgmt/logout',
+            url: appContext+'/logout',
+            //url: 'http://'+hostUrl+'/AECPortalMgmt/logout',
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",

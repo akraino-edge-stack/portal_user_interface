@@ -1,0 +1,158 @@
+<!--
+   Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+   
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+          http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   -->
+<!DOCTYPE script PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="PortalManagement">
+   <head>
+   <link rel="stylesheet" href="./resources/css/newSite.css">
+   </head>
+   <body ng-controller="AECnewSiteController">
+      <div class="borderFrame" style="margin-top:2%;height:400px;">
+         <div style="background-color:#f8f8f8;height:45px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
+         <div style="float:left">
+            <p style="margin-top:0px;padding-left:5px;padding-top:5px;font-weight: bold;">Sites</p>
+            </div>
+            <div style="margin-left:87%;width:200px:">
+             <a style="cursor: pointer;color:#4d4d4d;" ng-click="refreshRegionChange()"> Refresh 
+                        </a>
+               <button style="margin-left:5px;margin-top:5px;" class="button" ng-click="addNewSite()">New Site</button>
+               </div>
+            
+         </div>
+         <div style="padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:5px;height:300px;">
+            <div>
+               <table cellspacing="0" cellpadding="0">
+                  <tbody>
+                     <tr>
+                        <th style="border-left: none !important;"></th>
+                        <!--  <th>Blueprint name</th>-->
+                        <th>Name</th>
+                        <th>Region</th>
+                        <th>Blueprint</th>
+                        <th>Pod</th>
+                        <th style="border-right: none !important;">Status</th>
+                     </tr>
+                     <tr class="border_bottom" ng-repeat="site in siteList" ng-class="{'selected':$index ==selectedRow}">
+                        <td style="width:8%;padding-left:30px;font-size: 15px;"><input type="checkbox" ng-model="toSiteDelete[$index]" ng-change = "" name="subscriptionSite value="{{site.edgeSiteName}}" /></td>
+                        <!--   <td><a style="padding-left:10px;font-size: 15px;cursor: pointer;width:20%;" ng-click="podSelected(blueprint.name,blueprint.pod)">{{pod.name}}</a></td>-->
+                        <td style="padding-left:10px;font-size: 15px;width:15%;"><a ng-click="showSelectedSite($index)">{{ site.edgeSiteName }}</a></td>
+                        <td style="padding-left:10px;font-size: 15px;width:15%;">{{ site.region.regionName}}</td>
+                        <td style="padding-left:10px;font-size: 15px;width:15%;">{{site.blueprint}}</td>
+                         <td style="padding-left:10px;font-size: 15px;width:15%;">{{site.podName}}</td>
+                        <td style="padding-left:10px;font-size: 15px;width:20%;">
+                        <div>
+                        <div style="float:left">
+                           <div 
+                              ng-if ="site.podName == null">
+                              <button  style="width:200px" ng-click="createPod(site.edgeSiteName)" >Create Pod</button>
+                           </div>
+                           <div ng-if= "((site.podName != null) && ((site.edgeSiteBuildStatus == 'Not Started') || (site.edgeSiteBuildStatus == null)))"><button style="width:200px" ng-click="buildEdgeSite($index)">Build</button></div>
+                           <div ng-if= "site.edgeSiteBuildStatus == 
+                              'In Progress...'"><button class="statusButton" style="width:200px">In Progress</button></div>
+                           <div ng-if= "((site.edgeSiteBuildStatus.includes('problem')) || (site.edgeSiteBuildStatus.includes('error')) || (site.edgeSiteBuildStatus.includes('exception')))"><button  style="width:200px" ng-click="buildEdgeSite($index)">Re-build</button><p style="width:200px;font-size : 12px;color:red;">{{site.edgeSiteBuildStatus}}</p></div>
+                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && (site.edgeSiteDeployCreateTarStatus.toLowerCase() == 'not started'))">
+                              <button  style="width:200px" ng-click="deploySite($index)">Deploy</button>
+                           </div>
+                           <div ng-if = "((site.edgeSiteDeployCreateTarStatus != null) && (site.edgeSiteDeployCreateTarStatus.toLowerCase() != 'not started')) && ((site.edgeSiteDeployGenesisNodeStatus.toLowerCase() == 'not started') || (site.edgeSiteDeployGenesisNodeStatus  == null))"><button class="statusButton" style="width:200px" >Tar File Status {{site.edgeSiteDeployCreateTarStatus.toLowerCase()}}</button>
+                           </div>
+                           <div  ng-if ="((site.edgeSiteDeployGenesisNodeStatus.toLowerCase() != 'not started') && (site.edgeSiteDeployGenesisNodeStatus != null)) && ((site.edgeSiteDeployDeployToolStatus.toLowerCase() == 'not started') || (site.edgeSiteDeployDeployToolStatus  == null)) ">
+                              <button class="statusButton" style="width:200px" >Genesis Node Status {{site.edgeSiteDeployGenesisNodeStatus}}</button>
+                           </div>
+                            <div  ng-if ="((site.edgeSiteDeployDeployToolStatus.toLowerCase() != 'not started') && (site.edgeSiteDeployDeployToolStatus != null)) && ((site.deployStatus.toLowerCase() == 'not started') || (site.deployStatus  == null)) ">
+                              <button class="statusButton" style="width:200px" >Deploy Site Status {{site.edgeSiteDeployDeployToolStatus}}</button>
+                           </div>
+                           <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && ((site.deployStatus.includes('problem')) || (site.deployStatus.includes('error')) || (site.deployStatus.includes('exception'))))">
+                              <button  style="width:200px" ng-click="deploySite($index)" >Re Deploy</button>
+                              <p style="width:200px;font-size:12px;color:red;">{{site.deployStatus}}</p>
+                           </div>
+                            <div  ng-if ="(((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed')) && ((site.deployStatus.toLowerCase() == 'completed') || (site.deployStatus.toLowerCase() == 'success')))">
+                              <button  class="readystatusButton" style="width:200px" >Ready</button>
+                           </div>
+                           </div>
+                           <div style="float:right;">
+                           <a ng-show = "((site.edgeSiteBuildStatus.toLowerCase() == 'success') || (site.edgeSiteBuildStatus.toLowerCase() == 'completed'))"  ng-click="viewYamlBuildFile($index)">
+                     <i >view Yaml
+                     </i>
+                     </a>
+                     </div>
+                     </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div style="float:right;">
+            <!--  <button  class="button" ng-click="addSite()">New Pod</button>-->
+            <button  class="button" ng-click="addSite()" disabled>Decommission Site </button>
+         </div>
+      </div>
+      <div class="borderFrame" style="margin-top:0.5%;height:250px;" ng-show="showSiteDetails">
+         <div style="background-color:#f8f8f8;height:45px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
+            <p style="margin-top:0px;padding-left:5px;padding-top:5px;font-weight: bold;">Site Detail
+            </p>
+         </div>
+         <div>
+            <div style="float:left;width:400px;padding-left:20px;">
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Site Name : </label><label style="color:blue !important">{{selectedSiteName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;">Region :</label><label style="color:blue !important">{{selectedRegionName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >OOB IP Range :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Host IP Range :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of racks :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" ># of Nodes :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Total Power :</label>
+            </div>
+            <div style="float:left;">
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >POD Name :</label><label style="color:blue !important">{{selectedpodName}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;">POD Type :</label><label style="color:blue !important">{{selectedpodType}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right" >Blueprint :</label><label style="color:blue !important">{{selectedBlueprint}}</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Description :</label><br>
+               <label style="font-weight:bold !important;width:100px;text-align:right;" >Racks :</label><br>
+            </div>
+         </div>
+      </div>
+      <script type="text/ng-template" id="createSiteForm">
+         <form class="uploadForm">
+             <h2>Create Site:</h2>
+             <label style="width:30%;"> Site Name: </label>
+             <input type="text" placeholder="" ng-model="siteName" /> <br>
+             <label style="width:30%;"> Region: </label>
+             <select class="exampleTable" style="30px" ng-model="selectedRegion" ng-change="" ng-options="region.regionName for region in $parent.regions">
+                  <option value="">Choose Region
+                  
+                  
+                  </option>
+               </select></br>
+             <label style="width:30%;"> Location: </label>
+           <input type="text" placeholder="" ng-model="siteLocation" /> <br>
+            <!--<label style="width:30%;"> Pod: </label>
+             <select class="exampleTable" style="30px" ng-model="" ng-change="">
+                  <option value="">Choose Pod</option>
+                  <option value="Pod-1">Pod-1</option>
+                  <option value="Pod-2">Pod-2</option>
+               </select>--></br>
+           <button style="margin-left:80%" class="button" ng-click="cancel()">Close</button>
+            <button class="button" ng-click="createSite()">Save</button>
+      </script>
+      <script type="text/ng-template" id="yamltemplateForm">
+      <h1> Build Yaml File:</h1><br>
+       <div style="overflow:auto;height:250px;">
+      <pre>{{$parent.buildyamloutput}}</pre>
+        </div>
+      <button style="margin-left:45%" class="button" ng-click="cancel()">Close</button>
+   </script>
+   </body>
+</html>

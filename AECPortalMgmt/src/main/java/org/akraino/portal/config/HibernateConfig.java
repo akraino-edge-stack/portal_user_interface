@@ -22,7 +22,6 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -54,24 +53,23 @@ public class HibernateConfig {
 	@Autowired
 	@Bean(name = "transactionManager")
 	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
 
-		return transactionManager;
+		return new HibernateTransactionManager(sessionFactory);
+
 	}
 
 	private Properties hibernateProperties() {
-		return new Properties() {
-
-			{
-				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-				setProperty("hibernate.c3p0.min_size", env.getProperty("hibernate.c3p0.min_size"));
-				setProperty("hibernate.c3p0.max_size", env.getProperty("hibernate.c3p0.max_size"));
-				setProperty("hibernate.c3p0.max_statements", env.getProperty("hibernate.c3p0.max_statements"));
-				setProperty("hibernate.c3p0.acquire_increment", env.getProperty("hibernate.c3p0.acquire_increment"));
-				setProperty("hibernate.jdbc.use_streams_for_binary", env.getProperty("hibernate.jdbc.use_streams_for_binary"));
-			}
-		};
+		
+		Properties properties = new Properties();
+		
+		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		properties.put("hibernate.c3p0.min_size", env.getProperty("hibernate.c3p0.min_size"));
+		properties.put("hibernate.c3p0.max_size", env.getProperty("hibernate.c3p0.max_size"));
+		properties.put("hibernate.c3p0.max_statements", env.getProperty("hibernate.c3p0.max_statements"));
+		properties.put("hibernate.c3p0.acquire_increment", env.getProperty("hibernate.c3p0.acquire_increment"));
+		properties.put("hibernate.jdbc.use_streams_for_binary", env.getProperty("hibernate.jdbc.use_streams_for_binary"));
+	
+		return properties;
 	}
-
 }

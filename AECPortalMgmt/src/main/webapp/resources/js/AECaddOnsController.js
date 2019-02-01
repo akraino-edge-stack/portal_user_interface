@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-angular.module('PortalManagement').controller('AECaddOnsController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,hostUrl,camundaUrl) {
+angular.module('PortalManagement').controller('AECaddOnsController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,appContext) {
     $scope.regionHeader = 'Region';
     $scope.SiteHeader = 'Sites';
     $scope.Action = 'Action';
@@ -34,6 +34,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         }
         return haystack.ignoreCase().toindexOf(needle.ignoreCase()) !== -1;
     }
+    
     $scope.search = function() {
         $scope.filteredItems = $filter('filter')($scope.addOnsites, function(item) {
             for (var attr in item) {
@@ -97,28 +98,97 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     var alladdOnsSitesDisplay = function() {
         $http({
             method: 'GET',
-            url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
+            url: appContext+'/addon/onap/',
+            //url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
                 'tokenId' : $scope.tokenId
             }
         }).then(function(response) {
-            $scope.addOnsites = response.data;
+            $scope.addOnsites = response.data.sort(function(a, b){
+    		    //note the minus before -cmp, for descending order
+    		    return $scope.cmp( 
+    		        [$scope.cmp(a.edgeSite.region.regionName, b.edgeSite.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+    		        [$scope.cmp(b.edgeSite.region.regionName, a.edgeSite.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+    		    );
+    		});
+            /*angular.forEach($scope.addOnsites,function(item){
+            	item.inputFile = atob(item.inputFile);
+            	
+            })*/
+            console.log($scope.addOnsites);
             $scope.search();
             $scope.showaddOnSitesTable = true;
         }, function(error) {});
     }
     alladdOnsSitesDisplay();
     $scope.refreshRegionChange = function() {
+    	$scope.selectedaddOnRegion = "";
     	$scope.addOnselection = false;
+    	$scope.siteIndex = "";
         alladdOnsSitesDisplay();
+        /*$http({
+            method: 'GET',
+            url: 'http://'+hostUrl+'/AECPortalMgmt/addon/onap/',
+            headers: {
+                'Content-Type': "application/json",
+                'Accept': "application/json",
+                'tokenId' : $scope.tokenId
+            }
+        }).then(function(response) {
+            $scope.onapSites = response.data;
+            angular.forEach($scope.onapSites,function(item){
+            	item.inputFile = atob(item.inputFile);
+            	if(item.inputFile != null){
+            		item.inputFile = "Complete";
+            	}
+            	
+            })
+            console.log($scope.onapSites);
+            console.log($scope.onapSites);
+            $scope.addOnsites = angular.merge({},$scope.addOnsites,$scope.onapSites);
+            console.log($scope.addOnsites);
+            $scope.showaddOnSitesTable = true;
+            $scope.search();
+        }, function(error) {
+        	$scope.errorHandle(error);
+        });*/
     }
     $scope.selectedaddOnRegionChange = function() {
         if ($scope.selectedaddOnRegion == null) {
             alladdOnsSitesDisplay();
         } else {
-            $http({
+        	
+        	 $http({
+                 method: 'GET',
+                 url: appContext+'/addon/onap/',
+                 //url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/0',
+                 headers: {
+                     'Content-Type': "application/json",
+                     'Accept': "application/json",
+                     'tokenId' : $scope.tokenId
+                 }
+             }).then(function(response) {
+                 $scope.addOnsites =response.data.sort(function(a, b){
+         		    //note the minus before -cmp, for descending order
+         		    return $scope.cmp( 
+         		        [$scope.cmp(a.edgeSite.region.regionName, b.edgeSite.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+         		        [$scope.cmp(b.edgeSite.region.regionName, a.edgeSite.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+         		    );
+         		});
+                 /*angular.forEach($scope.addOnsites,function(item){
+                 	item.inputFile = atob(item.inputFile);
+                 	
+                 })*/
+                 var abc =$scope.addOnsites.filter(function(d) { return d.edgeSite.region.regionId === $scope.selectedaddOnRegion.regionId });
+               	 $scope.addOnsites = abc;
+                 console.log($scope.addOnsites);
+                 $scope.search();
+                 $scope.showaddOnSitesTable = true;
+             }, function(error) {});
+        	
+            /*$http({
                 method: 'GET',
                 url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/' + $scope.selectedaddOnRegion.regionId,
                 headers: {
@@ -133,9 +203,13 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
             }, function(error) {
             	$scope.errorHandle(error);
             });
-        }
+        }*/
+        } 
     }
     $scope.addOnUpdate = function(index) {
+    	for(var i =0;i< $scope.addOnsites.length; i++){
+        	$scope.addOnsites[i].addOnselection = false;
+        	}
     	if($scope.itemsPerPage > 6){
     	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
     	        console.log($scope.rowIndex);
@@ -167,16 +241,16 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         //console.log();
     }
     $scope.installOnap = function(siteIndex) {
-    	$scope.addOnsites[siteIndex].onapStatus = 'In Progress...';
+    	$scope.addOnsites[siteIndex].edgeSite.onapStatus = 'In Progress...';
     	
         $http({
             method: 'POST',
-            url: 'http://'+camundaUrl+'/onap/',
+            url: appContext+'/addon/onap',
             data: {
-            	 "sitename": $scope.addOnsites[siteIndex].edgeSiteName,
-                "remoteserver": $scope.addOnsites[siteIndex].edgeSiteIP,
-                "username": $scope.addOnsites[siteIndex].edgeSiteUser,
-                "password": $scope.addOnsites[siteIndex].edgeSitePwd,
+            	 "sitename": $scope.addOnsites[siteIndex].edgeSite.edgeSiteName,
+                "remoteserver": $scope.addOnsites[siteIndex].edgeSite.edgeSiteIP,
+                "username": $scope.addOnsites[siteIndex].edgeSite.edgeSiteUser,
+                "password": $scope.addOnsites[siteIndex].edgeSite.edgeSitePwd,
                 "portnumber": 22,
                 "srcdir": "/opt/akraino/onap/", 
                 "destdir": "/opt",
@@ -185,7 +259,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
                 "noofiterations": 0,
                 "waittime": 15,
                 "filetrasferscript": "/opt/akraino/onap/mv.sh", 
-                "filetransferparams": $scope.addOnsites[siteIndex].edgeSiteIP,
+                "filetransferparams": $scope.addOnsites[siteIndex].edgeSite.edgeSiteIP,
             },
             headers: {
                 'Content-Type': "application/json",
@@ -195,9 +269,9 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         	console.log(response.status);
         	if (response.status == 200) {
           
-            $http({
+            /*$http({
                 method: 'POST',
-                url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/status',
+                url: appContext+'edgeSites/status',
                 data:{
                 "siteName": $scope.addOnsites[siteIndex].edgeSiteName,
                 "onapStatus":"In Progress" 
@@ -212,7 +286,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
             	
             }, function(error) {
             	$scope.errorHandle(error);
-            });
+            });*/
         	}
         	else{
         		$scope.addOnsites[siteIndex].onapStatus = response.data.message;
@@ -227,14 +301,12 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
     	        console.log($scope.rowIndex);
     	        index  = $scope.rowIndex;
     	    	}
-    	    	else{
-    	    		index = index;
-    	   }
+    	    	
         $scope.siteName = $scope.addOnsites[index].edgeSiteName;
         $scope.readOnapData = "";
         $http({
             method: 'GET',
-            url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/onap/' + $scope.siteName,
+            url: appContext+'/edgeSites/onap/' + $scope.siteName,
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
@@ -254,9 +326,43 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
             width: '800px'
         });
     }
+    $scope.viewInputfile = function(siteName){
+    	 $http({
+    	method: 'GET',
+    	url: appContext+'/addon/onap/' +siteName,
+        //url: 'http://'+hostUrl+'/AECPortalMgmt/addon/onap/' +siteName,
+        headers: {
+            'Content-Type': "application/json",
+            'Accept': "application/json",
+            'tokenId' : $scope.tokenId
+        }
+    }).then(function(response) {
+        $scope.Response = response.data;
+        console.log($scope.Response);
+        $scope.inputFile = atob($scope.Response.inputFile);
+        ngDialog.open({
+            scope: $scope,
+            template: 'onapinputtemplateForm',
+            closeByDocument: false,
+            controller: 'OnapPopUpinputFileController',
+            appendClassName: 'ngdialog-custom',
+            width: '800px',
+            height:'450px'
+            
+            
+            
+        });
+       
+       
+    }, function(error) {
+    	$scope.errorHandle(error);
+    });
+    	
+    }
     $http({
         method: 'GET',
-        url: 'http://'+hostUrl+'/AECPortalMgmt/regions/',
+        url: appContext+'/regions/',
+        //url: 'http://'+hostUrl+'/AECPortalMgmt/regions/',
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json",
@@ -264,12 +370,12 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
         }
     }).then(function(response) {
         $scope.addOnregions = response.data;
-       
+        
     }, function(error) {
     	$scope.errorHandle(error);
     });
 });
-angular.module('PortalManagement').controller('PopUpController', function($scope,$http, ngDialog,hostUrl) {
+angular.module('PortalManagement').controller('PopUpController', function($scope,$http, ngDialog,appContext) {
 //scope.siteName = $scope.addOnsites[index].edgeSiteName;
 	//nsole.log("hi" +$scope.siteName);
     $scope.cancel = function() {
@@ -281,7 +387,8 @@ angular.module('PortalManagement').controller('PopUpController', function($scope
             $scope.closeThisDialog('cancel');
             $http({
                 method: 'POST',
-                url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/onap/' + $scope.siteName,
+                url: appContext+'/edgeSites/onap/' + $scope.siteName,
+                //url: 'http://'+hostUrl+'/AECPortalMgmt/edgeSites/onap/' + $scope.siteName,
                 data: {
                 	"siteName": $scope.siteName,
                 		"publicNetName":$scope.netName,
@@ -308,15 +415,16 @@ angular.module('PortalManagement').controller('PopUpController', function($scope
         }
     };
 });
-angular.module('PortalManagement').controller('addOnUploadController', function($scope,$http, ngDialog,$localStorage,hostUrl,Upload) {
+angular.module('PortalManagement').controller('addOnUploadController', function($scope,$http, ngDialog,$localStorage,appContext,Upload) {
 	$scope.addOnUpload = function(index,file){
 				
 		file.upload = Upload.upload({
-			url:'http://'+hostUrl+'/AECPortalMgmt/addon/onap/upload',
+			url:appContext+'/addon/onap/upload',
+			//url:'http://'+hostUrl+'/AECPortalMgmt/addon/onap/upload',
 			method:'POST',
 			file:file,
 			data:{
-				"siteName" :$scope.addOnsites[index].edgeSiteName
+				"siteName" :$scope.addOnsites[index].edgeSite.edgeSiteName
                 
               
             },
@@ -340,4 +448,9 @@ angular.module('PortalManagement').controller('addOnUploadController', function(
         $scope.closeThisDialog();
     };
 
+});
+angular.module('PortalManagement').controller('OnapPopUpinputFileController', function($scope,$http, ngDialog) {
+	$scope.cancel = function() {
+        $scope.closeThisDialog();
+    };
 });

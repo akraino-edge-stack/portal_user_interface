@@ -19,7 +19,7 @@
  };
  var pods = new Array();
 
- angular.module('PortalManagement').controller('AECPodsController', function($scope, $http, $sce, ngDialog, $filter, $rootScope, $controller, hostUrl, camundaUrl,$timeout) {
+ angular.module('PortalManagement').controller('AECPodsController', function($scope, $http, $sce, ngDialog, $filter, $rootScope, $controller, appContext,$timeout) {
          $scope.rackTableShow = false;
          $scope.textInputValidation = true;
          $scope.showPodDetails = false;
@@ -31,6 +31,7 @@
          $scope.deleteRackButton = true;
          $scope.readOnlyPod = false;
          $scope.readOnlyRack = false;
+         $scope.showPod = true;
          $scope.tokenId = localStorage.getItem("tokenId");
          $controller('commonController', { $scope: $scope }); 
 
@@ -77,10 +78,7 @@
                  $scope.showRackTable($scope.podName);
                  $scope.showSaveButton = true;
                  //Find pod by name
-             } else {
-
-             }
-
+             } 
          }
          $scope.update = function(podIndex) {
              //console.log(hostIndex)
@@ -103,7 +101,7 @@
         	 $scope.rackSelection = false;
         	 $scope.editRackButton = true;
              $scope.deleteRackButton = true;
-             var h = pods.length;
+            // var h = pods.length;
              console.log($scope.rackName + $scope.podName);
              for (var i = 0; i < pods.length; i++) {
             	 if(pods[i].podname == $scope.podName){
@@ -131,7 +129,7 @@
         	 $scope.showProcessMessage = true;
         	 $scope.editRackButton = true;
              $scope.deleteRackButton = true;
-             var h = pods.length;
+            // var h = pods.length;
              for (var i = 0; i < pods.length; i++) {
 
                 if(pods[i].podname == $scope.podName){
@@ -163,6 +161,7 @@
 
          }
              $scope.editPOD = function() {
+            	 $scope.showPod = false;
             	 $scope.podHeader = "Edit Pod";
             	 $scope.editPodButton = true;
                  $scope.deletePodButton = true;
@@ -170,6 +169,7 @@
                  $scope.showPodDetails = false;
                  //$scope.podName = $scope.podData[$scope.podIndex].name;
                  console.log($scope.podName);
+                 $scope.check = 1;
                  $scope.showRackTable($scope.podName);
                  $scope.showSaveButton = true;
                  $scope.readOnlyPod = true;
@@ -192,6 +192,35 @@
 
 
                       }
+                 var savePodDelete = JSON.stringify(pods);
+            	 //$scope.savePods = JSON.parse($scope.savePod);
+            	 $scope.savePod = savePodDelete.substring(1,savePodDelete.length-1);
+                 $http({
+                     method: 'PUT',
+                     url :appContext+'/pod/',
+                     //url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
+                     //dataType: 'json',
+                     data: $scope.savePod,
+                     headers: {
+                        'Content-Type': "application/json",
+                        'Accept': "application/json",
+                         'tokenId' : $scope.tokenId
+                     }
+                 }).then(function(response) {
+                     console.log(response.data);
+                     $scope.processMessage = "POD has been saved successfully.";
+                     console.log( $scope.processMessage);
+                     $scope.showProcessMessage = true;
+                     $timeout(function() {
+                    	 $scope.showProcessMessage = false;
+                         
+                      }, 5000);
+
+                 }, function(error) {
+                 	
+                 	
+                 });
+                 console.log(pods);
                  $scope.processPodMessage = "POD has been deleted,successfully.";
                  console.log( $scope.processPodMessage);
                  $scope.showProcessPodMessage = true;
@@ -207,13 +236,14 @@
                  $scope.textInputValidation = false;
                  $scope.rackName = null;
                  $scope.rackType = null;
+                 console.log(podName);
                  $scope.name = podName;
                  var currPodlist = pods.find(function(element) {
                      return element.podname === $scope.name;
                  });
                  $scope.parcels = currPodlist.racks;
                  $scope.totalRacks = $scope.parcels.length;
-                 $scope.rackPerPage = 1;
+                 $scope.rackPerPage = 6;
                  $scope.rackPaginate = function(value) {
                      var begin, end, index;
                      begin = ($scope.currentrackPage - 1) * $scope.rackPerPage;
@@ -235,6 +265,7 @@
                  $scope.clickedPodName = $scope.showPodName;
              }
              $scope.createPOD = function() {
+            	 $scope.showPod = false;
             	 $scope.podHeader = "Create Pod";
             	 $scope.readOnlyPod = false;
                  $scope.readOnlyRack = false;
@@ -243,6 +274,7 @@
                  $scope.rackName = null;
                  $scope.rackType = null;
                  $scope.podName = null;
+                 $scope.check = 0;
              }
              $scope.cancelAll = function() {
                  $scope.showCreatePods = false;
@@ -251,14 +283,17 @@
                  $scope.rackType ="";
                  $scope.rackName = "";
                  $scope.selection = false;
+                 $scope.rackSelection = false;
                  $scope.editPodButton = true;
                  $scope.deletePodButton = true;
                  $scope.showSaveButton = false;
+                 $scope.showPod = true;
 
              }
              $http({
                  method: 'GET',
-                 url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
+                 url: appContext+ '/pod/',
+                 //url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
                  headers: {
                      'Content-Type': "application/json",
                      'Accept': "application/json",
@@ -267,10 +302,10 @@
                  }
              }).then(function(response) {
                  $scope.podData = response.data;
-                 //pods = $scope.podData;
+                 pods = $scope.podData;
                  $scope.totalItems = $scope.podData.length;
-                 $scope.numPerPage = 1;
-                 console.log("hi" + $scope.podData);
+                 $scope.numPerPage = 6;
+                 console.log($scope.podData);
              }, function(error) {
                  $scope.errorHandle(error);
              });
@@ -283,19 +318,20 @@
                  return (begin <= index && index < end);
              };
              $scope.saveRacks = function(){
+            	 $scope.showPod = true;
+            	 $scope.showCreatePods = false;
             	 console.log("Save Pod");
-            	 $scope.savePod = JSON.stringify(pods);
+            	 var savePods = JSON.stringify(pods);
             	 //$scope.savePods = JSON.parse($scope.savePod);
-            	 console.log( $scope.savePod);
-            	 
+            	 $scope.savePod = savePods.substring(1,savePods.length-1);
+            	 console.log($scope.savePod);
+            	 if($scope.check == 1){
             	 $http({
-                     method: 'POST',
-                     url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
-                     dataType: 'json',
-                     data: {
-                         pod: pods
-                         
-                     },
+                     method: 'PUT',
+                     url: appContext+'/pod/',
+                    // url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
+                     //dataType: 'json',
+                     data: $scope.savePod,
                      headers: {
                         'Content-Type': "application/json",
                         'Accept': "application/json",
@@ -317,5 +353,33 @@
                  });
              }
              
+             else{
+            	 $http({
+                     method: 'POST',
+                     url: appContext+'/pod/',
+                     //url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
+                     //dataType: 'json',
+                     data: $scope.savePod,
+                     headers: {
+                        'Content-Type': "application/json",
+                        'Accept': "application/json",
+                         'tokenId' : $scope.tokenId
+                     }
+                 }).then(function(response) {
+                     console.log(response.data);
+                     $scope.processMessage = "POD has been saved successfully.";
+                     console.log( $scope.processMessage);
+                     $scope.showProcessMessage = true;
+                     $timeout(function() {
+                    	 $scope.showProcessMessage = false;
+                         
+                      }, 5000);
+
+                 }, function(error) {
+                 	
+                 	
+                 });
+             }
+             }
 
          });

@@ -16,11 +16,10 @@
 
 package org.akraino.portal.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.akraino.portal.service.AkrainoSiteService;
+import org.akraino.portal.entity.Region;
 import org.akraino.portal.service.RegionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +40,25 @@ public class RegionController {
 	private static final Logger logger = Logger.getLogger(RegionController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
-	public ResponseEntity<List<org.akraino.portal.entity.Region>> getAllRegions() {
+	public ResponseEntity<List<Region>> getAllRegions() {
 		
-		//List <org.akraino.portal.data.Region> list = new ArrayList<org.akraino.portal.data.Region> ();
-		List <org.akraino.portal.entity.Region> list = new ArrayList<org.akraino.portal.entity.Region> ();
-		logger.error("test error msg");
-		AkrainoSiteService akraionSiteService = new AkrainoSiteService();
+		logger.info("getAllRegions - start");
 		
+		List <Region> list = new ArrayList<> ();
+
 		try {
-			//list = akraionSiteService.getRegions(); //--> working with sql
 			
 			list = regionService.listAllRegions();
 			
+			logger.debug("regions list size:"+ list.size());
+			
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("Error retrieving regions", e);
 		}
 		
-		return new ResponseEntity<List<org.akraino.portal.entity.Region>>(list, HttpStatus.OK);
+		logger.info("getAllRegions - end");
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 }

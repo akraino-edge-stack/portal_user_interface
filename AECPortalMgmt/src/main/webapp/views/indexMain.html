@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
+
    
-   <div class="header" style="width: 100%" style="padding-top:5px; padding-bottom:5px;background-color:#000000;">
+  
+
+
+<div>
+<div class="header" style="width: 100%" style="padding-top:5px; padding-bottom:5px;background-color:#000000;">
       <a href="https://www.akraino.org/">
       <img src="./resources/images/logo_akraino_edge_stack.png" alt="Akraino" width="150" height="30" border="0">
       </a>
@@ -26,14 +30,12 @@ limitations under the License.
          <a href="#" style="font-color:#FFFFFF" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-click="goLogout()" >Sign Out</a>
       </div>
    </div>
-</div>
-<div>
    <div id="wrapper" style="margin-top:0.1px;">
       <div id="sidebar-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-cloak>
          <ul class="sidebar-nav">
            
             <li>
-               <a ng-class ="{example : $state.current.name == 'sites'}" ui-sref="sites">
+               <a ng-class="{example : $state.current.name == 'sites'}" ui-sref="sites">
                <i class="fa fa-home"></i> <span>Akraino Sites</span>
                </a>
             </li>
@@ -42,34 +44,34 @@ limitations under the License.
                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>Akraino Blueprint<span class="caret">
                </span></a>
                <ul id="configuracoes" class="collapse">
-               <li>
-                     <a  ng-class ="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
+              <!--   <li>
+                     <a  ng-class="{example : $state.current.name == 'pods'}" ui-sref="pods"><i class="fa fa-users"></i>
                      PODs</a>
-                  </li>
+                  </li>-->
                 <li>
-                     <a  ng-class ="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
-                     Blueprints</a>
+                     <a  ng-class="{example : $state.current.name == 'sitebuild'}" ui-sref="sitebuild"><i class="fa fa-users"></i>
+                    PODs</a>
                   </li>
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'hardware'}" ui-sref="hardware"><i class="fa fa-users"></i>
                      Hardware</a>
                   </li>
                   
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'software'}" ui-sref="software"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'software'}" ui-sref="software"><i class="fa fa-users"></i>
                      Software</a>
                   </li>
-                  <li>
+                  <!--  <li>
                      <a ng-class ="{example : $state.current.name == 'config'}" ui-sref="config"><i class="fa fa-users"></i>
                      Common Config</a>
-                  </li>
+                  </li>-->
                   <li>
-                     <a ng-class ="{example : $state.current.name == 'addons'}" ui-sref="addons"><i class="fa fa-users"></i>
+                     <a ng-class="{example : $state.current.name == 'addons'}" ui-sref="addons"><i class="fa fa-users"></i>
                      Add - Ons</a>
                   </li>
                </ul>
             </li>
-            <li class"dropdown">
+            <!--  <li class"dropdown">
                <a class="dropdown-toggle" data-toggle="collapse" data-target="#configuracoes1" role="button"
                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>Akraino Chest<span class="caret">
                </span></a>
@@ -87,26 +89,40 @@ limitations under the License.
                      ETE Security Tools</a>
                   </li>
                </ul>
-            </li>
-            <li>
+            </li>-->
+          <!--   <li>
                <a ng-class ="{example : $state.current.name == 'Inv'}" style="padding-left:3px;"ui-sref="Inv">
                <i class="fa fa-info"></i> <span>Inventory</span>
                </a>
-            </li>
+            </li>-->
+             <li class"dropdown">
+               <a class="dropdown-toggle" data-toggle="collapse" data-target="#configuracoes1" role="button"
+                  aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>ETE Testing<span class="caret">
+               </span></a>
+               <ul id="configuracoes1" class="collapse">
             <li>
-               <a ng-class ="{example : $state.current.name == 'eteTest'}" ui-sref="eteTest">
-               <i class="fa fa-check"></i><span>ETE Testing</span>
+            
+               <a ng-class="{example : $state.current.name == 'eteTest'}" ui-sref="eteTest">
+               <i class="fa fa-check"></i><span>ETE Testing(Tempest)</span>
+               </a>
+            </li>
+             <li>
+            
+               <a ng-class="{example : $state.current.name == 'eteChomp'}" ui-sref="eteChomp">
+               <i class="fa fa-check"></i><span>Chomp</span>
                </a>
             </li>
          </ul>
+         </li>
          
       </div>
       <!-- /#sidebar-wrapper -->
       <!-- Page Content -->
-      <div id="page-content-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" ng-cloak>
+      <div id="page-content-wrapper" ng-show="$state.current.name == 'undefined' || $state.current.name != 'login'" style="overflow:auto;" ng-cloak>
+      
          <div class="container-fluid">
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col-lg-12" style="padding-right:0px;">
                   <div id="wrapper">
                      <!-- Carrega todas as páginas-->
                      <div ui-view="main"></div>

@@ -22,18 +22,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 @Entity
-@Table(name="akraino.pod")
+@Table(name = "akraino.pod")
 public class Pod implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -41,40 +36,81 @@ public class Pod implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pod_id_generator")
-	@SequenceGenerator(name="pod_id_generator", sequenceName = "akraino.seq_pod", allocationSize=1)
-	@Column(name="pod_id")
-	private Long podId; 
-	
+	@SequenceGenerator(name = "pod_id_generator", sequenceName = "akraino.seq_pod", allocationSize = 1)
+	@Column(name = "pod_id")
+	private Integer podId;
+
 	@Column(name = "pod_name")
 	private String podname;
 	
-    @OneToMany(mappedBy = "pod")
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @OrderColumn(name="rack_id")
-	private Rack[] racks;
-    
-	public Long getPodId() {
-		return podId;
-	}
+	@Column(name = "pod_type")
+	private String podType;
+	
+	@Column(name="pod_json")
+	private byte[] podjson;
+	
+	@Column(name="site_id")
+	private Integer siteId;
 
-	public void setPodId(Long podId) {
-		this.podId = podId;
-	}
+/*	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
+	        orphanRemoval = true)
+	@JoinColumn(name = "pod_id")
+	private Set<GenericRack> racks;*/
 
 	public String getPodname() {
 		return podname;
+	}
+
+	public Integer getPodId() {
+		return podId;
+	}
+
+	public void setPodId(Integer podId) {
+		this.podId = podId;
 	}
 
 	public void setPodname(String podname) {
 		this.podname = podname;
 	}
 
-	public Rack[] getRacks() {
+	public String getPodType() {
+		return podType;
+	}
+
+	public void setPodType(String podType) {
+		this.podType = podType;
+	}
+
+	public byte[] getPodjson() {
+		return podjson;
+	}
+
+	public void setPodjson(byte[] podjson) {
+		this.podjson = podjson;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Integer getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+	
+/*	public Set<GenericRack> getRacks() {
 		return racks;
 	}
 
-	public void setRacks(Rack[] racks) {
+	public void setRacks(Set<GenericRack> racks) {
 		this.racks = racks;
 	}
 	
+	public void addRack(GenericRack rack) {
+		this.getRacks().add(rack);
+	}*/
+
 }

@@ -18,14 +18,19 @@ package org.akraino.portal.dao;
 import java.util.List;
 
 import org.akraino.portal.entity.Pod;
-import org.akraino.portal.entity.Rack;
 
 public interface PodDAO {
 	
-	public void save(Pod pod);
+	public void saveOrUpdate(Pod pod);
 	
-	public void save(Rack rack);
+	public void merge(Pod pod);
 	
 	public List<Pod> getPods();
+	
+	public Pod getPod(Integer podId);
+	
+	public void deletePod(Pod pod);
+	
+	public Pod getPodBySiteId(int siteId);
 	
 }

@@ -17,62 +17,12 @@ limitations under the License.
 <html ng-app="PortalManagement">
 
 <head>
-<style>
-.borderFrame{
-	margin-top:2px;
-	border:4px solid #cdcdcd;
-	/*border-radius: 0.1px;
-	/*-moz-border-radius: 0.1px;
-	-webkit-border-radius:0.1px;*/
-}
-.pagination > li > a
-{
-    background-color: white;
-    color: #4d4d4d;;
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover
-{
-    color: #4d4d4d;;
-    background-color: #eee;
-    border-color: #ddd;
-}
-
-.pagination > .active > a
-{
-    color: white;
-    background-color: #4d4d4d;;
-    border: solid 1px #4d4d4d;;
-}
-
-.pagination > .active > a:hover
-{
-    background-color: #4d4d4d;;
-    border: solid 1px #4d4d4d;;
-}
-.pagination > .active > a:active
-{
-    background-color: #4d4d4d;;
-    border: solid 1px #4d4d4d;;
-}
-input[type=text], select, textarea {
-     width: 40%;
-     padding: 3px;
-     border: 0.5px solid #ccc;
-     border-radius: 4px;
-     box-sizing: border-box;
-     margin-top: 3px;
-     margin-bottom: 3px;
-     resize: vertical;
-}
-</style>
+<link rel="stylesheet" href="./resources/css/createPod.css">
 </head>
 
 <body ng-controller="AECPodsController">
     <div id="akrainopodscontent" style="padding-left:20px;padding-right:20px">
+       <div ng-show="showPod">
         <div style="width:70%;">
           <div style="float:left;">
             <h2>POD List</h2>
@@ -106,7 +56,7 @@ input[type=text], select, textarea {
                      <input   type="radio"
                         ng-model="$parent.selection"
                         name="subscriptionPod"
-                        value="{{pod.name}}" ng-click="update(pod.podname)"/>
+                        value="{{pod.podname}}" ng-click="update(pod.podname)"/>
                      <form>
                   </td>	
                 <td style="padding-left:10px;font-size: 15px;">{{$index +1}}</td>
@@ -119,13 +69,16 @@ input[type=text], select, textarea {
         </table>
         <pagination total-items="totalItems" ng-model="currentPage"  
              max-size="5" boundary-links="true"  
-             items-per-page="numPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+             items-per-page="numPerPage" class="pagination-sm" style="float:right;background:transparent;" previous-text="&lsaquo;"
+    next-text="&rsaquo;"
+    first-text="&laquo;"
+    last-text="&raquo;">  
        </pagination>
-        
-         </div><br></br><br>
+       </div> 
+         </div><br>
         <!--ng-if="showCreatePods"--->
-        <div ng-show="showCreatePods" style="width:70%;">
-        <div class="borderFrame">
+        <div ng-show="showCreatePods" style="width:50%;">
+        <!--<div class="borderFrame">--->
          <div id="createPocontent" style="padding-left:5px;padding-right:5px;padding-bottom:5px;">
            <div ng-show="showSaveButton" style="float:right" >
            
@@ -157,13 +110,13 @@ input[type=text], select, textarea {
             <form class="podForm">
                 <label style="width:200px">POD name:</label>
                 <input type="text" style="width:300px;height:40px;" placeholder="Enter POD Name" ng-model="podName" ng-readonly="readOnlyPod" required/>
-                </br>
+                <br>
                 <label style="width:200px">Rack name:</label>
                 <input type="text" style="width:300px;height:40px;" placeholder="Enter Rack Name" ng-readonly = "readOnlyRack" ng-model="rackName" />
-                </br>
+                <br>
                 <label style="width:200px">Rack personality:</label>
                 <select style="height:40px;width:300px;" class="exampleTable" ng-model="rackType" />
-                <option value="" slected>Choose personality</option>
+                <option value="" selected>Choose personality</option>
                 <option value="control">Control</option>
 
                 <option value="compute">Compute</option>
@@ -172,8 +125,8 @@ input[type=text], select, textarea {
                 <option value="hybrid">Hybrid</option>
 
                 </select>
-                </br>
-                </br>
+                <br>
+                <br>
                 
                 <button class="refreshbutton" style="margin-left:5px;" ng-click="addRacks()">Add Rack</button>
                 <button class="refreshbutton" style="margin-left:5px;" ng-disabled ="editRackButton" ng-click="editRack()">Edit Rack</button>
@@ -183,7 +136,7 @@ input[type=text], select, textarea {
             </form>
             
             
-            <div ng-show="rackTableShow" style="width:60%;">
+            <div ng-show="rackTableShow" >
                 <h3>Racks</h3>
                 <table class="rackTable">
                     <tr>
@@ -214,12 +167,15 @@ input[type=text], select, textarea {
                 </table>
                  <pagination total-items="totalRacks" ng-model="currentrackPage"  
              max-size="5" boundary-links="true"  
-             items-per-page="rackPerPage" class="pagination-sm" style="float:right;background:transparent;">  
+             items-per-page="rackPerPage" class="pagination-sm" style="float:right;background:transparent;" previous-text="&lsaquo;"
+    next-text="&rsaquo;"
+    first-text="&laquo;"
+    last-text="&raquo;">  
        </pagination>
        
             </div><br><br><br>
             
-            </div>
+            
             </div>
         </div>
         <div ng-if="showPodDetails" style="width:70%;">

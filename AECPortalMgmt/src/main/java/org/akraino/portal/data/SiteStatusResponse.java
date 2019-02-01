@@ -23,6 +23,10 @@ public class SiteStatusResponse {
 	private String statusCode;
 	private String message;
 	
+	@Override
+	public String toString() {
+		return "SiteStatusResponse [siteName=" + siteName + ", statusCode=" + statusCode + ", message=" + message + "]";
+	}
 	
 	public String getSiteName() {
 		return siteName;
@@ -42,7 +46,5 @@ public class SiteStatusResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
+
 }

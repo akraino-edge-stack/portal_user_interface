@@ -26,5 +26,5 @@ public interface AddOnsDAO {
 	
 	public List<Onap> getOnapList();
 	
-	
+	public Onap getOnap(String siteName);
 }

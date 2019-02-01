@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.akraino.portal.config.AppConfig;
 import org.akraino.portal.entity.Pod;
-import org.akraino.portal.entity.Rack;
+import org.akraino.portal.entity.GenericRack;
 import org.akraino.portal.service.PodService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,31 @@ public class PodServiceTest extends TestCase {
 			
 			List<Pod> pods = podService.getPods();
 			
-			System.out.println("id"+pods.size());
+			/*Pod pod = new Pod();
+			pod.setPodname("RoverUUU16");*/
+			
+			Pod dbpod=null;
+			
+			for (Pod pod : pods) {
+				if (pod.getPodname().equals("RoverUUU16")) {
+					dbpod = pod;
+				}
+			}
+			
+			GenericRack rack = new GenericRack();
+			rack.setRackname("rack111");
+			rack.setRackPersonality("Control");
+
+			//dbpod.addRack(rack);
+			
+			//pod.setRacks(racks);
+			//podService.updatePod(dbpod);
+
+			//List<Pod> pods = podService.getPods();
+			
+			//System.out.println("id"+dbpod.getPodId());
+			
+			//System.out.println("id"+pods.size());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,0 +1,283 @@
+<!--
+   Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+   
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+          http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   -->
+<html ng-app="PortalManagement">
+   <style>
+      input[type=text],
+      select,
+      textarea {
+      width: 40%;
+      padding: 3px;
+      border: 0.5px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 3px;
+      margin-bottom: 3px;
+      resize: vertical;
+      box-shadow: 1px 2px #888888
+      }
+      #tabs ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      }
+      #tabs li {
+      float: left;
+      border: 2px solid #cdcdcd;
+      border-bottom-width: 0;
+      margin: 0px 0px 2px 3px;
+      padding: 5px 5px 0px 5px;
+      background-color: #CCC;
+      color: #696969;
+      }
+      .mainView {
+      border: 1px solid #cdcdcd;
+      clear: both;
+      /*padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 3px;
+      padding-bottom: 3px;*/
+      }
+      .mainView1 {
+      border: 1px solid #cdcdcd;
+      clear: both;
+      width:84%;
+      /*padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 3px;
+      padding-bottom: 3px;*/
+      }
+      #tabs .active {
+      background-color: #FFF;
+      color: #000;
+      }
+      .createborderFrame{
+      margin-top:2px;
+      border:0px solid #cdcdcd;
+      }
+      .headerbackground{
+      background-color: #cdcdcd;
+      height:30px
+      }
+      .selected{
+      background-color:#F9F4E5;
+      }
+      .tableWidth{
+      width:84%;
+      }
+      .selected {
+      border:2px solid #ddd;
+      }
+      .borderFrame{
+      border-radius: 20px;
+      border: 2px solid #ddd;
+      }
+      .borderFrame1{
+      border-radius: 20px;
+      border: 2px solid #c0c0c0;
+      }
+      table{
+      border: 0px solid #ddd;
+      }
+      table td{
+      color:#2c87f0;
+      padding: 4px;
+      border: 0px solid #ddd;
+      }
+      table th{
+      padding: 10px;
+      text-align: left;
+      color:#2c87f0;
+      border: 3px solid #ddd;
+      border-top: none !important;
+      }
+      .noderackTable th{
+      padding: 3px;
+      text-align: left;
+      color:#2c87f0;
+      border: 0;
+      border-top: none !important;
+      }
+      .noderackTable tr{
+      border: 1px solid #ddd;
+      }
+      .pagination {text-align: center;
+      }
+      .pagination > li > a
+      {
+      background-color: white;
+      color: #4d4d4d;;
+      }
+      .pagination > li > a:focus,
+      .pagination > li > a:hover,
+      .pagination > li > span:focus,
+      .pagination > li > span:hover
+      {
+      color: #4d4d4d;;
+      background-color: #2c87f0;
+      border-color: #ddd;
+      }
+      .pagination > .active > a
+      {
+      color: white;
+      background-color: #2c87f0;
+      border: solid 1px #4d4d4d;;
+      }
+      .pagination > .active > a:hover
+      {
+      background-color: #4d4d4d;;
+      border: solid 1px #4d4d4d;;
+      }
+      .pagination > .active > a:active
+      {
+      background-color: #4d4d4d;;
+      border: solid 1px #4d4d4d;;
+      }
+      .button {
+      background-color: #2c87f0;
+      border: none;
+      color: white;
+      padding: 7px 14px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 5px;
+      }
+      .smallbutton {
+      background-color: #2c87f0;
+      border: none;
+      color: white;
+      padding: 4px 7px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 5px;
+      }
+      .color-orange{
+      background-color:#FFD700;
+      }
+      .color-blue{
+      background-color:#FFFF00;
+      }
+      .color-green{
+      background-color:#FFA500;
+      }
+      .color-red{
+      background-color:#FF0000;
+      }
+   </style>
+   <body ng-controller="AECRacksController">
+      <div class="borderFrame" style="margin-top:2%;height:280px;">
+         <div style="background-color:#f8f8f8;height:45px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
+            <p style="margin-top:0px;padding-left:5px;padding-top:5px;font-weight: bold;">Rack
+         </div>
+         <div style="padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:5px;">
+            <div>
+               <table cellspacing="0" cellpadding="0">
+                  <tbody>
+                     <tr>
+                        <th style="border-left: none !important;"></th>
+                        <!--  <th>Blueprint name</th>-->
+                        <th>Rack</th>
+                        <th> Assigned to Pod?</th>
+                        <th>Total Power</th>
+                        <th style="border-right: none !important;">Total Cooling</th>
+                     </tr>
+                     <tr class="border_bottom" ng-repeat="rack in rackList" ng-class="{'selected':$index ==selectedRow}">
+                        <td ng-if='rack' style="width:8%;padding-left:30px;font-size: 15px;"><input type="checkbox" ng-model="torackDelete[$index]" ng-change = "callCheck()" name="subscriptionRack" value="{{}}" /></td>
+                        <td style="padding-left:10px;font-size: 15px;width:20%;"><a style="cursor: pointer;" ng-click="rackSelected(rack.name)">{{rack.name}}</a></td>
+                        <td style="padding-left:10px;font-size: 15px;width:20%;"></td>
+                        <td style="padding-left:10px;font-size: 15px;width:20%;">1000w</td>
+                        <td style="padding-left:10px;font-size: 15px;width:30%;">1000btu</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div>
+               <pagination   
+                  max-size="4" boundary-links="true"  
+                  items-per-page="" class="pagination-sm" style="margin-left:25%;background:transparent;" previous-text="&lsaquo;"
+                  next-text="&rsaquo;"
+                  first-text="&laquo;"
+                  last-text="&raquo;">  
+               </pagination>
+               <div style="float:left;padding-top:20px;">
+                  <button class="button"  ng-click="addRack()">New Rack</button>
+               </div>
+               <div style="float:right;padding-top:20px;">
+                  <button  class="button" ng-click="editRack()" ng-disabled="rackSelect">Edit</button>
+                  <button  class="button" ng-click="deleteRack()" ng-disabled="rackDelete">Delete</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="borderFrame" style="margin-top:2%;" ng-show="showRack">
+         <div style="background-color:#f8f8f8;height:40px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
+            <p style="margin-top:0px;padding-left:5px;padding-top:5px;font-weight: bold;">Rack Details</p>
+         </div>
+         <div style="height:350px;overflow-y:auto;overflow-x:auto;padding-top:5px;padding-left:10px;">
+            <label style="font-weight:bold !important;font-size: 15px;">Name : </label><label style="font-weight:bold !important;color:#2c87f0;font-size: 15px;"> {{rackName}}</label>
+            
+                     <table cellspacing="0" cellpadding="0"  class="noderackTable" style="width:300px;">
+                        <tr>
+                           <th style="border:0;"><label style="font-weight:bold !important;font-size: 15px;color:black;">Rack : </label> {{rack.name}}</th>
+                           <!--  <th style="padding-left:10%;"><button class="refreshbutton"   ng-click="addNodeTable(rack.name)" ng-click="setSelected(array.number,rack.name)"	 >Add Node</button></th>-->
+                        </tr>
+                        <tbody>
+                           <tr class="border_bottom" ng-repeat="array in nodeList">
+                              <!-- - <td style="width:1%;padding-left:10px;font-size: 15px;">{{array.number}}-</td>-->
+                              <td style="padding-left:10px;font-size: 15px;width:99%;"
+                                 ng-class="{'color-red': array.type === 'compute', 'color-blue': array.type === 'storage','color-green': array.type === 'network','color-orange': array.type === 'control'}">
+                                 <a ng-controller="myPopoverCtrl1" 
+                                    popover-template="myPopover.templateUrl" 
+                                    popover-title="Node Details" 
+                                    popover-placement="right" 
+                                    popover-is-open="myPopover.isOpen" 
+                                    ng-click="myPopover.open(array.type,array.name)">{{array.number}}- {{array.type}}</a>
+                              </td>
+                              <!-- <td style="width:49%" ><a  ng-show="hoverEdit" 
+                                 ng-click="addNodeTable(array.number,rack.name)" >Add Node</a></td>-->
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+               </tr>
+            </table>
+            
+         </div>
+      </div>
+      <script type="text/ng-template" id="Node.html">
+         
+         
+      </script>
+      <script type="text/ng-template" 
+         id="myPopoverTemplate.html" style="width:100px">
+         <label>Node Name :{{myPopover.nodeName }}</label></br>
+         <label>Node Type :{{myPopover.nodeType }}</label></br>
+         <label>xxxxx :xxxxx</label></br
+          <label>yyyyy :yyyyy</label></br>
+         
+         <button class="smallbutton" 
+                 ng-click="myPopover.close()">Edit</button>
+         <button class="smallbutton" 
+                 ng-click="myPopover.close()">Delete</button>
+         <button class="smallbutton" 
+                 ng-click="myPopover.close()">Close</button>
+         
+      </script>
+   </body>
+</html>
