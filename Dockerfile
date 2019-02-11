@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-FROM tomcat:8.5.31
+FROM tomcat:8.5.37
 COPY AECPortalMgmt.war /usr/local/tomcat/webapps
