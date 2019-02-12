@@ -18,36 +18,33 @@ limitations under the License.
    <head>
       <style>
          .form_bg {
-         background-color:#eee;
-         color:#666;
-         padding:20px;
-         border-radius:10px;
-         position: absolute;
-         border:1px solid #fff;
-         
-         top:0;
-         right: 0;
-         bottom: 0;
-         left: 0;
-         
-         margin:auto;
-         width: 400px;
-         height: 320px;
+           background-color:#eee;
+           color:#666;
+           padding:20px;
+           border-radius:10px;
+           position: absolute;
+           border:1px solid #fff;
+           top:0;
+           right: 0;
+           bottom: 0;
+           left: 0;
+           margin:auto;
+           width: 400px;
+           height: 320px;
          }
-         .form-control{
-         width: 320px;
+         .form-control {
+           width: 320px;
          }
          .align-center {
-         text-align:center;
+           text-align:center;
          }
       </style>
    </head>
    <body ng-controller="login">
       <div>
-         
          <div class="header" style="width: 100%" style="padding-top:10px; padding-bottom:10px">
             <a href="https://www.akraino.org/">
-            <img src="./resources/images/logo_akraino_edge_stack.png" alt="Akraino" width="200" height="40" border="0">
+              <img src="./resources/images/logo_akraino_edge_stack.png" alt="Akraino" width="200" height="57" border="0">
             </a>
             <div class="header-right">
                <a class="active" href="#home">Home</a>
@@ -56,21 +53,19 @@ limitations under the License.
             </div>
          </div>
       </div>
-     
       <div class="container">
          <div class="row">
-           
-             <h2 class="align-center">Sign In  Page</h2>
+            <h2 class="align-center">Sign In Page</h2>
             <div class="form_bg" style="margin-top:230px;">
                <form>
                   <br/>
                   <div class="form-group">
-                     <label style="margin-left: auto;margin-right: auto;padding-left:15px;">{{message}}</label></br></br>
-                     <input type="text"  style="margin-left: auto;margin-right: auto;" class="form-control" id="userid" placeholder="User name" ng-model ="usernameVal">
+                     <label style="margin-left: auto;margin-right: auto;padding-left:15px;">{{message}}</label>
+                     <input type="text"  style="margin-left: auto;margin-right: auto;" class="form-control" id="userid" placeholder="User name" ng-model="usernameVal">
                      <label style="display:block;text-align:center;color:red;">{{ userMessage }}</label>
                   </div>
                   <div class="form-group">
-                     <input type="password" style="margin-left: auto;margin-right: auto;" class="form-control" id="pwd" placeholder="Password" ng-model ="passwordVal">
+                     <input type="password" style="margin-left: auto;margin-right: auto;" class="form-control" id="pwd" placeholder="Password" ng-model="passwordVal">
                      <label style="display:block;text-align:center;color:red;">{{ passwordMessage }}</label>
                   </div>
                   <br/>
@@ -82,5 +77,4 @@ limitations under the License.
          </div>
       </div>
    </body>
-   <html>
-      <!--end log form -->
+<html>
