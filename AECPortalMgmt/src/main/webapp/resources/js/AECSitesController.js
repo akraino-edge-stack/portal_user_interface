@@ -295,7 +295,7 @@ angular.module('PortalManagement').controller('AECSitesController', function($sc
 	            data: {
 	            	 "sitename": $scope.sites[index].edgeSiteName,
 	            	 "filepath":"/opt/akraino/redfish/install_server_os.sh  ", 
-	            	 "fileparams": "--rc /opt/akraino/server-build/airship_input --skip-confirm", 
+	            	 "fileparams": "--rc /opt/akraino/server-build/"+$scope.sites[index].edgeSiteName+" --skip-confirm", 
 	            	 "winscpdir": "/opt/akraino/airshipinabottle_deploy", 
 	            	 "winscpfilepath": "/opt/akraino/airshipinabottle_deploy/mv.sh",
 	            	 "winscpfileparams":$scope.sites[index].edgeSiteIP, 
