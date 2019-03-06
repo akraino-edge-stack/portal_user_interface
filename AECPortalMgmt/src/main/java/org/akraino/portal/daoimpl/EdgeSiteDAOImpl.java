@@ -34,63 +34,63 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EdgeSiteDAOImpl implements EdgeSiteDAO {
 
-	private static final Logger logger = Logger.getLogger(EdgeSiteDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(EdgeSiteDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Override
-	public List<EdgeSite> listAllEdgeSites(int regionId) {
-		
-		logger.info("listAllEdgeSites");
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+    
+    @Override
+    public List<EdgeSite> listAllEdgeSites(int regionId) {
+        
+        logger.info("listAllEdgeSites");
+        
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
 
-		Root<EdgeSite> root = criteria.from(EdgeSite.class);
-		criteria.select(root);
-		
-		if (regionId > 0) {
-			criteria.where(builder.equal(root.get("region_id"), regionId));
-		}
+        Root<EdgeSite> root = criteria.from(EdgeSite.class);
+        criteria.select(root);
+        
+        if (regionId > 0) {
+            criteria.where(builder.equal(root.get("region_id"), regionId));
+        }
 
-		Query<EdgeSite> query = getSession().createQuery(criteria);
+        Query<EdgeSite> query = getSession().createQuery(criteria);
 
-		return query.getResultList();
-	}
+        return query.getResultList();
+    }
 
-	@Override
-	public void updateEdgeSite(EdgeSite edgeSite) {
-		
-		getSession().update(edgeSite);
-		
-	}
+    @Override
+    public void updateEdgeSite(EdgeSite edgeSite) {
+        
+        getSession().update(edgeSite);
+        
+    }
 
-	@Override
-	public EdgeSite getEdgeSiteDetails(String siteName) {
-		
-		logger.info("getEdgeSiteDetails");
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
+    @Override
+    public EdgeSite getEdgeSiteDetails(String siteName) {
+        
+        logger.info("getEdgeSiteDetails");
+        
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<EdgeSite> criteria = builder.createQuery(EdgeSite.class);
 
-		Root<EdgeSite> root = criteria.from(EdgeSite.class);
-		criteria.select(root);
-		
-		criteria.where(builder.equal(root.get("edgeSiteName"), siteName));
+        Root<EdgeSite> root = criteria.from(EdgeSite.class);
+        criteria.select(root);
+        
+        criteria.where(builder.equal(root.get("edgeSiteName"), siteName));
 
-		Query<EdgeSite> query = getSession().createQuery(criteria);
+        Query<EdgeSite> query = getSession().createQuery(criteria);
 
-		return query.getSingleResult();
-	}
-	
-	@Override
-	public void saveOrUpdate(EdgeSite site) {
-		getSession().saveOrUpdate(site);
+        return query.getSingleResult();
+    }
+    
+    @Override
+    public void saveOrUpdate(EdgeSite site) {
+        getSession().saveOrUpdate(site);
 
-	}
+    }
 }

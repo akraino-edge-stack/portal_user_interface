@@ -21,12 +21,12 @@ import java.util.List;
 import org.akraino.portal.entity.EdgeSite;
 
 public interface EdgeSiteDAO {
-	
-	public List<EdgeSite> listAllEdgeSites(int regionId);
-	
-	public void updateEdgeSite(EdgeSite edgeSite);
-	
-	public EdgeSite getEdgeSiteDetails(String siteName);
+    
+    public List<EdgeSite> listAllEdgeSites(int regionId);
+    
+    public void updateEdgeSite(EdgeSite edgeSite);
+    
+    public EdgeSite getEdgeSiteDetails(String siteName);
 
-	public void saveOrUpdate(EdgeSite site);
+    public void saveOrUpdate(EdgeSite site);
 }

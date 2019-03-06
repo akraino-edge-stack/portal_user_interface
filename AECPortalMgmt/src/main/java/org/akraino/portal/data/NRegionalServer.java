@@ -18,19 +18,19 @@ package org.akraino.portal.data;
 
 public class NRegionalServer {
 
-	private String ip;
+    private String ip;
 
-	public String getIp() {
-		return ip;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	@Override
-	public String toString() {
-		return "NRegionalServer [ip=" + ip + "]";
-	}
+    @Override
+    public String toString() {
+        return "NRegionalServer [ip=" + ip + "]";
+    }
 
 }

@@ -32,40 +32,40 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TestETEService {
 
-	@Autowired
-	EdgeSiteService edgeSiteService;
+    @Autowired
+    EdgeSiteService edgeSiteService;
 
-	public EdgeSiteState runTempest(TempestRequest tempestRequest) {
+    public EdgeSiteState runTempest(TempestRequest tempestRequest) {
 
-		EdgeSiteState siteState = new EdgeSiteState();
-		siteState.setSiteName(tempestRequest.getSitename());
+        EdgeSiteState siteState = new EdgeSiteState();
+        siteState.setSiteName(tempestRequest.getSitename());
 
-		try {
+        try {
 
-			String tempestURI = PropertyUtil.getInstance().getProperty("camunda.tempest.uri");
+            String tempestURI = PropertyUtil.getInstance().getProperty("camunda.tempest.uri");
 
-			RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
-			requestObj.setT(tempestRequest);
+            RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
+            requestObj.setT(tempestRequest);
 
-			RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
-			responseObj.setT(new EdgeSiteState());
+            RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
+            responseObj.setT(new EdgeSiteState());
 
-			siteState = RestInterface.sendPOST(tempestURI, requestObj, responseObj);
+            siteState = RestInterface.sendPOST(tempestURI, requestObj, responseObj);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			throw e;
+            throw e;
 
-		} finally {
-			
-			if (!StringUtil.notEmpty(siteState.getTempestStatus())) {
-				siteState.setTempestStatus("Error invoking Camunda API");
-			}
+        } finally {
+            
+            if (!StringUtil.notEmpty(siteState.getTempestStatus())) {
+                siteState.setTempestStatus("Error invoking Camunda API");
+            }
 
-			edgeSiteService.updateSiteStatus(siteState);
-		}
+            edgeSiteService.updateSiteStatus(siteState);
+        }
 
-		return siteState;
+        return siteState;
 
-	}
+    }
 }

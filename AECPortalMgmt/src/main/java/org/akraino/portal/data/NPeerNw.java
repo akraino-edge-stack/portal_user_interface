@@ -21,37 +21,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"ip", "scope", "asnumber"})
 public class NPeerNw {
 
-	private Integer asnumber;
-	private String ip;
-	private String scope;
+    private Integer asnumber;
+    private String ip;
+    private String scope;
 
-	public Integer getAsnumber() {
-		return asnumber;
-	}
+    public Integer getAsnumber() {
+        return asnumber;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public String getScope() {
-		return scope;
-	}
+    public String getScope() {
+        return scope;
+    }
 
-	public void setAsnumber(Integer asnumber) {
-		this.asnumber = asnumber;
-	}
+    public void setAsnumber(Integer asnumber) {
+        this.asnumber = asnumber;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public void setScope(String scope) {
-		this.scope = scope;
-	}
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 
-	@Override
-	public String toString() {
-		return "NPeerNw [asnumber=" + asnumber + ", ip=" + ip + ", scope=" + scope + "]";
-	}
+    @Override
+    public String toString() {
+        return "NPeerNw [asnumber=" + asnumber + ", ip=" + ip + ", scope=" + scope + "]";
+    }
 
 }

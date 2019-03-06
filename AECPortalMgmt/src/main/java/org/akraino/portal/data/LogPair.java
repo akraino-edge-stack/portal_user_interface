@@ -19,71 +19,71 @@ package org.akraino.portal.data;
 import java.sql.Timestamp;
 
 public class LogPair {
-	
-	private String signature;
-	
-	private Timestamp tstart;
-	
-	private Timestamp tstop;
+    
+    private String signature;
+    
+    private Timestamp tstart;
+    
+    private Timestamp tstop;
 
-	private ChompSysData sysdata;
-	
-	private String log;
-	
-	private ChompMetadata chMetadata;
+    private ChompSysData sysdata;
+    
+    private String log;
+    
+    private ChompMetadata chMetadata;
 
-	public String getSignature() {
-		return signature;
-	}
+    public String getSignature() {
+        return signature;
+    }
 
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
-	public Timestamp getTstart() {
-		return tstart;
-	}
+    public Timestamp getTstart() {
+        return tstart;
+    }
 
-	public void setTstart(Timestamp tstart) {
-		this.tstart = tstart;
-	}
+    public void setTstart(Timestamp tstart) {
+        this.tstart = tstart;
+    }
 
-	public Timestamp getTstop() {
-		return tstop;
-	}
+    public Timestamp getTstop() {
+        return tstop;
+    }
 
-	public void setTstop(Timestamp tstop) {
-		this.tstop = tstop;
-	}
+    public void setTstop(Timestamp tstop) {
+        this.tstop = tstop;
+    }
 
-	public ChompSysData getSysdata() {
-		return sysdata;
-	}
+    public ChompSysData getSysdata() {
+        return sysdata;
+    }
 
-	public void setSysdata(ChompSysData sysdata) {
-		this.sysdata = sysdata;
-	}
+    public void setSysdata(ChompSysData sysdata) {
+        this.sysdata = sysdata;
+    }
 
-	public String getLog() {
-		return log;
-	}
+    public String getLog() {
+        return log;
+    }
 
-	public void setLog(String log) {
-		this.log = log;
-	}
+    public void setLog(String log) {
+        this.log = log;
+    }
 
-	public ChompMetadata getChMetadata() {
-		return chMetadata;
-	}
+    public ChompMetadata getChMetadata() {
+        return chMetadata;
+    }
 
-	public void setChMetadata(ChompMetadata chMetadata) {
-		this.chMetadata = chMetadata;
-	}
+    public void setChMetadata(ChompMetadata chMetadata) {
+        this.chMetadata = chMetadata;
+    }
 
-	@Override
-	public String toString() {
-		return "LogPair [signature=" + signature + ", tstart=" + tstart + ", tstop=" + tstop + ", sysdata=" + sysdata
-				+ ", log=" + log + ", chMetadata=" + chMetadata + "]";
-	}
+    @Override
+    public String toString() {
+        return "LogPair [signature=" + signature + ", tstart=" + tstart + ", tstop=" + tstop + ", sysdata=" + sysdata
+                + ", log=" + log + ", chMetadata=" + chMetadata + "]";
+    }
 
 }

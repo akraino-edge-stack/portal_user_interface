@@ -34,28 +34,28 @@ import junit.framework.TestCase;
 @ContextConfiguration(classes = {AppConfig.class})
 @WebAppConfiguration
 public class TestETEServiceTest extends TestCase {
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("testETEService")
-	TestETEService testETEService;
+    TestETEService testETEService;
 
-	@Test
+    @Test
     public void testrun() {
-		
-		try {
-			
-			TempestRequest req = new TempestRequest();
-			req.setSitename("MTN1");
-			
-			EdgeSiteState state = testETEService.runTempest(req);
-			
-			System.out.println("no. of onaps:" + state.toString());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
+        
+        try {
+            
+            TempestRequest req = new TempestRequest();
+            req.setSitename("MTN1");
+            
+            EdgeSiteState state = testETEService.runTempest(req);
+            
+            System.out.println("no. of onaps:" + state.toString());
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+    }
 }

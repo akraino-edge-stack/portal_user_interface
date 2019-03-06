@@ -28,74 +28,74 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class SessionManagerFilter implements HandlerInterceptor {
 
-	private static final Logger logger = Logger.getLogger(SessionManagerFilter.class);
-	
-	@Override
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
-			throws Exception {
-		
-		logger.info("user authenticated");
-		
-	}
+    private static final Logger logger = Logger.getLogger(SessionManagerFilter.class);
+    
+    @Override
+    public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+            throws Exception {
+        
+        logger.info("user authenticated");
+        
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
-			throws Exception {
+    @Override
+    public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+            throws Exception {
 
-		logger.info("user authenticated");
-		
-	}
+        logger.info("user authenticated");
+        
+    }
 
-	@Override
-	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object data) throws Exception {
-		
-		try { 
-			return true;
-			/*if (StringUtil.notEmpty(req.getHeader("tokenId"))) {
-				
-				String clientToken = req.getHeader("tokenId");
-				
-				AccessService service = new AccessService();
-						
-				UserSession user = service.getUserSession(LoginUtil.decode(LoginUtil.getUserName(clientToken)));
-				
-				if (user.getTokenId()!= null && !sessionExpired(user)) {
-				
-					if (user.getTokenId().equals(LoginUtil.getPassword(clientToken))) {
-						// user authorized 
-						return true;
-						
-					} else {
-						// unauthorized access
-						res.sendError(401);
-					}
-				} else {
-					// session does not exist/expired, temporary re-direct, ask user to re-login
-					res.sendError(307);
-				}
-				
-			} else {
-				// bad request, no authToken sent in the request
-				res.sendError(400);
-			}*/
-		} catch (Exception e) {
-				logger.error(e);
-			}
-		
-		
-		return false;
-	}
-	
-	private boolean sessionExpired (UserSession session) {
-		
-		final long ONE_MINUTE_IN_MILLIS=60000; //millisecs
-		final int sessionTimeOut = 20; // 20 minutes
-		
-		long t= session.getCreatedDate().getTime();
-		Date afterAddingTimeOut = new Date(t + (sessionTimeOut * ONE_MINUTE_IN_MILLIS));
-		
-		return t > afterAddingTimeOut.getTime();
+    @Override
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object data) throws Exception {
+        
+        try { 
+            return true;
+            /*if (StringUtil.notEmpty(req.getHeader("tokenId"))) {
+                
+                String clientToken = req.getHeader("tokenId");
+                
+                AccessService service = new AccessService();
+                        
+                UserSession user = service.getUserSession(LoginUtil.decode(LoginUtil.getUserName(clientToken)));
+                
+                if (user.getTokenId()!= null && !sessionExpired(user)) {
+                
+                    if (user.getTokenId().equals(LoginUtil.getPassword(clientToken))) {
+                        // user authorized 
+                        return true;
+                        
+                    } else {
+                        // unauthorized access
+                        res.sendError(401);
+                    }
+                } else {
+                    // session does not exist/expired, temporary re-direct, ask user to re-login
+                    res.sendError(307);
+                }
+                
+            } else {
+                // bad request, no authToken sent in the request
+                res.sendError(400);
+            }*/
+        } catch (Exception e) {
+                logger.error(e);
+            }
+        
+        
+        return false;
+    }
+    
+    private boolean sessionExpired (UserSession session) {
+        
+        final long ONE_MINUTE_IN_MILLIS=60000; //millisecs
+        final int sessionTimeOut = 20; // 20 minutes
+        
+        long t= session.getCreatedDate().getTime();
+        Date afterAddingTimeOut = new Date(t + (sessionTimeOut * ONE_MINUTE_IN_MILLIS));
+        
+        return t > afterAddingTimeOut.getTime();
 
-	}
+    }
 
 }

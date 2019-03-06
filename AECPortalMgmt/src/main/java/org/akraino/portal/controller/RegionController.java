@@ -34,31 +34,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/regions")
 public class RegionController {
 
-	@Autowired
-	RegionService regionService;
-	
-	private static final Logger logger = Logger.getLogger(RegionController.class);
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
-	public ResponseEntity<List<Region>> getAllRegions() {
-		
-		logger.info("getAllRegions - start");
-		
-		List <Region> list = new ArrayList<> ();
+    @Autowired
+    RegionService regionService;
+    
+    private static final Logger logger = Logger.getLogger(RegionController.class);
+    
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)   
+    public ResponseEntity<List<Region>> getAllRegions() {
+        
+        logger.info("getAllRegions - start");
+        
+        List <Region> list = new ArrayList<> ();
 
-		try {
-			
-			list = regionService.listAllRegions();
-			
-			logger.debug("regions list size:"+ list.size());
-			
-		} catch (Exception e) {
-			logger.error("Error retrieving regions", e);
-		}
-		
-		logger.info("getAllRegions - end");
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
-	
+        try {
+            
+            list = regionService.listAllRegions();
+            
+            logger.debug("regions list size:"+ list.size());
+            
+        } catch (Exception e) {
+            logger.error("Error retrieving regions", e);
+        }
+        
+        logger.info("getAllRegions - end");
+        
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    
 }

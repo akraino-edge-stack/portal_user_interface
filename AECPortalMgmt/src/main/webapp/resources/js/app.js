@@ -220,11 +220,11 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
     //$scope.userid;
     //$scope.password;
     //$scope.signIn = "Sign In";
-	//console.log(appConfig.apiRoot);
-	$rootScope.tokenId ="";
+    //console.log(appConfig.apiRoot);
+    $rootScope.tokenId ="";
     $scope.usernameVal = '';
     $scope.passwordVal = '';
-    	$rootScope.message = "Please enter credentials";
+        $rootScope.message = "Please enter credentials";
     $scope.$state = $state;
     
     var baseURL = window.location.protocol + '//' + window.location.host;
@@ -248,8 +248,8 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
             $scope.userMessage = '';
         } 
        else {
-    	   $scope.passwordMessage = '';
-    	   $scope.userMessage ='';
+           $scope.passwordMessage = '';
+           $scope.userMessage ='';
             var userPwd = $scope.usernameVal + ":" + $scope.passwordVal;
             var auth = $base64.encode(userPwd);
             $http({
@@ -266,15 +266,15 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
             }).
             then(function(response) {
                 if (response.data.statusCode == 200) {
-                	$rootScope.tokenId = response.data.tokenId;
-                	localStorage.setItem("tokenId",response.data.tokenId);
+                    $rootScope.tokenId = response.data.tokenId;
+                    localStorage.setItem("tokenId",response.data.tokenId);
                     $state.transitionTo('sites');
                 }
                 else if (response.data.statusCode == 401){
-                	$scope.passwordVal= null;
-                	$scope.passwordMessage = 'Invalid Credentials, please try again...';
-                	
-                	localStorage.removeItem("tokenId");
+                    $scope.passwordVal= null;
+                    $scope.passwordMessage = 'Invalid Credentials, please try again...';
+                    
+                    localStorage.removeItem("tokenId");
                 }
             }, function(error) {
                 if (error.status == 401) {
@@ -296,13 +296,13 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
         }
     }
     $scope.goLogout = function() {
-    	/*AECPortalController.run(function($rootScope,$templateCache){
-    		$rootScope.$on('$viewContentLoaded',function(){
-    			$templateCache.remove('views/sites.html')
-    			//$window.location.reload();
-    		});
-    		});*/
-    	//$scope.tokenId = $rootScope.tokenId;
+        /*AECPortalController.run(function($rootScope,$templateCache){
+            $rootScope.$on('$viewContentLoaded',function(){
+                $templateCache.remove('views/sites.html')
+                //$window.location.reload();
+            });
+            });*/
+        //$scope.tokenId = $rootScope.tokenId;
         $http({
             method: 'POST',
             url: appContext+'/logout',
@@ -320,9 +320,9 @@ AECPortalController.controller('login',function($scope, $http, $filter, filterFi
              }*/
         }).then(function(response) {
             if (response.data.statusCode == 200) {
-            	//$cookies.remove("JSESSIONID");
-            	$rootScope.tokenId ="";
-            	localStorage.removeItem("tokenId");
+                //$cookies.remove("JSESSIONID");
+                $rootScope.tokenId ="";
+                localStorage.removeItem("tokenId");
                 $state.transitionTo('login');
                 $rootScope.message = 'User logged out, please login again...';
             }

@@ -24,9 +24,9 @@ package org.akraino.portal.data;
  *
  */
 public class UnicyclePod extends NPod {
-	
-	public UnicyclePod() {
-		super();
-	}
+    
+    public UnicyclePod() {
+        super();
+    }
 
 }

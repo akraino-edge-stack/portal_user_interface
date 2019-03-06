@@ -19,7 +19,7 @@ package org.akraino.portal.dao;
 import org.akraino.portal.entity.PodMetrics;
 
 public interface PodMetricsDAO {
-	
-	public void createPodMetrics(PodMetrics podMetrics);
+    
+    public void createPodMetrics(PodMetrics podMetrics);
 
 }

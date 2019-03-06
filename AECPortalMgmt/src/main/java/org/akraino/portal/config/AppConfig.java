@@ -34,26 +34,26 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @ComponentScan(basePackages = "org.akraino.portal")
 public class AppConfig extends WebMvcConfigurerAdapter {
-	
-	@Bean
+    
+    @Bean
     SessionManagerFilter getSessionManager() {
          return new SessionManagerFilter();
     }
-	
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
-	
-	@Override
+    
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+    
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getSessionManager())
         .addPathPatterns("/**")
         .excludePathPatterns("/login", "/logout");
 
     }
-	
-	@Bean
+    
+    @Bean
     public CommonsMultipartResolver multipartResolver() {
 
         CommonsMultipartResolver cmr = new CommonsMultipartResolver();
@@ -62,16 +62,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return cmr;
 
     }
-	
-	@Bean(name = "dataSource")
-	public DataSource getDataSource() {
-	    BasicDataSource dataSource = new BasicDataSource();
-	    dataSource.setDriverClassName("org.postgresql.Driver");
-	    dataSource.setUrl(PropertyUtil.getInstance().getProperty("postgres.db.url"));
-	    dataSource.setUsername(PropertyUtil.getInstance().getProperty("postgres.db.user.name"));
-	    dataSource.setPassword(PropertyUtil.getInstance().getProperty("postgres.db.user.pwd"));
-	 
-	    return dataSource;
-	}
+    
+    @Bean(name = "dataSource")
+    public DataSource getDataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl(PropertyUtil.getInstance().getProperty("postgres.db.url"));
+        dataSource.setUsername(PropertyUtil.getInstance().getProperty("postgres.db.user.name"));
+        dataSource.setPassword(PropertyUtil.getInstance().getProperty("postgres.db.user.pwd"));
+     
+        return dataSource;
+    }
 
 }

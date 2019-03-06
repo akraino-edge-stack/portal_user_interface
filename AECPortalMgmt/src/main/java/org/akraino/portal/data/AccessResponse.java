@@ -21,29 +21,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccessResponse {
 
-	private String tokenId="";
-	private String statusCode="";
-	private String message="";
-	
-	
-	public String getTokenId() {
-		return tokenId;
-	}
-	public void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
-	}
-	public String getStatusCode() {
-		return statusCode;
-	}
-	public void setStatusCode(String statusCode) {
-		this.statusCode = statusCode;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    private String tokenId="";
+    private String statusCode="";
+    private String message="";
+    
+    
+    public String getTokenId() {
+        return tokenId;
+    }
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
+    }
+    public String getStatusCode() {
+        return statusCode;
+    }
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	
+    
 }

@@ -23,53 +23,53 @@ import org.akraino.portal.config.AppConfig;
 import org.apache.log4j.Logger;
 
 public class PropertyUtil {
-	private static final Logger logger = Logger.getLogger(PropertyUtil.class);
-	private static final String APP_PROPERTIES_FILENAME = "app.properties";
-	private static PropertyUtil propertyUtil;
+    private static final Logger logger = Logger.getLogger(PropertyUtil.class);
+    private static final String APP_PROPERTIES_FILENAME = "app.properties";
+    private static PropertyUtil propertyUtil;
 
-	private Properties appProps;
+    private Properties appProps;
 
-	/**
-	 * Return the single instance of this object in the app.
-	 * @return the singleton
-	 */
-	public static synchronized PropertyUtil getInstance() {
-		if (propertyUtil == null) {
-			propertyUtil = new PropertyUtil();
-		}
-		return propertyUtil;
-	}
+    /**
+     * Return the single instance of this object in the app.
+     * @return the singleton
+     */
+    public static synchronized PropertyUtil getInstance() {
+        if (propertyUtil == null) {
+            propertyUtil = new PropertyUtil();
+        }
+        return propertyUtil;
+    }
 
-	private PropertyUtil() {
-		InputStream input = AppConfig.class.getClassLoader().getResourceAsStream(APP_PROPERTIES_FILENAME);
-		appProps = new Properties();
-		try {
-			appProps.load(input);
-		} catch (IOException e) {
-			logger.error("Error loading properties file: "+APP_PROPERTIES_FILENAME);
-		} finally {
-			try {
-				input.close();
-			} catch (IOException e) {
-				// ignore
-			}
-		}
-	}
+    private PropertyUtil() {
+        InputStream input = AppConfig.class.getClassLoader().getResourceAsStream(APP_PROPERTIES_FILENAME);
+        appProps = new Properties();
+        try {
+            appProps.load(input);
+        } catch (IOException e) {
+            logger.error("Error loading properties file: "+APP_PROPERTIES_FILENAME);
+        } finally {
+            try {
+                input.close();
+            } catch (IOException e) {
+                // ignore
+            }
+        }
+    }
 
-	/**
-	 * Get a property from the PropertyUtil object.  If the environment variable $IP is set,
-	 * then any URL's referring to localhost will be rewritten to use this IP address instead.
-	 * @param key the key to use to find the property
-	 * @return the value
-	 */
-	public String getProperty(String key) {
-		String s = appProps.getProperty(key);
-		if (s != null && s.indexOf("://localhost:") > 0) {
-			String ip = System.getenv().get("IP");
-			if (ip != null && !"".contentEquals(ip)) {
-				s = s.replaceAll("://localhost:", "://"+ip+":");
-			}
-		}
-		return s;
-	}
+    /**
+     * Get a property from the PropertyUtil object.  If the environment variable $IP is set,
+     * then any URL's referring to localhost will be rewritten to use this IP address instead.
+     * @param key the key to use to find the property
+     * @return the value
+     */
+    public String getProperty(String key) {
+        String s = appProps.getProperty(key);
+        if (s != null && s.indexOf("://localhost:") > 0) {
+            String ip = System.getenv().get("IP");
+            if (ip != null && !"".contentEquals(ip)) {
+                s = s.replaceAll("://localhost:", "://"+ip+":");
+            }
+        }
+        return s;
+    }
 }

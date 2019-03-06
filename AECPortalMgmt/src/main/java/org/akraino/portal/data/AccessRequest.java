@@ -16,15 +16,15 @@
 package org.akraino.portal.data;
 
 public class AccessRequest {
-	
-	private String tokenId;
+    
+    private String tokenId;
 
-	public String getTokenId() {
-		return tokenId;
-	}
+    public String getTokenId() {
+        return tokenId;
+    }
 
-	public void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
-	}
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
+    }
 
 }

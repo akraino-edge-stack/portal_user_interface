@@ -22,31 +22,31 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"start", "endRange"})
 public class NCIDRRange {
 
-	@JsonProperty("start")
-	private String startRange;
+    @JsonProperty("start")
+    private String startRange;
 
-	@JsonProperty("end")
-	private String endRange;
-	
-	public String getEndRange() {
-		return endRange;
-	}
+    @JsonProperty("end")
+    private String endRange;
+    
+    public String getEndRange() {
+        return endRange;
+    }
 
-	public String getStartRange() {
-		return startRange;
-	}
+    public String getStartRange() {
+        return startRange;
+    }
 
-	public void setEndRange(String endRange) {
-		this.endRange = endRange;
-	}
+    public void setEndRange(String endRange) {
+        this.endRange = endRange;
+    }
 
-	public void setStartRange(String startRange) {
-		this.startRange = startRange;
-	}
+    public void setStartRange(String startRange) {
+        this.startRange = startRange;
+    }
 
-	@Override
-	public String toString() {
-		return "NCIDRRange [endRange=" + endRange + ", startRange=" + startRange + "]";
-	}
+    @Override
+    public String toString() {
+        return "NCIDRRange [endRange=" + endRange + ", startRange=" + startRange + "]";
+    }
 
 }

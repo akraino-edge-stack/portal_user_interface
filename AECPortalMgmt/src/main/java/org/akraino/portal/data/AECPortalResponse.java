@@ -17,39 +17,39 @@
 package org.akraino.portal.data;
 
 public class AECPortalResponse {
-	
-	private String statusCode;
-	
-	private String message;
-	
-	private String entity;
+    
+    private String statusCode;
+    
+    private String message;
+    
+    private String entity;
 
-	public String getStatusCode() {
-		return statusCode;
-	}
+    public String getStatusCode() {
+        return statusCode;
+    }
 
-	@Override
-	public String toString() {
-		return "AECPortalResponse [statusCode=" + statusCode + ", message=" + message + ", entity=" + entity + "]";
-	}
+    @Override
+    public String toString() {
+        return "AECPortalResponse [statusCode=" + statusCode + ", message=" + message + ", entity=" + entity + "]";
+    }
 
-	public void setStatusCode(String statusCode) {
-		this.statusCode = statusCode;
-	}
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public String getEntity() {
-		return entity;
-	}
+    public String getEntity() {
+        return entity;
+    }
 
-	public void setEntity(String entity) {
-		this.entity = entity;
-	}
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
 }

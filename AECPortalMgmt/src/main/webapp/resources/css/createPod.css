@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 .borderFrame{
-	margin-top:2px;
-	border:4px solid #cdcdcd;
-	/*border-radius: 0.1px;
-	/*-moz-border-radius: 0.1px;
-	-webkit-border-radius:0.1px;*/
+    margin-top:2px;
+    border:4px solid #cdcdcd;
+    /*border-radius: 0.1px;
+    /*-moz-border-radius: 0.1px;
+    -webkit-border-radius:0.1px;*/
 }
 .pagination > li > a
 {

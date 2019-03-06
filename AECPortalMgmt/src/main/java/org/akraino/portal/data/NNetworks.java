@@ -31,109 +31,109 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"bonded", "primary", "slaves", "oob", "host", "nwStorage", "pxe", "ksn", "neutron"})
 public class NNetworks {
 
-	private String bonded;
-	private String primary;
-	private List<NSlaveNw> slaves;
-	private NNetwork oob;
+    private String bonded;
+    private String primary;
+    private List<NSlaveNw> slaves;
+    private NNetwork oob;
 
-	private NNetwork host;
-	
-	@JsonProperty("storage")
-	private NNetwork nwStorage;
-	
-	private NNetwork pxe;
-	
-	private NKSNNetwork ksn;
+    private NNetwork host;
+    
+    @JsonProperty("storage")
+    private NNetwork nwStorage;
+    
+    private NNetwork pxe;
+    
+    private NKSNNetwork ksn;
 
-	private NNetwork neutron;
+    private NNetwork neutron;
 
-	public String getBonded() {
-		return bonded;
-	}
+    public String getBonded() {
+        return bonded;
+    }
 
-	public void setBonded(String bonded) {
-		this.bonded = bonded;
-	}
+    public void setBonded(String bonded) {
+        this.bonded = bonded;
+    }
 
-	public String getPrimary() {
-		return primary;
-	}
+    public String getPrimary() {
+        return primary;
+    }
 
-	public void setPrimary(String primary) {
-		this.primary = primary;
-	}
+    public void setPrimary(String primary) {
+        this.primary = primary;
+    }
 
-	public List<NSlaveNw> getSlaves() {
-		return slaves;
-	}
+    public List<NSlaveNw> getSlaves() {
+        return slaves;
+    }
 
-	public void setSlaves(List<NSlaveNw> slaves) {
-		this.slaves = slaves;
-	}
-	
-	public void addSlaves(NSlaveNw slave) {
-		
-		if (this.getSlaves() == null) {
-			this.setSlaves(new ArrayList<>());
-		}
-		
-		this.getSlaves().add(slave);
-		
-	}
+    public void setSlaves(List<NSlaveNw> slaves) {
+        this.slaves = slaves;
+    }
+    
+    public void addSlaves(NSlaveNw slave) {
+        
+        if (this.getSlaves() == null) {
+            this.setSlaves(new ArrayList<>());
+        }
+        
+        this.getSlaves().add(slave);
+        
+    }
 
-	public NNetwork getOob() {
-		return oob;
-	}
+    public NNetwork getOob() {
+        return oob;
+    }
 
-	public void setOob(NNetwork oob) {
-		this.oob = oob;
-	}
+    public void setOob(NNetwork oob) {
+        this.oob = oob;
+    }
 
-	public NNetwork getHost() {
-		return host;
-	}
+    public NNetwork getHost() {
+        return host;
+    }
 
-	public void setHost(NNetwork host) {
-		this.host = host;
-	}
+    public void setHost(NNetwork host) {
+        this.host = host;
+    }
 
-	public NNetwork getNwStorage() {
-		return nwStorage;
-	}
+    public NNetwork getNwStorage() {
+        return nwStorage;
+    }
 
-	public void setNwStorage(NNetwork nwStorage) {
-		this.nwStorage = nwStorage;
-	}
+    public void setNwStorage(NNetwork nwStorage) {
+        this.nwStorage = nwStorage;
+    }
 
-	public NNetwork getPxe() {
-		return pxe;
-	}
+    public NNetwork getPxe() {
+        return pxe;
+    }
 
-	public void setPxe(NNetwork pxe) {
-		this.pxe = pxe;
-	}
+    public void setPxe(NNetwork pxe) {
+        this.pxe = pxe;
+    }
 
-	public NKSNNetwork getKsn() {
-		return ksn;
-	}
+    public NKSNNetwork getKsn() {
+        return ksn;
+    }
 
-	public void setKsn(NKSNNetwork ksn) {
-		this.ksn = ksn;
-	}
+    public void setKsn(NKSNNetwork ksn) {
+        this.ksn = ksn;
+    }
 
-	public NNetwork getNeutron() {
-		return neutron;
-	}
+    public NNetwork getNeutron() {
+        return neutron;
+    }
 
-	public void setNeutron(NNetwork neutron) {
-		this.neutron = neutron;
-	}
+    public void setNeutron(NNetwork neutron) {
+        this.neutron = neutron;
+    }
 
-	@Override
-	public String toString() {
-		return "NNetworks [bonded=" + bonded + ", primary=" + primary + ", slaves=" + slaves + ", oob=" + oob
-				+ ", host=" + host + ", nwStorage=" + nwStorage + ", pxe=" + pxe + ", ksn=" + ksn + ", neutron="
-				+ neutron + "]";
-	}
+    @Override
+    public String toString() {
+        return "NNetworks [bonded=" + bonded + ", primary=" + primary + ", slaves=" + slaves + ", oob=" + oob
+                + ", host=" + host + ", nwStorage=" + nwStorage + ", pxe=" + pxe + ", ksn=" + ksn + ", neutron="
+                + neutron + "]";
+    }
 
 }

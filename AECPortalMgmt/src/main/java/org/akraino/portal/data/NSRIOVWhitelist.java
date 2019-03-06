@@ -17,20 +17,20 @@
 package org.akraino.portal.data;
 
 public class NSRIOVWhitelist {
-	
-	private String address;
+    
+    private String address;
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	@Override
-	public String toString() {
-		return "NSRIOVWhitelist [address=" + address + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "NSRIOVWhitelist [address=" + address + "]";
+    }
+    
 }

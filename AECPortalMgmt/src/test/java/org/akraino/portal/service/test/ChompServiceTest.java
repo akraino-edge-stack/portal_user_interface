@@ -35,27 +35,27 @@ import junit.framework.TestCase;
 @ContextConfiguration(classes = {AppConfig.class})
 @WebAppConfiguration
 public class ChompServiceTest extends TestCase {
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("podMetricsService")
-	PodMetricsService podMetricsService;
-	
-	
-	
-	@Test
-	public void testRun() {
-		
-		try {
-			
-			List<ChompObject> chomps = podMetricsService.getChompData();
-			
-			System.out.println("chomp:" + chomps.toString());
-		
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-	}
-	
+    PodMetricsService podMetricsService;
+    
+    
+    
+    @Test
+    public void testRun() {
+        
+        try {
+            
+            List<ChompObject> chomps = podMetricsService.getChompData();
+            
+            System.out.println("chomp:" + chomps.toString());
+        
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+        
+    }
+    
 }

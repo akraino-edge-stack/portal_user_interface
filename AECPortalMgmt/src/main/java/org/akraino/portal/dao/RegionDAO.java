@@ -22,8 +22,8 @@ import org.akraino.portal.entity.Region;
 
 public interface RegionDAO {
 
-	public List<Region> listAllRegions();
-	
-	public Region getRegion(Integer id);
-	
+    public List<Region> listAllRegions();
+    
+    public Region getRegion(Integer id);
+    
 }

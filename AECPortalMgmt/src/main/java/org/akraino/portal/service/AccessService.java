@@ -31,52 +31,52 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AccessService {
 
-	@Autowired
-	private AccessDAO accessDAO;
+    @Autowired
+    private AccessDAO accessDAO;
 
-	public void createUserSession(String userid, String tokenId) {
+    public void createUserSession(String userid, String tokenId) {
 
-		UserSession userSession = new UserSession();
-		userSession.setLoginId(userid);
-		userSession.setTokenId(tokenId);
-		userSession.setCreatedDate(new Date());
+        UserSession userSession = new UserSession();
+        userSession.setLoginId(userid);
+        userSession.setTokenId(tokenId);
+        userSession.setCreatedDate(new Date());
 
-		accessDAO.createUserSession(userSession);
+        accessDAO.createUserSession(userSession);
 
-	}
+    }
 
-	public void updateUserSession(String userid, String tokenId) {
+    public void updateUserSession(String userid, String tokenId) {
 
-		UserSession userSession = accessDAO.getUserSession(userid);
+        UserSession userSession = accessDAO.getUserSession(userid);
 
-		userSession.setTokenId(tokenId);
+        userSession.setTokenId(tokenId);
 
-		accessDAO.updateUserSession(userSession);
+        accessDAO.updateUserSession(userSession);
 
-	}
+    }
 
-	public UserSession getUserSession(String userId) {
+    public UserSession getUserSession(String userId) {
 
-		UserSession userSession = null;
-		
-		try {
-			
-			userSession = accessDAO.getUserSession(userId);
-			
-		} catch (NoResultException ne) {
-			// add logger statement
-		}
-		
-		return userSession;
+        UserSession userSession = null;
+        
+        try {
+            
+            userSession = accessDAO.getUserSession(userId);
+            
+        } catch (NoResultException ne) {
+            // add logger statement
+        }
+        
+        return userSession;
 
-	}
+    }
 
-	public void deleteUserSession(String authToken) {
+    public void deleteUserSession(String authToken) {
 
-		String userId = LoginUtil.decode(LoginUtil.getUserName(authToken));
+        String userId = LoginUtil.decode(LoginUtil.getUserName(authToken));
 
-		accessDAO.deleteUserSession(userId);
+        accessDAO.deleteUserSession(userId);
 
-	}
+    }
 
 }

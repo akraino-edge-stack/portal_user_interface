@@ -34,80 +34,80 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PodDAOImpl implements PodDAO {
-	
-	private static final Logger logger = Logger.getLogger(PodDAOImpl.class);
+    
+    private static final Logger logger = Logger.getLogger(PodDAOImpl.class);
 
-	@Autowired
-	private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
-	@Override
-	public List<Pod> getPods() {
+    @Override
+    public List<Pod> getPods() {
 
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<Pod> criteria = builder.createQuery(Pod.class);
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<Pod> criteria = builder.createQuery(Pod.class);
 
-		Root<Pod> root = criteria.from(Pod.class);
-		criteria.select(root);
+        Root<Pod> root = criteria.from(Pod.class);
+        criteria.select(root);
 
-		Query<Pod> query = getSession().createQuery(criteria);
+        Query<Pod> query = getSession().createQuery(criteria);
 
-		return query.getResultList();
+        return query.getResultList();
 
-	}
+    }
 
-	@Override
-	public Pod getPod(Integer podId) {
+    @Override
+    public Pod getPod(Integer podId) {
 
-		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
+        EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
 
-		return em.find(Pod.class, podId);
-	}
+        return em.find(Pod.class, podId);
+    }
 
-	@Override
-	public void saveOrUpdate(Pod pod) {
-		getSession().saveOrUpdate(pod);
+    @Override
+    public void saveOrUpdate(Pod pod) {
+        getSession().saveOrUpdate(pod);
 
-	}
+    }
 
-	@Override
-	public void merge(Pod pod) {
-		getSession().merge(pod);
+    @Override
+    public void merge(Pod pod) {
+        getSession().merge(pod);
 
-	}
+    }
 
-	@Override
-	public void deletePod(Pod pod) {
-		getSession().delete(pod);
+    @Override
+    public void deletePod(Pod pod) {
+        getSession().delete(pod);
 
-	}
+    }
 
-	@Override
-	public Pod getPodBySiteId(int siteId) {
+    @Override
+    public Pod getPodBySiteId(int siteId) {
 
-		Pod pod = null;
-		try {
+        Pod pod = null;
+        try {
 
-			CriteriaBuilder builder = getSession().getCriteriaBuilder();
-			CriteriaQuery<Pod> criteria = builder.createQuery(Pod.class);
+            CriteriaBuilder builder = getSession().getCriteriaBuilder();
+            CriteriaQuery<Pod> criteria = builder.createQuery(Pod.class);
 
-			Root<Pod> root = criteria.from(Pod.class);
-			criteria.select(root);
+            Root<Pod> root = criteria.from(Pod.class);
+            criteria.select(root);
 
-			criteria.where(builder.equal(root.get("siteId"), siteId));
+            criteria.where(builder.equal(root.get("siteId"), siteId));
 
-			Query<Pod> query = getSession().createQuery(criteria);
+            Query<Pod> query = getSession().createQuery(criteria);
 
-			pod = query.getSingleResult();
+            pod = query.getSingleResult();
 
-		} catch (NoResultException nre) {
-			logger.warn("pod was not found for the site:" + siteId);
-		}
+        } catch (NoResultException nre) {
+            logger.warn("pod was not found for the site:" + siteId);
+        }
 
-		return pod;
-	}
+        return pod;
+    }
 
 }

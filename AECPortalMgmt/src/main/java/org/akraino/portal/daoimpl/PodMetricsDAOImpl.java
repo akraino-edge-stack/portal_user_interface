@@ -27,23 +27,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PodMetricsDAOImpl implements PodMetricsDAO {
 
-	private static final Logger logger = Logger.getLogger(PodMetricsDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(PodMetricsDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		
-		logger.info("get Hibernate session");
-		
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Override
-	public void createPodMetrics(PodMetrics podMetrics) {
-		
-		getSession().saveOrUpdate(podMetrics);
+    protected Session getSession() {
+        
+        logger.info("get Hibernate session");
+        
+        return sessionFactory.getCurrentSession();
+    }
+    
+    @Override
+    public void createPodMetrics(PodMetrics podMetrics) {
+        
+        getSession().saveOrUpdate(podMetrics);
 
-	}
+    }
 
 }

@@ -20,54 +20,54 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NKSNNode extends NNode {
 
-	@JsonProperty("api_service_ip")
-	private String apiServiceIP;
+    @JsonProperty("api_service_ip")
+    private String apiServiceIP;
 
-	@JsonProperty("etcd_service_ip")
-	private String etcdServiceIP;
+    @JsonProperty("etcd_service_ip")
+    private String etcdServiceIP;
 
-	@JsonProperty("pod_cidr")
-	private String podCIDR;
+    @JsonProperty("pod_cidr")
+    private String podCIDR;
 
-	@JsonProperty("service_cidr")
-	private String serviceCIDR;
+    @JsonProperty("service_cidr")
+    private String serviceCIDR;
 
-	public String getApiServiceIP() {
-		return apiServiceIP;
-	}
+    public String getApiServiceIP() {
+        return apiServiceIP;
+    }
 
-	public String getEtcdServiceIP() {
-		return etcdServiceIP;
-	}
+    public String getEtcdServiceIP() {
+        return etcdServiceIP;
+    }
 
-	public String getPodCIDR() {
-		return podCIDR;
-	}
+    public String getPodCIDR() {
+        return podCIDR;
+    }
 
-	public String getServiceCIDR() {
-		return serviceCIDR;
-	}
+    public String getServiceCIDR() {
+        return serviceCIDR;
+    }
 
-	public void setApiServiceIP(String apiServiceIP) {
-		this.apiServiceIP = apiServiceIP;
-	}
+    public void setApiServiceIP(String apiServiceIP) {
+        this.apiServiceIP = apiServiceIP;
+    }
 
-	public void setEtcdServiceIP(String etcdServiceIP) {
-		this.etcdServiceIP = etcdServiceIP;
-	}
+    public void setEtcdServiceIP(String etcdServiceIP) {
+        this.etcdServiceIP = etcdServiceIP;
+    }
 
-	public void setPodCIDR(String podCIDR) {
-		this.podCIDR = podCIDR;
-	}
+    public void setPodCIDR(String podCIDR) {
+        this.podCIDR = podCIDR;
+    }
 
-	public void setServiceCIDR(String serviceCIDR) {
-		this.serviceCIDR = serviceCIDR;
-	}
+    public void setServiceCIDR(String serviceCIDR) {
+        this.serviceCIDR = serviceCIDR;
+    }
 
-	@Override
-	public String toString() {
-		return "NKSNNode [apiServiceIP=" + apiServiceIP + ", etcdServiceIP=" + etcdServiceIP + ", podCIDR=" + podCIDR
-				+ ", serviceCIDR=" + serviceCIDR + "]";
-	}
+    @Override
+    public String toString() {
+        return "NKSNNode [apiServiceIP=" + apiServiceIP + ", etcdServiceIP=" + etcdServiceIP + ", podCIDR=" + podCIDR
+                + ", serviceCIDR=" + serviceCIDR + "]";
+    }
 
 }

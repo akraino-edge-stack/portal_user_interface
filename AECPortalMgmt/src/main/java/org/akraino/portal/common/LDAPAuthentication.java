@@ -32,53 +32,53 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LDAPAuthentication {
-	
-	private static final Logger logger = Logger.getLogger(LDAPAuthentication.class);
-	
-	public static final String AUTHORIZED = "Authorized";
-	public static final String UNAUTHORIZED = "Unauthorized";
-	
-	public synchronized AccessResponse authenticateUser(String user, String pwd) {
-		
-		AccessResponse authResponse = new AccessResponse();
-		
-		try {
-			String serviceUserDN = "uid=" + user + "," + "ou=users,dc=akraino,dc=org";
-			String serviceUserPassword = pwd;
+    
+    private static final Logger logger = Logger.getLogger(LDAPAuthentication.class);
+    
+    public static final String AUTHORIZED = "Authorized";
+    public static final String UNAUTHORIZED = "Unauthorized";
+    
+    public synchronized AccessResponse authenticateUser(String user, String pwd) {
+        
+        AccessResponse authResponse = new AccessResponse();
+        
+        try {
+            String serviceUserDN = "uid=" + user + "," + "ou=users,dc=akraino,dc=org";
+            String serviceUserPassword = pwd;
 
-			Hashtable<String, String> env = new Hashtable<String, String>(11);
-			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-			env.put(Context.PROVIDER_URL, PropertyUtil.getInstance().getProperty("apacheds.ldap.url"));
-			env.put(Context.SECURITY_AUTHENTICATION, "simple");
-			env.put(Context.SECURITY_PRINCIPAL, serviceUserDN);
-			env.put(Context.SECURITY_CREDENTIALS, serviceUserPassword);
+            Hashtable<String, String> env = new Hashtable<String, String>(11);
+            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+            env.put(Context.PROVIDER_URL, PropertyUtil.getInstance().getProperty("apacheds.ldap.url"));
+            env.put(Context.SECURITY_AUTHENTICATION, "simple");
+            env.put(Context.SECURITY_PRINCIPAL, serviceUserDN);
+            env.put(Context.SECURITY_CREDENTIALS, serviceUserPassword);
 
-			LdapContext ctx = new InitialLdapContext(env, null);
-			ctx.setRequestControls(null);
-			NamingEnumeration<?> namingEnum = ctx.search("ou=users", "(objectclass=*)", getSimpleSearchControls());
+            LdapContext ctx = new InitialLdapContext(env, null);
+            ctx.setRequestControls(null);
+            NamingEnumeration<?> namingEnum = ctx.search("ou=users", "(objectclass=*)", getSimpleSearchControls());
 
-			while (namingEnum.hasMore()) {
-				SearchResult result = (SearchResult) namingEnum.next ();
-				Attributes attrs = result.getAttributes();
-				authResponse.setMessage(AUTHORIZED);
-			}
-		}
-		catch (Exception e) {
-			logger.error(e);
+            while (namingEnum.hasMore()) {
+                SearchResult result = (SearchResult) namingEnum.next ();
+                Attributes attrs = result.getAttributes();
+                authResponse.setMessage(AUTHORIZED);
+            }
+        }
+        catch (Exception e) {
+            logger.error(e);
 
-			authResponse.setMessage(UNAUTHORIZED);
-		}
-		
-		return authResponse;
-		
-	}
+            authResponse.setMessage(UNAUTHORIZED);
+        }
+        
+        return authResponse;
+        
+    }
 
-	private synchronized SearchControls getSimpleSearchControls() {
-	    SearchControls searchControls = new SearchControls();
-	    searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-	    searchControls.setTimeLimit(0);
-	    searchControls.setCountLimit(1000);
+    private synchronized SearchControls getSimpleSearchControls() {
+        SearchControls searchControls = new SearchControls();
+        searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+        searchControls.setTimeLimit(0);
+        searchControls.setCountLimit(1000);
 
-	    return searchControls;
-	}
+        return searchControls;
+    }
 }

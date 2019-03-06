@@ -18,34 +18,34 @@ package org.akraino.portal.data;
 
 public class SiteRequest {
 
-	private String name;
-	
-	private Integer regionId;
-	
-	private String location;
+    private String name;
+    
+    private Integer regionId;
+    
+    private String location;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getRegionId() {
-		return regionId;
-	}
+    public Integer getRegionId() {
+        return regionId;
+    }
 
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
-	}
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
 }

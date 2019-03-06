@@ -49,12 +49,12 @@
 
                  if (currPod == undefined) {
                      var newPOD = {
-                    	podname: "value",
+                        podname: "value",
                          racks: "value"
                      };
                      var rack = {
-                    		 rackname: "value",
-                    		 rackPersonality: "value"
+                             rackname: "value",
+                             rackPersonality: "value"
                      };
                      var newRacks = new Array();
 
@@ -66,8 +66,8 @@
                      pods.push(newPOD);
                  } else {
                      var newRack = {
-                    		 rackname: "value",
-                    		 rackPersonality: "value"
+                             rackname: "value",
+                             rackPersonality: "value"
                      };
                      newRack.rackname = $scope.rackName;
                      newRack.rackPersonality = $scope.rackType;
@@ -97,14 +97,14 @@
 
          }
          $scope.editRack = function() {
-        	 $scope.showSaveButton = true;
-        	 $scope.rackSelection = false;
-        	 $scope.editRackButton = true;
+             $scope.showSaveButton = true;
+             $scope.rackSelection = false;
+             $scope.editRackButton = true;
              $scope.deleteRackButton = true;
             // var h = pods.length;
              console.log($scope.rackName + $scope.podName);
              for (var i = 0; i < pods.length; i++) {
-            	 if(pods[i].podname == $scope.podName){
+                 if(pods[i].podname == $scope.podName){
                  for (var j = 0; j < pods[i].racks.length; j++) {
                      if (pods[i].racks[j].rackname == $scope.rackName) {
                          pods[i].racks[j].rackname = $scope.rackName;
@@ -113,21 +113,21 @@
                      }
                      
                  }
-            	 } 
+                 } 
 
              }
              $scope.processMessage = "Rack has been edited,successfully.Please save the POD";
              $scope.showProcessMessage = true;
              $timeout(function() {
-            	 $scope.showProcessMessage = false;
+                 $scope.showProcessMessage = false;
                  
               }, 5000);
          }
          $scope.deleteRack = function() {
-        	 $scope.showSaveButton = true;
-        	 $scope.rackSelection = false;
-        	 $scope.showProcessMessage = true;
-        	 $scope.editRackButton = true;
+             $scope.showSaveButton = true;
+             $scope.rackSelection = false;
+             $scope.showProcessMessage = true;
+             $scope.editRackButton = true;
              $scope.deleteRackButton = true;
             // var h = pods.length;
              for (var i = 0; i < pods.length; i++) {
@@ -154,16 +154,16 @@
              console.log( $scope.processMessage);
              $scope.showProcessMessage = true;
              $timeout(function() {
-            	 $scope.showProcessMessage = false;
+                 $scope.showProcessMessage = false;
                  
               }, 5000);
 
 
          }
              $scope.editPOD = function() {
-            	 $scope.showPod = false;
-            	 $scope.podHeader = "Edit Pod";
-            	 $scope.editPodButton = true;
+                 $scope.showPod = false;
+                 $scope.podHeader = "Edit Pod";
+                 $scope.editPodButton = true;
                  $scope.deletePodButton = true;
                  $scope.showCreatePods = true;
                  $scope.showPodDetails = false;
@@ -176,7 +176,7 @@
 
              }
              $scope.deletePOD = function() {
-            	 $scope.editPodButton = true;
+                 $scope.editPodButton = true;
                  $scope.deletePodButton = true;
                  $scope.showCreatePods = false;
                  $scope.showPodDetails = false;
@@ -186,15 +186,15 @@
                  for (var i = 0; i < pods.length; i++) {
 
                      if(pods[i].podname == $scope.podName){
-                    	 pods.splice(i, 1);
+                         pods.splice(i, 1);
                       }
 
 
 
                       }
                  var savePodDelete = JSON.stringify(pods);
-            	 //$scope.savePods = JSON.parse($scope.savePod);
-            	 $scope.savePod = savePodDelete.substring(1,savePodDelete.length-1);
+                 //$scope.savePods = JSON.parse($scope.savePod);
+                 $scope.savePod = savePodDelete.substring(1,savePodDelete.length-1);
                  $http({
                      method: 'PUT',
                      url :appContext+'/pod/',
@@ -212,20 +212,20 @@
                      console.log( $scope.processMessage);
                      $scope.showProcessMessage = true;
                      $timeout(function() {
-                    	 $scope.showProcessMessage = false;
+                         $scope.showProcessMessage = false;
                          
                       }, 5000);
 
                  }, function(error) {
-                 	
-                 	
+                     
+                     
                  });
                  console.log(pods);
                  $scope.processPodMessage = "POD has been deleted,successfully.";
                  console.log( $scope.processPodMessage);
                  $scope.showProcessPodMessage = true;
                  $timeout(function() {
-                	 $scope.showProcessPodMessage = false;
+                     $scope.showProcessPodMessage = false;
                      
                   }, 5000);
                  $scope.podData = pods;
@@ -265,9 +265,9 @@
                  $scope.clickedPodName = $scope.showPodName;
              }
              $scope.createPOD = function() {
-            	 $scope.showPod = false;
-            	 $scope.podHeader = "Create Pod";
-            	 $scope.readOnlyPod = false;
+                 $scope.showPod = false;
+                 $scope.podHeader = "Create Pod";
+                 $scope.readOnlyPod = false;
                  $scope.readOnlyRack = false;
                  $scope.showCreatePods = true;
                  $scope.showPodDetails = false;
@@ -318,15 +318,15 @@
                  return (begin <= index && index < end);
              };
              $scope.saveRacks = function(){
-            	 $scope.showPod = true;
-            	 $scope.showCreatePods = false;
-            	 console.log("Save Pod");
-            	 var savePods = JSON.stringify(pods);
-            	 //$scope.savePods = JSON.parse($scope.savePod);
-            	 $scope.savePod = savePods.substring(1,savePods.length-1);
-            	 console.log($scope.savePod);
-            	 if($scope.check == 1){
-            	 $http({
+                 $scope.showPod = true;
+                 $scope.showCreatePods = false;
+                 console.log("Save Pod");
+                 var savePods = JSON.stringify(pods);
+                 //$scope.savePods = JSON.parse($scope.savePod);
+                 $scope.savePod = savePods.substring(1,savePods.length-1);
+                 console.log($scope.savePod);
+                 if($scope.check == 1){
+                 $http({
                      method: 'PUT',
                      url: appContext+'/pod/',
                     // url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
@@ -343,18 +343,18 @@
                      console.log( $scope.processMessage);
                      $scope.showProcessMessage = true;
                      $timeout(function() {
-                    	 $scope.showProcessMessage = false;
+                         $scope.showProcessMessage = false;
                          
                       }, 5000);
 
                  }, function(error) {
-                 	
-                 	
+                     
+                     
                  });
              }
              
              else{
-            	 $http({
+                 $http({
                      method: 'POST',
                      url: appContext+'/pod/',
                      //url: 'http://' + hostUrl + '/AECPortalMgmt/pod/',
@@ -371,13 +371,13 @@
                      console.log( $scope.processMessage);
                      $scope.showProcessMessage = true;
                      $timeout(function() {
-                    	 $scope.showProcessMessage = false;
+                         $scope.showProcessMessage = false;
                          
                       }, 5000);
 
                  }, function(error) {
-                 	
-                 	
+                     
+                     
                  });
              }
              }

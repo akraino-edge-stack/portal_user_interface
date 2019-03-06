@@ -33,35 +33,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/test")
 public class TestETEController {
 
-	@Autowired
-	TestETEService testETEService;
-	
-	private static final Logger logger = Logger.getLogger(TestETEController.class);
+    @Autowired
+    TestETEService testETEService;
+    
+    private static final Logger logger = Logger.getLogger(TestETEController.class);
 
-	@RequestMapping(value = "/tempest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AECPortalResponse> runTempest(@RequestBody TempestRequest requestPayLoad) {
+    @RequestMapping(value = "/tempest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AECPortalResponse> runTempest(@RequestBody TempestRequest requestPayLoad) {
 
-		AECPortalResponse response = new AECPortalResponse();
-		
-		logger.info("runTempest - " + requestPayLoad);
+        AECPortalResponse response = new AECPortalResponse();
+        
+        logger.info("runTempest - " + requestPayLoad);
 
-		try {
+        try {
 
-			testETEService.runTempest(requestPayLoad);
+            testETEService.runTempest(requestPayLoad);
 
-			response.setEntity("Tempest");
-			response.setStatusCode("200");
-			response.setMessage("Tempest call initiated successfuly");
+            response.setEntity("Tempest");
+            response.setStatusCode("200");
+            response.setMessage("Tempest call initiated successfuly");
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			response.setEntity("Tempest");
-			response.setStatusCode("406");
-			response.setMessage("Tempest call initiation failed");
+            response.setEntity("Tempest");
+            response.setStatusCode("406");
+            response.setMessage("Tempest call initiation failed");
 
-		}
+        }
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
-	}
+    }
 }

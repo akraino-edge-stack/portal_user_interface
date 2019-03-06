@@ -30,49 +30,49 @@ import javax.persistence.Table;
 @Table(name = "akraino.software")
 public class Software implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "software_id_generator")
-	@SequenceGenerator(name = "software_id_generator", sequenceName = "akraino.seq_software", allocationSize = 1)
-	@Column(name = "software_id")
-	private Long softwareId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "software_id_generator")
+    @SequenceGenerator(name = "software_id_generator", sequenceName = "akraino.seq_software", allocationSize = 1)
+    @Column(name = "software_id")
+    private Long softwareId;
 
-	@Column(name = "software_name")
-	private String softwareName;
+    @Column(name = "software_name")
+    private String softwareName;
 
-	@Column(name = "software_version")
-	private String softwareVersion;
+    @Column(name = "software_version")
+    private String softwareVersion;
 
-	public Long getSoftwareId() {
-		return softwareId;
-	}
+    public Long getSoftwareId() {
+        return softwareId;
+    }
 
-	public void setSoftwareId(Long softwareId) {
-		this.softwareId = softwareId;
-	}
+    public void setSoftwareId(Long softwareId) {
+        this.softwareId = softwareId;
+    }
 
-	public String getSoftwareName() {
-		return softwareName;
-	}
+    public String getSoftwareName() {
+        return softwareName;
+    }
 
-	public void setSoftwareName(String softwareName) {
-		this.softwareName = softwareName;
-	}
+    public void setSoftwareName(String softwareName) {
+        this.softwareName = softwareName;
+    }
 
-	public String getSoftwareVersion() {
-		return softwareVersion;
-	}
+    public String getSoftwareVersion() {
+        return softwareVersion;
+    }
 
-	public void setSoftwareVersion(String softwareVersion) {
-		this.softwareVersion = softwareVersion;
-	}
+    public void setSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
 }

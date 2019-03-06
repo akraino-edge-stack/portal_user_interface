@@ -17,14 +17,14 @@
 package org.akraino.portal.common;
 
 public class RestRequestBody<T> {
-	
-	private T t;
+    
+    private T t;
 
-	public T getT() {
-		return t;
-	}
+    public T getT() {
+        return t;
+    }
 
-	public void setT(T t) {
-		this.t = t;
-	}
+    public void setT(T t) {
+        this.t = t;
+    }
 }

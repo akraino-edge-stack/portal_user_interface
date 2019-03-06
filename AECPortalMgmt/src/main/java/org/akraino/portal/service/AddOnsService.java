@@ -45,126 +45,126 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AddOnsService {
 
-	private static final Logger logger = Logger.getLogger(AddOnsService.class);
-	
-	@Autowired
-	private AddOnsDAO addOnsDAO;
-	
-	@Autowired
-	private EdgeSiteDAO edgeSiteDAO;
-	
-	@Autowired
-	EdgeSiteService edgeSiteService;
-	
-	private String akrainoBaseDir = null;
-	
-	public AddOnsService() {
-		
-		akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
-		
-	}
-	
-	public boolean saveOnapInput(byte[] fileContent, String siteName) throws IOException {
+    private static final Logger logger = Logger.getLogger(AddOnsService.class);
+    
+    @Autowired
+    private AddOnsDAO addOnsDAO;
+    
+    @Autowired
+    private EdgeSiteDAO edgeSiteDAO;
+    
+    @Autowired
+    EdgeSiteService edgeSiteService;
+    
+    private String akrainoBaseDir = null;
+    
+    public AddOnsService() {
+        
+        akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
+        
+    }
+    
+    public boolean saveOnapInput(byte[] fileContent, String siteName) throws IOException {
 
-		EdgeSite edgeSite = null;
-		FileOutputStream out = null;
-		
-		try {
-			// read input file from db
-			edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteName);
-			
-			if (edgeSite != null) {
-				Onap onap = getOnap(siteName);
-				if (onap == null) {
-					//onap is not installed on the edge site
-					onap = new Onap();
-					onap.setEdgeSite(edgeSite);
-				}
-				onap.setInputFile(fileContent);
-				//update DB with inputfile
-				addOnsDAO.saveOnap(onap);
-				
-				// copy input file
-				String filepath = akrainoBaseDir + "/onap/parameters.env";
-				//String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteName + ".onap";
-				
-				Path path = Paths.get(filepath);
-	            Files.createDirectories(path.getParent());
+        EdgeSite edgeSite = null;
+        FileOutputStream out = null;
+        
+        try {
+            // read input file from db
+            edgeSite = edgeSiteDAO.getEdgeSiteDetails(siteName);
+            
+            if (edgeSite != null) {
+                Onap onap = getOnap(siteName);
+                if (onap == null) {
+                    //onap is not installed on the edge site
+                    onap = new Onap();
+                    onap.setEdgeSite(edgeSite);
+                }
+                onap.setInputFile(fileContent);
+                //update DB with inputfile
+                addOnsDAO.saveOnap(onap);
+                
+                // copy input file
+                String filepath = akrainoBaseDir + "/onap/parameters.env";
+                //String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteName + ".onap";
+                
+                Path path = Paths.get(filepath);
+                Files.createDirectories(path.getParent());
 
-				out = new FileOutputStream(filepath);
-				out.write(fileContent);
-				
+                out = new FileOutputStream(filepath);
+                out.write(fileContent);
+                
 
 
-				return true;
-			}
+                return true;
+            }
 
-			
-		} catch (NoResultException e) {
-			logger.info("no edge site found");
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-		}
-		
-		return false;
-	}
-	
-	public Onap getOnap(String siteName) {
-		
-		
-		Onap onap = null;
-		try {
-			
-			onap = addOnsDAO.getOnap(siteName);
-			
-		} catch (NoResultException e) {
-			
-			return null;
-		}
-		
-		return onap;
-	}
-	
-	public List <Onap> getOnapList() {
-		
-		List <Onap> onapList = addOnsDAO.getOnapList();
-		
-		return onapList;
-	}
-	
-	public EdgeSiteState installOnap(WorkflowRequest onapRequest) {
-		
-		EdgeSiteState siteState = new EdgeSiteState();
-		siteState.setSiteName(onapRequest.getSitename());
+            
+        } catch (NoResultException e) {
+            logger.info("no edge site found");
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+        
+        return false;
+    }
+    
+    public Onap getOnap(String siteName) {
+        
+        
+        Onap onap = null;
+        try {
+            
+            onap = addOnsDAO.getOnap(siteName);
+            
+        } catch (NoResultException e) {
+            
+            return null;
+        }
+        
+        return onap;
+    }
+    
+    public List <Onap> getOnapList() {
+        
+        List <Onap> onapList = addOnsDAO.getOnapList();
+        
+        return onapList;
+    }
+    
+    public EdgeSiteState installOnap(WorkflowRequest onapRequest) {
+        
+        EdgeSiteState siteState = new EdgeSiteState();
+        siteState.setSiteName(onapRequest.getSitename());
 
-		try {
+        try {
 
-			String onapURI = PropertyUtil.getInstance().getProperty("camunda.onap.uri");
+            String onapURI = PropertyUtil.getInstance().getProperty("camunda.onap.uri");
 
-			RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
-			requestObj.setT(onapRequest);
+            RestRequestBody<WorkflowRequest> requestObj = new RestRequestBody<WorkflowRequest>();
+            requestObj.setT(onapRequest);
 
-			RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
-			responseObj.setT(new EdgeSiteState());
+            RestResponseBody<EdgeSiteState> responseObj = new RestResponseBody<EdgeSiteState>();
+            responseObj.setT(new EdgeSiteState());
 
-			siteState = RestInterface.sendPOST(onapURI, requestObj, responseObj);
+            siteState = RestInterface.sendPOST(onapURI, requestObj, responseObj);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			throw e;
+            throw e;
 
-		} finally {
-			
-			if (!StringUtil.notEmpty(siteState.getOnapStatus())) {
-				siteState.setOnapStatus("Error invoking Camunda API");
-			}
+        } finally {
+            
+            if (!StringUtil.notEmpty(siteState.getOnapStatus())) {
+                siteState.setOnapStatus("Error invoking Camunda API");
+            }
 
-			edgeSiteService.updateSiteStatus(siteState);
-		}
-		
-		return siteState;
-		
-	}
+            edgeSiteService.updateSiteStatus(siteState);
+        }
+        
+        return siteState;
+        
+    }
 }

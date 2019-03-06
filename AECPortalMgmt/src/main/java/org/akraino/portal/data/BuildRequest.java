@@ -17,26 +17,26 @@
 package org.akraino.portal.data;
 
 public class BuildRequest extends WorkflowRequest {
-	
-	private String blueprint;
-	private String targetfolder;
-	
-	@Override
-	public String toString() {
-		return "BuildRequest [blueprint=" + blueprint + ", targetfolder=" + targetfolder + "]";
-	}
-	
-	public String getBlueprint() {
-		return blueprint;
-	}
-	public void setBlueprint(String blueprint) {
-		this.blueprint = blueprint;
-	}
-	public String getTargetfolder() {
-		return targetfolder;
-	}
-	public void setTargetfolder(String targetfolder) {
-		this.targetfolder = targetfolder;
-	}
+    
+    private String blueprint;
+    private String targetfolder;
+    
+    @Override
+    public String toString() {
+        return "BuildRequest [blueprint=" + blueprint + ", targetfolder=" + targetfolder + "]";
+    }
+    
+    public String getBlueprint() {
+        return blueprint;
+    }
+    public void setBlueprint(String blueprint) {
+        this.blueprint = blueprint;
+    }
+    public String getTargetfolder() {
+        return targetfolder;
+    }
+    public void setTargetfolder(String targetfolder) {
+        this.targetfolder = targetfolder;
+    }
 
 }

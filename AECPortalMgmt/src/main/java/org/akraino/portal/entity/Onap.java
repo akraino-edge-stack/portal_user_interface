@@ -32,50 +32,50 @@ import javax.persistence.Table;
 @Table(name="akraino.onap")
 public class Onap implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "onap_id_generator")
-	@SequenceGenerator(name="onap_id_generator", sequenceName = "akraino.seq_onap", allocationSize=1)
-	@Column(name="onap_id")
-	private int onapId; 
-	
-	@OneToOne
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "onap_id_generator")
+    @SequenceGenerator(name="onap_id_generator", sequenceName = "akraino.seq_onap", allocationSize=1)
+    @Column(name="onap_id")
+    private int onapId; 
+    
+    @OneToOne
     @JoinColumn(name = "edge_site_id")
-	private EdgeSite edgeSite;
-	
-	@Column(name = "input_file")
-	private byte [] inputFile;
+    private EdgeSite edgeSite;
+    
+    @Column(name = "input_file")
+    private byte [] inputFile;
 
-	public int getOnapId() {
-		return onapId;
-	}
+    public int getOnapId() {
+        return onapId;
+    }
 
-	public void setOnapId(int onapId) {
-		this.onapId = onapId;
-	}
+    public void setOnapId(int onapId) {
+        this.onapId = onapId;
+    }
 
-	public EdgeSite getEdgeSite() {
-		return edgeSite;
-	}
+    public EdgeSite getEdgeSite() {
+        return edgeSite;
+    }
 
-	public void setEdgeSite(EdgeSite edgeSite) {
-		this.edgeSite = edgeSite;
-	}
+    public void setEdgeSite(EdgeSite edgeSite) {
+        this.edgeSite = edgeSite;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public byte[] getInputFile() {
-		return inputFile;
-	}
+    public byte[] getInputFile() {
+        return inputFile;
+    }
 
-	public void setInputFile(byte[] inputFile) {
-		this.inputFile = inputFile;
-	}
-	
+    public void setInputFile(byte[] inputFile) {
+        this.inputFile = inputFile;
+    }
+    
 }

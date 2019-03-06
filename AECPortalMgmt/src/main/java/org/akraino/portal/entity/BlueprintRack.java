@@ -35,50 +35,50 @@ import javax.persistence.Table;
 @Table(name = "akraino.blueprint_rack")
 public class BlueprintRack implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rack_id_generator")
-	@SequenceGenerator(name = "rack_id_generator", sequenceName = "akraino.seq_rack", allocationSize = 1)
-	@Column(name = "brack_id")
-	private Long bRackId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rack_id_generator")
+    @SequenceGenerator(name = "rack_id_generator", sequenceName = "akraino.seq_rack", allocationSize = 1)
+    @Column(name = "brack_id")
+    private Long bRackId;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "brack_id")
-	private Set<EdgeNode> edgeNodes;
-	
-	@OneToOne
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "brack_id")
+    private Set<EdgeNode> edgeNodes;
+    
+    @OneToOne
     @JoinColumn(name = "grack_id")
-	private GenericRack gRack;
+    private GenericRack gRack;
 
-	public Long getbRackId() {
-		return bRackId;
-	}
+    public Long getbRackId() {
+        return bRackId;
+    }
 
-	public void setbRackId(Long bRackId) {
-		this.bRackId = bRackId;
-	}
+    public void setbRackId(Long bRackId) {
+        this.bRackId = bRackId;
+    }
 
-	public Set<EdgeNode> getEdgeNodes() {
-		return edgeNodes;
-	}
+    public Set<EdgeNode> getEdgeNodes() {
+        return edgeNodes;
+    }
 
-	public void setEdgeNodes(Set<EdgeNode> edgeNodes) {
-		this.edgeNodes = edgeNodes;
-	}
+    public void setEdgeNodes(Set<EdgeNode> edgeNodes) {
+        this.edgeNodes = edgeNodes;
+    }
 
-	public GenericRack getgRack() {
-		return gRack;
-	}
+    public GenericRack getgRack() {
+        return gRack;
+    }
 
-	public void setgRack(GenericRack gRack) {
-		this.gRack = gRack;
-	}
+    public void setgRack(GenericRack gRack) {
+        this.gRack = gRack;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }
