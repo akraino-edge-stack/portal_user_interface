@@ -35,22 +35,22 @@ import junit.framework.TestCase;
 @WebAppConfiguration
 public class RegionServiceTest extends TestCase {
 
-	@Autowired
+    @Autowired
     @Qualifier("regionService")
-	RegionService regionService;
-	
-	@Test
+    RegionService regionService;
+    
+    @Test
     public void testrun() {
-		
-		try {
-			List<Region> regions = regionService.listAllRegions();
-			
-			System.out.println("size" + regions.size());
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+        
+        try {
+            List<Region> regions = regionService.listAllRegions();
+            
+            System.out.println("size" + regions.size());
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
 }

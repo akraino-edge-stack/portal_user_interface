@@ -81,9 +81,9 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         $scope.currentPage = this.n;
     }
     $scope.refreshtempestRegionChange = function(){
-    	$scope.tempestselection = false;
-    	eteTestSitesDisplay ();
-    	 $scope.siteIndex  = "";
+        $scope.tempestselection = false;
+        eteTestSitesDisplay ();
+         $scope.siteIndex  = "";
     }
     var eteTestSitesDisplay = function() {
         $http({
@@ -93,22 +93,22 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
-                	'tokenId' : $scope.tokenId
+                    'tokenId' : $scope.tokenId
             }
         }).then(function(response) {
             $scope.tempestSites = response.data.sort(function(a, b){
-    		    //note the minus before -cmp, for descending order
-    		    return $scope.cmp( 
-    		        [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
-    		        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
-    		    );
-    		});
+                //note the minus before -cmp, for descending order
+                return $scope.cmp( 
+                    [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+                    [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+                );
+            });
             
             console.log($scope.tempestSites);
             $scope.search();
             $scope.showtempestSitesTable = true;
         }, function(error) {
-        	 $scope.errorHandle(error);
+             $scope.errorHandle(error);
         });
     }
     eteTestSitesDisplay();
@@ -127,43 +127,43 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
                 }
             }).then(function(response) {
                 $scope.tempestSites = response.data.sort(function(a, b){
-        		    //note the minus before -cmp, for descending order
-        		    return $scope.cmp( 
-        		        [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
-        		        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
-        		    );
-        		});
+                    //note the minus before -cmp, for descending order
+                    return $scope.cmp( 
+                        [$scope.cmp(a.region.regionName, b.region.regionName), $scope.cmp(a.edgeSiteName, b.edgeSiteName)], 
+                        [$scope.cmp(b.region.regionName, a.region.regionName), $scope.cmp(b.edgeSiteName, a.edgeSiteName)]
+                    );
+                });
                 var abc =  $scope.tempestSites.filter(function(d) { return d.region.regionId === $scope.selectedtempestRegion.regionId });
                 $scope.tempestSites = abc;
                 $scope.showtempestSitesTable = true;
                 $scope.search();
             }, function(error) {
-            	 $scope.errorHandle(error);
+                 $scope.errorHandle(error);
             });
         }
     }
     $scope.tempestUpdate = function(index) {
-    	if($scope.itemsPerPage > 6){
-    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
-    	        console.log($scope.rowIndex);
-    	        $scope.siteIndex  = $scope.rowIndex;
-    	    	}
-    	    	else{
-    	    		$scope.siteIndex = index;
-    	    	}
-    	//$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+        if($scope.itemsPerPage > 6){
+            $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+                console.log($scope.rowIndex);
+                $scope.siteIndex  = $scope.rowIndex;
+                }
+                else{
+                    $scope.siteIndex = index;
+                }
+        //$scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
        // $scope.siteIndex = index;
         $scope.tempestSelectButton = false;
         console.log($scope.siteIndex);
     }
     $scope.runTempest = function(siteIndex) {
-    	console.log(siteIndex);
-    	$scope.tempestSites[siteIndex].tempestStatus = 'In Progress...';
-    	$http({
+        console.log(siteIndex);
+        $scope.tempestSites[siteIndex].tempestStatus = 'In Progress...';
+        $http({
      method: 'POST',
      url: appContext+'/test/tempest',
      data: {
-    	 "sitename": $scope.tempestSites[siteIndex].edgeSiteName,
+         "sitename": $scope.tempestSites[siteIndex].edgeSiteName,
         "remoteserver": $scope.tempestSites[siteIndex].edgeSiteIP,
         "username":$scope.tempestSites[siteIndex].edgeSiteUser,
         "password":$scope.tempestSites[siteIndex].edgeSitePwd,
@@ -184,7 +184,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
          'Accept': "application/json",
      }
  }).then(function(response) {
- 	if (response.status == 200) {
+     if (response.status == 200) {
         //$scope.tempestSites[siteIndex].tempestStatus = 'Completed...';
        /* $http({
                      method: 'POST',
@@ -193,7 +193,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
                      data:{
                      "siteName": $scope.tempestSites[siteIndex].edgeSiteName,
                      "tempestStatus":"In Progress" 
-                     	
+                         
                      },
                      headers: {
                          'Content-Type': "application/json",
@@ -201,26 +201,26 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
                          'tokenId' : $scope.tokenId
                      }
                  }).then(function(response) {
-                 	
+                     
                  }, function(error) {
-                 	$scope.errorHandle(error);
+                     $scope.errorHandle(error);
                  });*/
        
-    	}
-    	else {
-    		$scope.tempestSites[siteIndex].tempestStatus = response.data.message;
+        }
+        else {
+            $scope.tempestSites[siteIndex].tempestStatus = response.data.message;
         }
     }, function(error) {
-    	$scope.tempestSites[siteIndex].tempestStatus = "Error"
+        $scope.tempestSites[siteIndex].tempestStatus = "Error"
     });
 }
     $scope.opentempestDialog = function(index) {
-    	if($scope.itemsPerPage > 6){
-    	    $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
-    	        console.log($scope.rowIndex);
-    	        index  = $scope.rowIndex;
-    	    	}
-    	    	
+        if($scope.itemsPerPage > 6){
+            $scope.rowIndex = ($scope.currentPage-1)*$scope.itemsPerPage+index+1;
+                console.log($scope.rowIndex);
+                index  = $scope.rowIndex;
+                }
+                
         $scope.siteName = $scope.tempestSites[index].edgeSiteName;
         $scope.osUsername = "admin";
         $scope.osPassword = "password";
@@ -247,7 +247,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
     }).then(function(response) {
         $scope.tempestregions = response.data;
     }, function(error) {
-    	$scope.errorHandle(error);
+        $scope.errorHandle(error);
     });
 });
 angular.module('PortalManagement').controller('PopUptempestController', function($scope, ngDialog) {

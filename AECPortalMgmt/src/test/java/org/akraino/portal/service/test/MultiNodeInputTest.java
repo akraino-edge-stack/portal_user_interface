@@ -34,40 +34,40 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 import junit.framework.TestCase;
 
 public class MultiNodeInputTest extends TestCase {
-	
-	private static final String MULTI_NODE_INPUT_FILENAME = "multi-node-input-file-hpgen10.yaml";
-	
-	private static final String MULTI_NODE_OUTPUT_FILENAME = "/multi-node-output-file-hpgen10.yaml";
-	
-	@Test
-	public void testRun() {
-		
-		File yamlFile = new File(AppConfig.class.getClassLoader().getResource(MULTI_NODE_INPUT_FILENAME).getPath());
-		
-		ObjectMapper mapper = new ObjectMapper(
-				new YAMLFactory()
-				.enable(Feature.MINIMIZE_QUOTES)
-				.enable(Feature.WRITE_DOC_START_MARKER)
-				)
-				.disable(SerializationFeature.WRITE_NULL_MAP_VALUES)
-				.setSerializationInclusion(Include.NON_NULL);
-		
-		try {
-			NPod npod = mapper.readValue(yamlFile, NPod.class);
-			
-			mapper.writeValue(new File(yamlFile.getParent()+MULTI_NODE_OUTPUT_FILENAME), npod);
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    
+    private static final String MULTI_NODE_INPUT_FILENAME = "multi-node-input-file-hpgen10.yaml";
+    
+    private static final String MULTI_NODE_OUTPUT_FILENAME = "/multi-node-output-file-hpgen10.yaml";
+    
+    @Test
+    public void testRun() {
+        
+        File yamlFile = new File(AppConfig.class.getClassLoader().getResource(MULTI_NODE_INPUT_FILENAME).getPath());
+        
+        ObjectMapper mapper = new ObjectMapper(
+                new YAMLFactory()
+                .enable(Feature.MINIMIZE_QUOTES)
+                .enable(Feature.WRITE_DOC_START_MARKER)
+                )
+                .disable(SerializationFeature.WRITE_NULL_MAP_VALUES)
+                .setSerializationInclusion(Include.NON_NULL);
+        
+        try {
+            NPod npod = mapper.readValue(yamlFile, NPod.class);
+            
+            mapper.writeValue(new File(yamlFile.getParent()+MULTI_NODE_OUTPUT_FILENAME), npod);
+            
+        } catch (JsonParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	}
+    }
 
 }

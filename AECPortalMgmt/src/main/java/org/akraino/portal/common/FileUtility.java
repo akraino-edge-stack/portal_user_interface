@@ -25,29 +25,29 @@ import java.nio.file.Paths;
 
 public class FileUtility {
 
-	/**
-	 * Write an array of bytes to a file, converting CRLF to LF along the way.
-	 * @param filePath the pathname of the file to write
-	 * @param fileContent the array of bytes to write
-	 * @throws IOException if an I/O problem occurs
-	 */
-	public static void writeToFile(final String filePath, final byte[] fileContent) throws IOException {
+    /**
+     * Write an array of bytes to a file, converting CRLF to LF along the way.
+     * @param filePath the pathname of the file to write
+     * @param fileContent the array of bytes to write
+     * @throws IOException if an I/O problem occurs
+     */
+    public static void writeToFile(final String filePath, final byte[] fileContent) throws IOException {
 
-		FileOutputStream out = null;
-		try {
-			// Convert CRLF to LF
-			String s = new String(fileContent).replaceAll("\r\n", "\n");
+        FileOutputStream out = null;
+        try {
+            // Convert CRLF to LF
+            String s = new String(fileContent).replaceAll("\r\n", "\n");
 
-			Path path = Paths.get(filePath);
-			Files.createDirectories(path.getParent());
+            Path path = Paths.get(filePath);
+            Files.createDirectories(path.getParent());
 
-			File file = new File(filePath);
-			out = new FileOutputStream(file);
-			out.write(s.getBytes());
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-		}
-	}
+            File file = new File(filePath);
+            out = new FileOutputStream(file);
+            out.write(s.getBytes());
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
 }

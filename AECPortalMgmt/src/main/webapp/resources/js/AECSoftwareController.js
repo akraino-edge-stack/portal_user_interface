@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 angular.module('PortalManagement').controller('AECSoftwareController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller,appContext) {
-	 $controller('commonController', { $scope: $scope }); 
-	$scope.NodeName ="Site Ipaddress";
-	$scope.NodeType ="Software Name";
-	$scope.Model ="Version";
-	$scope.softwareSiteNameDetail = localStorage.getItem("accessSiteName");
+     $controller('commonController', { $scope: $scope }); 
+    $scope.NodeName ="Site Ipaddress";
+    $scope.NodeType ="Software Name";
+    $scope.Model ="Version";
+    $scope.softwareSiteNameDetail = localStorage.getItem("accessSiteName");
     if ($scope.softwareSiteNameDetail != null) {
         $scope.softwareSiteReplace = "Rover,Unicycle," + $scope.softwareSiteNameDetail.replace("null,", "");
     } else {
@@ -33,10 +33,10 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
     });
     $scope.showBlueprintTable = function() {
         if ($scope.selectSoftwareBlueprint == 'Rover') {
-        	$scope.NodeName ="Site Ipaddress";
-        	$scope.NodeType ="Software Name";
-        	$scope.Model ="Version";
-        	$http({
+            $scope.NodeName ="Site Ipaddress";
+            $scope.NodeType ="Software Name";
+            $scope.Model ="Version";
+            $http({
                 method: 'GET',
                 url: appContext+'/softwareRover.txt',
                // url: 'http://' + hostUrl + '/AECPortalMgmt/softwareRover.txt',
@@ -45,15 +45,15 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
                     'Accept': "application/json"
                 }
             }).then(function(response) {
-            	 $scope.softwareDetails  = response.data;
-            	 $scope.showsoftwareTable = true;
+                 $scope.softwareDetails  = response.data;
+                 $scope.showsoftwareTable = true;
             }, function(error) {});
 
         } else if ($scope.selectSoftwareBlueprint == 'Unicycle') {
-        	$scope.NodeName ="Site Ipaddress";
-        	$scope.NodeType ="Software Name";
-        	$scope.Model ="Version";
-        	$http({
+            $scope.NodeName ="Site Ipaddress";
+            $scope.NodeType ="Software Name";
+            $scope.Model ="Version";
+            $http({
                 method: 'GET',
                 url: appContext+'/softwareUnicycle.txt',
                 //url: 'http://' + hostUrl + '/AECPortalMgmt/softwareUnicycle.txt',
@@ -62,15 +62,15 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
                     'Accept': "application/json"
                 }
             }).then(function(response) {
-            	$scope.softwareDetails  = response.data;
-           	 $scope.showsoftwareTable = true;
+                $scope.softwareDetails  = response.data;
+                $scope.showsoftwareTable = true;
             }, function(error) {});
 
 
         } else {
-        	$scope.NodeName ="Node(host)";
-        	$scope.NodeType ="Node Type";
-        	$scope.Model ="H/W Model";
+            $scope.NodeName ="Node(host)";
+            $scope.NodeType ="Node Type";
+            $scope.Model ="H/W Model";
             console.log(localStorage.getItem($scope.selectSoftwareBlueprint));
             $scope.softwareDetails = $scope.$eval(localStorage.getItem($scope.selectSoftwareBlueprint));
             $scope.showsoftwareTable = true;
@@ -96,9 +96,9 @@ angular.module('PortalManagement').controller('AECSoftwareController', function(
             'Accept': "application/json"
         }
     }).then(function(response) {
-    	 $scope.softwareDetails  = response.data;
-    	 console.log($scope.softwareDetails );
-    	 $scope.showsoftwareTable = true;
+         $scope.softwareDetails  = response.data;
+         console.log($scope.softwareDetails );
+         $scope.showsoftwareTable = true;
     }, function(error) {});
 
     

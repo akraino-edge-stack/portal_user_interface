@@ -20,50 +20,50 @@ package org.akraino.portal.common;
 import java.util.Base64;
 
 public class LoginUtil {
-	
-	private LoginUtil() {
-		throw new IllegalStateException("Utility class");
-	}
+    
+    private LoginUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 
-	public static synchronized String getUserName(String base64Str) {
-		
-		return base64Str.split(":")[0];
-		
-	}
-	
-	public static synchronized String getPassword(String base64Str) {
-		
-		if (!StringUtil.notEmpty(base64Str))
-			return null;
-		
-		return base64Str.split(":")[1];
-		
-	}
-	
-	public static synchronized String decode(String base64Str) {
-		
-		byte [] decodedBytes;
-		String decodedString = null;
-		
-		if (StringUtil.notEmpty(base64Str)) {
-			decodedBytes = Base64.getDecoder().decode(base64Str);
-			decodedString = new String (decodedBytes);
-		}
-		
-		return decodedString;
-		
-	}
-	
-	public static synchronized String encode(String base64Str) {
-		
-		String encodedString = null;
-		
-		if (StringUtil.notEmpty(base64Str)) {
-			encodedString = Base64.getEncoder().encodeToString(base64Str.getBytes());
-		}
-		
-		return encodedString;
-		
-	}
-	
+    public static synchronized String getUserName(String base64Str) {
+        
+        return base64Str.split(":")[0];
+        
+    }
+    
+    public static synchronized String getPassword(String base64Str) {
+        
+        if (!StringUtil.notEmpty(base64Str))
+            return null;
+        
+        return base64Str.split(":")[1];
+        
+    }
+    
+    public static synchronized String decode(String base64Str) {
+        
+        byte [] decodedBytes;
+        String decodedString = null;
+        
+        if (StringUtil.notEmpty(base64Str)) {
+            decodedBytes = Base64.getDecoder().decode(base64Str);
+            decodedString = new String (decodedBytes);
+        }
+        
+        return decodedString;
+        
+    }
+    
+    public static synchronized String encode(String base64Str) {
+        
+        String encodedString = null;
+        
+        if (StringUtil.notEmpty(base64Str)) {
+            encodedString = Base64.getEncoder().encodeToString(base64Str.getBytes());
+        }
+        
+        return encodedString;
+        
+    }
+    
 }

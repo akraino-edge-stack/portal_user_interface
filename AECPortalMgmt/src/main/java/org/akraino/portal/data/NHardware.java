@@ -20,52 +20,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NHardware {
 
-	private String vendor;
-	
-	private String generation;
-	
-	@JsonProperty("hw_version")
-	private String hwVersion;
-	
-	@JsonProperty("bios_version")
-	private String biosVersion;
+    private String vendor;
+    
+    private String generation;
+    
+    @JsonProperty("hw_version")
+    private String hwVersion;
+    
+    @JsonProperty("bios_version")
+    private String biosVersion;
 
-	public String getVendor() {
-		return vendor;
-	}
+    public String getVendor() {
+        return vendor;
+    }
 
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
 
-	public String getGeneration() {
-		return generation;
-	}
+    public String getGeneration() {
+        return generation;
+    }
 
-	public void setGeneration(String generation) {
-		this.generation = generation;
-	}
+    public void setGeneration(String generation) {
+        this.generation = generation;
+    }
 
-	public String getHwVersion() {
-		return hwVersion;
-	}
+    public String getHwVersion() {
+        return hwVersion;
+    }
 
-	public void setHwVersion(String hwVersion) {
-		this.hwVersion = hwVersion;
-	}
+    public void setHwVersion(String hwVersion) {
+        this.hwVersion = hwVersion;
+    }
 
-	public String getBiosVersion() {
-		return biosVersion;
-	}
+    public String getBiosVersion() {
+        return biosVersion;
+    }
 
-	public void setBiosVersion(String biosVersion) {
-		this.biosVersion = biosVersion;
-	}
+    public void setBiosVersion(String biosVersion) {
+        this.biosVersion = biosVersion;
+    }
 
-	@Override
-	public String toString() {
-		return "NHardware [vendor=" + vendor + ", generation=" + generation + ", hwVersion=" + hwVersion
-				+ ", biosVersion=" + biosVersion + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "NHardware [vendor=" + vendor + ", generation=" + generation + ", hwVersion=" + hwVersion
+                + ", biosVersion=" + biosVersion + "]";
+    }
+    
 }

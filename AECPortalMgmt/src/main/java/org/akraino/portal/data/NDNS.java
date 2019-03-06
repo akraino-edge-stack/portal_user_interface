@@ -30,101 +30,101 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"domain", "servers", "upstreamServers", "serversJoined", "ingressDomain, dnsSearch, ntp"})
 public class NDNS {
 
-	private String domain;
-	
-	private String servers;
-	
-	private String dnsSearch;
-	
-	private String ntp;
-	
-	public NDNS() {
-		this.domain = "";
-		this.servers = "";
-		this.dnsSearch = "";
-		this.ntp = "";
-	}
+    private String domain;
+    
+    private String servers;
+    
+    private String dnsSearch;
+    
+    private String ntp;
+    
+    public NDNS() {
+        this.domain = "";
+        this.servers = "";
+        this.dnsSearch = "";
+        this.ntp = "";
+    }
 
-	public NDNS(String domain, String servers, String dnsSearch, String ntp) {
-		super();
-		this.domain = domain;
-		this.servers = servers;
-		this.dnsSearch = dnsSearch;
-		this.ntp = ntp;
-	}
+    public NDNS(String domain, String servers, String dnsSearch, String ntp) {
+        super();
+        this.domain = domain;
+        this.servers = servers;
+        this.dnsSearch = dnsSearch;
+        this.ntp = ntp;
+    }
 
 
 
-	@JsonProperty("upstream_servers")
-	private String[] upstreamServers;
+    @JsonProperty("upstream_servers")
+    private String[] upstreamServers;
 
-	@JsonProperty("upstream_servers_joined")
-	private String serversJoined;
-	
-	@JsonProperty("ingress_domain")
-	private String ingressDomain;
+    @JsonProperty("upstream_servers_joined")
+    private String serversJoined;
+    
+    @JsonProperty("ingress_domain")
+    private String ingressDomain;
 
-	public String getDomain() {
-		return domain;
-	}
+    public String getDomain() {
+        return domain;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-	public String getServers() {
-		return servers;
-	}
+    public String getServers() {
+        return servers;
+    }
 
-	public void setServers(String servers) {
-		this.servers = servers;
-	}
+    public void setServers(String servers) {
+        this.servers = servers;
+    }
 
-	public String[] getUpstreamServers() {
-		return upstreamServers;
-	}
+    public String[] getUpstreamServers() {
+        return upstreamServers;
+    }
 
-	public void setUpstreamServers(String[] upstreamServers) {
-		this.upstreamServers = upstreamServers;
-	}
+    public void setUpstreamServers(String[] upstreamServers) {
+        this.upstreamServers = upstreamServers;
+    }
 
-	public String getServersJoined() {
-		return serversJoined;
-	}
+    public String getServersJoined() {
+        return serversJoined;
+    }
 
-	public void setServersJoined(String serversJoined) {
-		this.serversJoined = serversJoined;
-	}
+    public void setServersJoined(String serversJoined) {
+        this.serversJoined = serversJoined;
+    }
 
-	public String getIngressDomain() {
-		return ingressDomain;
-	}
+    public String getIngressDomain() {
+        return ingressDomain;
+    }
 
-	public void setIngressDomain(String ingressDomain) {
-		this.ingressDomain = ingressDomain;
-	}
+    public void setIngressDomain(String ingressDomain) {
+        this.ingressDomain = ingressDomain;
+    }
 
-	public String getDnsSearch() {
-		return dnsSearch;
-	}
+    public String getDnsSearch() {
+        return dnsSearch;
+    }
 
-	public void setDnsSearch(String dnsSearch) {
-		this.dnsSearch = dnsSearch;
-	}
+    public void setDnsSearch(String dnsSearch) {
+        this.dnsSearch = dnsSearch;
+    }
 
-	public String getNtp() {
-		return ntp;
-	}
+    public String getNtp() {
+        return ntp;
+    }
 
-	public void setNtp(String ntp) {
-		this.ntp = ntp;
-	}
+    public void setNtp(String ntp) {
+        this.ntp = ntp;
+    }
 
-	@Override
-	public String toString() {
-		return "NDNS [domain=" + domain + ", servers=" + servers + ", upstreamServers="
-				+ Arrays.toString(upstreamServers) + ", serversJoined=" + serversJoined + ", ingressDomain="
-				+ ingressDomain + "]";
-	}
+    @Override
+    public String toString() {
+        return "NDNS [domain=" + domain + ", servers=" + servers + ", upstreamServers="
+                + Arrays.toString(upstreamServers) + ", serversJoined=" + serversJoined + ", ingressDomain="
+                + ingressDomain + "]";
+    }
 
 }

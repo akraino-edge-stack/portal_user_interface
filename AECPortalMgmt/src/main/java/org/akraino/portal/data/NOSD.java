@@ -18,28 +18,28 @@ package org.akraino.portal.data;
 
 public class NOSD {
 
-	private String data;
-	private String journal;
+    private String data;
+    private String journal;
 
-	public String getData() {
-		return data;
-	}
+    public String getData() {
+        return data;
+    }
 
-	public String getJournal() {
-		return journal;
-	}
+    public String getJournal() {
+        return journal;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	public void setJournal(String journal) {
-		this.journal = journal;
-	}
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
 
-	@Override
-	public String toString() {
-		return "NOSD [data=" + data + ", journal=" + journal + "]";
-	}
+    @Override
+    public String toString() {
+        return "NOSD [data=" + data + ", journal=" + journal + "]";
+    }
 
 }

@@ -18,47 +18,47 @@ package org.akraino.portal.data;
 
 public class NBlueprint {
 
-	private String blueprintFamily;
-	private String blueprintName;
-	private String ETETesting;
-	private String Monitoring;
+    private String blueprintFamily;
+    private String blueprintName;
+    private String ETETesting;
+    private String Monitoring;
 
-	public String getBlueprintFamily() {
-		return blueprintFamily;
-	}
+    public String getBlueprintFamily() {
+        return blueprintFamily;
+    }
 
-	public String getBlueprintName() {
-		return blueprintName;
-	}
+    public String getBlueprintName() {
+        return blueprintName;
+    }
 
-	public String getETETesting() {
-		return ETETesting;
-	}
+    public String getETETesting() {
+        return ETETesting;
+    }
 
-	public String getMonitoring() {
-		return Monitoring;
-	}
+    public String getMonitoring() {
+        return Monitoring;
+    }
 
-	public void setBlueprintFamily(String blueprintFamily) {
-		this.blueprintFamily = blueprintFamily;
-	}
+    public void setBlueprintFamily(String blueprintFamily) {
+        this.blueprintFamily = blueprintFamily;
+    }
 
-	public void setBlueprintName(String blueprintName) {
-		this.blueprintName = blueprintName;
-	}
+    public void setBlueprintName(String blueprintName) {
+        this.blueprintName = blueprintName;
+    }
 
-	public void setETETesting(String eTETesting) {
-		ETETesting = eTETesting;
-	}
+    public void setETETesting(String eTETesting) {
+        ETETesting = eTETesting;
+    }
 
-	public void setMonitoring(String monitoring) {
-		Monitoring = monitoring;
-	}
+    public void setMonitoring(String monitoring) {
+        Monitoring = monitoring;
+    }
 
-	@Override
-	public String toString() {
-		return "NBlueprint [blueprintFamily=" + blueprintFamily + ", blueprintName=" + blueprintName + ", ETETesting="
-				+ ETETesting + ", Monitoring=" + Monitoring + "]";
-	}
+    @Override
+    public String toString() {
+        return "NBlueprint [blueprintFamily=" + blueprintFamily + ", blueprintName=" + blueprintName + ", ETETesting="
+                + ETETesting + ", Monitoring=" + Monitoring + "]";
+    }
 
 }

@@ -30,28 +30,28 @@ import org.springframework.web.client.RestTemplate;
 
 public class RestInterface {
 
-	@SuppressWarnings("unchecked")
-	public static <X, Y> Y sendPOST(String contextURI, RestRequestBody<X> requestbody, RestResponseBody<Y> responseBody) {
+    @SuppressWarnings("unchecked")
+    public static <X, Y> Y sendPOST(String contextURI, RestRequestBody<X> requestbody, RestResponseBody<Y> responseBody) {
 
-		String baseURL = PropertyUtil.getInstance().getProperty("camunda.host.url");
+        String baseURL = PropertyUtil.getInstance().getProperty("camunda.host.url");
 
-		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-		headers.add("Content-Type", "application/json; charset=UTF-8");
-		headers.add("Accept", "application/json");
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        headers.add("Content-Type", "application/json; charset=UTF-8");
+        headers.add("Accept", "application/json");
 
-		//RestTemplate restTemplate = new RestTemplate();
-		
-		RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-		interceptors.add(new RestInterfaceInterceptor());
-		restTemplate.setInterceptors(interceptors);
-		
-		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        //RestTemplate restTemplate = new RestTemplate();
+        
+        RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+        interceptors.add(new RestInterfaceInterceptor());
+        restTemplate.setInterceptors(interceptors);
+        
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-		HttpEntity<X> httpEntity = new HttpEntity<X>(requestbody.getT(), headers);
+        HttpEntity<X> httpEntity = new HttpEntity<X>(requestbody.getT(), headers);
 
-		Y response = (Y) restTemplate.postForObject(baseURL+contextURI, httpEntity, responseBody.getT().getClass());
+        Y response = (Y) restTemplate.postForObject(baseURL+contextURI, httpEntity, responseBody.getT().getClass());
 
-		return response;
-	}
+        return response;
+    }
 }

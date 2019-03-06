@@ -32,59 +32,59 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AccessDAOImpl implements AccessDAO {
 
-	private static final Logger logger = Logger.getLogger(AccessDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(AccessDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Override
-	public void createUserSession(UserSession usersession) {
-		
-		logger.info("createUserSession");
-		
-		getSession().save(usersession);
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+    
+    @Override
+    public void createUserSession(UserSession usersession) {
+        
+        logger.info("createUserSession");
+        
+        getSession().save(usersession);
 
-	}
+    }
 
-	@Override
-	public void updateUserSession(UserSession usersession) {
+    @Override
+    public void updateUserSession(UserSession usersession) {
 
-		logger.info("updateUserSession");
-		
-		getSession().update(usersession);
+        logger.info("updateUserSession");
+        
+        getSession().update(usersession);
 
-	}
+    }
 
-	@Override
-	public UserSession getUserSession(String userId) {
-		
-		logger.info("getUserSession");
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<UserSession> criteria = builder.createQuery(UserSession.class);
+    @Override
+    public UserSession getUserSession(String userId) {
+        
+        logger.info("getUserSession");
+        
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<UserSession> criteria = builder.createQuery(UserSession.class);
 
-		Root<UserSession> root = criteria.from(UserSession.class);
-		criteria.select(root);
-		criteria.where(builder.equal(root.get("loginId"), userId));
+        Root<UserSession> root = criteria.from(UserSession.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("loginId"), userId));
 
-		Query<UserSession> query = getSession().createQuery(criteria);
+        Query<UserSession> query = getSession().createQuery(criteria);
 
-		return query.getSingleResult();
+        return query.getSingleResult();
 
-	}
+    }
 
-	@Override
-	public void deleteUserSession(String userId) {
-		
-		logger.info("deleteUserSession");
+    @Override
+    public void deleteUserSession(String userId) {
+        
+        logger.info("deleteUserSession");
 
-		UserSession userSession = getUserSession(userId);
-		
-		getSession().delete(userSession);
+        UserSession userSession = getUserSession(userId);
+        
+        getSession().delete(userSession);
 
-	}
+    }
 }

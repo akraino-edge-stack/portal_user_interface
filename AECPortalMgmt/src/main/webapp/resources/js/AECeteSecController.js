@@ -15,5 +15,5 @@
  */
 
 angular.module('PortalManagement').controller('AECeteSecController', function($scope, $http, $sce, ngDialog, $filter,$rootScope,$controller,appContext) {
-	 $controller('commonController', { $scope: $scope }); 
+     $controller('commonController', { $scope: $scope }); 
 });

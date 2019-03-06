@@ -24,63 +24,63 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"physical", "pInterface", "vlanStart", "vlanEnd", "whitelists"})
 public class NSRIOVNet {
 
-	private String physical;
-	
-	@JsonProperty("interface")
-	private String pInterface;
+    private String physical;
+    
+    @JsonProperty("interface")
+    private String pInterface;
 
-	@JsonProperty("vlan_start")
-	private String vlanStart;
-	
-	@JsonProperty("vlan_end")
-	private String vlanEnd;
+    @JsonProperty("vlan_start")
+    private String vlanStart;
+    
+    @JsonProperty("vlan_end")
+    private String vlanEnd;
 
-	private List<NSRIOVWhitelist> whitelists;
+    private List<NSRIOVWhitelist> whitelists;
 
-	public String getPhysical() {
-		return physical;
-	}
+    public String getPhysical() {
+        return physical;
+    }
 
-	public void setPhysical(String physical) {
-		this.physical = physical;
-	}
+    public void setPhysical(String physical) {
+        this.physical = physical;
+    }
 
-	public String getpInterface() {
-		return pInterface;
-	}
+    public String getpInterface() {
+        return pInterface;
+    }
 
-	public void setpInterface(String pInterface) {
-		this.pInterface = pInterface;
-	}
+    public void setpInterface(String pInterface) {
+        this.pInterface = pInterface;
+    }
 
-	public String getVlanStart() {
-		return vlanStart;
-	}
+    public String getVlanStart() {
+        return vlanStart;
+    }
 
-	public void setVlanStart(String vlanStart) {
-		this.vlanStart = vlanStart;
-	}
+    public void setVlanStart(String vlanStart) {
+        this.vlanStart = vlanStart;
+    }
 
-	public String getVlanEnd() {
-		return vlanEnd;
-	}
+    public String getVlanEnd() {
+        return vlanEnd;
+    }
 
-	public void setVlanEnd(String vlanEnd) {
-		this.vlanEnd = vlanEnd;
-	}
+    public void setVlanEnd(String vlanEnd) {
+        this.vlanEnd = vlanEnd;
+    }
 
-	public List<NSRIOVWhitelist> getWhitelists() {
-		return whitelists;
-	}
+    public List<NSRIOVWhitelist> getWhitelists() {
+        return whitelists;
+    }
 
-	public void setWhitelists(List<NSRIOVWhitelist> whitelists) {
-		this.whitelists = whitelists;
-	}
+    public void setWhitelists(List<NSRIOVWhitelist> whitelists) {
+        this.whitelists = whitelists;
+    }
 
-	@Override
-	public String toString() {
-		return "NSRIOVNet [physical=" + physical + ", pInterface=" + pInterface + ", vlanStart=" + vlanStart
-				+ ", vlanEnd=" + vlanEnd + ", whitelists=" + whitelists + "]";
-	}
+    @Override
+    public String toString() {
+        return "NSRIOVNet [physical=" + physical + ", pInterface=" + pInterface + ", vlanStart=" + vlanStart
+                + ", vlanEnd=" + vlanEnd + ", whitelists=" + whitelists + "]";
+    }
 
 }

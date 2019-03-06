@@ -38,70 +38,70 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AddOnsDAOImpl implements AddOnsDAO {
 
-	private static final Logger logger = Logger.getLogger(AddOnsDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(AddOnsDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
-	@Override
-	public void saveOnap(Onap onap) {
+    @Override
+    public void saveOnap(Onap onap) {
 
-		logger.info("saveOnap");
-		
-		getSession().saveOrUpdate(onap);
+        logger.info("saveOnap");
+        
+        getSession().saveOrUpdate(onap);
 
-	}
+    }
 
-	@Override
-	public List<Onap> getOnapList() {
-		
-		logger.info("getOnapList");
+    @Override
+    public List<Onap> getOnapList() {
+        
+        logger.info("getOnapList");
 
-		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
+        EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
 
-		@SuppressWarnings("unchecked")
-		List<Object[]> objectList = em
-				.createQuery("SELECT onap, edgeSite FROM Onap onap RIGHT JOIN onap.edgeSite edgeSite").getResultList();
-		List<Onap> onapList = new ArrayList<Onap>();
-		for (Object[] object : objectList) {
-			if (object[0] == null) {
-				Onap onap = new Onap();
-				onap.setEdgeSite((EdgeSite) object[1]);
-				onapList.add(onap);
-			} else {
-				onapList.add((Onap) object[0]);
-			}
-		}
+        @SuppressWarnings("unchecked")
+        List<Object[]> objectList = em
+                .createQuery("SELECT onap, edgeSite FROM Onap onap RIGHT JOIN onap.edgeSite edgeSite").getResultList();
+        List<Onap> onapList = new ArrayList<Onap>();
+        for (Object[] object : objectList) {
+            if (object[0] == null) {
+                Onap onap = new Onap();
+                onap.setEdgeSite((EdgeSite) object[1]);
+                onapList.add(onap);
+            } else {
+                onapList.add((Onap) object[0]);
+            }
+        }
 
-		return onapList;
-	}
+        return onapList;
+    }
 
-	@Override
-	public Onap getOnap(String siteName) throws NoResultException {
-		
-		logger.info("getOnap");
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<Object[]> criteria = builder.createQuery(Object[].class);
+    @Override
+    public Onap getOnap(String siteName) throws NoResultException {
+        
+        logger.info("getOnap");
+        
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteria = builder.createQuery(Object[].class);
 
-		Root<Onap> onapRoot = criteria.from(Onap.class);
-		Root<EdgeSite> edgeSiteRoot = criteria.from(EdgeSite.class);
-		criteria.multiselect(onapRoot, edgeSiteRoot);
-		criteria.where(builder.equal(edgeSiteRoot.get("edgeSiteName"), siteName));
+        Root<Onap> onapRoot = criteria.from(Onap.class);
+        Root<EdgeSite> edgeSiteRoot = criteria.from(EdgeSite.class);
+        criteria.multiselect(onapRoot, edgeSiteRoot);
+        criteria.where(builder.equal(edgeSiteRoot.get("edgeSiteName"), siteName));
 
-		Query<Object[]> query = getSession().createQuery(criteria);
-		List<Object[]> list = query.getResultList();
+        Query<Object[]> query = getSession().createQuery(criteria);
+        List<Object[]> list = query.getResultList();
 
-		Onap onap = null;
+        Onap onap = null;
 
-		for (Object[] objects : list) {
-			onap = (Onap) objects[0];
-		}
+        for (Object[] objects : list) {
+            onap = (Onap) objects[0];
+        }
 
-		return onap;
-	}
+        return onap;
+    }
 }

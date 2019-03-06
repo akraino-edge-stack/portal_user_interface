@@ -27,41 +27,41 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "akraino.usersession")
 public class UserSession implements Serializable {
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "login_id")
-	private String loginId;
-	
-	@Column(name = "token_id")
-	private String tokenId;
-	
-	@Column(name = "crt_dt")
-	private Date createdDate;
-	
-	
-	public String getLoginId() {
-		return loginId;
-	}
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-	public String getTokenId() {
-		return tokenId;
-	}
-	public void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
-	}
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	
+    
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @Column(name = "login_id")
+    private String loginId;
+    
+    @Column(name = "token_id")
+    private String tokenId;
+    
+    @Column(name = "crt_dt")
+    private Date createdDate;
+    
+    
+    public String getLoginId() {
+        return loginId;
+    }
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+    public String getTokenId() {
+        return tokenId;
+    }
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
+    }
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+    
 }

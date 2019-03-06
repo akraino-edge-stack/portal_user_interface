@@ -35,50 +35,50 @@ import javax.persistence.Table;
 @Table(name = "akraino.blueprint")
 public class Blueprint implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "blueprint_id_generator")
-	@SequenceGenerator(name = "blueprint_id_generator", sequenceName = "akraino.seq_blueprint", allocationSize = 1)
-	@Column(name = "blueprint_id")
-	private int blueprintId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "blueprint_id_generator")
+    @SequenceGenerator(name = "blueprint_id_generator", sequenceName = "akraino.seq_blueprint", allocationSize = 1)
+    @Column(name = "blueprint_id")
+    private int blueprintId;
 
-	@Column(name = "blueprint_name")
-	private String blueprintName;
+    @Column(name = "blueprint_name")
+    private String blueprintName;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "blueprint_id")
-	private Set<BlueprintRack> racks;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "blueprint_id")
+    private Set<BlueprintRack> racks;
 
-	public int getBlueprintId() {
-		return blueprintId;
-	}
+    public int getBlueprintId() {
+        return blueprintId;
+    }
 
-	public void setBlueprintId(int blueprintId) {
-		this.blueprintId = blueprintId;
-	}
+    public void setBlueprintId(int blueprintId) {
+        this.blueprintId = blueprintId;
+    }
 
-	public String getBlueprintName() {
-		return blueprintName;
-	}
+    public String getBlueprintName() {
+        return blueprintName;
+    }
 
-	public void setBlueprintName(String blueprintName) {
-		this.blueprintName = blueprintName;
-	}
+    public void setBlueprintName(String blueprintName) {
+        this.blueprintName = blueprintName;
+    }
 
-	public Set<BlueprintRack> getRacks() {
-		return racks;
-	}
+    public Set<BlueprintRack> getRacks() {
+        return racks;
+    }
 
-	public void setRacks(Set<BlueprintRack> racks) {
-		this.racks = racks;
-	}
+    public void setRacks(Set<BlueprintRack> racks) {
+        this.racks = racks;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
 }

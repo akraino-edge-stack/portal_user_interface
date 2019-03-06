@@ -35,41 +35,41 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = { "classpath:hibernate.properties" })
 public class HibernateConfig {
 
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@Autowired
-	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory(DataSource dataSource) {
-		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
+    @Autowired
+    @Bean(name = "sessionFactory")
+    public SessionFactory getSessionFactory(DataSource dataSource) {
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
-		sessionBuilder.scanPackages("org.akraino.portal.entity");
-		sessionBuilder.addProperties(hibernateProperties());
+        sessionBuilder.scanPackages("org.akraino.portal.entity");
+        sessionBuilder.addProperties(hibernateProperties());
 
-		return sessionBuilder.buildSessionFactory();
+        return sessionBuilder.buildSessionFactory();
 
-	}
+    }
 
-	@Autowired
-	@Bean(name = "transactionManager")
-	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+    @Autowired
+    @Bean(name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
 
-		return new HibernateTransactionManager(sessionFactory);
+        return new HibernateTransactionManager(sessionFactory);
 
-	}
+    }
 
-	private Properties hibernateProperties() {
-		
-		Properties properties = new Properties();
-		
-		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
-		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-		properties.put("hibernate.c3p0.min_size", env.getProperty("hibernate.c3p0.min_size"));
-		properties.put("hibernate.c3p0.max_size", env.getProperty("hibernate.c3p0.max_size"));
-		properties.put("hibernate.c3p0.max_statements", env.getProperty("hibernate.c3p0.max_statements"));
-		properties.put("hibernate.c3p0.acquire_increment", env.getProperty("hibernate.c3p0.acquire_increment"));
-		properties.put("hibernate.jdbc.use_streams_for_binary", env.getProperty("hibernate.jdbc.use_streams_for_binary"));
-	
-		return properties;
-	}
+    private Properties hibernateProperties() {
+        
+        Properties properties = new Properties();
+        
+        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.c3p0.min_size", env.getProperty("hibernate.c3p0.min_size"));
+        properties.put("hibernate.c3p0.max_size", env.getProperty("hibernate.c3p0.max_size"));
+        properties.put("hibernate.c3p0.max_statements", env.getProperty("hibernate.c3p0.max_statements"));
+        properties.put("hibernate.c3p0.acquire_increment", env.getProperty("hibernate.c3p0.acquire_increment"));
+        properties.put("hibernate.jdbc.use_streams_for_binary", env.getProperty("hibernate.jdbc.use_streams_for_binary"));
+    
+        return properties;
+    }
 }

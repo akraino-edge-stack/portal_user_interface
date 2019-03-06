@@ -29,16 +29,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RegionService {
 
-	private static final Logger logger = Logger.getLogger(RegionService.class);
+    private static final Logger logger = Logger.getLogger(RegionService.class);
 
-	@Autowired
-	private RegionDAO regionDAO;
+    @Autowired
+    private RegionDAO regionDAO;
 
-	public List<Region> listAllRegions() {
+    public List<Region> listAllRegions() {
 
-		logger.info("listAllRegions");
-		
-		return regionDAO.listAllRegions();
-	}
+        logger.info("listAllRegions");
+        
+        return regionDAO.listAllRegions();
+    }
 
 }

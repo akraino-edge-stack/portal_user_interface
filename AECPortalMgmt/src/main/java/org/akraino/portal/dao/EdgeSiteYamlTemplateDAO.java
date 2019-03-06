@@ -22,10 +22,10 @@ import org.akraino.portal.entity.EdgeSiteYamlTemplate;
 
 public interface EdgeSiteYamlTemplateDAO {
 
-	public List<EdgeSiteYamlTemplate> getYamlTemplates();
-	
-	public void save(EdgeSiteYamlTemplate template);
-	
-	public void deleteAll();
-	
+    public List<EdgeSiteYamlTemplate> getYamlTemplates();
+    
+    public void save(EdgeSiteYamlTemplate template);
+    
+    public void deleteAll();
+    
 }

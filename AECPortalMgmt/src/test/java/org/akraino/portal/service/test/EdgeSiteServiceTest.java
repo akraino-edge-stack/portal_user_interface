@@ -36,40 +36,40 @@ import junit.framework.TestCase;
 @WebAppConfiguration
 public class EdgeSiteServiceTest extends TestCase {
 
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("edgeSiteService")
-	EdgeSiteService edgeSiteService;
-	
-	@Autowired
+    EdgeSiteService edgeSiteService;
+    
+    @Autowired
     @Qualifier("addOnsService")
-	AddOnsService addOnsService;
-	
-	@Test
+    AddOnsService addOnsService;
+    
+    @Test
     public void testrun() {
-		
-		try {
-			
-			//List<EdgeSite> sites = akrainoService.getSites(1);
-			
-			//String quotes = akrainoService.getRestDetails();
-			
-			//System.out.println("Quotes from Spring Blogs::::::::" + quotes);
-			
-			//ExamplePostObject obj = edgeSiteService.POSTRequest();
-			
-			//System.out.println("post response: " + obj.getId());
-			
-			//List<EdgeSite> sites = edgeSiteService.getSites(0);
-			
-			List<Onap> onaps = addOnsService.getOnapList();
-			
-			System.out.println("size:" + onaps.size());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+        
+        try {
+            
+            //List<EdgeSite> sites = akrainoService.getSites(1);
+            
+            //String quotes = akrainoService.getRestDetails();
+            
+            //System.out.println("Quotes from Spring Blogs::::::::" + quotes);
+            
+            //ExamplePostObject obj = edgeSiteService.POSTRequest();
+            
+            //System.out.println("post response: " + obj.getId());
+            
+            //List<EdgeSite> sites = edgeSiteService.getSites(0);
+            
+            List<Onap> onaps = addOnsService.getOnapList();
+            
+            System.out.println("size:" + onaps.size());
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
 }

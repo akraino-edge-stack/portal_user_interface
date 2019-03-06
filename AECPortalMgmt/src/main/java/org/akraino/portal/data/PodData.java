@@ -17,45 +17,45 @@
 package org.akraino.portal.data;
 
 public class PodData {
-	
-	private String podName;
-	
-	private String podType;
-	
-	private String podJson;
-	
-	private Integer siteId;
+    
+    private String podName;
+    
+    private String podType;
+    
+    private String podJson;
+    
+    private Integer siteId;
 
-	public String getPodName() {
-		return podName;
-	}
+    public String getPodName() {
+        return podName;
+    }
 
-	public void setPodName(String podName) {
-		this.podName = podName;
-	}
+    public void setPodName(String podName) {
+        this.podName = podName;
+    }
 
-	public String getPodType() {
-		return podType;
-	}
+    public String getPodType() {
+        return podType;
+    }
 
-	public void setPodType(String podType) {
-		this.podType = podType;
-	}
+    public void setPodType(String podType) {
+        this.podType = podType;
+    }
 
-	public String getPodJson() {
-		return podJson;
-	}
+    public String getPodJson() {
+        return podJson;
+    }
 
-	public void setPodJson(String podJson) {
-		this.podJson = podJson;
-	}
+    public void setPodJson(String podJson) {
+        this.podJson = podJson;
+    }
 
-	public Integer getSiteId() {
-		return siteId;
-	}
+    public Integer getSiteId() {
+        return siteId;
+    }
 
-	public void setSiteId(Integer siteId) {
-		this.siteId = siteId;
-	}
+    public void setSiteId(Integer siteId) {
+        this.siteId = siteId;
+    }
 
 }

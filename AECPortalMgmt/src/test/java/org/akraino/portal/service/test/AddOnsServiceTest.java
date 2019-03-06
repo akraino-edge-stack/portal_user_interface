@@ -37,33 +37,33 @@ import junit.framework.TestCase;
 @ContextConfiguration(classes = {AppConfig.class})
 @WebAppConfiguration
 public class AddOnsServiceTest extends TestCase {
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("addOnsService")
-	AddOnsService addOnsService;
+    AddOnsService addOnsService;
 
-	@Test
+    @Test
     public void testrun() {
-		
-		try {
-			
-			File fr = new File("C:\\Users\\ld261v\\Desktop\\AEC\\test\\input.onap");
-			
-			//addOnsService.saveOnapInput(Files.readAllBytes(fr.toPath()), "MTN1");
-			
-			//Onap onap = addOnsService.getOnap("MTN1");
-			//System.out.println(new String(onap.getInputFile()));
-			
-			List<Onap> onaps = addOnsService.getOnapList();
-			
-			System.out.println("no. of onaps:" + onaps);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
+        
+        try {
+            
+            File fr = new File("C:\\Users\\ld261v\\Desktop\\AEC\\test\\input.onap");
+            
+            //addOnsService.saveOnapInput(Files.readAllBytes(fr.toPath()), "MTN1");
+            
+            //Onap onap = addOnsService.getOnap("MTN1");
+            //System.out.println(new String(onap.getInputFile()));
+            
+            List<Onap> onaps = addOnsService.getOnapList();
+            
+            System.out.println("no. of onaps:" + onaps);
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+    }
 
 }

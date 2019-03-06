@@ -24,77 +24,77 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"vlan", "vlanInterface", "cidr", "localASNumber", "ranges", "additionalCidrs", "ingressCidr", "peers", "vrrpIP"})
 public class NKSNNetwork extends NNetwork {
 
-	@JsonProperty("additional_cidrs")
-	private List<String> additionalCidrs;
-	
-	@JsonProperty("ingress_cidr")
-	private String ingressCidr;
-	
-	@JsonProperty("local_asnumber")
-	private String localASNumber;
+    @JsonProperty("additional_cidrs")
+    private List<String> additionalCidrs;
+    
+    @JsonProperty("ingress_cidr")
+    private String ingressCidr;
+    
+    @JsonProperty("local_asnumber")
+    private String localASNumber;
 
-	private String peerAsNumber;
+    private String peerAsNumber;
 
-	private List<NPeerNw> peers;
+    private List<NPeerNw> peers;
 
-	private String peerScope;
-	
-	@JsonProperty("vrrp_ip")
-	private String vrrpIP;
+    private String peerScope;
+    
+    @JsonProperty("vrrp_ip")
+    private String vrrpIP;
 
-	public List<String> getAdditionalCidrs() {
-		return additionalCidrs;
-	}
+    public List<String> getAdditionalCidrs() {
+        return additionalCidrs;
+    }
 
-	public String getIngressCidr() {
-		return ingressCidr;
-	}
+    public String getIngressCidr() {
+        return ingressCidr;
+    }
 
-	public String getLocalASNumber() {
-		return localASNumber;
-	}
+    public String getLocalASNumber() {
+        return localASNumber;
+    }
 
-	public String getPeerAsNumber() {
-		return peerAsNumber;
-	}
+    public String getPeerAsNumber() {
+        return peerAsNumber;
+    }
 
-	public List<NPeerNw> getPeers() {
-		return peers;
-	}
+    public List<NPeerNw> getPeers() {
+        return peers;
+    }
 
-	public String getPeerScope() {
-		return peerScope;
-	}
+    public String getPeerScope() {
+        return peerScope;
+    }
 
-	public void setAdditionalCidrs(List<String> additionalCidrs) {
-		this.additionalCidrs = additionalCidrs;
-	}
+    public void setAdditionalCidrs(List<String> additionalCidrs) {
+        this.additionalCidrs = additionalCidrs;
+    }
 
-	public void setIngressCidr(String ingressCidr) {
-		this.ingressCidr = ingressCidr;
-	}
+    public void setIngressCidr(String ingressCidr) {
+        this.ingressCidr = ingressCidr;
+    }
 
-	public void setLocalASNumber(String localASNumber) {
-		this.localASNumber = localASNumber;
-	}
+    public void setLocalASNumber(String localASNumber) {
+        this.localASNumber = localASNumber;
+    }
 
-	public void setPeerAsNumber(String peerAsNumber) {
-		this.peerAsNumber = peerAsNumber;
-	}
+    public void setPeerAsNumber(String peerAsNumber) {
+        this.peerAsNumber = peerAsNumber;
+    }
 
-	public void setPeers(List<NPeerNw> peers) {
-		this.peers = peers;
-	}
+    public void setPeers(List<NPeerNw> peers) {
+        this.peers = peers;
+    }
 
-	public void setPeerScope(String peerScope) {
-		this.peerScope = peerScope;
-	}
+    public void setPeerScope(String peerScope) {
+        this.peerScope = peerScope;
+    }
 
-	@Override
-	public String toString() {
-		return "NKSNNetwork [additionalCidrs=" + additionalCidrs + ", ingressCidr=" + ingressCidr + ", localASNumber="
-				+ localASNumber + ", peerAsNumber=" + peerAsNumber + ", peers=" + peers + ", peerScope=" + peerScope
-				+ "]";
-	}
+    @Override
+    public String toString() {
+        return "NKSNNetwork [additionalCidrs=" + additionalCidrs + ", ingressCidr=" + ingressCidr + ", localASNumber="
+                + localASNumber + ", peerAsNumber=" + peerAsNumber + ", peers=" + peers + ", peerScope=" + peerScope
+                + "]";
+    }
 
 }

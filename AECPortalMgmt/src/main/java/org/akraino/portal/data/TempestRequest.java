@@ -17,25 +17,25 @@
 package org.akraino.portal.data;
 
 public class TempestRequest extends WorkflowRequest {
-	
-	private String deploymentverifier;
-	private String verifierparams;
-	
-	public String getDeploymentverifier() {
-		return deploymentverifier;
-	}
-	public void setDeploymentverifier(String deploymentverifier) {
-		this.deploymentverifier = deploymentverifier;
-	}
-	public String getVerifierparams() {
-		return verifierparams;
-	}
-	public void setVerifierparams(String verifierparams) {
-		this.verifierparams = verifierparams;
-	}
-	@Override
-	public String toString() {
-		return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
-	}
-	
+    
+    private String deploymentverifier;
+    private String verifierparams;
+    
+    public String getDeploymentverifier() {
+        return deploymentverifier;
+    }
+    public void setDeploymentverifier(String deploymentverifier) {
+        this.deploymentverifier = deploymentverifier;
+    }
+    public String getVerifierparams() {
+        return verifierparams;
+    }
+    public void setVerifierparams(String verifierparams) {
+        this.verifierparams = verifierparams;
+    }
+    @Override
+    public String toString() {
+        return "TempestRequest [deploymentverifier=" + deploymentverifier + ", verifierparams=" + verifierparams + "]";
+    }
+    
 }

@@ -35,54 +35,54 @@ import junit.framework.TestCase;
 @ContextConfiguration(classes = {AppConfig.class})
 @WebAppConfiguration
 public class PodServiceTest extends TestCase {
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("podService")
-	PodService podService;
+    PodService podService;
 
-	@Test
+    @Test
     public void testrun() {
-		
-		try {
-			
-			//Pod pod = new Pod();
-			
-			//pod.setPodname("Rover12");
-			
-			//podService.savePod(pod);
-			
-			List<Pod> pods = podService.getPods();
-			
-			/*Pod pod = new Pod();
-			pod.setPodname("RoverUUU16");*/
-			
-			Pod dbpod=null;
-			
-			for (Pod pod : pods) {
-				if (pod.getPodname().equals("RoverUUU16")) {
-					dbpod = pod;
-				}
-			}
-			
-			GenericRack rack = new GenericRack();
-			rack.setRackname("rack111");
-			rack.setRackPersonality("Control");
+        
+        try {
+            
+            //Pod pod = new Pod();
+            
+            //pod.setPodname("Rover12");
+            
+            //podService.savePod(pod);
+            
+            List<Pod> pods = podService.getPods();
+            
+            /*Pod pod = new Pod();
+            pod.setPodname("RoverUUU16");*/
+            
+            Pod dbpod=null;
+            
+            for (Pod pod : pods) {
+                if (pod.getPodname().equals("RoverUUU16")) {
+                    dbpod = pod;
+                }
+            }
+            
+            GenericRack rack = new GenericRack();
+            rack.setRackname("rack111");
+            rack.setRackPersonality("Control");
 
-			//dbpod.addRack(rack);
-			
-			//pod.setRacks(racks);
-			//podService.updatePod(dbpod);
+            //dbpod.addRack(rack);
+            
+            //pod.setRacks(racks);
+            //podService.updatePod(dbpod);
 
-			//List<Pod> pods = podService.getPods();
-			
-			//System.out.println("id"+dbpod.getPodId());
-			
-			//System.out.println("id"+pods.size());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+            //List<Pod> pods = podService.getPods();
+            
+            //System.out.println("id"+dbpod.getPodId());
+            
+            //System.out.println("id"+pods.size());
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
 }

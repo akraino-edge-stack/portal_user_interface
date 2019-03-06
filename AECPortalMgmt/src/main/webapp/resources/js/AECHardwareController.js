@@ -131,7 +131,7 @@ angular.module('PortalManagement').controller('AECHardwareController', function(
 });
 angular.module('PortalManagement').controller('PopUpHardwareController', function($scope, $http, $filter, filterFilter, $state) {
     //console.log($scope.$parent.selectedBlueprint);
-	 $scope.data = {
+     $scope.data = {
              nodeName: "",
              nodeType: "",
              hwModel: "",
@@ -145,7 +145,7 @@ angular.module('PortalManagement').controller('PopUpHardwareController', functio
             $scope.data.blueprintSiteBuildName = $scope.$parent.selectedBlueprint.name + '-' + $scope.siteBuildName;
             $scope.blueprintSiteBuildName = $scope.$parent.selectedBlueprint.name + '-' + $scope.siteBuildName;
         } else {
-        	 
+             
             $scope.blueprintSiteBuildName = $scope.$parent.selectedBlueprint.name + '-' + $scope.siteBuildName;
             $scope.data.blueprintSiteBuildName = $scope.$parent.selectedBlueprint.name + '-' + $scope.siteBuildName;
             $scope.readControlType = true;
@@ -227,7 +227,7 @@ angular.module('PortalManagement').controller('PopUpHardwareController', functio
     };
 });
 angular.module('PortalManagement').controller('PopUpSaveHardwareController', function($scope, $http, $filter, filterFilter, $state) {
-	 $scope.cancel = function() {
-	        $scope.closeThisDialog();
-	    };
+     $scope.cancel = function() {
+            $scope.closeThisDialog();
+        };
 });

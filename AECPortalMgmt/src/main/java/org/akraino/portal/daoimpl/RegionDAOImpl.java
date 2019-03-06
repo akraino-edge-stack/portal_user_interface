@@ -35,40 +35,40 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RegionDAOImpl implements RegionDAO {
 
-	private static final Logger logger = Logger.getLogger(RegionDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(RegionDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		
-		logger.info("get Hibernate session");
-		
-		return sessionFactory.getCurrentSession();
-	}
+    protected Session getSession() {
+        
+        logger.info("get Hibernate session");
+        
+        return sessionFactory.getCurrentSession();
+    }
 
-	@Override
-	public List<Region> listAllRegions() {
+    @Override
+    public List<Region> listAllRegions() {
 
-		logger.info("listAllRegions");
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<Region> criteria = builder.createQuery(Region.class);
+        logger.info("listAllRegions");
+        
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<Region> criteria = builder.createQuery(Region.class);
 
-		Root<Region> root = criteria.from(Region.class);
-		criteria.select(root);
+        Root<Region> root = criteria.from(Region.class);
+        criteria.select(root);
 
-		Query<Region> query = getSession().createQuery(criteria);
+        Query<Region> query = getSession().createQuery(criteria);
 
-		return query.getResultList();
-	}
+        return query.getResultList();
+    }
 
-	@Override
-	public Region getRegion(Integer regionId) {
+    @Override
+    public Region getRegion(Integer regionId) {
 
-		EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
+        EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
 
-		return em.find(Region.class, regionId);
-	}
+        return em.find(Region.class, regionId);
+    }
 
 }

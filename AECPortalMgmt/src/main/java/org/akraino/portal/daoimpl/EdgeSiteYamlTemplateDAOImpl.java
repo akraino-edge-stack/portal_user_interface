@@ -34,51 +34,51 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EdgeSiteYamlTemplateDAOImpl implements EdgeSiteYamlTemplateDAO {
 
-	private static final Logger logger = Logger.getLogger(EdgeSiteYamlTemplateDAOImpl.class);
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(EdgeSiteYamlTemplateDAOImpl.class);
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Override
-	public List<EdgeSiteYamlTemplate> getYamlTemplates() {
-		
-		logger.info("getYamlTemplates");
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+    
+    @Override
+    public List<EdgeSiteYamlTemplate> getYamlTemplates() {
+        
+        logger.info("getYamlTemplates");
 
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<EdgeSiteYamlTemplate> criteria = builder.createQuery(EdgeSiteYamlTemplate.class);
-		
-		Root<EdgeSiteYamlTemplate> root = criteria.from(EdgeSiteYamlTemplate.class);
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaQuery<EdgeSiteYamlTemplate> criteria = builder.createQuery(EdgeSiteYamlTemplate.class);
+        
+        Root<EdgeSiteYamlTemplate> root = criteria.from(EdgeSiteYamlTemplate.class);
         criteria.select(root);
-		
+        
         Query<EdgeSiteYamlTemplate> query = getSession().createQuery(criteria);
         
         return query.getResultList();
-		
-	}
+        
+    }
 
-	@Override
-	public void save(EdgeSiteYamlTemplate template) {
-		
-		logger.info("save");
-		
-		getSession().saveOrUpdate(template);
-	}
+    @Override
+    public void save(EdgeSiteYamlTemplate template) {
+        
+        logger.info("save");
+        
+        getSession().saveOrUpdate(template);
+    }
 
-	@Override
-	public void deleteAll() {
-		// clean all j2 files
-		
-		Query<?> query = getSession().createQuery("delete from EdgeSiteYamlTemplate");
-		 
-		int result = query.executeUpdate();
-		
-		if (result > 0) {
-			logger.info("all j2 templates are cleaned up");
-		}
-		
-	}
+    @Override
+    public void deleteAll() {
+        // clean all j2 files
+        
+        Query<?> query = getSession().createQuery("delete from EdgeSiteYamlTemplate");
+         
+        int result = query.executeUpdate();
+        
+        if (result > 0) {
+            logger.info("all j2 templates are cleaned up");
+        }
+        
+    }
 }

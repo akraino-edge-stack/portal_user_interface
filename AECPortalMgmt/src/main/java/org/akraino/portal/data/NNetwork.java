@@ -30,131 +30,131 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"vlan", "vlanInterface", "cidr", "gateway", "subnet", "netmask", "routes", "ranges", "dns", })
 public class NNetwork {
 
-	private String cidr;
+    private String cidr;
 
-	private NDNS dns;
+    private NDNS dns;
 
-	private String gateway;
+    private String gateway;
 
-	private String inf;
+    private String inf;
 
-	private boolean mesh;
+    private boolean mesh;
 
-	private String netmask;
+    private String netmask;
 
-	private NetworkRanges ranges;
+    private NetworkRanges ranges;
 
-	private Map<String, String> routes;
+    private Map<String, String> routes;
 
-	private String subnet;
-	private Integer vlan;
+    private String subnet;
+    private Integer vlan;
 
-	@JsonProperty("interface")
-	private String vlanInterface;
-	
-	private Integer mtu;
+    @JsonProperty("interface")
+    private String vlanInterface;
+    
+    private Integer mtu;
 
-	public String getCidr() {
-		return cidr;
-	}
+    public String getCidr() {
+        return cidr;
+    }
 
-	public NDNS getDns() {
-		return dns;
-	}
+    public NDNS getDns() {
+        return dns;
+    }
 
-	public String getGateway() {
-		return gateway;
-	}
+    public String getGateway() {
+        return gateway;
+    }
 
-	public String getInf() {
-		return inf;
-	}
+    public String getInf() {
+        return inf;
+    }
 
-	public String getNetmask() {
-		return netmask;
-	}
+    public String getNetmask() {
+        return netmask;
+    }
 
-	public NetworkRanges getRanges() {
-		return ranges;
-	}
+    public NetworkRanges getRanges() {
+        return ranges;
+    }
 
-	public Map<String, String> getRoutes() {
-		return routes;
-	}
+    public Map<String, String> getRoutes() {
+        return routes;
+    }
 
-	public String getSubnet() {
-		return subnet;
-	}
+    public String getSubnet() {
+        return subnet;
+    }
 
-	public String getVlanInterface() {
-		return vlanInterface;
-	}
+    public String getVlanInterface() {
+        return vlanInterface;
+    }
 
-	public boolean isMesh() {
-		return mesh;
-	}
+    public boolean isMesh() {
+        return mesh;
+    }
 
-	public void setCidr(String cidr) {
-		this.cidr = cidr;
-	}
+    public void setCidr(String cidr) {
+        this.cidr = cidr;
+    }
 
-	public void setDns(NDNS dns) {
-		this.dns = dns;
-	}
+    public void setDns(NDNS dns) {
+        this.dns = dns;
+    }
 
-	public void setGateway(String gateway) {
-		this.gateway = gateway;
-	}
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
 
-	public void setInf(String inf) {
-		this.inf = inf;
-	}
+    public void setInf(String inf) {
+        this.inf = inf;
+    }
 
-	public void setMesh(boolean mesh) {
-		this.mesh = mesh;
-	}
+    public void setMesh(boolean mesh) {
+        this.mesh = mesh;
+    }
 
-	public void setNetmask(String netmask) {
-		this.netmask = netmask;
-	}
+    public void setNetmask(String netmask) {
+        this.netmask = netmask;
+    }
 
-	public void setRanges(NetworkRanges ranges) {
-		this.ranges = ranges;
-	}
+    public void setRanges(NetworkRanges ranges) {
+        this.ranges = ranges;
+    }
 
-	public void setRoutes(Map<String, String> routes) {
-		this.routes = routes;
-	}
+    public void setRoutes(Map<String, String> routes) {
+        this.routes = routes;
+    }
 
-	public void setSubnet(String subnet) {
-		this.subnet = subnet;
-	}
+    public void setSubnet(String subnet) {
+        this.subnet = subnet;
+    }
 
-	public void setVlanInterface(String vlanInterface) {
-		this.vlanInterface = vlanInterface;
-	}
+    public void setVlanInterface(String vlanInterface) {
+        this.vlanInterface = vlanInterface;
+    }
 
-	public Integer getVlan() {
-		return vlan;
-	}
+    public Integer getVlan() {
+        return vlan;
+    }
 
-	public void setVlan(Integer vlan) {
-		this.vlan = vlan;
-	}
+    public void setVlan(Integer vlan) {
+        this.vlan = vlan;
+    }
 
-	public Integer getMtu() {
-		return mtu;
-	}
+    public Integer getMtu() {
+        return mtu;
+    }
 
-	public void setMtu(Integer mtu) {
-		this.mtu = mtu;
-	}
+    public void setMtu(Integer mtu) {
+        this.mtu = mtu;
+    }
 
-	@Override
-	public String toString() {
-		return "NNetwork [cidr=" + cidr + ", dns=" + dns + ", gateway=" + gateway + ", inf=" + inf + ", mesh=" + mesh
-				+ ", netmask=" + netmask + ", ranges=" + ranges + ", routes=" + routes + ", subnet=" + subnet
-				+ ", vlan=" + vlan + ", vlanInterface=" + vlanInterface + "]";
-	}
+    @Override
+    public String toString() {
+        return "NNetwork [cidr=" + cidr + ", dns=" + dns + ", gateway=" + gateway + ", inf=" + inf + ", mesh=" + mesh
+                + ", netmask=" + netmask + ", ranges=" + ranges + ", routes=" + routes + ", subnet=" + subnet
+                + ", vlan=" + vlan + ", vlanInterface=" + vlanInterface + "]";
+    }
 
 }

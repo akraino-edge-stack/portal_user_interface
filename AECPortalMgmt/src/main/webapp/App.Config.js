@@ -15,9 +15,9 @@
  */
 
 var config_module = angular.module('myApp.config', [])
-	//.constant('hostUrl','localhost:8080')
-	//.constant('camundaUrl','localhost:8073')
-	.constant('appContext','/AECPortalMgmt')
-	
-	
+    //.constant('hostUrl','localhost:8080')
+    //.constant('camundaUrl','localhost:8073')
+    .constant('appContext','/AECPortalMgmt')
+    
+    
 ;

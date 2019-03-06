@@ -88,7 +88,7 @@
                      <table cellspacing="0" cellpadding="0"  class="noderackTable" style="width:300px;">
                         <tr>
                            <th style="border:0;"><label style="font-weight:bold !important;font-size: 15px;color:black;">Rack : </label> {{rack.name}}</th>
-                           <!--  <th style="padding-left:10%;"><button class="refreshbutton"   ng-click="addNodeTable(rack.name)" ng-click="setSelected(array.number,rack.name)"	 >Add Node</button></th>-->
+                           <!--  <th style="padding-left:10%;"><button class="refreshbutton"   ng-click="addNodeTable(rack.name)" ng-click="setSelected(array.number,rack.name)"     >Add Node</button></th>-->
                         </tr>
                         <tbody>
                            <tr class="border_bottom" ng-repeat="array in rack.nodes" ng-mouseover="hoverIn(array.name)" ng-mouseleave="hoverOut()"  ng-class="{selected : ((array.number === idSelectedVote) && (rack.name === rackNName))}">

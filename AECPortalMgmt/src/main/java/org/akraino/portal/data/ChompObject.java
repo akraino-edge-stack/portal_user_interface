@@ -23,116 +23,116 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ChompObject {
-	
-	private String name;
-	
-	private Timestamp tstart;
-	
-	private Timestamp tstop;
-	
-	private String type;
-	
-	@JsonProperty("count")
-	private Integer logCount;
-	
-	private String[] latency;
-	
-	@JsonProperty("latency_max")
-	private Float latencyMax;
-	
-	@JsonProperty("latency_min")
-	private Float latencyMin;
-	
-	@JsonProperty("latency_avg")
-	private Float latencyAvg;
-	
-	private List<LogPair[]> logs;
+    
+    private String name;
+    
+    private Timestamp tstart;
+    
+    private Timestamp tstop;
+    
+    private String type;
+    
+    @JsonProperty("count")
+    private Integer logCount;
+    
+    private String[] latency;
+    
+    @JsonProperty("latency_max")
+    private Float latencyMax;
+    
+    @JsonProperty("latency_min")
+    private Float latencyMin;
+    
+    @JsonProperty("latency_avg")
+    private Float latencyAvg;
+    
+    private List<LogPair[]> logs;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Timestamp getTstart() {
-		return tstart;
-	}
+    public Timestamp getTstart() {
+        return tstart;
+    }
 
-	public void setTstart(Timestamp tstart) {
-		this.tstart = tstart;
-	}
+    public void setTstart(Timestamp tstart) {
+        this.tstart = tstart;
+    }
 
-	public Timestamp getTstop() {
-		return tstop;
-	}
+    public Timestamp getTstop() {
+        return tstop;
+    }
 
-	public void setTstop(Timestamp tstop) {
-		this.tstop = tstop;
-	}
+    public void setTstop(Timestamp tstop) {
+        this.tstop = tstop;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public Integer getLogCount() {
-		return logCount;
-	}
+    public Integer getLogCount() {
+        return logCount;
+    }
 
-	public void setLogCount(Integer logCount) {
-		this.logCount = logCount;
-	}
+    public void setLogCount(Integer logCount) {
+        this.logCount = logCount;
+    }
 
-	public String[] getLatency() {
-		return latency;
-	}
+    public String[] getLatency() {
+        return latency;
+    }
 
-	public void setLatency(String[] latency) {
-		this.latency = latency;
-	}
+    public void setLatency(String[] latency) {
+        this.latency = latency;
+    }
 
-	public Float getLatencyMax() {
-		return latencyMax;
-	}
+    public Float getLatencyMax() {
+        return latencyMax;
+    }
 
-	public void setLatencyMax(Float latencyMax) {
-		this.latencyMax = latencyMax;
-	}
+    public void setLatencyMax(Float latencyMax) {
+        this.latencyMax = latencyMax;
+    }
 
-	public Float getLatencyMin() {
-		return latencyMin;
-	}
+    public Float getLatencyMin() {
+        return latencyMin;
+    }
 
-	public void setLatencyMin(Float latencyMin) {
-		this.latencyMin = latencyMin;
-	}
+    public void setLatencyMin(Float latencyMin) {
+        this.latencyMin = latencyMin;
+    }
 
-	public Float getLatencyAvg() {
-		return latencyAvg;
-	}
+    public Float getLatencyAvg() {
+        return latencyAvg;
+    }
 
-	public void setLatencyAvg(Float latencyAvg) {
-		this.latencyAvg = latencyAvg;
-	}
+    public void setLatencyAvg(Float latencyAvg) {
+        this.latencyAvg = latencyAvg;
+    }
 
-	public List<LogPair[]> getLogs() {
-		return logs;
-	}
+    public List<LogPair[]> getLogs() {
+        return logs;
+    }
 
-	public void setLogs(List<LogPair[]> logs) {
-		this.logs = logs;
-	}
+    public void setLogs(List<LogPair[]> logs) {
+        this.logs = logs;
+    }
 
-	@Override
-	public String toString() {
-		return "ChompObject [name=" + name + ", tstart=" + tstart + ", tstop=" + tstop + ", type=" + type
-				+ ", logCount=" + logCount + ", latency=" + Arrays.toString(latency) + ", latencyMax=" + latencyMax
-				+ ", latencyMin=" + latencyMin + ", latencyAvg=" + latencyAvg + ", logs=" + logs + "]";
-	}
+    @Override
+    public String toString() {
+        return "ChompObject [name=" + name + ", tstart=" + tstart + ", tstop=" + tstop + ", type=" + type
+                + ", logCount=" + logCount + ", latency=" + Arrays.toString(latency) + ", latencyMax=" + latencyMax
+                + ", latencyMin=" + latencyMin + ", latencyAvg=" + latencyAvg + ", logs=" + logs + "]";
+    }
 
 }

@@ -19,32 +19,32 @@ package org.akraino.portal.data;
 
 public class SiteStatusResponse {
 
-	private String siteName;
-	private String statusCode;
-	private String message;
-	
-	@Override
-	public String toString() {
-		return "SiteStatusResponse [siteName=" + siteName + ", statusCode=" + statusCode + ", message=" + message + "]";
-	}
-	
-	public String getSiteName() {
-		return siteName;
-	}
-	public void setSiteName(String siteName) {
-		this.siteName = siteName;
-	}
-	public String getStatusCode() {
-		return statusCode;
-	}
-	public void setStatusCode(String statusCode) {
-		this.statusCode = statusCode;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    private String siteName;
+    private String statusCode;
+    private String message;
+    
+    @Override
+    public String toString() {
+        return "SiteStatusResponse [siteName=" + siteName + ", statusCode=" + statusCode + ", message=" + message + "]";
+    }
+    
+    public String getSiteName() {
+        return siteName;
+    }
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
+    public String getStatusCode() {
+        return statusCode;
+    }
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 }
