@@ -28,51 +28,51 @@ import javax.persistence.Table;
 @Table(name="akraino.edge_site_template_file")
 public class EdgeSiteYamlTemplate {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "template_id_generator")
-	@SequenceGenerator(name = "template_id_generator", sequenceName = "akraino.seq_yamltemplate", allocationSize = 1)
-	@Column(name="yamltemplate_id")
-	private int id; 
-	
-	@Column(name = "template_file_name")
-	private String fileName;
-	
-	@Column(name = "template_file_location")
-	private String fileLocation;
-	
-	@Column(name = "template_file_content")
-	private byte [] fileContent;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "template_id_generator")
+    @SequenceGenerator(name = "template_id_generator", sequenceName = "akraino.seq_yamltemplate", allocationSize = 1)
+    @Column(name="yamltemplate_id")
+    private int id; 
+    
+    @Column(name = "template_file_name")
+    private String fileName;
+    
+    @Column(name = "template_file_location")
+    private String fileLocation;
+    
+    @Column(name = "template_file_content")
+    private byte [] fileContent;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public String getFileLocation() {
-		return fileLocation;
-	}
+    public String getFileLocation() {
+        return fileLocation;
+    }
 
-	public void setFileLocation(String fileLocation) {
-		this.fileLocation = fileLocation;
-	}
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+    }
 
-	public byte[] getFileContent() {
-		return fileContent;
-	}
+    public byte[] getFileContent() {
+        return fileContent;
+    }
 
-	public void setFileContent(byte[] fileContent) {
-		this.fileContent = fileContent;
-	}
-	
+    public void setFileContent(byte[] fileContent) {
+        this.fileContent = fileContent;
+    }
+    
 }

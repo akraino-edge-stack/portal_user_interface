@@ -37,101 +37,101 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AccessController {
 
-	private static final Logger logger = Logger.getLogger(AccessController.class);
+    private static final Logger logger = Logger.getLogger(AccessController.class);
 
-	@Autowired
-	LDAPAuthentication ldapAuth;
+    @Autowired
+    LDAPAuthentication ldapAuth;
 
-	@Autowired
-	AccessService accessService;
+    @Autowired
+    AccessService accessService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccessResponse> login(@RequestHeader(value = "Authorization") String base64Auth,
-			HttpServletRequest req) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccessResponse> login(@RequestHeader(value = "Authorization") String base64Auth,
+            HttpServletRequest req) {
 
-		AccessResponse response = new AccessResponse();
+        AccessResponse response = new AccessResponse();
 
-		try {
+        try {
 
-			base64Auth = base64Auth.replaceAll("Basic ", "");
+            base64Auth = base64Auth.replaceAll("Basic ", "");
 
-			String userPwd = LoginUtil.decode(base64Auth);
+            String userPwd = LoginUtil.decode(base64Auth);
 
-			String username = LoginUtil.getUserName(userPwd);
+            String username = LoginUtil.getUserName(userPwd);
 
-			String pwd = LoginUtil.getPassword(userPwd);
-			
-			logger.info("User attempt to log in:" + username);
+            String pwd = LoginUtil.getPassword(userPwd);
+            
+            logger.info("User attempt to log in:" + username);
 
-			response = ldapAuth.authenticateUser(username, pwd);
+            response = ldapAuth.authenticateUser(username, pwd);
 
-			if (response.getMessage().equals(LDAPAuthentication.AUTHORIZED)) {
+            if (response.getMessage().equals(LDAPAuthentication.AUTHORIZED)) {
 
-				// Authentication successful, valid user
+                // Authentication successful, valid user
 
-				UserSession user = accessService.getUserSession(username);
+                UserSession user = accessService.getUserSession(username);
 
-				HttpSession session = req.getSession(true);
+                HttpSession session = req.getSession(true);
 
-				String sessionId = session.getId();
+                String sessionId = session.getId();
 
-				String sessionToken = LoginUtil.encode(username) + ":" + sessionId;
+                String sessionToken = LoginUtil.encode(username) + ":" + sessionId;
 
-				session.setAttribute("sessionToken", sessionToken);
+                session.setAttribute("sessionToken", sessionToken);
 
-				if (user != null && StringUtil.notEmpty(user.getTokenId())) {
+                if (user != null && StringUtil.notEmpty(user.getTokenId())) {
 
-					// user session exists, re-activate session
-					accessService.updateUserSession(username, sessionId);
+                    // user session exists, re-activate session
+                    accessService.updateUserSession(username, sessionId);
 
-				} else {
-					// create new user session
-					accessService.createUserSession(username, sessionId);
-				}
+                } else {
+                    // create new user session
+                    accessService.createUserSession(username, sessionId);
+                }
 
-				response.setStatusCode("200");
-				response.setTokenId(sessionToken);
-				response.setMessage(LDAPAuthentication.AUTHORIZED);
-				
-				logger.info("User authorized:" + username);
+                response.setStatusCode("200");
+                response.setTokenId(sessionToken);
+                response.setMessage(LDAPAuthentication.AUTHORIZED);
+                
+                logger.info("User authorized:" + username);
 
-			} else {
-				// Authentication failed, invalid user
-				response.setStatusCode("401");
-				response.setTokenId(null);
-				response.setMessage(LDAPAuthentication.UNAUTHORIZED);
+            } else {
+                // Authentication failed, invalid user
+                response.setStatusCode("401");
+                response.setTokenId(null);
+                response.setMessage(LDAPAuthentication.UNAUTHORIZED);
 
-				logger.error("Authentication failed, invalid user-" + username);
-			}
+                logger.error("Authentication failed, invalid user-" + username);
+            }
 
-		} catch (Exception e) {
-			logger.error("failed to login-", e);
-		}
+        } catch (Exception e) {
+            logger.error("failed to login-", e);
+        }
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccessResponse> logout(@RequestHeader(value = "tokenId") String authToken) {
+    @RequestMapping(value = "/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccessResponse> logout(@RequestHeader(value = "tokenId") String authToken) {
 
-		AccessResponse response = new AccessResponse();
-		try {
-			
-			String userName = LoginUtil.decode(LoginUtil.getUserName(authToken));
+        AccessResponse response = new AccessResponse();
+        try {
+            
+            String userName = LoginUtil.decode(LoginUtil.getUserName(authToken));
 
-			accessService.deleteUserSession(authToken);
+            accessService.deleteUserSession(authToken);
 
-			response.setTokenId(null);
-			response.setStatusCode("200");
-			
-			logger.info("User logged out" + userName);
+            response.setTokenId(null);
+            response.setStatusCode("200");
+            
+            logger.info("User logged out" + userName);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			logger.error("failed to logout", e);
-		}
+            logger.error("failed to logout", e);
+        }
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

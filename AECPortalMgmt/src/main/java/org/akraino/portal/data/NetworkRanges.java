@@ -22,43 +22,43 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"reservedRange", "staticRange", "dhcpRange"})
 public class NetworkRanges {
 
-	@JsonProperty("dhcp")
-	private NCIDRRange dhcpRange;
+    @JsonProperty("dhcp")
+    private NCIDRRange dhcpRange;
 
-	@JsonProperty("reserved")
-	private NCIDRRange reservedRange;
+    @JsonProperty("reserved")
+    private NCIDRRange reservedRange;
 
-	@JsonProperty("static")
-	private NCIDRRange staticRange;
+    @JsonProperty("static")
+    private NCIDRRange staticRange;
 
-	public NCIDRRange getDhcpRange() {
-		return dhcpRange;
-	}
+    public NCIDRRange getDhcpRange() {
+        return dhcpRange;
+    }
 
-	public NCIDRRange getReservedRange() {
-		return reservedRange;
-	}
+    public NCIDRRange getReservedRange() {
+        return reservedRange;
+    }
 
-	public NCIDRRange getStaticRange() {
-		return staticRange;
-	}
+    public NCIDRRange getStaticRange() {
+        return staticRange;
+    }
 
-	public void setDhcpRange(NCIDRRange dhcpRange) {
-		this.dhcpRange = dhcpRange;
-	}
+    public void setDhcpRange(NCIDRRange dhcpRange) {
+        this.dhcpRange = dhcpRange;
+    }
 
-	public void setReservedRange(NCIDRRange reservedRange) {
-		this.reservedRange = reservedRange;
-	}
+    public void setReservedRange(NCIDRRange reservedRange) {
+        this.reservedRange = reservedRange;
+    }
 
-	public void setStaticRange(NCIDRRange staticRange) {
-		this.staticRange = staticRange;
-	}
+    public void setStaticRange(NCIDRRange staticRange) {
+        this.staticRange = staticRange;
+    }
 
-	@Override
-	public String toString() {
-		return "NetworkRanges [dhcpRange=" + dhcpRange + ", reservedRange=" + reservedRange + ", staticRange="
-				+ staticRange + "]";
-	}
+    @Override
+    public String toString() {
+        return "NetworkRanges [dhcpRange=" + dhcpRange + ", reservedRange=" + reservedRange + ", staticRange="
+                + staticRange + "]";
+    }
 
 }

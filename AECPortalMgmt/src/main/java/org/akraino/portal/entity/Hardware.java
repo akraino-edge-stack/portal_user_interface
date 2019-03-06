@@ -30,49 +30,49 @@ import javax.persistence.Table;
 @Table(name = "akraino.hardware")
 public class Hardware implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hardware_id_generator")
-	@SequenceGenerator(name = "hardware_id_generator", sequenceName = "akraino.seq_hardware", allocationSize = 1)
-	@Column(name = "hardware_id")
-	private Long hardwareId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hardware_id_generator")
+    @SequenceGenerator(name = "hardware_id_generator", sequenceName = "akraino.seq_hardware", allocationSize = 1)
+    @Column(name = "hardware_id")
+    private Long hardwareId;
 
-	@Column(name = "hardware_name")
-	private String hardwareName;
+    @Column(name = "hardware_name")
+    private String hardwareName;
 
-	@Column(name = "hardware_type")
-	private String hardwareType;
+    @Column(name = "hardware_type")
+    private String hardwareType;
 
-	public Long getHardwareId() {
-		return hardwareId;
-	}
+    public Long getHardwareId() {
+        return hardwareId;
+    }
 
-	public void setHardwareId(Long hardwareId) {
-		this.hardwareId = hardwareId;
-	}
+    public void setHardwareId(Long hardwareId) {
+        this.hardwareId = hardwareId;
+    }
 
-	public String getHardwareName() {
-		return hardwareName;
-	}
+    public String getHardwareName() {
+        return hardwareName;
+    }
 
-	public void setHardwareName(String hardwareName) {
-		this.hardwareName = hardwareName;
-	}
+    public void setHardwareName(String hardwareName) {
+        this.hardwareName = hardwareName;
+    }
 
-	public String getHardwareType() {
-		return hardwareType;
-	}
+    public String getHardwareType() {
+        return hardwareType;
+    }
 
-	public void setHardwareType(String hardwareType) {
-		this.hardwareType = hardwareType;
-	}
+    public void setHardwareType(String hardwareType) {
+        this.hardwareType = hardwareType;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
 }

@@ -32,45 +32,45 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class GenericRack implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rack_id_generator")
-	@SequenceGenerator(name = "rack_id_generator", sequenceName = "akraino.seq_rack", allocationSize = 1)
-	@Column(name = "grack_id")
-	private Long rackId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rack_id_generator")
+    @SequenceGenerator(name = "rack_id_generator", sequenceName = "akraino.seq_rack", allocationSize = 1)
+    @Column(name = "grack_id")
+    private Long rackId;
 
-	@Column(name = "rack_name")
-	private String rackname;
+    @Column(name = "rack_name")
+    private String rackname;
 
-	@Column(name = "rack_personality")
-	private String rackPersonality;
+    @Column(name = "rack_personality")
+    private String rackPersonality;
 
-	public Long getRackId() {
-		return rackId;
-	}
+    public Long getRackId() {
+        return rackId;
+    }
 
-	public void setRackId(Long rackId) {
-		this.rackId = rackId;
-	}
+    public void setRackId(Long rackId) {
+        this.rackId = rackId;
+    }
 
-	public String getRackname() {
-		return rackname;
-	}
+    public String getRackname() {
+        return rackname;
+    }
 
-	public void setRackname(String rackname) {
-		this.rackname = rackname;
-	}
+    public void setRackname(String rackname) {
+        this.rackname = rackname;
+    }
 
-	public String getRackPersonality() {
-		return rackPersonality;
-	}
+    public String getRackPersonality() {
+        return rackPersonality;
+    }
 
-	public void setRackPersonality(String rackPersonality) {
-		this.rackPersonality = rackPersonality;
-	}
+    public void setRackPersonality(String rackPersonality) {
+        this.rackPersonality = rackPersonality;
+    }
 
 }

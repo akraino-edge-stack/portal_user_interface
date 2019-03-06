@@ -24,39 +24,39 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"name", "labels", "partitions"})
 public class NDisk {
 
-	private String name;
-	
-	private Map<String, String> labels;
+    private String name;
+    
+    private Map<String, String> labels;
 
-	private List<NDiskPartition> partitions;
+    private List<NDiskPartition> partitions;
 
-	public Map<String, String> getLabels() {
-		return labels;
-	}
+    public Map<String, String> getLabels() {
+        return labels;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<NDiskPartition> getPartitions() {
-		return partitions;
-	}
+    public List<NDiskPartition> getPartitions() {
+        return partitions;
+    }
 
-	public void setPartitions(List<NDiskPartition> partitions) {
-		this.partitions = partitions;
-	}
+    public void setPartitions(List<NDiskPartition> partitions) {
+        this.partitions = partitions;
+    }
 
-	public void setLabels(Map<String, String> labels) {
-		this.labels = labels;
-	}
+    public void setLabels(Map<String, String> labels) {
+        this.labels = labels;
+    }
 
-	@Override
-	public String toString() {
-		return "NDisk [name=" + name + ", labels=" + labels + ", partitions=" + partitions + "]";
-	}
+    @Override
+    public String toString() {
+        return "NDisk [name=" + name + ", labels=" + labels + ", partitions=" + partitions + "]";
+    }
 
 }

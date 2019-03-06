@@ -38,69 +38,69 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/chomp")
 public class ChompController {
-	
-	@Autowired
-	PodMetricsService podMetricsService;
-	
-	private static final Logger logger = Logger.getLogger(ChompController.class);
-	
-	@SuppressWarnings("deprecation")
-	@PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SiteStatusResponse> uploadChompInputFile(@RequestParam MultipartFile file,
-			@ModelAttribute("originSrc") String originSrc, @ModelAttribute("interval") String interval,
-			@ModelAttribute("timeStamp") String timeStamp) {
+    
+    @Autowired
+    PodMetricsService podMetricsService;
+    
+    private static final Logger logger = Logger.getLogger(ChompController.class);
+    
+    @SuppressWarnings("deprecation")
+    @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteStatusResponse> uploadChompInputFile(@RequestParam MultipartFile file,
+            @ModelAttribute("originSrc") String originSrc, @ModelAttribute("interval") String interval,
+            @ModelAttribute("timeStamp") String timeStamp) {
 
-		SiteStatusResponse response = new SiteStatusResponse();
+        SiteStatusResponse response = new SiteStatusResponse();
 
-		logger.info("upload chomp data request at:" + timeStamp + "for interval" + interval);
+        logger.info("upload chomp data request at:" + timeStamp + "for interval" + interval);
 
-		try {
-			
-			byte [] chompbytes = file.getBytes();
-			String chompString = StringUtils.toString(chompbytes, "UTF-8");
+        try {
+            
+            byte [] chompbytes = file.getBytes();
+            String chompString = StringUtils.toString(chompbytes, "UTF-8");
 
-			boolean copyStatus = podMetricsService.processChompInputFile(chompString);
+            boolean copyStatus = podMetricsService.processChompInputFile(chompString);
 
-			if (copyStatus) {
-				response.setStatusCode("200");
-				response.setMessage("CHOMP data loaded into akraino successfully");
+            if (copyStatus) {
+                response.setStatusCode("200");
+                response.setMessage("CHOMP data loaded into akraino successfully");
 
-			} else {
-				response.setStatusCode("406");
-				response.setMessage("CHOMP data load into akraino failed");
-			}
+            } else {
+                response.setStatusCode("406");
+                response.setMessage("CHOMP data load into akraino failed");
+            }
 
-		} catch (Exception e) {
-			response.setStatusCode("406");
-			response.setMessage(e.getMessage());
+        } catch (Exception e) {
+            response.setStatusCode("406");
+            response.setMessage(e.getMessage());
 
-			logger.error("Error uploading input file", e);
-		}
+            logger.error("Error uploading input file", e);
+        }
 
-		logger.info("upload input file for request:" + response);
+        logger.info("upload input file for request:" + response);
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
-	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ChompObject>> getChompData() {
+    }
+    
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ChompObject>> getChompData() {
 
-		logger.info("getChompData - start");
-		
-		List<ChompObject> chompdata = null;
-		try {
-			
-			chompdata = podMetricsService.getChompData();
-			
+        logger.info("getChompData - start");
+        
+        List<ChompObject> chompdata = null;
+        try {
+            
+            chompdata = podMetricsService.getChompData();
+            
 
-		} catch (Exception e) {
-			logger.error("Exception retrieving site details", e);
-		} 
-		
-		logger.info("getChompData - end");
+        } catch (Exception e) {
+            logger.error("Exception retrieving site details", e);
+        } 
+        
+        logger.info("getChompData - end");
 
-		return new ResponseEntity<>(chompdata, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(chompdata, HttpStatus.OK);
+    }
 
 }

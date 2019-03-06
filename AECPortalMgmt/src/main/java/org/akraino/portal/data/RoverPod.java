@@ -24,30 +24,30 @@ package org.akraino.portal.data;
  * @author ld261v
  */
 public class RoverPod extends NPod {
-	
-	private String webIP;
-	
-	private Integer webPort;
+    
+    private String webIP;
+    
+    private Integer webPort;
 
-	public String getWebIP() {
-		return webIP;
-	}
+    public String getWebIP() {
+        return webIP;
+    }
 
-	public void setWebIP(String webIP) {
-		this.webIP = webIP;
-	}
+    public void setWebIP(String webIP) {
+        this.webIP = webIP;
+    }
 
-	public Integer getWebPort() {
-		return webPort;
-	}
+    public Integer getWebPort() {
+        return webPort;
+    }
 
-	public void setWebPort(Integer webPort) {
-		this.webPort = webPort;
-	}
+    public void setWebPort(Integer webPort) {
+        this.webPort = webPort;
+    }
 
-	@Override
-	public String toString() {
-		return "RoverPod [webIP=" + webIP + ", webPort=" + webPort + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "RoverPod [webIP=" + webIP + ", webPort=" + webPort + "]";
+    }
+    
 }

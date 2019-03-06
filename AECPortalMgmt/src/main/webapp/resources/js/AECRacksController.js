@@ -18,7 +18,7 @@ var RackArray = new Array();
 
 angular.module('PortalManagement').controller('AECRacksController', function($scope, $http, $filter, filterFilter, $state, ngDialog, $controller, appContext) {
 RackArray =  
-	 [{
+     [{
     "name": "Rack-3",
     "type": "control"
 },
@@ -100,88 +100,88 @@ $scope.createSoftwareObject = function(name, type, version) {
 }
 $scope.rackList = RackArray;
 $scope.rackSelected = function(rackName,index){
-	 
-	    	$scope.showRack = true;
-	    	//$scope.blueprintName = blueprintName;
-	    	$scope.selectedRow = index;
-	    	$scope.rackName = rackName;
-	    	var currentRack = RackArray.filter(function(element){
-	            return element.name === $scope.rackName;
-	        });
-	    	
-	    	if(currentRack[0].nodes == undefined){
-				/*var currRackcheck = currentPod[0].racks.find(function(element){
-		             return element.name ===  currentPod[0].racks[j].name;
-		          });*/
-					 
-	    					 var Nodes = new Array();
-	    					 for(var i = 0 ;i<52;i++){
-	    			    	     var newNode =$scope.createNodeObject(i,"", "",[],[]);
-	    			   	   		 Nodes.push(newNode);
-	    			   	   		 $scope.nodeList = Nodes;
-	    			   	   	 } 
-	    					 
-	    		         	// var newRack = $scope.createRackObject(currentRack[0].name, currentRack[0].type, Nodes);
-	    		         	//RackArray.push(newRack); 
-	    		              //$scope.rackList = Racks;
-	    		             // console.log(Racks);
-	    		         	 //var newPod = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
-	    		 	         //var newBlueprint = $scope.createBlueprintObject($scope.blueprintName, newPod);   
-	    		              //currentBlueprint.pod.racks.push(Racks); 
-	    					 currentRack[0].nodes = Nodes;
-	    				 }
-	    			 
-	    	
-	    			 
-	    	$scope.nodeList= currentRack[0].nodes;
-	    	
-			 console.log($scope.nodeList);
-	    	
-	    		 
-			 
-	
+     
+            $scope.showRack = true;
+            //$scope.blueprintName = blueprintName;
+            $scope.selectedRow = index;
+            $scope.rackName = rackName;
+            var currentRack = RackArray.filter(function(element){
+                return element.name === $scope.rackName;
+            });
+            
+            if(currentRack[0].nodes == undefined){
+                /*var currRackcheck = currentPod[0].racks.find(function(element){
+                     return element.name ===  currentPod[0].racks[j].name;
+                  });*/
+                     
+                             var Nodes = new Array();
+                             for(var i = 0 ;i<52;i++){
+                                 var newNode =$scope.createNodeObject(i,"", "",[],[]);
+                                       Nodes.push(newNode);
+                                       $scope.nodeList = Nodes;
+                                   } 
+                             
+                             // var newRack = $scope.createRackObject(currentRack[0].name, currentRack[0].type, Nodes);
+                             //RackArray.push(newRack); 
+                              //$scope.rackList = Racks;
+                             // console.log(Racks);
+                              //var newPod = $scope.createPodObject($scope.selectPodName.name, $scope.rackList);
+                              //var newBlueprint = $scope.createBlueprintObject($scope.blueprintName, newPod);   
+                              //currentBlueprint.pod.racks.push(Racks); 
+                             currentRack[0].nodes = Nodes;
+                         }
+                     
+            
+                     
+            $scope.nodeList= currentRack[0].nodes;
+            
+             console.log($scope.nodeList);
+            
+                 
+             
+    
 }
 });
 angular.module('PortalManagement').controller(
-		  'myPopoverCtrl1', function($scope,$http, ngDialog) {
-			  
-		      // query popover
-		      $scope.myPopover = {
+          'myPopoverCtrl1', function($scope,$http, ngDialog) {
               
-		        isOpen: false,
-
-		        templateUrl: 'myPopoverTemplate.html',
+              // query popover
+              $scope.myPopover = {
               
-		        open: function open(type,name) {
-		        	
-		        	if(type == ""){
-		        		$scope.myPopover.isOpen = false;
-		        		ngDialog.open({
-		    	            scope: $scope,
-		    	            template: 'Node.html',
-		    	            closeByDocument: false,
-		    	            controller: 'addNodeController',
-		    	            appendClassName: 'ngdialog-custom',
-		    	            width: '850px'
-		    	        });
-		        
-		         
-		        }
-		        	else{
-		        		 $scope.myPopover.isOpen = true;
-				          $scope.myPopover.nodeName = name;
-				          $scope.myPopover.nodeType = type;
-		        		
-		        	}
-		        },
+                isOpen: false,
 
-		        close: function close() {
-		          $scope.myPopover.isOpen = false;
-		        }
-		      };
+                templateUrl: 'myPopoverTemplate.html',
+              
+                open: function open(type,name) {
+                    
+                    if(type == ""){
+                        $scope.myPopover.isOpen = false;
+                        ngDialog.open({
+                            scope: $scope,
+                            template: 'Node.html',
+                            closeByDocument: false,
+                            controller: 'addNodeController',
+                            appendClassName: 'ngdialog-custom',
+                            width: '850px'
+                        });
+                
+                 
+                }
+                    else{
+                         $scope.myPopover.isOpen = true;
+                          $scope.myPopover.nodeName = name;
+                          $scope.myPopover.nodeType = type;
+                        
+                    }
+                },
 
-		    });
+                close: function close() {
+                  $scope.myPopover.isOpen = false;
+                }
+              };
+
+            });
 angular.module('PortalManagement').controller(
-		  'addNodeController', function($scope,$http, ngDialog) {});
-			  
-		  
+          'addNodeController', function($scope,$http, ngDialog) {});
+              
+          

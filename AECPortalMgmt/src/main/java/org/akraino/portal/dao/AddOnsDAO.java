@@ -21,10 +21,10 @@ import java.util.List;
 import org.akraino.portal.entity.Onap;
 
 public interface AddOnsDAO {
-	
-	public void saveOnap(Onap onap);
-	
-	public List<Onap> getOnapList();
-	
-	public Onap getOnap(String siteName);
+    
+    public void saveOnap(Onap onap);
+    
+    public List<Onap> getOnapList();
+    
+    public Onap getOnap(String siteName);
 }

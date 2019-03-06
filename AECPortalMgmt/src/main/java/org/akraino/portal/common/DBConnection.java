@@ -22,47 +22,47 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-	private static DBConnection  dbConnection;
-	private static Object lock = new Object();
+    private static DBConnection  dbConnection;
+    private static Object lock = new Object();
 
-	private Connection connection;
+    private Connection connection;
 
-	/**
-	 * Get the singleton instance of this class.
-	 * @return a DBConnection object to access the DB.
-	 * @throws SQLException if an error occurs at the SQL layer
-	 * @throws ClassNotFoundException if the DB driver is not loaded
-	 */
-	public static DBConnection getInstance() throws  SQLException, ClassNotFoundException
-	{
-		synchronized(lock)
-		{
-			if (null == dbConnection)
-			{
-				dbConnection = new DBConnection();
-			}
-			return dbConnection;
-		}
-	}
+    /**
+     * Get the singleton instance of this class.
+     * @return a DBConnection object to access the DB.
+     * @throws SQLException if an error occurs at the SQL layer
+     * @throws ClassNotFoundException if the DB driver is not loaded
+     */
+    public static DBConnection getInstance() throws  SQLException, ClassNotFoundException
+    {
+        synchronized(lock)
+        {
+            if (null == dbConnection)
+            {
+                dbConnection = new DBConnection();
+            }
+            return dbConnection;
+        }
+    }
 
-	private DBConnection() throws ClassNotFoundException, SQLException
-	{
-		PropertyUtil p    = PropertyUtil.getInstance();
-		String jdbcUrl    = p.getProperty("postgres.db.url");
-		String userId     = p.getProperty("postgres.db.user.name");
-		String dbPassword = p.getProperty("postgres.db.user.pwd");
+    private DBConnection() throws ClassNotFoundException, SQLException
+    {
+        PropertyUtil p    = PropertyUtil.getInstance();
+        String jdbcUrl    = p.getProperty("postgres.db.url");
+        String userId     = p.getProperty("postgres.db.user.name");
+        String dbPassword = p.getProperty("postgres.db.user.pwd");
 
-		Class.forName("org.postgresql.Driver");
-		connection = DriverManager.getConnection(jdbcUrl, userId, dbPassword);
-		connection.setAutoCommit(false);
-	}
+        Class.forName("org.postgresql.Driver");
+        connection = DriverManager.getConnection(jdbcUrl, userId, dbPassword);
+        connection.setAutoCommit(false);
+    }
 
-	/**
-	 * Get the JDBC Connection object from this class.
-	 * @return the Connection (may be null)
-	 */
-	public Connection getConnection()
-	{
-		return connection;
-	}
+    /**
+     * Get the JDBC Connection object from this class.
+     * @return the Connection (may be null)
+     */
+    public Connection getConnection()
+    {
+        return connection;
+    }
 }

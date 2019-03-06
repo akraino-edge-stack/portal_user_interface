@@ -20,12 +20,12 @@ import org.akraino.portal.entity.UserSession;
 
 public interface AccessDAO {
 
-	public void createUserSession(UserSession usersession);
-	
-	public void updateUserSession(UserSession usersession);
-	
-	public UserSession getUserSession(String userid);
-	
-	public void deleteUserSession(String userid);
-	
+    public void createUserSession(UserSession usersession);
+    
+    public void updateUserSession(UserSession usersession);
+    
+    public UserSession getUserSession(String userid);
+    
+    public void deleteUserSession(String userid);
+    
 }

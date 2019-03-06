@@ -21,38 +21,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"name", "size", "mountpoint"})
 public class NDiskPartition {
 
-	private String mountpoint;
-	
-	private String name;
-	private String size;
+    private String mountpoint;
+    
+    private String name;
+    private String size;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getSize() {
-		return size;
-	}
+    public String getSize() {
+        return size;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSize(String size) {
-		this.size = size;
-	}
+    public void setSize(String size) {
+        this.size = size;
+    }
 
-	public String getMountpoint() {
-		return mountpoint;
-	}
+    public String getMountpoint() {
+        return mountpoint;
+    }
 
-	public void setMountpoint(String mountpoint) {
-		this.mountpoint = mountpoint;
-	}
+    public void setMountpoint(String mountpoint) {
+        this.mountpoint = mountpoint;
+    }
 
-	@Override
-	public String toString() {
-		return "NDiskPartition [mountPoint=" + mountpoint + ", name=" + name + ", size=" + size + "]";
-	}
+    @Override
+    public String toString() {
+        return "NDiskPartition [mountPoint=" + mountpoint + ", name=" + name + ", size=" + size + "]";
+    }
 
 }

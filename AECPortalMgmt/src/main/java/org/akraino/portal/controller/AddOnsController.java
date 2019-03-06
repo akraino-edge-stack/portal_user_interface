@@ -42,98 +42,98 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/addon")
 public class AddOnsController {
 
-	@Autowired
-	AddOnsService addOnsService;
+    @Autowired
+    AddOnsService addOnsService;
 
-	private static final Logger logger = Logger.getLogger(PodController.class);
+    private static final Logger logger = Logger.getLogger(PodController.class);
 
-	@RequestMapping(value = "/onap/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
-			@ModelAttribute("siteName") String siteName) {
+    @RequestMapping(value = "/onap/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteStatusResponse> uploadInputFile(@RequestParam MultipartFile file,
+            @ModelAttribute("siteName") String siteName) {
 
-		SiteStatusResponse response = new SiteStatusResponse();
+        SiteStatusResponse response = new SiteStatusResponse();
 
-		EdgeSiteState siteRequest = new EdgeSiteState();
+        EdgeSiteState siteRequest = new EdgeSiteState();
 
-		siteRequest.setSiteName(siteName);
+        siteRequest.setSiteName(siteName);
 
-		try {
-			boolean copyStatus = addOnsService.saveOnapInput(file.getBytes(), siteName);
-			if (copyStatus) {
-				logger.info("ONAP input file copied successfully");
-				response.setStatusCode("200");
-				response.setMessage("Input file copied successfully");
-			} else {
-				logger.warn("Edge site not found");
-				response.setStatusCode("406");
-				response.setMessage("Input file copy failed");
-			}
+        try {
+            boolean copyStatus = addOnsService.saveOnapInput(file.getBytes(), siteName);
+            if (copyStatus) {
+                logger.info("ONAP input file copied successfully");
+                response.setStatusCode("200");
+                response.setMessage("Input file copied successfully");
+            } else {
+                logger.warn("Edge site not found");
+                response.setStatusCode("406");
+                response.setMessage("Input file copy failed");
+            }
 
-		} catch (Exception e) {
-			logger.error("Error copying ONAP input file", e);
-			
-			response.setStatusCode("406");
-			response.setMessage(e.getMessage());
-		}
+        } catch (Exception e) {
+            logger.error("Error copying ONAP input file", e);
+            
+            response.setStatusCode("406");
+            response.setMessage(e.getMessage());
+        }
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
-	}
+    }
 
-	@RequestMapping(value = "/onap/{siteName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Onap> getOnapDetails(@PathVariable("siteName") String siteName) {
+    @RequestMapping(value = "/onap/{siteName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Onap> getOnapDetails(@PathVariable("siteName") String siteName) {
 
-		Onap onap = null;
-		try {
+        Onap onap = null;
+        try {
 
-			onap = addOnsService.getOnap(siteName);
+            onap = addOnsService.getOnap(siteName);
 
-		} catch (Exception e) {
-			logger.error("Error retrieving ONAP details", e);
-		}
+        } catch (Exception e) {
+            logger.error("Error retrieving ONAP details", e);
+        }
 
-		return new ResponseEntity<Onap>(onap, HttpStatus.OK);
-	}
+        return new ResponseEntity<Onap>(onap, HttpStatus.OK);
+    }
 
-	@RequestMapping(value = "/onap", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Onap>> getOnapList() {
+    @RequestMapping(value = "/onap", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Onap>> getOnapList() {
 
-		List<Onap> onapList = null;
-		try {
+        List<Onap> onapList = null;
+        try {
 
-			onapList = addOnsService.getOnapList();
+            onapList = addOnsService.getOnapList();
 
-		} catch (Exception e) {
-			logger.error("Error retrieving ONAP list", e);
-		}
+        } catch (Exception e) {
+            logger.error("Error retrieving ONAP list", e);
+        }
 
-		return new ResponseEntity<>(onapList, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(onapList, HttpStatus.OK);
+    }
 
-	@RequestMapping(value = "/onap", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AECPortalResponse> installOnap(@RequestBody WorkflowRequest onapRequest) {
+    @RequestMapping(value = "/onap", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AECPortalResponse> installOnap(@RequestBody WorkflowRequest onapRequest) {
 
-		AECPortalResponse response = new AECPortalResponse();
+        AECPortalResponse response = new AECPortalResponse();
 
-		try {
+        try {
 
-			addOnsService.installOnap(onapRequest);
+            addOnsService.installOnap(onapRequest);
 
-			response.setEntity("ONAP install");
-			response.setStatusCode("200");
-			response.setMessage("ONAP install call initiated successfuly");
+            response.setEntity("ONAP install");
+            response.setStatusCode("200");
+            response.setMessage("ONAP install call initiated successfuly");
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			response.setEntity("ONAP install");
-			response.setStatusCode("406");
-			response.setMessage("ONAP install call initiation failed");
-			
-			logger.error("Error triggering ONAP install", e);
-		}
+            response.setEntity("ONAP install");
+            response.setStatusCode("406");
+            response.setMessage("ONAP install call initiation failed");
+            
+            logger.error("Error triggering ONAP install", e);
+        }
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
-	}
+    }
 
 }

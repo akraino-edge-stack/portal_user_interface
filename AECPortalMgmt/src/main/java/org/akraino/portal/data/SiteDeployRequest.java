@@ -17,134 +17,134 @@
 package org.akraino.portal.data;
 
 public class SiteDeployRequest extends WorkflowRequest {
-	
-	private String winscpdir;
-	
-	private String winscpfilepath;
-	
-	private String winscpfileparams;
-	
-	private String remotefilename;
-	
-	private String filepath;
-	
-	private String blueprint;
-	
-	private String file1;
-	
-	private String file1params;
-	
-	private String remotefile1;
-	
-	private String remotefile2;
-	
-	private String destdir1;
-	
-	private String destdir2;
+    
+    private String winscpdir;
+    
+    private String winscpfilepath;
+    
+    private String winscpfileparams;
+    
+    private String remotefilename;
+    
+    private String filepath;
+    
+    private String blueprint;
+    
+    private String file1;
+    
+    private String file1params;
+    
+    private String remotefile1;
+    
+    private String remotefile2;
+    
+    private String destdir1;
+    
+    private String destdir2;
 
-	@Override
-	public String toString() {
-		return "SiteDeployRequest [winscpdir=" + winscpdir + ", winscpfilepath=" + winscpfilepath
-				+ ", winscpfileparams=" + winscpfileparams + ", remotefilename=" + remotefilename + ", filepath="
-				+ filepath + ", blueprint=" + blueprint + ", file1=" + file1 + ", file1params=" + file1params
-				+ ", remotefile1=" + remotefile1 + ", remotefile2=" + remotefile2 + ", destdir1=" + destdir1
-				+ ", destdir2=" + destdir2 + "]";
-	}
+    @Override
+    public String toString() {
+        return "SiteDeployRequest [winscpdir=" + winscpdir + ", winscpfilepath=" + winscpfilepath
+                + ", winscpfileparams=" + winscpfileparams + ", remotefilename=" + remotefilename + ", filepath="
+                + filepath + ", blueprint=" + blueprint + ", file1=" + file1 + ", file1params=" + file1params
+                + ", remotefile1=" + remotefile1 + ", remotefile2=" + remotefile2 + ", destdir1=" + destdir1
+                + ", destdir2=" + destdir2 + "]";
+    }
 
-	public String getWinscpdir() {
-		return winscpdir;
-	}
+    public String getWinscpdir() {
+        return winscpdir;
+    }
 
-	public void setWinscpdir(String winscpdir) {
-		this.winscpdir = winscpdir;
-	}
+    public void setWinscpdir(String winscpdir) {
+        this.winscpdir = winscpdir;
+    }
 
-	public String getWinscpfilepath() {
-		return winscpfilepath;
-	}
+    public String getWinscpfilepath() {
+        return winscpfilepath;
+    }
 
-	public void setWinscpfilepath(String winscpfilepath) {
-		this.winscpfilepath = winscpfilepath;
-	}
+    public void setWinscpfilepath(String winscpfilepath) {
+        this.winscpfilepath = winscpfilepath;
+    }
 
-	public String getWinscpfileparams() {
-		return winscpfileparams;
-	}
+    public String getWinscpfileparams() {
+        return winscpfileparams;
+    }
 
-	public void setWinscpfileparams(String winscpfileparams) {
-		this.winscpfileparams = winscpfileparams;
-	}
+    public void setWinscpfileparams(String winscpfileparams) {
+        this.winscpfileparams = winscpfileparams;
+    }
 
-	public String getRemotefilename() {
-		return remotefilename;
-	}
+    public String getRemotefilename() {
+        return remotefilename;
+    }
 
-	public void setRemotefilename(String remotefilename) {
-		this.remotefilename = remotefilename;
-	}
+    public void setRemotefilename(String remotefilename) {
+        this.remotefilename = remotefilename;
+    }
 
-	public String getFilepath() {
-		return filepath;
-	}
+    public String getFilepath() {
+        return filepath;
+    }
 
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
-	}
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
 
-	public String getBlueprint() {
-		return blueprint;
-	}
+    public String getBlueprint() {
+        return blueprint;
+    }
 
-	public void setBlueprint(String blueprint) {
-		this.blueprint = blueprint;
-	}
+    public void setBlueprint(String blueprint) {
+        this.blueprint = blueprint;
+    }
 
-	public String getFile1() {
-		return file1;
-	}
+    public String getFile1() {
+        return file1;
+    }
 
-	public void setFile1(String file1) {
-		this.file1 = file1;
-	}
+    public void setFile1(String file1) {
+        this.file1 = file1;
+    }
 
-	public String getFile1params() {
-		return file1params;
-	}
+    public String getFile1params() {
+        return file1params;
+    }
 
-	public void setFile1params(String file1params) {
-		this.file1params = file1params;
-	}
+    public void setFile1params(String file1params) {
+        this.file1params = file1params;
+    }
 
-	public String getRemotefile1() {
-		return remotefile1;
-	}
+    public String getRemotefile1() {
+        return remotefile1;
+    }
 
-	public void setRemotefile1(String remotefile1) {
-		this.remotefile1 = remotefile1;
-	}
+    public void setRemotefile1(String remotefile1) {
+        this.remotefile1 = remotefile1;
+    }
 
-	public String getRemotefile2() {
-		return remotefile2;
-	}
+    public String getRemotefile2() {
+        return remotefile2;
+    }
 
-	public void setRemotefile2(String remotefile2) {
-		this.remotefile2 = remotefile2;
-	}
+    public void setRemotefile2(String remotefile2) {
+        this.remotefile2 = remotefile2;
+    }
 
-	public String getDestdir1() {
-		return destdir1;
-	}
+    public String getDestdir1() {
+        return destdir1;
+    }
 
-	public void setDestdir1(String destdir1) {
-		this.destdir1 = destdir1;
-	}
+    public void setDestdir1(String destdir1) {
+        this.destdir1 = destdir1;
+    }
 
-	public String getDestdir2() {
-		return destdir2;
-	}
+    public String getDestdir2() {
+        return destdir2;
+    }
 
-	public void setDestdir2(String destdir2) {
-		this.destdir2 = destdir2;
-	}
-	
+    public void setDestdir2(String destdir2) {
+        this.destdir2 = destdir2;
+    }
+    
 }

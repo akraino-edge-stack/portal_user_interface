@@ -35,85 +35,85 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EdgeSiteYamlTemplateService {
 
-	private static final Logger logger = Logger.getLogger(EdgeSiteYamlTemplateService.class);
+    private static final Logger logger = Logger.getLogger(EdgeSiteYamlTemplateService.class);
 
-	private static final String J2_TEMPLATE_DIR = "akraino-j2templates";
+    private static final String J2_TEMPLATE_DIR = "akraino-j2templates";
 
-	private String akrainoBaseDir = null;
+    private String akrainoBaseDir = null;
 
-	@Autowired
-	private EdgeSiteYamlTemplateDAO edgeSiteYamlTemplateDAO;
+    @Autowired
+    private EdgeSiteYamlTemplateDAO edgeSiteYamlTemplateDAO;
 
-	public EdgeSiteYamlTemplateService() {
+    public EdgeSiteYamlTemplateService() {
 
-		akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
+        akrainoBaseDir = PropertyUtil.getInstance().getProperty("akraino.base.dir");
 
-	}
+    }
 
-	public List<EdgeSiteYamlTemplate> getYamlTemplates() {
+    public List<EdgeSiteYamlTemplate> getYamlTemplates() {
 
-		logger.info("getYamlTemplates");
+        logger.info("getYamlTemplates");
 
-		return edgeSiteYamlTemplateDAO.getYamlTemplates();
+        return edgeSiteYamlTemplateDAO.getYamlTemplates();
 
-	}
+    }
 
-	public void loadJ2TemplateFiles() throws IOException {
+    public void loadJ2TemplateFiles() throws IOException {
 
-		cleanJ2FilesFromDB();
+        cleanJ2FilesFromDB();
 
-		logger.info("loadJ2TemplateFiles");
+        logger.info("loadJ2TemplateFiles");
 
-		String j2_file_path = akrainoBaseDir + "/akraino-j2templates";
+        String j2_file_path = akrainoBaseDir + "/akraino-j2templates";
 
-		logger.info("loading j2 template files from:" + j2_file_path);
+        logger.info("loading j2 template files from:" + j2_file_path);
 
-		copyFilesToDB(j2_file_path);
+        copyFilesToDB(j2_file_path);
 
-	}
+    }
 
-	private void copyFilesToDB(String directoryPath) throws IOException {
+    private void copyFilesToDB(String directoryPath) throws IOException {
 
-		File directory = new File(directoryPath);
+        File directory = new File(directoryPath);
 
-		// Get all j2 files
-		File[] files = directory.listFiles();
-		if (files != null) {
-			for (File file : files) {
-				if (file.isFile() && FilenameUtils.getExtension(file.toString()).equals("j2")) {
+        // Get all j2 files
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && FilenameUtils.getExtension(file.toString()).equals("j2")) {
 
-					byte[] fileContent = Files.readAllBytes(file.toPath());
+                    byte[] fileContent = Files.readAllBytes(file.toPath());
 
-					String absolutePath = file.getParent();
-					String relativePath = absolutePath
-							.substring(absolutePath.indexOf(J2_TEMPLATE_DIR) + J2_TEMPLATE_DIR.length());
+                    String absolutePath = file.getParent();
+                    String relativePath = absolutePath
+                            .substring(absolutePath.indexOf(J2_TEMPLATE_DIR) + J2_TEMPLATE_DIR.length());
 
-					String fullFileName = file.getName();
-					String fileName = fullFileName.substring(0, fullFileName.lastIndexOf('.'));
+                    String fullFileName = file.getName();
+                    String fileName = fullFileName.substring(0, fullFileName.lastIndexOf('.'));
 
-					EdgeSiteYamlTemplate template = new EdgeSiteYamlTemplate();
+                    EdgeSiteYamlTemplate template = new EdgeSiteYamlTemplate();
 
-					template.setFileName(fileName);
-					template.setFileLocation(StringUtil.notEmpty(relativePath) ? relativePath : "/");
-					template.setFileContent(fileContent);
+                    template.setFileName(fileName);
+                    template.setFileLocation(StringUtil.notEmpty(relativePath) ? relativePath : "/");
+                    template.setFileContent(fileContent);
 
-					edgeSiteYamlTemplateDAO.save(template);
+                    edgeSiteYamlTemplateDAO.save(template);
 
-				} else if (file.isDirectory()) {
+                } else if (file.isDirectory()) {
 
-					copyFilesToDB(file.getAbsolutePath());
+                    copyFilesToDB(file.getAbsolutePath());
 
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 
-	private void cleanJ2FilesFromDB() {
+    private void cleanJ2FilesFromDB() {
 
-		logger.info("cleanJ2FilesFromDB");
+        logger.info("cleanJ2FilesFromDB");
 
-		edgeSiteYamlTemplateDAO.deleteAll();
+        edgeSiteYamlTemplateDAO.deleteAll();
 
-	}
+    }
 
 }

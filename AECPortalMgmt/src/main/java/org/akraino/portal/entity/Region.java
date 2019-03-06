@@ -25,24 +25,24 @@ import javax.persistence.Table;
 @Table(name="akraino.region")
 public class Region {
 
-	@Id
-	@Column(name = "region_id")
-	Integer regionId;
-	
-	@Column(name = "region_name")
-	String regionName;
-	
-	public Integer getRegionId() {
-		return regionId;
-	}
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
-	}
-	public String getRegionName() {
-		return regionName;
-	}
-	public void setRegionName(String regionName) {
-		this.regionName = regionName;
-	}
-	
+    @Id
+    @Column(name = "region_id")
+    Integer regionId;
+    
+    @Column(name = "region_name")
+    String regionName;
+    
+    public Integer getRegionId() {
+        return regionId;
+    }
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+    }
+    public String getRegionName() {
+        return regionName;
+    }
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+    
 }

@@ -22,41 +22,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NStorage {
 
-	private List<NOSD> osds;
-	
-	@JsonProperty("osd_count")
-	private int osdCount;
+    private List<NOSD> osds;
+    
+    @JsonProperty("osd_count")
+    private int osdCount;
 
-	@JsonProperty("total_osd_count")
-	private int totalOSDCount;
+    @JsonProperty("total_osd_count")
+    private int totalOSDCount;
 
-	public List<NOSD> getOsds() {
-		return osds;
-	}
+    public List<NOSD> getOsds() {
+        return osds;
+    }
 
-	public void setOsds(List<NOSD> osds) {
-		this.osds = osds;
-	}
+    public void setOsds(List<NOSD> osds) {
+        this.osds = osds;
+    }
 
-	public int getOsdCount() {
-		return osdCount;
-	}
+    public int getOsdCount() {
+        return osdCount;
+    }
 
-	public void setOsdCount(int osdCount) {
-		this.osdCount = osdCount;
-	}
+    public void setOsdCount(int osdCount) {
+        this.osdCount = osdCount;
+    }
 
-	public int getTotalOSDCount() {
-		return totalOSDCount;
-	}
+    public int getTotalOSDCount() {
+        return totalOSDCount;
+    }
 
-	public void setTotalOSDCount(int totalOSDCount) {
-		this.totalOSDCount = totalOSDCount;
-	}
+    public void setTotalOSDCount(int totalOSDCount) {
+        this.totalOSDCount = totalOSDCount;
+    }
 
-	@Override
-	public String toString() {
-		return "NStorage [osds=" + osds + ", osdCount=" + osdCount + ", totalOSDCount=" + totalOSDCount + "]";
-	}
+    @Override
+    public String toString() {
+        return "NStorage [osds=" + osds + ", osdCount=" + osdCount + ", totalOSDCount=" + totalOSDCount + "]";
+    }
 
 }

@@ -20,17 +20,17 @@ import java.util.List;
 import org.akraino.portal.entity.Pod;
 
 public interface PodDAO {
-	
-	public void saveOrUpdate(Pod pod);
-	
-	public void merge(Pod pod);
-	
-	public List<Pod> getPods();
-	
-	public Pod getPod(Integer podId);
-	
-	public void deletePod(Pod pod);
-	
-	public Pod getPodBySiteId(int siteId);
-	
+    
+    public void saveOrUpdate(Pod pod);
+    
+    public void merge(Pod pod);
+    
+    public List<Pod> getPods();
+    
+    public Pod getPod(Integer podId);
+    
+    public void deletePod(Pod pod);
+    
+    public Pod getPodBySiteId(int siteId);
+    
 }
