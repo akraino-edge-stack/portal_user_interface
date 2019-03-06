@@ -83,7 +83,7 @@ $scope.deploySite = function(index){
          "file1params":$scope.siteList[index].edgeSiteName,
          "winscpfilepath":"/opt/akraino/yaml_builds/tools/2genesis.sh",
          "winscpfileparams":$scope.siteList[index].edgeSiteName,
-         "remotserver":$scope.siteList[index].edgeSiteIP,
+         "remoteserver":$scope.siteList[index].edgeSiteIP,
          "port": 22,
          "username": $scope.siteList[index].edgeSiteUser, 
          "password": $scope.siteList[index].edgeSitePwd ,
