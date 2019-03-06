@@ -84,7 +84,7 @@ $scope.deploySite = function(index){
          "winscpfilepath":"/opt/akraino/yaml_builds/tools/2genesis.sh",
          "winscpfileparams":$scope.siteList[index].edgeSiteName,
          "remoteserver":$scope.siteList[index].edgeSiteIP,
-         "port": 22,
+         "portnumber": 22,
          "username": $scope.siteList[index].edgeSiteUser, 
          "password": $scope.siteList[index].edgeSitePwd ,
          "destdir1":"/root/akraino/configs/promenade-bundle",

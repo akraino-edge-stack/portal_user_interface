@@ -22,7 +22,7 @@ public class WorkflowRequest {
 	private String remoteserver;
 	private String username;
 	private String password;
-	private Integer port;
+	private Integer portnumber;
 	private String srcdir;
 	private String destdir;
 	private String filename;
@@ -36,7 +36,7 @@ public class WorkflowRequest {
 	@Override
 	public String toString() {
 		return "WorkflowRequest [sitename=" + sitename + ", remoteserver=" + remoteserver + ", username=" + username
-				+ ", password=" + password + ", port=" + port + ", srcdir=" + srcdir + ", destdir=" + destdir
+				+ ", password=" + password + ", portnumber=" + portnumber + ", srcdir=" + srcdir + ", destdir=" + destdir
 				+ ", filename=" + filename + ", filepath=" + filepath + ", fileparams=" + fileparams
 				+ ", noofiterations=" + noofiterations + ", waittime=" + waittime + ", filetrasferscript="
 				+ filetrasferscript + ", filetransferparams=" + filetransferparams + "]";
@@ -74,11 +74,11 @@ public class WorkflowRequest {
 		this.password = password;
 	}
 
-	public Integer getPort() {
-		return port;
+	public Integer getPortnumber() {
+		return portnumber;
 	}
-	public void setPort(Integer port) {
-		this.port = port;
+	public void setPort(Integer portnumber) {
+		this.portnumber = portnumber;
 	}
 	public String getSrcdir() {
 		return srcdir;
