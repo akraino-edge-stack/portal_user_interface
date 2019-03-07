@@ -251,7 +251,7 @@ angular.module('PortalManagement').controller('AECaddOnsController', function($s
                 "remoteserver": $scope.addOnsites[siteIndex].edgeSite.edgeSiteIP,
                 "username": $scope.addOnsites[siteIndex].edgeSite.edgeSiteUser,
                 "password": $scope.addOnsites[siteIndex].edgeSite.edgeSitePwd,
-                "portnumber": 22,
+                "port": 22,
                 "srcdir": "/opt/akraino/onap/", 
                 "destdir": "/opt",
                 "filename": "INSTALL.sh",

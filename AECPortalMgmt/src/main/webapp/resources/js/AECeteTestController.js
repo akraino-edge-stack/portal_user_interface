@@ -167,7 +167,7 @@ angular.module('PortalManagement').controller('AECeteTestController', function($
         "remoteserver": $scope.tempestSites[siteIndex].edgeSiteIP,
         "username":$scope.tempestSites[siteIndex].edgeSiteUser,
         "password":$scope.tempestSites[siteIndex].edgeSitePwd,
-        "portnumber": 22 ,
+        "port": 22 ,
         "srcdir": "/opt/akraino/tempest", 
         "destdir": "/opt", 
         "filename":"test_run.sh", 
