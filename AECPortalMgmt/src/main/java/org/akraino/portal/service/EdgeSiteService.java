@@ -315,7 +315,6 @@ public class EdgeSiteService {
 			edgeSite.setEdgeSiteBuildStatus(ROVER_BUILD_STATUS_NA);
 			
 			String filepath = akrainoBaseDir + "/server-build/"+siteRequest.getSiteName();
-			//String filepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + YAML_FILE_EXT;
 
 			logger.info("writing input file to:" + filepath);
 			
@@ -329,33 +328,26 @@ public class EdgeSiteService {
 			edgeSite.setEdgeSiteDeployDeployToolStatus(STATUS_NOT_STARTED);
 			
 			String inputfilepath = akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName() + YAML_FILE_EXT;
-			//String inputfilepath = "C:\\Users\\ld261v\\Desktop\\AEC\\test\\" + siteRequest.getSiteName() + YAML_FILE_EXT;
 			logger.info("writing input file to:" + inputfilepath);
 
 			FileUtility.writeToFile(inputfilepath, bfileContent);
 			
 			// copy j2 template files
-			pushJ2TemplateFiles();
+			// pushJ2TemplateFiles();
 			
 			// read the input yaml file into a yaml parser
-			ObjectMapper mapper = new ObjectMapper(
-					new YAMLFactory()
-					.configure(Feature.USE_NATIVE_TYPE_ID, false)
-					//.configure(Feature.ALWAYS_QUOTE_NUMBERS_AS_STRINGS, true)
-					//.enable(Feature.MINIMIZE_QUOTES)
-					.enable(Feature.WRITE_DOC_START_MARKER)
-					)
-					.enable(SerializationFeature.INDENT_OUTPUT);
-					//.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-					//.disable(SerializationFeature.WRITE_NULL_MAP_VALUES)
-					//.setSerializationInclusion(Include.NON_NULL);
+			// ObjectMapper mapper = new ObjectMapper(
+					// new YAMLFactory()
+					// .configure(Feature.USE_NATIVE_TYPE_ID, false)
+					// .enable(Feature.WRITE_DOC_START_MARKER)
+					// )
+					// .enable(SerializationFeature.INDENT_OUTPUT);
 			
 			//read yaml file into a datamodel, in future release, this yaml read will be replaced with Narad data fetch
-			NPod npod = mapper.readValue(new File(inputfilepath), NPod.class);
+			// NPod npod = mapper.readValue(new File(inputfilepath), NPod.class);
 			
 			//write yaml file from datamodel
-			mapper.writeValue(new File(akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName()+"_portal"+YAML_FILE_EXT), npod);
-
+			// mapper.writeValue(new File(akrainoBaseDir + "/yaml_builds/" + edgeSite.getEdgeSiteName()+"_portal"+YAML_FILE_EXT), npod);
 		}
 		
 		// update edge site
