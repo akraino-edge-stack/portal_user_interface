@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.*;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -310,11 +311,26 @@ public class EdgeSiteService {
 		edgeSite.setDeployStatus(STATUS_NOT_STARTED);
 		edgeSite.setvCDNStatus(STATUS_NOT_STARTED);
 		edgeSite.setDeployMode(siteRequest.getDeployMode());
+
+                String sfileContent = new String(bfileContent);
 		
 		// copy input file
 		if (siteRequest.getBlueprint().equals(BLUEPRINT_ROVER)) {
 			
 			edgeSite.setEdgeSiteBuildStatus(ROVER_BUILD_STATUS_NA);
+
+                        // get IP and PWD from input file
+                        Pattern pattern = Pattern.compile("SRV_IP=([^#\n]*) *");
+                        Matcher matcher = pattern.matcher(sfileContent);
+                        if (matcher.find()) {
+                               edgeSite.setEdgeSiteIP(matcher.group(1));
+                        }
+                        edgeSite.setEdgeSiteUser("root");
+                        pattern = Pattern.compile("SRV_PWD=([^#\n]*) *");
+                        matcher = pattern.matcher(sfileContent);
+                        if (matcher.find()) {
+                                edgeSite.setEdgeSitePwd(matcher.group(1));
+                        }
 			
 			String filepath = akrainoBaseDir + "/server-build/"+siteRequest.getSiteName();
 
@@ -324,15 +340,13 @@ public class EdgeSiteService {
 
 		} else if (siteRequest.getBlueprint().equals(BLUEPRINT_UNICYCLE)) {
 
+                        // get IP and PWD from input file
                         Yaml yaml = new Yaml();
-                        Map<String , Object> yamlMaps = (Map<String, Object>) yaml.load(new String(bfileContent));
+                        Map<String , Object> yamlMaps = (Map<String, Object>) yaml.load(sfileContent);
                         final Map<String, Object> genesis = (Map<String, Object>) yamlMaps.get("genesis");
                         edgeSite.setEdgeSiteIP((String) genesis.get("host"));
-                        logger.info("setting edgesiteip to: " + (String) genesis.get("host"));
                         edgeSite.setEdgeSiteUser("root");
-                        logger.info("setting edgesiteuser to: " + "root");
                         edgeSite.setEdgeSitePwd((String) genesis.get("root_password"));
-                        logger.info("setting edgesitepwd to: " + (String) genesis.get("root_password"));
 
 			edgeSite.setEdgeSiteBuildStatus(STATUS_NOT_STARTED);
 			edgeSite.setEdgeSiteDeployCreateTarStatus(STATUS_NOT_STARTED);

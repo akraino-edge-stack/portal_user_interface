@@ -450,12 +450,11 @@
       <form class="uploadForm">
           <h1>Input Details:</h1><br>
           <label style="width:30%;"> Site Ipaddress: </label>
-          <input type="text" placeholder="" ng-model="siteIPaddress" /> <br>
+          <input type="text" placeholder="" ng-model="siteIPaddress" readonly/> <br>
           <label style="width:30%;"> Site Username: </label>
-          <input type="text" placeholder="" ng-model="siteUsername" /> <br>
+          <input type="text" placeholder="" ng-model="siteUsername" readonly/> <br>
           <label style="width:30%;"> Site Password: </label>
-      
-          <input type="text" placeholder="" ng-model="sitePassword" /> <br>
+          <input type="password" placeholder="" ng-model="sitePassword" readonly/> <br>
           <label style="width:30%;">Input File: </label>
           <input type="file" name="Input File" accept="**" ngf-select ng-model="file" />
           <br>
