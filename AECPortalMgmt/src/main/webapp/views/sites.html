@@ -353,12 +353,11 @@
          <form class="uploadForm">
              <h1>Input Details:</h1><br>
              <label style="width:30%;"> Host IP address: </label>
-             <input type="text" placeholder="" ng-model="siteIPaddress" /> <br>
+             <input type="text" placeholder="" ng-model="siteIPaddress" readonly/> <br>
              <label style="width:30%;"> Host username: </label>
-             <input type="text" placeholder="" ng-model="siteUsername" /> <br>
+             <input type="text" placeholder="" ng-model="siteUsername" readonly/> <br>
              <label style="width:30%;"> Host password: </label>
-         
-             <input type="text" placeholder="" ng-model="sitePassword" /> <br>
+             <input type="password" placeholder="" ng-model="sitePassword" readonly/> <br>
             <!-- <div ng-if ="sites[$parent.hostIndex].blueprintType == 'Unicycle'">
              <label style="width:30%"> Select deployment option: </label>
              
