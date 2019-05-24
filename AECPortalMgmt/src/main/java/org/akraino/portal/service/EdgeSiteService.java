@@ -63,6 +63,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
+import org.yaml.snakeyaml.Yaml;
 
 @Service("edgeSiteService")
 @Transactional
@@ -321,6 +322,16 @@ public class EdgeSiteService {
 			FileUtility.writeToFile(filepath, bfileContent);
 
 		} else if (siteRequest.getBlueprint().equals(BLUEPRINT_UNICYCLE)) {
+
+                        Yaml yaml = new Yaml();
+                        Map<String , Object> yamlMaps = (Map<String, Object>) yaml.load(new String(bfileContent));
+                        final Map<String, Object> genesis = (Map<String, Object>) yamlMaps.get("genesis");
+                        edgeSite.setEdgeSiteIP(genesis.get("host"));
+                        logger.info("setting edgesiteip to: " + genesis.get("host"));
+                        edgeSite.setEdgeSiteUser("root");
+                        logger.info("setting edgesiteuser to: " + "root");
+                        edgeSite.setEdgeSitePwd(genesis.get("root_password"));
+                        logger.info("setting edgesitepwd to: " + genesis.get("root_password"));
 
 			edgeSite.setEdgeSiteBuildStatus(STATUS_NOT_STARTED);
 			edgeSite.setEdgeSiteDeployCreateTarStatus(STATUS_NOT_STARTED);
