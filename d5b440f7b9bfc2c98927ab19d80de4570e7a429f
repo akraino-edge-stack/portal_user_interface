@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "846c5ca9_35fe0b22",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2020-03-31T13:30:02Z",
+      "side": 1,
+      "message": "Timezone should be America/New_York",
+      "revId": "d5b440f7b9bfc2c98927ab19d80de4570e7a429f",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762b0e2c_0ad329dc",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2020-03-31T13:30:02Z",
+      "side": 1,
+      "message": "Timezone should be America/New_York",
+      "revId": "d5b440f7b9bfc2c98927ab19d80de4570e7a429f",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a8dea8_912e8332",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2020-03-31T13:30:02Z",
+      "side": 1,
+      "message": "Smitha is no longer at AT\u0026T, please remove",
+      "revId": "d5b440f7b9bfc2c98927ab19d80de4570e7a429f",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
